@@ -17,31 +17,21 @@
  */
 package edu.ricm3.game.purgatoire;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
-  public Model() {
-  }
+	public Model() {
+	}
 
-@Override
-public void step(long now) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void step(long now) {
+		// TODO Auto-generated method stub
 
-@Override
-public void shutdown() {
-	// TODO Auto-generated method stub
-	
-}
+	}
+
+	@Override
+	public void shutdown() {
+		// TODO Auto-generated method stub
+	}
 }

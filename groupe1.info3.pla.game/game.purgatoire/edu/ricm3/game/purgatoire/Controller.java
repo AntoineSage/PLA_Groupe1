@@ -15,38 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Button;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
 
 import edu.ricm3.game.GameController;
-
-/**
- * This class is to illustrate the most simple game controller. It does not
- * much, but it shows how to obtain the key strokes, mouse buttons, and mouse
- * moves.
- * 
- * With ' ', you see what you should never do, SLEEP. With '+' and '-', you can
- * add or remove some simulated overheads.
- * 
- * @author Pr. Olivier Gruber
- */
 
 public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
-	Button m_cowboysOn;
-	Button m_explosionsOn;
-	Button m_strobesOn;
-	Button m_plus, m_minus;
 
 	public Controller(Model model, View view) {
 		m_model = model;
