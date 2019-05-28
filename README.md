@@ -1,17 +1,17 @@
 # Purgatoire
 
-Projet d’étudiants en 1ère année de Polytech Grenoble en filière Informatique.
+Projet d’étudiants en 3ème année d'école d'ingénieur à Polytech Grenoble en filière Informatique.
 
 ## But du jeu
 
-Purgatoire est un jeu de plateau/action/aventure en **solo**. Le but du jeu est d’obtenir des points de karma (positifs ou négatifs) dans le but de devenir Dieu ou Satan et ainsi de régner sur le **paradis** ou sur l’**enfer** le plus rapidement possible.
+Purgatoire est un jeu de plateau/action/aventure en **solo**. Le but du jeu est d’obtenir des points de karma (positifs ou négatifs) et de l'expérience dans le but de devenir Dieu ou Satan et ainsi de régner sur le **paradis** ou sur l’**enfer** le plus rapidement possible.
 
 ## Contrôles
 
 On déplace le personnage avec les **flèches directionnelles**, on peut activer le pouvoir **wizz** avec la touche **W**, **pop** avec **X** et **hit** avec **C**.
 
-- **Dans l’enfer**, wizz est une attaque de zone, pop est un sort qui augmente pendant 30 secondes les dégâts que le joueur inflige (mais il prend plus de dégâts pendant ce temps) et hit permet de lancer des boules de feu.
-- **Dans le paradis**, wizz permet de caresser, pop permet d’effectuer un dash et hit de donner un coup à une case de distance.
+- **Dans l’enfer**, wizz est une attaque de zone, pop est un sort qui augmente pendant un court moment les dégâts que le joueur inflige (mais il prend plus de dégâts pendant ce temps) et hit permet de lancer des boules de feu.
+- **Dans le paradis**, wizz permet de caresser, pop permet d’effectuer un dash (déplacement rapide dans une direciton) et hit d'attaquer devant lui.
 
 ## Règles
 
@@ -31,16 +31,15 @@ Au paradis, le joueur ne doit **pas toucher les âmes** qui l’entourent et il 
 
 ### En résumé
 
-| Pouvoir | Enfer | Paradis |
-|:-------:|-------|---------|
-| Pop     | Faiblesse ×2 et dégâts ×2 (cooldown de 30s) | Dash |
-| Wizz    | Attaque de zone | Caresse |
+| Pouvoir | Enfer                                       | Paradis |
+| :-----: | ------------------------------------------- | ------- |
+|   Pop   | Faiblesse ×2 et dégâts ×2 (cooldown de 30s) | Dash    |
+|  Wizz   | Attaque de zone                             | Caresse |
 
-
-| Karma    | Enfer | Paradis |
-|:--------:|-------|---------|
-| Augmente | Eau bénite ou ne tue pas pendant 5s | Caresse |
-| Diminue  | Tue ou blesse | Tue, blesse ou ne caresse pas pendant 5s |
+|  Karma   | Enfer                               | Paradis                                  |
+| :------: | ----------------------------------- | ---------------------------------------- |
+| Augmente | Eau bénite ou ne tue pas pendant 5s | Caresse                                  |
+| Diminue  | Tue ou blesse                       | Tue, blesse ou ne caresse pas pendant 5s |
 
 - **Enfer → paradis** : +10 PV max et -10 XP
 - **Paradis → enfer** : 50% PV et -10 XP
