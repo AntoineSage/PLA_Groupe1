@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import edu.ricm3.game.GameView;
@@ -25,14 +26,19 @@ public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
 	Model m_model;
-
+	
+	HeroView m_heroView;
+	
 	public View(Model m) {
 		m_model = m;
+		m_heroView = new HeroView(m.hero);
 	}
 
 	@Override
 	protected void _paint(Graphics g) {
-		// TODO Auto-generated method stub
-
+		g.setColor(Color.white);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		m_heroView.paint(g);
 	}
 }

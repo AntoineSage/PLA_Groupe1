@@ -20,14 +20,24 @@ package edu.ricm3.game.purgatoire;
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
-
+	Entity hero;
+	
+	long lastTimeSinceAutomatonStep;
+	
 	public Model() {
+		Aut aut = new Aut();
+		Transition trans = new Transition();
+		hero = new Entity(30, 30, 3, 3, aut);
+		lastTimeSinceAutomatonStep = 0;
 	}
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
-
+		long elapsed = now - lastTimeSinceAutomatonStep;
+		if(elapsed > 1000) {
+			hero.m_automaton.step();
+			lastTimeSinceAutomatonStep = now;
+		}
 	}
 
 	@Override
