@@ -31,7 +31,7 @@ public class View extends GameView {
 	
 	public View(Model m) {
 		m_model = m;
-		m_heroView = new HeroView(m.hero);
+		m_heroView = new HeroView(m_model.m_hero); 
 	}
 
 	@Override

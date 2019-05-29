@@ -2,7 +2,7 @@ package ricm3.interpreter;
 
 import java.util.Iterator;
 
-import edu.ricm3.game.Entity;
+import edu.ricm3.game.purgatoire.Entity;
 
 public class Aut {
 

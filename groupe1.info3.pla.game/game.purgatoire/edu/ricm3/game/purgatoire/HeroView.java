@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class HeroView implements IViewable {
 	Entity m_hero;
 
-	HeroView(Entity hero) {
+	HeroView(Entity hero) { 
 		m_hero = hero;
 	}
 
@@ -15,5 +15,4 @@ public class HeroView implements IViewable {
 		g.setColor(Color.red);
 		g.fillRect(m_hero.m_x * 10, m_hero.m_y * 10, m_hero.m_w * 10, m_hero.m_h * 10);
 	}
-
 }
