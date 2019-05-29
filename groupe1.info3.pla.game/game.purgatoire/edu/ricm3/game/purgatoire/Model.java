@@ -31,7 +31,7 @@ public class Model extends GameModel {
 	long lastTimeSinceAutomatonStep; 
 	
 	public Model() {
-		m_hero = new Entity(30, 30, 5, 5, Direction.NORD);
+		m_hero = new Entity(30, 30, 3, 3, Direction.NORD);
 		State state1 = new State();
 		Aut aut = new Aut(state1, state1, m_hero);
 		State state2 = new State();
