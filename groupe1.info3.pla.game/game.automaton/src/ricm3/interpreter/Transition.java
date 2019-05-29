@@ -6,6 +6,7 @@ public class Transition {
 	public State m_nextState; 
 	
 	public Transition(Condition condition, IAction action, State nextState) {
+
 		m_condition = condition;
 		m_action = action;
 		m_nextState = nextState;
