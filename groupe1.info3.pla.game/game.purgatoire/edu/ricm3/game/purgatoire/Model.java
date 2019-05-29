@@ -18,6 +18,7 @@
 package edu.ricm3.game.purgatoire;
 
 import edu.ricm3.game.GameModel;
+import ricm3.interpreter.State;
 
 public class Model extends GameModel {
 	Entity hero;
@@ -26,7 +27,10 @@ public class Model extends GameModel {
 	
 	public Model() {
 		Aut aut = new Aut();
-		Transition trans = new Transition();
+		State state1 = new State();
+		State state2 = new State();
+		State state3 = new State();
+		
 		hero = new Entity(30, 30, 3, 3, aut);
 		lastTimeSinceAutomatonStep = 0;
 	}
