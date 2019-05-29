@@ -17,19 +17,31 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import edu.ricm3.game.Entity;
 import edu.ricm3.game.GameModel;
+import ricm3.interpreter.Aut;
+import ricm3.interpreter.Condition;
+import ricm3.interpreter.Move;
 import ricm3.interpreter.State;
+import ricm3.interpreter.Transition;
 
 public class Model extends GameModel {
 	Entity hero;
 	
-	long lastTimeSinceAutomatonStep;
+	long lastTimeSinceAutomatonStep; 
 	
 	public Model() {
-		Aut aut = new Aut();
 		State state1 = new State();
+		Aut aut = new Aut(state1, state1);
 		State state2 = new State();
+		Transition trans1 = new Transition(new Condition(), new Move(), state2);
 		State state3 = new State();
+		Transition trans2 = new Transition(new Condition(), new Move(), state3);
+		State state4 = new State();
+		Transition trans3 = new Transition(new Condition(), new Move(), state4);
+		state1.addTransition(trans1);
+		state2.addTransition(trans2);
+		state3.addTransition(trans3);
 		
 		hero = new Entity(30, 30, 3, 3, aut);
 		lastTimeSinceAutomatonStep = 0;
