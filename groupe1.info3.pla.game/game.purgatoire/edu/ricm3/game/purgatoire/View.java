@@ -23,7 +23,7 @@ import java.awt.Graphics;
 import edu.ricm3.game.GameView;
 import edu.ricm3.game.purgatoire.Model.WorldType;
 
-public class View extends GameView {
+public class View extends GameView implements Transformable {
 	private static final long serialVersionUID = 1L;
 
 	Model m_model;

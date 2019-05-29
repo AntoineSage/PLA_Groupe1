@@ -2,7 +2,7 @@ package edu.ricm3.game.purgatoire;
 
 import edu.ricm3.game.purgatoire.Model.WorldType;
 
-public class Entity {
+public class Entity implements Transformable {
 
 	Stunt m_heaven;
 	Stunt m_hell;
@@ -18,7 +18,7 @@ public class Entity {
 		transform();
 	}
 
-	void transform() {
+	public void transform() {
 		if (getWorld() == WorldType.HEAVEN)
 			m_current = m_heaven;
 		else

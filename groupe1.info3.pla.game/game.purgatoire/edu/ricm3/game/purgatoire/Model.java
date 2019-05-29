@@ -19,7 +19,7 @@ package edu.ricm3.game.purgatoire;
 
 import edu.ricm3.game.GameModel;
 
-public class Model extends GameModel {
+public class Model extends GameModel implements Transformable {
 
 	public static enum WorldType {
 		HEAVEN, HELL;
@@ -53,7 +53,8 @@ public class Model extends GameModel {
 			System.out.println("Hell");
 	}
 
-	void transform() {
+	public void transform() {
+		// TODO put world change in Controller?
 		if (m_wt == WorldType.HEAVEN)
 			m_wt = WorldType.HELL;
 		else
