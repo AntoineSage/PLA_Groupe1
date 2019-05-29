@@ -1,7 +1,7 @@
 graphviz_executable = open
 java_interpreter    = java
 dot_output_file     = ~/Desktop/ast.dot
-project_directory   = ~/git/github/GamaParser/
+project_directory   = ~/2018/workshops/pla/group1.info3.pla.game
 parser_class        = AutomataParser
 
 test1 = "Philosopher(Think){ * (Think) }"
