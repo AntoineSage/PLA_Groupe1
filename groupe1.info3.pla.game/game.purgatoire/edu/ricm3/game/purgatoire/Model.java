@@ -21,13 +21,23 @@ import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
+	enum WorldType {
+		HEAVEN, HELL;
+	}
+
+	private WorldType m_wt;
+
 	public Model() {
+		m_wt = WorldType.HEAVEN;
 	}
 
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
+	}
 
+	WorldType getWorld() {
+		return m_wt;
 	}
 
 	@Override
