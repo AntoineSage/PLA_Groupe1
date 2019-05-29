@@ -17,22 +17,40 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import edu.ricm3.game.GameView;
+import edu.ricm3.game.purgatoire.Model.WorldType;
 
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
 	Model m_model;
+	private WorldSprites m_heaven;
+	private WorldSprites m_hell;
+	private WorldSprites m_current;
 
 	public View(Model m) {
 		m_model = m;
+		m_heaven = new WorldSprites(Color.blue);
+		m_hell = new WorldSprites(Color.red);
+		transform();
+	}
+	
+//	public void step(long now) {
+//	}
+	
+	public void transform() {
+		if (m_model.getWorld() == WorldType.HEAVEN)
+			m_current = m_heaven;
+		else
+			m_current = m_hell;
 	}
 
 	@Override
 	protected void _paint(Graphics g) {
-		// TODO Auto-generated method stub
-
+		g.setColor(m_current.getPlayerColor());
+		g.fillRect(0, 0, 50, 50);
 	}
 }

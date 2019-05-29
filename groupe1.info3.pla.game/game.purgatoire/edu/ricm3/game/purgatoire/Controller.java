@@ -29,6 +29,7 @@ public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
+	private long m_lastTransform;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -49,7 +50,17 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void step(long now) {
-		m_model.step(now);
+		if (m_lastTransform == 0)
+			m_lastTransform = now;
+		if (now - m_lastTransform > 2000) {
+			m_model.transform();
+			m_view.transform();
+			m_model.printWorld();
+			m_model.getPlayer().pop();
+			m_model.getPlayer().wizz();
+			m_lastTransform = now;
+		}
+//		m_model.step(now);
 //		m_view.step(now);
 	}
 

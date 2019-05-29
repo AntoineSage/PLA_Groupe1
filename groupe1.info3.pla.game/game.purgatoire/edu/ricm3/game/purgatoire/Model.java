@@ -27,7 +27,6 @@ public class Model extends GameModel {
 
 	private WorldType m_wt;
 	private Player m_player;
-	private long m_lastTransform;
 	// TODO lastTransform and transform() in Controller?
 
 	public Model() {
@@ -37,19 +36,14 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
-		if (m_lastTransform == 0)
-			m_lastTransform = now;
-		if (now - m_lastTransform > 2000) {
-			transform();
-			printWorld();
-			m_player.pop();
-			m_player.wizz();
-			m_lastTransform = now;
-		}
 	}
 
 	WorldType getWorld() {
 		return m_wt;
+	}
+
+	public Player getPlayer() {
+		return m_player;
 	}
 
 	void printWorld() {
