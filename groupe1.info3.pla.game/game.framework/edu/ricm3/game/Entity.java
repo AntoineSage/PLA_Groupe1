@@ -1,5 +1,7 @@
 package edu.ricm3.game;
 
+import ricm3.interpreter.Aut;
+
 public class Entity {
 
 	public int m_x, m_y, m_w, m_h;
