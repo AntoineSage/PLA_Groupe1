@@ -21,36 +21,50 @@ import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
-	enum WorldType {
+	public static enum WorldType {
 		HEAVEN, HELL;
 	}
 
 	private WorldType m_wt;
+	private Player m_player;
 	private long m_lastTransform;
+	// TODO lastTransform and transform() in Controller?
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
+		m_player = new Player(this);
 	}
 
 	@Override
 	public void step(long now) {
 		if (m_lastTransform == 0)
 			m_lastTransform = now;
-		if (now - m_lastTransform > 200)
+		if (now - m_lastTransform > 2000) {
 			transform();
-		// TODO step on all entities
+			printWorld();
+			m_player.pop();
+			m_player.wizz();
+			m_lastTransform = now;
+		}
 	}
 
 	WorldType getWorld() {
 		return m_wt;
 	}
-	
+
+	void printWorld() {
+		if (m_wt == WorldType.HEAVEN)
+			System.out.println("Heaven");
+		else
+			System.out.println("Hell");
+	}
+
 	void transform() {
 		if (m_wt == WorldType.HEAVEN)
 			m_wt = WorldType.HELL;
 		else
 			m_wt = WorldType.HEAVEN;
-		// TODO transform on all entities
+		m_player.transform();
 	}
 
 	@Override
