@@ -26,6 +26,7 @@ public class Model extends GameModel {
 	}
 
 	private WorldType m_wt;
+	private long m_lastTransform;
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
@@ -33,15 +34,26 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
+		if (m_lastTransform == 0)
+			m_lastTransform = now;
+		if (now - m_lastTransform > 200)
+			transform();
+		// TODO step on all entities
 	}
 
 	WorldType getWorld() {
 		return m_wt;
 	}
+	
+	void transform() {
+		if (m_wt == WorldType.HEAVEN)
+			m_wt = WorldType.HELL;
+		else
+			m_wt = WorldType.HEAVEN;
+		// TODO transform on all entities
+	}
 
 	@Override
 	public void shutdown() {
-		// TODO Auto-generated method stub
 	}
 }
