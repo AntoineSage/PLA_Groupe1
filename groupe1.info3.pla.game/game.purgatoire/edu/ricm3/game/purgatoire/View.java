@@ -25,9 +25,11 @@ import edu.ricm3.game.GameView;
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
-	Model m_model;
-	
-	HeroView m_heroView;
+	private Model m_model;
+
+	private HeroView m_heroView;
+
+	private int gridSize = 10;
 	
 	public View(Model m) {
 		m_model = m;
@@ -36,9 +38,47 @@ public class View extends GameView {
 
 	@Override
 	protected void _paint(Graphics g) {
+		gridSize = (getWidth())/ 80;
 		g.setColor(Color.white);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		m_heroView.paint(g);
+		m_heroView.paint(g, gridSize);
+		paintGrid(g);
 	}
+	
+	private void paintRainbowGrid(Graphics g) {
+		float hsb[] = {0, 0.8f, 0.8f};
+		int rgb = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+		Color col = new Color(rgb);
+		
+		for(int i = 0; i < getWidth(); i+= gridSize) {
+			g.setColor(col);
+			g.drawLine(i, 0, i, getHeight());
+			hsb[0] = (hsb[0] + (1.0f / (float)(getWidth() / gridSize)));
+			rgb = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+			col = new Color(rgb);
+		}
+		
+		hsb[0] = 0;
+		
+		for(int i = 0; i < getHeight(); i+= gridSize) {
+			g.setColor(col);
+			g.drawLine(0, i, getWidth(), i);
+			hsb[0] = (hsb[0] + (1.0f / (float)(getHeight() / gridSize)));
+			rgb = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+			col = new Color(rgb);
+		}
+	}	
+	
+	private void paintGrid(Graphics g) {
+		g.setColor(new Color(0, 0, 0, 100));
+		for(int i = 0; i < getWidth(); i+= gridSize) {
+			g.drawLine(i, 0, i, getHeight());
+		}
+		
+		for(int i = 0; i < getHeight(); i+= gridSize) {
+			g.drawLine(0, i, getWidth(), i);
+		}
+	}
+	
 }

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package edu.ricm3.game.purgatoire;
-
+ 
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.Entity.Direction;
 import ricm3.interpreter.Aut;
