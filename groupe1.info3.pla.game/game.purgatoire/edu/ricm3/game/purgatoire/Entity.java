@@ -10,7 +10,6 @@ public class Entity {
 
 	public enum Direction {
 		NORD, SUD, EST, WEST;
-
 	}
 
 	public Entity() {

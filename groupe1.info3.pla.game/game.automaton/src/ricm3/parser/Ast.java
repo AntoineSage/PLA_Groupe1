@@ -1,6 +1,19 @@
 package ricm3.parser;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import ricm3.interpreter.IAction;
+import ricm3.interpreter.IAction.Move;
+import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IBehaviour;
+import ricm3.interpreter.ICondition;
+import ricm3.interpreter.ICondition.IBinaryCondition;
+import ricm3.interpreter.ICondition.IUnaryCondition;
+import ricm3.interpreter.ICondition.Not;
+import ricm3.interpreter.IState;
+import ricm3.interpreter.ITransition;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
  *
@@ -43,10 +56,9 @@ public class Ast {
 		return "undefined " + this.kind + ".as_dot_aut";
 	}
 	
-	
 	// AST as active automata (interpreter of transitions)
 	
-	public Object  make() {
+	public Object make() {
 		  return null; // TODO à définir dans la plupart des classes internes ci-dessous.
 	}
 	
@@ -65,6 +77,26 @@ public class Ast {
 		public String tree_edges() {
 			String value_id = Dot.node_id( -this.id) ;
 			return Dot.declare_node( value_id, value, "shape=none, fontsize=10, fontcolor=blue" ) + Dot.edge(this.dot_id(), value_id) ;
+		}
+
+		@Override
+		public Object make() {
+			ICondition weird = new ICondition();
+
+			switch (value) {
+			case "!":
+			case "not":
+				new Move(null);
+				return new Not();
+				
+			case "/" :
+				return weird.new Or();
+			case "&" :
+				return weird.new And();
+			default:
+				return null;
+			}
+			
 		}
 	}
 
@@ -220,6 +252,14 @@ public class Ast {
 		public String toString() { 
 			return operator + "(" + operand + ")" ; 
 		}
+
+		@Override
+		public Object make() {
+			IUnaryCondition op = (IUnaryCondition) operator.make();
+			op.setCondition((ICondition)operand.make());
+			
+			return op;
+		}
 	}
 
 	public static class BinaryOp extends Expression {
@@ -242,6 +282,14 @@ public class Ast {
 		
 		public String toString() { 
 			return "(" + left_operand + " " + operator + " " + right_operand + ")" ; 
+		}
+		
+		@Override
+		public Object make() {
+			IBinaryCondition op = (IBinaryCondition) operator.make();
+			op.setConditions((ICondition)left_operand.make(), (ICondition)left_operand.make());
+			
+			return op;
 		}
 	}
 
@@ -277,6 +325,11 @@ public class Ast {
 			}
 			return name + "(" + string + ")" ; 
 		}
+
+		@Override
+		public Object make() {
+			
+		}
 	}
 
 	public static class Condition extends Ast {
@@ -295,6 +348,13 @@ public class Ast {
 		public String toString() {
 			return expression.toString() ;
 		}
+
+		@Override
+		public ICondition make() {
+			return (ICondition) expression.make();
+		}
+		
+		
 	}
 
 	public static class Action extends Ast {
@@ -313,6 +373,13 @@ public class Ast {
 		public String toString() {
 			return expression.toString() ;
 		}
+
+		@Override
+		public IAction make() {
+			return (IAction) expression.make();
+		}
+		
+				
 	}
 
 	public static class State extends Ast {
@@ -335,6 +402,11 @@ public class Ast {
 		public String as_state_of(Automaton automaton){ 
 			return Dot.declare_node( this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4") ;
 		}
+
+		@Override
+		public IState make() {
+			return new IState(name.value, id);
+		}		
 	}
 
 	public static class AI_Definitions extends Ast {
@@ -371,7 +443,6 @@ public class Ast {
 		}
 		
 	}
-
 	
 	public static class Automaton extends Ast {
 
@@ -386,6 +457,17 @@ public class Ast {
 			this.behaviours = behaviours;
 		}
 
+		public IAutomaton make() {
+			List<IBehaviour> iBehaviours = new LinkedList<IBehaviour>() ;
+			Iterator<Behaviour> iter = behaviours.iterator();
+			while(iter.hasNext()) {
+				iBehaviours.add(iter.next().make());
+			}
+			
+			IState istate_initial = entry.make();
+			return new IAutomaton(istate_initial, iBehaviours) ;
+		}
+		
 		public String tree_edges() {
 			String output = new String();
 			output += name.as_tree_son_of(this);
@@ -443,9 +525,23 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string ;
 		}
+
+		@Override
+		public IBehaviour make() {
+			List<ITransition> itransitions = new LinkedList<ITransition>() ;
+			Iterator<Transition> iter = transitions.iterator();
+			while(iter.hasNext()) {
+				itransitions.add(iter.next().make());
+			}
+			
+			IState iState = source.make();
+			
+			return new IBehaviour(iState, itransitions);
+		}
+		
+		
 	}
 
-	
 	public static class Transition extends Ast {
 
 		Condition condition;
@@ -459,6 +555,10 @@ public class Ast {
 			this.target = target;
 		}
 
+		public ITransition make() {
+			return new ITransition(condition.make(), action.make(), target.make());
+		}
+		
 		public String tree_edges() {
 			return condition.as_tree_son_of(this) + action.as_tree_son_of(this) + target.as_tree_son_of(this);
 		}

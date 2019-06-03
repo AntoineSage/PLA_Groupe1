@@ -29,16 +29,18 @@ public class View extends GameView {
 
 	private HeroView m_heroView;
 
-	private int gridSize = 10;
+	private int gridSize;
+	private int numberOfCellHorizontally;
 	
 	public View(Model m) {
 		m_model = m;
-		m_heroView = new HeroView(m_model.m_hero); 
+		m_heroView = new HeroView(m_model.m_hero);
+		numberOfCellHorizontally = 80;
 	}
 
 	@Override
 	protected void _paint(Graphics g) {
-		gridSize = (getWidth())/ 80;
+		gridSize = (getWidth())/ numberOfCellHorizontally;
 		g.setColor(Color.white);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
