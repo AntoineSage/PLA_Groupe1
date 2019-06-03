@@ -21,7 +21,13 @@ import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
+	int l_x, l_y, l_h, l_w;
+	
 	public Model() {
+		l_x = 0;
+		l_y = 0;
+		l_h = 2;
+		l_w = 100;
 	}
 
 	@Override

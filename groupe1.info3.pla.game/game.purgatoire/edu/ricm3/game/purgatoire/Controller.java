@@ -61,7 +61,14 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			m_view.m_y--;
+			break;
+		case KeyEvent.VK_DOWN:
+			m_view.m_y++;
+			break;
+		}
 
 	}
 
