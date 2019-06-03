@@ -27,7 +27,6 @@ public class View extends GameView {
 
 	Model m_model;
 	int m_y;
-	int pt = 2 * Options.LVL_SIZE;
 
 	public View(Model m) {
 		m_model = m;
@@ -35,19 +34,13 @@ public class View extends GameView {
 	}
 
 	public void up() {
-		m_y--;
-		if (m_y + getHeight() < pt - Options.LVL_SIZE) {
-			pt -= Options.LVL_SIZE;
-		}
-		System.out.println("PT : " + pt);
-		System.out.println("M_Y : " + m_y);
+		m_y = m_model.player.m_y - (Options.WIN_HEIGHT) / 2 + Options.PLAYER_SIZE;
+		System.out.println(m_y);
 	}
 
 	public void down() {
-		if (m_y + getHeight() != pt) {
-			m_y++;
-			System.out.println(m_y);
-		}
+		m_y = m_model.player.m_y - (Options.WIN_HEIGHT) / 2 + Options.PLAYER_SIZE;
+		System.out.println(m_y);
 	}
 
 	@Override
@@ -63,8 +56,8 @@ public class View extends GameView {
 		Graphics g3 = g.create(0, -m_y + Options.LVL_SIZE, getWidth(), Options.LVL_SIZE);
 		g3.setColor(Color.GREEN);
 		g3.fillRect(m_model.b3.m_x, m_model.b3.m_y, m_model.b3.m_w, m_model.b3.m_h);
-		// g3.setColor(Color.RED);
-		// g3.fillRect(m_model.l_x, m_model.l_y, m_model.l_w, m_model.l_h);
+		g.setColor(Color.RED);
+		g.fillRect(m_model.player.m_x, m_model.player.m_y - m_y, m_model.player.m_w, m_model.player.m_h);
 		g3.dispose();
 		g2.dispose();
 		g1.dispose();

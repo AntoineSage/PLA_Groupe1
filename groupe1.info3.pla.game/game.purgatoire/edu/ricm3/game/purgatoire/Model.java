@@ -21,18 +21,28 @@ import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
-	//int l_x, l_y, l_h, l_w;
-	Bounds b1, b2, b3;
+	Bounds b1, b2, b3, player;
+	int pt = Options.LVL_SIZE;
 
 	public Model() {
-//		l_x = 0;
-//		l_y = 398;
-//		l_h = 2;
-//		l_w = 100;
-
 		b1 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
 		b2 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
 		b3 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
+		player = new Bounds((Options.WIN_WIDTH) / 2 - Options.PLAYER_SIZE,
+				(Options.WIN_HEIGHT) / 2 - Options.PLAYER_SIZE, Options.PLAYER_SIZE, Options.PLAYER_SIZE);
+	}
+
+	public void up() {
+		player.m_y--;
+		if (player.m_y + player.m_h < pt - Options.LVL_SIZE) {
+			pt -= Options.LVL_SIZE;
+		}
+	}
+
+	public void down() {
+		if (player.m_y + player.m_h != pt) {
+			player.m_y++;
+		}
 	}
 
 	@Override
