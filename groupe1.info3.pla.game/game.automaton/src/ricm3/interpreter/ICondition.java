@@ -9,16 +9,97 @@ public abstract class ICondition {
 	public ICondition() {
 	}
 
+	boolean eval(Entity e, IKeyEnum lastPressedKey) {
+		return eval(e);
+	}
+
 	boolean eval(Entity e) {
-		return true;
+		return false;
 	}
 
 	public static class ITrue extends ICondition {
 		public ITrue() {
 		}
 
+		@Override
 		boolean eval(Entity e) {
 			return true;
+		}
+	}
+
+	public static class IGotPower extends ICondition {
+		public IGotPower() {
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return e.gotPower();
+		}
+	}
+
+	public static class IGotStuff extends ICondition {
+		public IGotStuff() {
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return e.gotStuff();
+		}
+	}
+
+	public static class IKey extends ICondition {
+		IKeyEnum key;
+		
+		public IKey(IKeyEnum k) {
+			key = k;
+		}
+
+		@Override
+		boolean eval(Entity e, IKeyEnum lastPressedKey) {
+			return lastPressedKey.equals(key);
+		}
+	}
+
+	public static class IMyDir extends ICondition {
+		IDirection direction;
+		
+		public IMyDir(IDirection d) {
+			direction = d;
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return e.directionIs(direction);
+		}
+	}
+
+	public static class ICell extends ICondition {
+		IDirection direction;
+		IEntity entity;
+		
+		public ICell (IDirection d, IEntity e) {
+			direction = d;
+			entity = e;
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return e.cellAtIs(direction, entity);
+		}
+	}
+
+	public static class IClosest extends ICondition {
+		IDirection direction;
+		IEntity entity;
+		
+		public IClosest (IEntity e, IDirection d) {
+			direction = d;
+			entity = e;
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return e.closestEntityAt(entity, direction);
 		}
 	}
 
@@ -38,6 +119,7 @@ public abstract class ICondition {
 		public INot() {
 		}
 
+		@Override
 		boolean eval(Entity e) {
 			return !condition.eval(e);
 		}
@@ -61,6 +143,7 @@ public abstract class ICondition {
 		public IAnd() {
 		}
 
+		@Override
 		boolean eval(Entity e) {
 			return left.eval(e) && right.eval(e);
 		}
@@ -71,6 +154,7 @@ public abstract class ICondition {
 		public IOr() {
 		}
 
+		@Override
 		boolean eval(Entity e) {
 			return left.eval(e) || right.eval(e);
 		}

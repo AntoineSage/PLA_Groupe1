@@ -1,0 +1,7 @@
+ProtoPlayer(Init){
+  * (Init):
+  | Key(z) ? Move(N) :(Init)
+  | Key(s) ? Move(S) :(Init)
+  | Key(q) ? Move(O) :(Init)
+  | Key(d) ? Move(E) :(Init)
+}

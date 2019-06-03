@@ -16,13 +16,13 @@ public class IAutomaton {
 	}
 	
 
-	public boolean step(Entity e) {
+	public boolean step(Entity e, IKeyEnum lastPressedKey) {
 		Iterator<IBehaviour> iter = behaviours.iterator();
 		while(iter.hasNext()) {
 			IBehaviour behaviour = iter.next();
 			if(behaviour.getSource().name.equals(current.name)) {
 				try {
-					current = behaviour.step(e);
+					current = behaviour.step(e, lastPressedKey);
 				} catch (NoTransitionException exception) {
 					return false;
 				}

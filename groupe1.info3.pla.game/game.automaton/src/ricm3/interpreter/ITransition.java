@@ -15,8 +15,8 @@ public class ITransition {
 		this.target = target;
 	}
 
-	boolean feasible(Entity e) {
-		return condition.eval(e);
+	boolean feasible(Entity e,IKeyEnum lastPressedKey) {
+		return condition.eval(e, lastPressedKey);
 	}
 
 	IState exec(Entity e) {

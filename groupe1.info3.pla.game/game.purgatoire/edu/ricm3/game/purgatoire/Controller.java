@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import edu.ricm3.game.GameController;
+import ricm3.interpreter.IKeyEnum;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -60,12 +61,16 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		m_model.lastPressedKey = new IKeyEnum(((Character)(e.getKeyChar())).toString());
+				
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if(e.getKeyChar() == m_model.lastPressedKey.simple) {
+			m_model.lastPressedKey = new IKeyEnum();			
+		}
 		// TODO Auto-generated method stub
 
 	}

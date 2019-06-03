@@ -20,20 +20,23 @@ package edu.ricm3.game.purgatoire;
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.Entity.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IKeyEnum;
 import ricm3.parser.Ast;
 import ricm3.parser.Ast.AI_Definitions;
 import ricm3.parser.Ast.Automaton;
 
 public class Model extends GameModel {
 	public Entity m_hero;
+	IKeyEnum lastPressedKey;
 	
 	long lastTimeSinceAutomatonStep; 
 	
 	public Model() {
+		lastPressedKey = new IKeyEnum();
 		m_hero = new Entity(30, 30, 3, 3, Direction.NORD);
 		
 		try {
-			AI_Definitions ast = (AI_Definitions) ricm3.parser.AutomataParser.from_file("test");
+			AI_Definitions ast = (AI_Definitions) ricm3.parser.AutomataParser.from_file("protoPlayer.aut");
 			IAutomaton aut = ast.automata.get(0).make();
 			m_hero.setAutomaton(aut);
 		} catch (Exception e) {
@@ -46,8 +49,8 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		long elapsed = now - lastTimeSinceAutomatonStep;
-		if(elapsed > 1000) {
-			m_hero.m_automaton.step(m_hero);
+		if(elapsed > 1000 / 30 ) {
+			m_hero.m_automaton.step(m_hero, lastPressedKey);
 			lastTimeSinceAutomatonStep = now;
 		}
 	}

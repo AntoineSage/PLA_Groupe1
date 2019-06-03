@@ -14,14 +14,14 @@ public abstract class IAction {
 	}
 
 	public static class IMove extends IAction {
-		Direction direction;
+		IDirection direction;
 
-		public IMove(Direction direction) {
+		public IMove(IDirection direction) {
 			this.direction = direction;
 		}
 
 		public IMove() {
-			this(edu.ricm3.game.purgatoire.Entity.Direction.NORD);
+			this(IDirection.NORTH);
 		}
 
 		protected void exec(Entity e) {

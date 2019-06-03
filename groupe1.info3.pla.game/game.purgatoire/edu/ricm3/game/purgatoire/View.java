@@ -45,7 +45,7 @@ public class View extends GameView {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		m_heroView.paint(g, gridSize);
-		paintGrid(g);
+		// paintGrid(g);
 	}
 	
 	private void paintRainbowGrid(Graphics g) {

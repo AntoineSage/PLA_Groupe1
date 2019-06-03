@@ -15,11 +15,11 @@ public class IBehaviour {
 		this.transitions = transitions ;
 	}
 	
-	IState step(Entity e) throws NoTransitionException {
+	IState step(Entity e, IKeyEnum lastPressedKey) throws NoTransitionException {
 		Iterator<ITransition> iter = transitions.iterator();
 		while(iter.hasNext()) {
 			ITransition transition = iter.next();
-			if(transition.feasible(e)) {
+			if(transition.feasible(e, lastPressedKey)) {
 				return transition.exec(e);
 			}
 		}
