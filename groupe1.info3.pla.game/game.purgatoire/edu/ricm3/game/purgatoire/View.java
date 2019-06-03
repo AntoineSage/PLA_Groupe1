@@ -27,19 +27,26 @@ public class View extends GameView {
 
 	Model m_model;
 	int m_y;
+	int pt = 2 * Options.LVL_SIZE;
 
 	public View(Model m) {
 		m_model = m;
 		m_y = 0;
 	}
-	
+
 	public void up() {
 		m_y--;
+		if (m_y + getHeight() < pt - Options.LVL_SIZE) {
+			pt -= Options.LVL_SIZE;
+		}
+		System.out.println("PT : " + pt);
+		System.out.println("M_Y : " + m_y);
 	}
-	
+
 	public void down() {
-		if((m_model.l_y-m_y)+m_model.l_h != getHeight()) {
+		if (m_y + getHeight() != pt) {
 			m_y++;
+			System.out.println(m_y);
 		}
 	}
 
@@ -47,9 +54,19 @@ public class View extends GameView {
 	protected void _paint(Graphics g) {
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics gg = g.create(0, -m_y, getWidth(), getHeight());
-		gg.setColor(Color.RED);
-		gg.fillRect(m_model.l_x, m_model.l_y, m_model.l_w, m_model.l_h);
-		gg.dispose();
+		Graphics g1 = g.create(0, -m_y - Options.LVL_SIZE, getWidth(), Options.LVL_SIZE);
+		g1.setColor(Color.PINK);
+		g1.fillRect(m_model.b1.m_x, m_model.b1.m_y, m_model.b1.m_w, m_model.b1.m_h);
+		Graphics g2 = g.create(0, -m_y, getWidth(), Options.LVL_SIZE);
+		g2.setColor(Color.BLUE);
+		g2.fillRect(m_model.b2.m_x, m_model.b2.m_y, m_model.b2.m_w, m_model.b2.m_h);
+		Graphics g3 = g.create(0, -m_y + Options.LVL_SIZE, getWidth(), Options.LVL_SIZE);
+		g3.setColor(Color.GREEN);
+		g3.fillRect(m_model.b3.m_x, m_model.b3.m_y, m_model.b3.m_w, m_model.b3.m_h);
+		// g3.setColor(Color.RED);
+		// g3.fillRect(m_model.l_x, m_model.l_y, m_model.l_w, m_model.l_h);
+		g3.dispose();
+		g2.dispose();
+		g1.dispose();
 	}
 }

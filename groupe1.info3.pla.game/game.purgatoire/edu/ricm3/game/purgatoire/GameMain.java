@@ -31,7 +31,7 @@ public class GameMain {
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
 
-		Dimension d = new Dimension(1024, 768);
+		Dimension d = new Dimension(Options.WIN_WIDTH, Options.WIN_HEIGHT);
 		new GameUI(model, view, controller, d);
 
 		return;

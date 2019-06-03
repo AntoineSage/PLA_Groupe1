@@ -21,13 +21,18 @@ import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
-	int l_x, l_y, l_h, l_w;
-	
+	//int l_x, l_y, l_h, l_w;
+	Bounds b1, b2, b3;
+
 	public Model() {
-		l_x = 0;
-		l_y = 700;
-		l_h = 2;
-		l_w = 100;
+//		l_x = 0;
+//		l_y = 398;
+//		l_h = 2;
+//		l_w = 100;
+
+		b1 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
+		b2 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
+		b3 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
 	}
 
 	@Override
