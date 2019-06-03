@@ -37,8 +37,9 @@ public class View extends GameView {
 	protected void _paint(Graphics g) {
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.RED);
-		g.fillRect(m_model.l_x, m_model.l_y-m_y, m_model.l_w, m_model.l_h);
-		System.out.println( m_model.l_y-m_y);
+		Graphics gg = g.create(0, -m_y, getWidth(), getHeight());
+		gg.setColor(Color.RED);
+		gg.fillRect(m_model.l_x, m_model.l_y, m_model.l_w, m_model.l_h);
+		gg.dispose();
 	}
 }
