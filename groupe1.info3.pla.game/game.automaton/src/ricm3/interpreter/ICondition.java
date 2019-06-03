@@ -4,17 +4,17 @@ import edu.ricm3.game.purgatoire.Entity;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
-public class ICondition {
+public abstract class ICondition {
 
 	public ICondition() {
 	}
 
 	boolean eval(Entity e) {
 		return true;
-	} // à redéfinir dans chaque sous-classe
+	}
 
-	public class True extends ICondition {
-		True() {
+	public static class ITrue extends ICondition {
+		public ITrue() {
 		}
 
 		boolean eval(Entity e) {
@@ -22,38 +22,7 @@ public class ICondition {
 		}
 	}
 
-	public class Cell extends ICondition {
-		Direction direction;
-		Kind kind;
-		Distance distance;
-
-		Cell(Direction direction, Kind kind, Distance distance) {
-			this.direction = direction;
-			this.kind = kind;
-			this.distance = distance;
-		}
-
-		Cell(Direction direction, Kind kind) {
-			this.direction = direction;
-			this.kind = kind;
-			this.distance = 1;
-		}
-
-		boolean eval(Entity e) {
-			return is_Kind(this.kind, this.direction, this.distance, e.position, e.map);
-		}
-	}
-
-	public class GotPower extends ICondition {
-		GotPower() {
-		}
-
-		boolean eval(Entity e) {
-			return (e.power > 0);
-		}
-	}
-
-	public class IUnaryCondition extends ICondition {
+	public static abstract class IUnaryCondition extends ICondition {
 		ICondition condition;
 
 		IUnaryCondition() {
@@ -64,9 +33,9 @@ public class ICondition {
 		}
 	}
 
-	public class Not extends IUnaryCondition {
+	public static class INot extends IUnaryCondition {
 
-		public Not() {
+		public INot() {
 		}
 
 		boolean eval(Entity e) {
@@ -74,7 +43,7 @@ public class ICondition {
 		}
 	}
 
-	public class IBinaryCondition extends ICondition {
+	public static abstract class IBinaryCondition extends ICondition {
 		ICondition left;
 		ICondition right;
 
@@ -87,9 +56,9 @@ public class ICondition {
 		}
 	}
 
-	public class And extends IBinaryCondition {
+	public static class IAnd extends IBinaryCondition {
 
-		public And() {
+		public IAnd() {
 		}
 
 		boolean eval(Entity e) {
@@ -97,9 +66,9 @@ public class ICondition {
 		}
 	}
 
-	public class Or extends IBinaryCondition {
+	public static class IOr extends IBinaryCondition {
 
-		public Or() {
+		public IOr() {
 		}
 
 		boolean eval(Entity e) {

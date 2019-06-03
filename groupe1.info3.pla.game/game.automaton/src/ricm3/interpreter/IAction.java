@@ -1,12 +1,11 @@
 package ricm3.interpreter;
 
 import edu.ricm3.game.purgatoire.Entity;
-import ricm3.parser.Ast.Direction;
-import ricm3.parser.Ast.Value;
+import edu.ricm3.game.purgatoire.Entity.Direction;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
-public class IAction {
+public abstract class IAction {
 
 	IAction() {
 	}
@@ -14,15 +13,19 @@ public class IAction {
 	protected void exec(Entity e) {
 	}
 
-	public class Move extends IAction {
+	public static class IMove extends IAction {
 		Direction direction;
 
-		public Move(Direction direction) {
+		public IMove(Direction direction) {
 			this.direction = direction;
 		}
 
+		public IMove() {
+			this(edu.ricm3.game.purgatoire.Entity.Direction.NORD);
+		}
+
 		protected void exec(Entity e) {
-			e.move(edu.ricm3.game.purgatoire.Entity.Direction.NORD);
+			e.move(direction);
 		}
 	}
 

@@ -1,12 +1,12 @@
 package edu.ricm3.game.purgatoire;
 
-import ricm3.interpreter.Aut;
+import ricm3.interpreter.IAutomaton;
 
 public class Entity {
 
 	public int m_x, m_y, m_w, m_h;
 	public Direction m_direction;
-	public Aut m_automaton;
+	public IAutomaton m_automaton;
 
 	public enum Direction {
 		NORD, SUD, EST, WEST;
@@ -21,7 +21,7 @@ public class Entity {
 		m_automaton = null;
 	}
 
-	public Entity(int x, int y, int w, int h, Direction direction, Aut automaton) {
+	public Entity(int x, int y, int w, int h, Direction direction, IAutomaton automaton) {
 		m_x = x;
 		m_y = y;
 		m_h = h;
@@ -55,7 +55,7 @@ public class Entity {
 		}
 	}
 
-	public void setAutomaton(Aut aut) {
+	public void setAutomaton(IAutomaton aut) {
 		m_automaton = aut;
 	}
 

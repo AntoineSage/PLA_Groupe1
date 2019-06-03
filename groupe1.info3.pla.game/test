@@ -1,0 +1,12 @@
+Test(Init){
+
+ * (Init):
+ | True ? Move :(State1)
+
+ * (State1):
+ | True ? Move :(State2)
+
+ * (State2):
+ | True ? Move :(State3)
+ 
+}

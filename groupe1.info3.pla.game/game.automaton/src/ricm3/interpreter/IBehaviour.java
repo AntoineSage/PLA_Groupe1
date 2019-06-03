@@ -1,7 +1,8 @@
 package ricm3.interpreter;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+
+import edu.ricm3.game.purgatoire.Entity;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
@@ -14,10 +15,18 @@ public class IBehaviour {
 		this.transitions = transitions ;
 	}
 	
-	IState step() {
-		Iterator<ITransition>
-		// - selectionne la première transition faisable
-		// - lève une exception si aucune transition possible
-		return // l'état cible de la transition choisie
+	IState step(Entity e) throws NoTransitionException {
+		Iterator<ITransition> iter = transitions.iterator();
+		while(iter.hasNext()) {
+			ITransition transition = iter.next();
+			if(transition.feasible(e)) {
+				return transition.exec(e);
+			}
+		}
+		throw new NoTransitionException();
+	}
+	
+	public IState getSource() {
+		return source;
 	}
 }

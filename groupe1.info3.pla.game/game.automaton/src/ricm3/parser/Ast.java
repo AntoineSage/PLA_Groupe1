@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ricm3.interpreter.IAction;
-import ricm3.interpreter.IAction.Move;
+import ricm3.interpreter.IAction.IMove;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IBehaviour;
 import ricm3.interpreter.ICondition;
+import ricm3.interpreter.ICondition.IAnd;
 import ricm3.interpreter.ICondition.IBinaryCondition;
+import ricm3.interpreter.ICondition.INot;
+import ricm3.interpreter.ICondition.IOr;
+import ricm3.interpreter.ICondition.ITrue;
 import ricm3.interpreter.ICondition.IUnaryCondition;
-import ricm3.interpreter.ICondition.Not;
 import ricm3.interpreter.IState;
 import ricm3.interpreter.ITransition;
 
@@ -81,18 +84,15 @@ public class Ast {
 
 		@Override
 		public Object make() {
-			ICondition weird = new ICondition();
-
 			switch (value) {
 			case "!":
 			case "not":
-				new Move(null);
-				return new Not();
+				return new INot();
 				
 			case "/" :
-				return weird.new Or();
+				return new IOr();
 			case "&" :
-				return weird.new And();
+				return new IAnd();
 			default:
 				return null;
 			}
@@ -232,6 +232,9 @@ public class Ast {
 	
 	public static abstract class Expression extends Ast {
 		public abstract String toString();
+
+		public abstract ICondition make_condition();
+		public abstract IAction make_action();
 	}
 	
 	public static class UnaryOp extends Expression {
@@ -253,12 +256,15 @@ public class Ast {
 			return operator + "(" + operand + ")" ; 
 		}
 
-		@Override
-		public Object make() {
+		public ICondition make_condition() {
 			IUnaryCondition op = (IUnaryCondition) operator.make();
-			op.setCondition((ICondition)operand.make());
+			op.setCondition((ICondition)operand.make_condition());
 			
 			return op;
+		}
+
+		public IAction make_action() {
+			return null;
 		}
 	}
 
@@ -283,13 +289,18 @@ public class Ast {
 		public String toString() { 
 			return "(" + left_operand + " " + operator + " " + right_operand + ")" ; 
 		}
-		
+
 		@Override
-		public Object make() {
+		public ICondition make_condition() {
 			IBinaryCondition op = (IBinaryCondition) operator.make();
-			op.setConditions((ICondition)left_operand.make(), (ICondition)left_operand.make());
+			op.setConditions((ICondition)left_operand.make_condition(), (ICondition)left_operand.make_condition());
 			
 			return op;
+		}
+
+		@Override
+		public IAction make_action() {
+			return null;
 		}
 	}
 
@@ -327,8 +338,21 @@ public class Ast {
 		}
 
 		@Override
-		public Object make() {
-			
+		public ICondition make_condition() {
+			switch (name.toString()) {
+			case "True": return new ITrue();
+			default:
+				return null;
+			}
+		}
+
+		@Override
+		public IAction make_action() {
+			switch (name.toString()) {
+			case "Move": return new IMove();
+			default:
+				return null;
+			}
 		}
 	}
 
@@ -351,7 +375,7 @@ public class Ast {
 
 		@Override
 		public ICondition make() {
-			return (ICondition) expression.make();
+			return (ICondition) expression.make_condition();
 		}
 		
 		
@@ -376,7 +400,7 @@ public class Ast {
 
 		@Override
 		public IAction make() {
-			return (IAction) expression.make();
+			return (IAction) expression.make_action();
 		}
 		
 				
@@ -411,7 +435,7 @@ public class Ast {
 
 	public static class AI_Definitions extends Ast {
 
-		List<Automaton> automata;
+		public List<Automaton> automata;
 
 		AI_Definitions(List<Automaton> list) {
 			this.kind = "AI_Definitions";

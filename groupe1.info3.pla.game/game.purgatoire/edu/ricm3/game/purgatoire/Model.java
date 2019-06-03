@@ -19,11 +19,10 @@ package edu.ricm3.game.purgatoire;
  
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.Entity.Direction;
-import ricm3.interpreter.Aut;
-import ricm3.interpreter.Condition;
-import ricm3.interpreter.Move;
-import ricm3.interpreter.State;
-import ricm3.interpreter.Transition;
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.Ast;
+import ricm3.parser.Ast.AI_Definitions;
+import ricm3.parser.Ast.Automaton;
 
 public class Model extends GameModel {
 	public Entity m_hero;
@@ -32,20 +31,15 @@ public class Model extends GameModel {
 	
 	public Model() {
 		m_hero = new Entity(30, 30, 3, 3, Direction.NORD);
-		State state1 = new State();
-		Aut aut = new Aut(state1, state1, m_hero);
-		State state2 = new State();
-		Transition trans1 = new Transition(new Condition(), new Move(), state2);
-		State state3 = new State();
-		Transition trans2 = new Transition(new Condition(), new Move(), state3);
-		State state4 = new State();
-		Transition trans3 = new Transition(new Condition(), new Move(), state4);
-		state1.addTransition(trans1);
-		state2.addTransition(trans2);
-		state3.addTransition(trans3);
 		
-		m_hero.setAutomaton(aut); 
-		
+		try {
+			AI_Definitions ast = (AI_Definitions) ricm3.parser.AutomataParser.from_file("test");
+			IAutomaton aut = ast.automata.get(0).make();
+			m_hero.setAutomaton(aut);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		lastTimeSinceAutomatonStep = 0;
 	}
 
@@ -53,7 +47,7 @@ public class Model extends GameModel {
 	public void step(long now) {
 		long elapsed = now - lastTimeSinceAutomatonStep;
 		if(elapsed > 1000) {
-			m_hero.m_automaton.step();
+			m_hero.m_automaton.step(m_hero);
 			lastTimeSinceAutomatonStep = now;
 		}
 	}
