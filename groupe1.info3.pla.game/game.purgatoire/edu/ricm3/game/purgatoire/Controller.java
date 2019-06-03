@@ -63,10 +63,10 @@ public class Controller extends GameController implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			m_view.m_y--;
+			m_view.up();
 			break;
 		case KeyEvent.VK_DOWN:
-			m_view.m_y++;
+			m_view.down();
 			break;
 		}
 

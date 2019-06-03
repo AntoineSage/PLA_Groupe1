@@ -25,7 +25,7 @@ public class Model extends GameModel {
 	
 	public Model() {
 		l_x = 0;
-		l_y = 0;
+		l_y = 700;
 		l_h = 2;
 		l_w = 100;
 	}

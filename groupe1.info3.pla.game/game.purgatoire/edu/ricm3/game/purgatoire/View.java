@@ -32,6 +32,16 @@ public class View extends GameView {
 		m_model = m;
 		m_y = 0;
 	}
+	
+	public void up() {
+		m_y--;
+	}
+	
+	public void down() {
+		if((m_model.l_y-m_y)+m_model.l_h != getHeight()) {
+			m_y++;
+		}
+	}
 
 	@Override
 	protected void _paint(Graphics g) {
