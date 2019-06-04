@@ -20,8 +20,14 @@ package edu.ricm3.game.purgatoire;
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
+	WorldType m_wt;
+	Level m_currentLevel, m_nextLevel;
+	Player m_player;
 
 	public Model() {
+	}
+
+	void transform() {
 	}
 
 	@Override
