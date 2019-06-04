@@ -1,5 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
 import java.util.LinkedList;
 
 public class Level {
@@ -10,13 +11,15 @@ public class Level {
 	LinkedList<Entity> m_entities;
 	Entity m_special;
 	Entity collisionGrid[][];
-
-	Level(Model model, Entity special) {
+	Color m_c;
+	
+	Level(Model model, Entity special, Color c) {
 		m_model = model;
 		m_special = special;
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+		m_c = c;
 
 	}
 

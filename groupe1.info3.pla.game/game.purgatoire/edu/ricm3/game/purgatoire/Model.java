@@ -17,6 +17,8 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
+
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
@@ -25,6 +27,9 @@ public class Model extends GameModel {
 	Player m_player;
 
 	public Model() {
+		m_currentLevel = new Level(this, null, Color.BLUE);
+		m_nextLevel = new Level(this, null, Color.pink);
+		m_player = new Player(24, Options.LVL_HEIGHT - 1 - 3, 3, 3, m_currentLevel);
 	}
 
 	void transform() {
@@ -39,5 +44,11 @@ public class Model extends GameModel {
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
+	}
+
+	void nextLevel() {
+		m_currentLevel = m_nextLevel;
+		m_nextLevel = new Level(this, null, Color.GREEN);
+		m_player.nextLevel(m_currentLevel);
 	}
 }
