@@ -22,6 +22,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 import edu.ricm3.game.GameController;
 
@@ -29,10 +33,12 @@ public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
+	Queue<KeyEvent> m_allKeyPressed;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
+		m_allKeyPressed = new LinkedList<KeyEvent>();
 	}
 
 	@Override
@@ -49,8 +55,8 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
-
+		m_model.step(now, this);
+		// m_view.step(now);
 	}
 
 	@Override
@@ -61,14 +67,19 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		m_allKeyPressed.add(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		while(iter.hasNext()) {
+			KeyEvent key = iter.next();
+			if(key.getKeyCode() == e.getKeyCode()){
+				iter.remove();
+				// m_allKeyPressed.remove(key);
+			}
+		}
 	}
 
 	@Override
@@ -111,5 +122,16 @@ public class Controller extends GameController implements ActionListener {
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public boolean isKeyPressed(int e) {
+		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		while(iter.hasNext()) {
+			KeyEvent key = iter.next();
+			if(key.getKeyCode() == e){
+				return true;
+			}
+		}
+		return false;
 	}
 }

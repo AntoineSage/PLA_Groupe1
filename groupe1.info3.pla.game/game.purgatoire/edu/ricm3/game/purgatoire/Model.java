@@ -17,27 +17,48 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.util.List;
+
 import edu.ricm3.game.GameModel;
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.Ast;
+import ricm3.parser.AutomataParser;
+import ricm3.parser.Ast.AI_Definitions;
 
 public class Model extends GameModel {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 	Player m_player;
+	IAutomaton m_aut;
 
 	public Model() {
+		try {
+			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
+			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
+			m_aut = automatons.get(0);
+			m_player = new Player();
+			m_player.m_currentStunt = new Stunt();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	void transform() {
 	}
 
-	@Override
-	public void step(long now) {
-		// TODO Auto-generated method stub
-
+	public void step(long now, Controller controller) {
+		m_aut.step(m_player, controller);
 	}
 
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void step(long now) {
+		
 	}
 }
