@@ -12,8 +12,8 @@ abstract public class Stunt {
 	Color m_c;
 	Rectangle m_bounds;
 	BufferedImage m_sprite;
-	
-	Stunt(IAutomaton automaton, Color c, Rectangle bounds ) {
+
+	Stunt(IAutomaton automaton, Color c, Rectangle bounds) {
 		m_automaton = automaton;
 		m_c = c;
 		m_bounds = bounds;
@@ -26,18 +26,19 @@ abstract public class Stunt {
 	void move() {
 
 	}
-	
+
 	void pop() {
-		
+
 	}
-	
+
 	void wizz() {
-		
+
 	}
 
 	void egg() {
-		
+
 	}
+
 	void getDamage() {
 
 	}
