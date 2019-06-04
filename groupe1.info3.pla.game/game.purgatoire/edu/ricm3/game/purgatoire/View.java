@@ -37,10 +37,10 @@ public class View extends GameView implements Transformable {
 		m_hell = new WorldSprites(Color.red);
 		transform();
 	}
-	
-//	public void step(long now) {
-//	}
-	
+
+	public void step(long now) {
+	}
+
 	public void transform() {
 		if (m_model.getWorld() == WorldType.HEAVEN)
 			m_current = m_heaven;
@@ -51,6 +51,7 @@ public class View extends GameView implements Transformable {
 	@Override
 	protected void _paint(Graphics g) {
 		g.setColor(m_current.getPlayerColor());
-		g.fillRect(0, 0, 50, 50);
+		g.fillRect(50, 50, 50, 50);
+		
 	}
 }

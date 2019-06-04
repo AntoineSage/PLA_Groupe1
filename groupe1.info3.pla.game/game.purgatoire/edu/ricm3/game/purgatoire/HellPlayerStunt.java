@@ -21,6 +21,17 @@ public class HellPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void hit(Entity entity) {
+	void hit() {
+		System.out.println("hit hell");
+	}
+
+	@Override
+	void egg() {
+		System.out.println("egg hell");
+	}
+
+	@Override
+	void getDamage() {
+		System.out.println("getDamage hell");
 	}
 }

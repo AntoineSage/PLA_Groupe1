@@ -18,7 +18,13 @@ public abstract class Stunt {
 	void move() {
 	}
 
-	void hit(Entity entity) {
+	void hit() {
+	}
+
+	void egg() {
+	}
+
+	void getDamage() {
 	}
 
 }

@@ -4,43 +4,52 @@ import edu.ricm3.game.purgatoire.Model.WorldType;
 
 public class Entity implements Transformable {
 
-	Stunt m_heaven;
-	Stunt m_hell;
-	Stunt m_current;
-//	int m_dmg;
-//	int m_hp;
+	Stunt m_heavenStunt;
+	Stunt m_hellStunt;
+	Stunt m_currentStunt;
+	int m_DMG;
+	int m_HP;
+	int m_maxHP;
 	Model m_model;
 
 	Entity(Model model) {
 		m_model = model;
-		m_heaven = new HeavenPlayerStunt(this);
-		m_hell = new HellPlayerStunt(this);
+		m_heavenStunt = new HeavenPlayerStunt(this);
+		m_hellStunt = new HellPlayerStunt(this);
 		transform();
 	}
 
 	public void transform() {
 		if (getWorld() == WorldType.HEAVEN)
-			m_current = m_heaven;
+			m_currentStunt = m_heavenStunt;
 		else
-			m_current = m_hell;
+			m_currentStunt = m_hellStunt;
 	}
 
 	WorldType getWorld() {
 		return m_model.getWorld();
 	}
 
-//	void step(long now) {
-//	}
+	void step(long now) {
+	}
 
-//	void takeDamage() {
-//	}
+	void takeDamage() {
+		m_currentStunt.getDamage();
+	}
 
 	public void pop() {
-		m_current.pop();
+		m_currentStunt.pop();
 	}
 
 	public void wizz() {
-		m_current.wizz();
+		m_currentStunt.wizz();
 	}
 
+	public void egg() {
+		m_currentStunt.egg();
+	}
+
+	public void hit() {
+		m_currentStunt.hit();
+	}
 }

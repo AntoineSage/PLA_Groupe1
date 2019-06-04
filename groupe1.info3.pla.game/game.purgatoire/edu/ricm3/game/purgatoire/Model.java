@@ -25,6 +25,7 @@ public class Model extends GameModel implements Transformable {
 		HEAVEN, HELL;
 	}
 
+	private Level m_level;
 	private WorldType m_wt;
 	private Player m_player;
 	// TODO lastTransform and transform() in Controller?
@@ -32,6 +33,7 @@ public class Model extends GameModel implements Transformable {
 	public Model() {
 		m_wt = WorldType.HEAVEN;
 		m_player = new Player(this);
+		m_level = new Level(this);
 	}
 
 	@Override
@@ -56,10 +58,12 @@ public class Model extends GameModel implements Transformable {
 	public void transform() {
 		// TODO put world change in Controller?
 		if (m_wt == WorldType.HEAVEN)
-			m_wt = WorldType.HELL;
-		else
-			m_wt = WorldType.HEAVEN;
+			if (m_player.karma < 0)
+				m_wt = WorldType.HELL;
+			else if (m_player.karma > 0)
+				m_wt =WorldType.HEAVEN;
 		m_player.transform();
+		m_level.transform();
 	}
 
 	@Override

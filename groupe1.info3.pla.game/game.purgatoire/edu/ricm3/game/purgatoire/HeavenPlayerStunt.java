@@ -20,6 +20,17 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void hit(Entity entity) {
+	void hit() {
+		System.out.println("hit heaven");
+	}
+
+	@Override
+	void egg() {
+		System.out.println("egg heaven");
+	}
+
+	@Override
+	void getDamage() {
+		System.out.println("getDamage heaven");
 	}
 }
