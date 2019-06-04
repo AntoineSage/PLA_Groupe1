@@ -17,25 +17,38 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
+
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel {
 
-	Bounds b1, b2, b3, player;
+	Bounds current, next, player;
 	int pt = Options.LVL_SIZE;
+	Color colors[];
+	int indice;
 
 	public Model() {
-		b1 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
-		b2 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
-		b3 = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE);
+		current = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE, Color.BLUE);
+		next = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE, Color.PINK);
 		player = new Bounds((Options.WIN_WIDTH) / 2 - Options.PLAYER_SIZE,
-				(Options.WIN_HEIGHT) / 2 - Options.PLAYER_SIZE, Options.PLAYER_SIZE, Options.PLAYER_SIZE);
+				((Options.LVL_SIZE) / 4) , Options.PLAYER_SIZE, Options.PLAYER_SIZE, Color.red);
+		colors = new Color[3];
+		colors[0] = Color.GREEN;
+		colors[1] = Color.BLUE;
+		colors[2] = Color.PINK;
 	}
 
 	public void up() {
 		player.m_y--;
 		if (player.m_y + player.m_h < pt - Options.LVL_SIZE) {
 			pt -= Options.LVL_SIZE;
+			System.out.println(current.m_c);
+			current = next;
+			System.out.println(current.m_c);
+			next = new Bounds(0, 0, Options.WIN_WIDTH, Options.LVL_SIZE, colors[indice % 3]);
+			indice++;
+
 		}
 	}
 
