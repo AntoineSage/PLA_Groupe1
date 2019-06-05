@@ -156,21 +156,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_RIGHT:
-			m_model.m_player.m_currentStunt.tryMove(IDirection.EAST);
-			break;
-		case KeyEvent.VK_LEFT:
-			m_model.m_player.m_currentStunt.tryMove(IDirection.WEST);
-			break;
-		case KeyEvent.VK_UP:
-			m_model.m_player.m_currentStunt.tryMove(IDirection.NORTH);
-			break;
-		case KeyEvent.VK_DOWN:
-			m_model.m_player.m_currentStunt.tryMove(IDirection.SOUTH);
-			break;
-		}
 		m_allKeyPressed.add(e);
 	}
 

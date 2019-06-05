@@ -6,6 +6,10 @@ public class HeavenSpecialStunt extends Stunt {
 	HeavenSpecialStunt(Entity entity) {
 		super(null, entity, Color.ORANGE);
 	}
+	
+	HeavenSpecialStunt() {
+		super(null, null, Color.ORANGE);
+	}
 
 	@Override
 	void pop() {

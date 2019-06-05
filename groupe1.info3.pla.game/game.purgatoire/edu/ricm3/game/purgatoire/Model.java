@@ -22,23 +22,17 @@ import java.util.List;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
-import ricm3.interpreter.IDirection;
 import ricm3.parser.Ast;
 import ricm3.parser.Ast.AI_Definitions;
 import ricm3.parser.AutomataParser;
 
 public class Model extends GameModel implements Transformable {
 	WorldType m_wt;
-	IDirection m_direction;
 	Level m_currentLevel, m_nextLevel;
+
 	Player m_player;
 	Soul m_soul;
 	Obstacle m_obstacle;
-	IAutomaton m_aut;
-	HeavenSoulStunt m_heavenSoulStunt;
-	HellSoulStunt m_hellSoulStunt;
-	HeavenObstacleStunt m_heavenObstacleStunt;
-	HellObstacleStunt m_hellObstacleStunt;
 	Special m_special;
 
 	int m_period, m_totalTime, m_totalDistance;
@@ -50,21 +44,16 @@ public class Model extends GameModel implements Transformable {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
-		m_heavenSoulStunt = new HeavenSoulStunt();
-		m_hellSoulStunt = new HellSoulStunt();
-		m_soul = new Soul(m_currentLevel, m_heavenSoulStunt, m_hellSoulStunt, 20, 12, 3, 3);
-		m_heavenObstacleStunt = new HeavenObstacleStunt();
-		m_hellObstacleStunt = new HellObstacleStunt();
-		m_obstacle = new Obstacle(m_currentLevel, m_heavenObstacleStunt, m_hellObstacleStunt, 30, 8, 2, 2);
+		
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH)/2, Options.LVL_HEIGHT - 3, 3, 3);
-
+		m_obstacle = new Obstacle(m_currentLevel, 30, 8, 2, 2);
+		m_soul = new Soul(m_currentLevel, 20, 12, 3, 3);
 		m_special = new Special(m_currentLevel, 40, 40 , 3, 3);
-		
-		
+				
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
 			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
-			m_aut = automatons.get(0);
+			IAutomaton m_aut = automatons.get(0);
 			m_player.m_heavenStunt.m_automaton = m_aut;
 			m_player.m_hellStunt.m_automaton = m_aut;
 			m_soul.m_heavenStunt.m_automaton = automatons.get(1);
