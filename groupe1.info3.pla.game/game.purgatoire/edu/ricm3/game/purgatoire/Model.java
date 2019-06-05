@@ -26,9 +26,9 @@ import ricm3.parser.AutomataParser;
 import ricm3.parser.Ast.AI_Definitions;
 
 public class Model extends GameModel implements Transformable {
-	private WorldType m_wt;
+	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
-	private Player m_player;
+	Player m_player;
 	IAutomaton m_aut;
 	// TODO lastTransform and transform() in Controller?
 
