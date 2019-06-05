@@ -18,22 +18,39 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-
+import java.util.List;
 import edu.ricm3.game.GameModel;
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.Ast;
+import ricm3.parser.AutomataParser;
+import ricm3.parser.Ast.AI_Definitions;
 
 public class Model extends GameModel implements Transformable {
 	private WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 	private Player m_player;
+	IAutomaton m_aut;
 	// TODO lastTransform and transform() in Controller?
 
+	long lastUpdate;
+	
 	public Model() {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = new Level(this, Color.BLUE);
 		m_nextLevel = new Level(this, Color.pink);
 		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 1 - 3, 3, 3);
-	}
 
+		try {
+			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
+			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
+			m_aut = automatons.get(0);
+			m_player.m_heavenStunt.m_automaton = m_aut;
+			m_player.m_hellStunt.m_automaton = m_aut;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void step(long now) {
@@ -61,11 +78,20 @@ public class Model extends GameModel implements Transformable {
 //				m_wt = WorldType.HELL;
 //			else if (m_player.m_karma > 0)
 //				m_wt =WorldType.HEAVEN;
-		if(m_wt == WorldType.HEAVEN) m_wt = WorldType.HELL;
-		else m_wt = WorldType.HEAVEN;
+		if (m_wt == WorldType.HEAVEN)
+			m_wt = WorldType.HELL;
+		else
+			m_wt = WorldType.HEAVEN;
 		m_player.transform();
 		m_currentLevel.transform();
 		m_nextLevel.transform();
+	}
+
+	public void step(long now, Controller controller) {
+		if(now - lastUpdate > 1000 / 30) {
+			lastUpdate = now;
+			m_player.step(now, controller);
+		}
 	}
 
 	@Override

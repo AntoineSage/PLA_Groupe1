@@ -49,8 +49,17 @@ public class View extends GameView implements Transformable {
 
 	@Override
 	protected void _paint(Graphics g) {
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(m_current.getPlayerColor());
 		g.fillRect(50, 50, 50, 50);
-		
+
+		paint(g, m_model.getPlayer());
+	}
+
+	private void paint(Graphics g, Entity e) {
+		g.setColor(e.m_currentStunt.m_c);
+		g.fillRect(e.m_bounds.x * Options.BLOCK_SIZE, e.m_bounds.y * Options.BLOCK_SIZE,
+				e.m_bounds.width * Options.BLOCK_SIZE, e.m_bounds.height * Options.BLOCK_SIZE);
 	}
 }

@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IDirection;
 
-abstract public class Stunt {
+public class Stunt {
 
 	IAutomaton m_automaton;
 	Color m_c;
@@ -22,6 +23,29 @@ abstract public class Stunt {
 		m_automaton = automaton;
 		m_entity = entity;
 		m_sprite = sprite;
+	}
+
+	void move(IDirection d) {
+		switch (d) {
+		case EAST:
+			m_entity.m_bounds.x++;
+			System.out.println("EAST");
+			break;
+		case NORTH:
+			m_entity.m_bounds.y--;
+			System.out.println("NORTH");
+			break;
+		case SOUTH:
+			m_entity.m_bounds.y++;
+			System.out.println("SOUTH");
+			break;
+		case WEST:
+			m_entity.m_bounds.x--;
+			System.out.println("WEST");
+			break;
+		default:
+			break;
+		}
 	}
 
 	void pop() {

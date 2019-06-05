@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
-		super(null, entity, Color.RED);
+		super(null, entity, Color.BLUE);
 	}
 
 	@Override

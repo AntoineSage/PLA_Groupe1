@@ -2,6 +2,8 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Rectangle;
 
+import ricm3.interpreter.IDirection;
+
 public class Entity {
 	int m_HP, m_maxHP;
 	int m_DMG;
@@ -34,6 +36,10 @@ public class Entity {
 
 	void takeDamage() {
 		m_currentStunt.getDamage();
+	}
+
+	public void move(IDirection d) {
+		m_currentStunt.move(d);
 	}
 
 	public void pop() {
