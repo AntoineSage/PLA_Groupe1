@@ -22,6 +22,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import edu.ricm3.game.GameController;
 
@@ -29,10 +32,13 @@ public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
+	private long m_lastTransform;
+	Queue<KeyEvent> m_allKeyPressed;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
+		m_allKeyPressed = new LinkedList<KeyEvent>();
 	}
 
 	@Override
@@ -49,8 +55,20 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void step(long now) {
+		if (m_lastTransform == 0)
+			m_lastTransform = now;
+		if (now - m_lastTransform > 2000) {
+			m_model.transform();
+			m_view.transform();
+			m_model.printWorld();
+			m_model.getPlayer().pop();
+			m_model.getPlayer().wizz();
+			m_model.getPlayer().hit();
+			m_model.getPlayer().egg();
+			m_lastTransform = now;
+		}
+		m_model.step(now, this);
 		m_view.step(now);
-
 	}
 
 	@Override
@@ -61,27 +79,33 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
-		case KeyEvent.VK_RIGHT: 
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_RIGHT:
 			m_model.m_player.moveR();
 			break;
-		case KeyEvent.VK_LEFT: 
+		case KeyEvent.VK_LEFT:
 			m_model.m_player.moveL();
 			break;
-		case KeyEvent.VK_UP: 
+		case KeyEvent.VK_UP:
 			m_model.m_player.moveUP();
 			break;
-		case KeyEvent.VK_DOWN: 
+		case KeyEvent.VK_DOWN:
 			m_model.m_player.moveDown();
 			break;
 		}
-
+		m_allKeyPressed.add(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		while (iter.hasNext()) {
+			KeyEvent key = iter.next();
+			if (key.getKeyCode() == e.getKeyCode()) {
+				iter.remove();
+				// m_allKeyPressed.remove(key);
+			}
+		}
 	}
 
 	@Override
@@ -124,5 +148,16 @@ public class Controller extends GameController implements ActionListener {
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public boolean isKeyPressed(int e) {
+		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		while (iter.hasNext()) {
+			KeyEvent key = iter.next();
+			if (key.getKeyCode() == e) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

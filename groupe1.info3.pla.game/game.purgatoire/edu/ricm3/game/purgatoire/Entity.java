@@ -2,6 +2,8 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Rectangle;
 
+import ricm3.interpreter.IDirection;
+
 public class Entity {
 	int m_HP, m_maxHP;
 	int m_DMG;
@@ -10,47 +12,49 @@ public class Entity {
 	Level m_level;
 	Rectangle m_bounds;
 
-	Entity() {
-
-	}
-
-	Entity(int HP, int maxHP, int DMG, int karmaToGive, Stunt heavenStunt, Stunt hellStunt, Stunt currentStunt,
-			Level level, Rectangle bounds) {
-		m_HP = HP;
-		m_maxHP = maxHP;
-		m_DMG = DMG;
-		m_heavenStunt = heavenStunt;
-		m_hellStunt = hellStunt;
-		m_currentStunt = currentStunt;
+	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
-		m_bounds = bounds;
+		m_heavenStunt = heaven;
+		m_hellStunt = hell;
+		m_bounds = new Rectangle(x, y, width, height);
+		transform();
 	}
 
-	void transfrom() {
-
+	public void transform() {
+		if (getWorldType() == WorldType.HEAVEN)
+			m_currentStunt = m_heavenStunt;
+		else
+			m_currentStunt = m_hellStunt;
 	}
-
+	
+	void step(long now) {
+	}
+	
 	WorldType getWorldType() {
 		return m_level.getWorldType();
 	}
 
-	void hit() {
-		m_currentStunt.hit();
+	void takeDamage() {
+		m_currentStunt.getDamage();
 	}
 
-	void move() {
-		m_currentStunt.move();
+	public void move(IDirection d) {
+		m_currentStunt.move(d);
 	}
 
-	void pop() {
+	public void pop() {
 		m_currentStunt.pop();
 	}
 
-	void wizz() {
+	public void wizz() {
 		m_currentStunt.wizz();
 	}
 
-	void egg() {
+	public void egg() {
 		m_currentStunt.egg();
+	}
+
+	public void hit() {
+		m_currentStunt.hit();
 	}
 }

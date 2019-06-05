@@ -18,37 +18,93 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-
+import java.util.List;
 import edu.ricm3.game.GameModel;
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.Ast;
+import ricm3.parser.AutomataParser;
+import ricm3.parser.Ast.AI_Definitions;
 
-public class Model extends GameModel {
+public class Model extends GameModel implements Transformable {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 	Player m_player;
+	IAutomaton m_aut;
+	// TODO lastTransform and transform() in Controller?
 
+	long lastUpdate;
+	
 	public Model() {
-		m_currentLevel = new Level(this, null, Color.BLUE);
-		m_nextLevel = new Level(this, null, Color.pink);
-		m_player = new Player(24, Options.LVL_HEIGHT - 1 - 3, 3, 3, m_currentLevel);
-	}
+		m_wt = WorldType.HEAVEN;
+		m_currentLevel = new Level(this, Color.yellow);
+		m_nextLevel = new Level(this, Color.pink);
+		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
 
-	void transform() {
+		try {
+			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
+			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
+			m_aut = automatons.get(0);
+			m_player.m_heavenStunt.m_automaton = m_aut;
+			m_player.m_hellStunt.m_automaton = m_aut;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
+	}
 
+	WorldType getWorld() {
+		return m_wt;
+	}
+
+	public Player getPlayer() {
+		return m_player;
+	}
+
+	void printWorld() {
+		if (m_wt == WorldType.HEAVEN)
+			System.out.println("Heaven");
+		else
+			System.out.println("Hell");
+	}
+
+	public void transform() {
+		// TODO put world change in Controller?
+//		if (m_wt == WorldType.HEAVEN)
+//			if (m_player.m_karma < 0)
+//				m_wt = WorldType.HELL;
+//			else if (m_player.m_karma > 0)
+//				m_wt =WorldType.HEAVEN;
+		if (m_wt == WorldType.HEAVEN)
+			m_wt = WorldType.HELL;
+		else
+			m_wt = WorldType.HEAVEN;
+		m_player.transform();
+		m_currentLevel.transform();
+		m_nextLevel.transform();
+	}
+
+	public void step(long now, Controller controller) {
+		if(now - lastUpdate > 1000 / 30) {
+			lastUpdate = now;
+			m_player.step(now, controller);
+		}
 	}
 
 	@Override
 	public void shutdown() {
-		// TODO Auto-generated method stub
+	}
+
+	public WorldType getWorldType() {
+		return m_wt;
 	}
 
 	void nextLevel() {
 		m_currentLevel = m_nextLevel;
-		m_nextLevel = new Level(this, null, Color.GREEN);
+		m_nextLevel = new Level(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);
 	}
 }

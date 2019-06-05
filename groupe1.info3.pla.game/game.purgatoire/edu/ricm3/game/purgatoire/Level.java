@@ -12,26 +12,30 @@ public class Level {
 	Entity m_special;
 	Entity collisionGrid[][];
 	Color m_c;
-	
-	Level(Model model, Entity special, Color c) {
+
+
+
+	Level(Model model, Color c) {
+		m_c = c;
 		m_model = model;
-		m_special = special;
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
-		m_c = c;
-
+	}
+	
+	Level(Model model) {
+		this(model, Color.WHITE);
 	}
 
 	void step() {
-
-	}
-
-	void transform() {
-
 	}
 
 	WorldType getWorldType() {
-		return m_model.m_wt;
+		return m_model.getWorldType();
+	}
+
+	void transform() {
+		System.out.println("Level transform");
+		// TODO appeler transform sur les listes(souls,obstacles...)
 	}
 }
