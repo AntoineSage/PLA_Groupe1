@@ -75,13 +75,40 @@ public class CollisionGrid {
 			}			
 			break;
 		case NORTH:
+			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = grid[i][entity.m_bounds.y -1].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		case SOUTH:
+			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		case WEST:
+			for(int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+				Iterator<Entity> iter = grid[entity.m_bounds.x -1][i].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		default:
-			break;
+			throw new IllegalStateException();
 		
 		}
 		return true;
