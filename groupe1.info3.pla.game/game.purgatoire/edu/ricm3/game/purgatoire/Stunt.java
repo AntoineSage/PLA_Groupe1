@@ -13,6 +13,11 @@ public class Stunt {
 	BufferedImage m_sprite;
 	Entity m_entity;
 
+	Stunt(IAutomaton automaton, Color c) {
+		m_automaton = automaton;
+		m_c = c;
+	}
+
 	Stunt(IAutomaton automaton, Entity entity, Color c) {
 		m_automaton = automaton;
 		m_entity = entity;
@@ -43,6 +48,14 @@ public class Stunt {
 			m_entity.m_bounds.x--;
 			System.out.println("WEST");
 			break;
+		case FRONT:
+
+		case BACK:
+
+		case LEFT:
+
+		case RIGHT:
+
 		default:
 			break;
 		}

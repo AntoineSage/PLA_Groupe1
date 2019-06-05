@@ -13,7 +13,7 @@ public class Entity {
 	Level m_level;
 	Rectangle m_bounds;
 	IEntityType m_type;
-	
+
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
@@ -28,10 +28,11 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
-	
+
 	void step(long now) {
+		m_currentStunt.m_automaton.step(this, null);
 	}
-	
+
 	WorldType getWorldType() {
 		return m_level.getWorldType();
 	}
