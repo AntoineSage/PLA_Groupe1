@@ -2,6 +2,8 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 
+import ricm3.interpreter.IDirection;
+
 public class HellSpecialStunt extends Stunt {
 	HellSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
@@ -12,12 +14,12 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop flaque");
 	}
 
 	@Override
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz flaque");
 	}
 

@@ -17,6 +17,7 @@ public class Entity {
 
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
+		m_level.addEntity(this);
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
@@ -53,16 +54,16 @@ public class Entity {
 		m_currentStunt.getDamage(DMG);
 	}
 
-	public void move(IDirection d) {
+	public void tryMove(IDirection d) {
 		m_currentStunt.tryMove(d);
 	}
 
-	public void pop() {
-		m_currentStunt.pop();
+	public void pop(IDirection d) {
+		m_currentStunt.pop(d);
 	}
 
-	public void wizz() {
-		m_currentStunt.wizz();
+	public void wizz(IDirection d) {
+		m_currentStunt.wizz(d);
 	}
 
 	public void egg() {
@@ -75,5 +76,17 @@ public class Entity {
 
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
+	}
+
+	public boolean isDir(IDirection m_dir) {
+		return m_direction == m_dir;
+	}
+
+	public boolean isEntityAt(IEntityType type, IDirection direction) {
+		throw new IllegalStateException("Not yet implemented");
+	}
+
+	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
+		throw new IllegalStateException("Not yet implemented");
 	}
 }

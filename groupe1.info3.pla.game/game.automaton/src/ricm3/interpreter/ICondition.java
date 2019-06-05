@@ -15,11 +15,117 @@ abstract public class ICondition {
 	ICondition() {
 	}
 
-
 	public ICondition(List<Parameter> parameters) {
 	}
 
 	abstract boolean eval(Entity e);
+
+	public static class ITrue extends ICondition {
+		public ITrue() {
+		}
+
+		@Override
+		boolean eval(Entity e) {
+			return true;
+		}
+	}
+
+	public static class IKey extends ICondition {
+		private int m_key;
+
+		public IKey(int key) {
+			m_key = key;
+		}
+
+		public IKey(List<Parameter> parameters) {
+			if (parameters.size() != 1)
+				throw new IllegalStateException("IKey should always been created with a KeyEvent parameter");
+			m_key = (int) parameters.get(0).make();
+		}
+
+		boolean eval(Entity e) {
+			return Singleton.getController().isKeyPressed(m_key);
+		}
+	}
+
+	public static class IMyDir extends ICondition {
+		IDirection m_direction;
+
+		public IMyDir(List<Parameter> parameters) {
+			if (parameters.size() != 1)
+				throw new IllegalStateException("IMyDir should always been created with a IDirection parameter");
+			m_direction = (IDirection) parameters.get(0).make();
+		}
+
+		boolean eval(Entity e) {
+			return e.isDir(m_direction);
+		}
+	}
+
+	public static class ICell extends ICondition {
+		IDirection m_direction;
+		IEntityType m_type;
+
+		public ICell(List<Parameter> parameters) {
+			if (parameters.size() != 2)
+				throw new IllegalStateException(
+						"ICell should always been created with a IDirection and IEntityType parameter");
+			m_direction = (IDirection) parameters.get(0).make();
+			m_type = (IEntityType) parameters.get(1).make();
+		}
+
+		boolean eval(Entity e) {
+			return e.isEntityAt(m_type, m_direction);
+		}
+	}
+
+	public static class IClosest extends ICondition {
+		IDirection m_direction;
+		IEntityType m_type;
+
+		public IClosest(List<Parameter> parameters) {
+			if (parameters.size() != 2)
+				throw new IllegalStateException(
+						"IClosest should always been created with a IDirection and IEntityType parameter");
+			m_direction = (IDirection) parameters.get(1).make();
+			m_type = (IEntityType) parameters.get(0).make();
+		}
+
+		boolean eval(Entity e) {
+			return e.isClosestEntityAt(m_type, m_direction);
+		}
+	}
+
+//	public class Cell extends ICondition {
+//		IDirection direction;
+//		Kind kind;
+//		Distance distance;
+//
+//		Cell(Direction direction, Kind kind, Distance distance) {
+//			this.direction = direction;
+//			this.kind = kind;
+//			this.distance = distance;
+//		}
+//
+//		Cell(Direction direction, Kind kind) {
+//			this.direction = direction;
+//			this.kind = kind;
+//			this.distance = 1;
+//		}
+//
+//		boolean eval(Entity e) {
+//			return is_Kind(this.kind, this.direction, this.distance, e.position, e.map);
+//		}
+//	}
+//
+//	public class GotPower extends Condition {
+//		GotPower() {
+//		}
+//
+//		boolean eval(Entity e) {
+//			return (e.power > 0);
+//		}
+//	}
 
 	abstract public static class IUnaryOp extends ICondition {
 		protected ICondition m_condition;
@@ -71,76 +177,4 @@ abstract public class ICondition {
 		}
 
 	}
-
-	public static class ITrue extends ICondition {
-		public ITrue() {
-		}
-
-		@Override
-		boolean eval(Entity e) {
-			return true;
-		}
-	}
-
-	public static class IKey extends ICondition {
-		private int m_key;
-
-		public IKey(int key) {
-			m_key = key;
-		}
-
-		public IKey(List<Parameter> parameters) {
-			if(parameters.size() != 1) throw new IllegalStateException("IKey should always been created with a KeyEvent parameter");
-			m_key = (int)parameters.get(0).make();
-		}
-
-		boolean eval(Entity e) {
-			return Singleton.getController().isKeyPressed(m_key);
-		}
-	}
-
-//	public static class IMyDir extends ICondition {
-//		private KeyEvent m_key;
-//		private Controller m_controller;
-//
-//		public IMyDir(KeyEvent key, Controller controller) {
-//			m_key = key;
-//		}
-//
-//		boolean eval(Entity e) {
-//			return controller.isKeyPressed(key);
-//		}
-//	}
-//
-//	public class Cell extends ICondition {
-//		IDirection direction;
-//		Kind kind;
-//		Distance distance;
-//
-//		Cell(Direction direction, Kind kind, Distance distance) {
-//			this.direction = direction;
-//			this.kind = kind;
-//			this.distance = distance;
-//		}
-//
-//		Cell(Direction direction, Kind kind) {
-//			this.direction = direction;
-//			this.kind = kind;
-//			this.distance = 1;
-//		}
-//
-//		boolean eval(Entity e) {
-//			return is_Kind(this.kind, this.direction, this.distance, e.position, e.map);
-//		}
-//	}
-//
-//	public class GotPower extends Condition {
-//		GotPower() {
-//		}
-//
-//		boolean eval(Entity e) {
-//			return (e.power > 0);
-//		}
-//	}
-
 }

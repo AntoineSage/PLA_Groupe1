@@ -65,11 +65,11 @@ public class Stunt {
 		}
 	}
 
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop de base");
 	}
 
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz de base");
 	}
 

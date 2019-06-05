@@ -10,12 +10,12 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop heaven");
 	}
 
 	@Override
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz heaven");
 	}
 
