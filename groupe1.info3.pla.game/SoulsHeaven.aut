@@ -1,0 +1,6 @@
+soulsHeaven(Init){
+	|Closest(@,N) ? Move(N):Init
+	|Closest(@,E) ? Move(E):Init
+	|Closest(@,W) ? Move(W):Init
+	|Closest(@,S) ? Move(S):Init
+}
