@@ -19,25 +19,58 @@ public class IEntityType {
 	public static final IEntityType VOID = new IEntityType(IType.VOID);
 	public static final IEntityType PLAYER = new IEntityType(IType.PLAYER);
 	public static final IEntityType ANYTHING = new IEntityType(IType.ANYTHING);
-	
+
 	IType m_type;
-	
+
 	public IEntityType(IType type) {
 		m_type = type;
 	}
 
-	public boolean isCollidingWith(List<IEntityType> m_collidingTypes) {
-		Iterator<IEntityType> iter = m_collidingTypes.iterator();
-		while(iter.hasNext()) {
-			IEntityType type = iter.next();
-			if(isCollidingWith(type)) return true;
+	public boolean isCollidingWith(IEntityType type) {
+		switch (m_type) {
+		case PLAYER:
+			switch(type.m_type) {
+			case PLAYER :
+			case OBSTACLE :
+			case DANGER :
+				return true;
+			default:
+				return false;
+			}
+		case TEAM:
+			switch(type.m_type) {
+			case OBSTACLE :
+			case DANGER :
+				return true;
+			default:
+				return false;
+			}
+		case ADVERSARY:
+			switch(type.m_type) {
+			default:
+				return false;
+			}
+		case OBSTACLE:
+			switch(type.m_type) {
+			case PLAYER :
+			case OBSTACLE :
+			case DANGER :
+				return true;
+			default:
+				return false;
+			}
+		case DANGER:
+			switch(type.m_type) {
+			case PLAYER :
+			case OBSTACLE :
+			case DANGER :
+				return true;
+			default:
+				return false;
+			}
+		default:
+			return false;
 		}
-		
-		return false;
 	}
 
-	private boolean isCollidingWith(IEntityType type) {
-		return false;
-	}
-	
 }

@@ -49,7 +49,7 @@ public class CollisionGrid {
 				Iterator<Entity> iter = grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
 				while(iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+					if(entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
