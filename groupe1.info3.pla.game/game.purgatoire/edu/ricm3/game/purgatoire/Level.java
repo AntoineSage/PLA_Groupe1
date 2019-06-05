@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import ricm3.interpreter.IDirection;
+
 public class Level {
 
 	Model m_model;
@@ -52,5 +54,9 @@ public class Level {
 	// Update the collisionGrid with the future new values translated by x and y.
 	public void updateEntity(Entity e, int x, int y) {
 		collisionGrid.updateEntity(e, x, y);
+	}
+
+	public boolean wontCollide(Entity entity, IDirection d) {
+		return collisionGrid.wontCollide(entity, d);
 	}
 }
