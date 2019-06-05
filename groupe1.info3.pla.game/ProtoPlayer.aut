@@ -8,4 +8,26 @@ ProtoPlayer(Init){
   | Key(s) ? Move(S) :(Init)
   | Key(q) ? Move(O) :(Init)
   | Key(d) ? Move(E) :(Init)
-  }
+}
+
+SoulsHeaven(Init){
+	* (Init): True ? Move(N) :(Step1)
+	* (Step1): True ? Move(N) :(Step2)
+	* (Step2): True ? Move(N) :(Step3)
+	* (Step3): True ? Move(S) :(Step4)
+	* (Step4): True ? Move(S) :(Step5)
+	* (Step5): True ? Move(S) :(Init)
+}
+
+SoulsHell(Init){
+	* (Init): True ? Move(O) :(Step1)
+	* (Step1): True ? Move(O) :(Step2)
+	* (Step2): True ? Move(O) :(Step3)
+	* (Step3): True ? Move(E) :(Step4)
+	* (Step4): True ? Move(E) :(Step5)
+	* (Step5): True ? Move(E) :(Init)
+}
+
+Obstacle(Init){
+	* (Init)
+}

@@ -9,8 +9,6 @@ public class HellPlayerStunt extends Stunt {
 	HellPlayerStunt(Entity entity) {
 		super(null, entity, Color.RED);
 	}
-
-		
 	
 	@Override
 	void pop() {

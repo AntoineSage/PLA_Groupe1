@@ -14,11 +14,13 @@ public class Entity {
 	Rectangle m_bounds;
 	IEntityType m_type;
 	IDirection m_direction;
-	
+
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
+		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
+		m_hellStunt .setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		transform();
@@ -32,12 +34,21 @@ public class Entity {
 	}
 
 	void step(long now) {
+		m_currentStunt.m_automaton.step(this, null);
 	}
 
 	WorldType getWorldType() {
 		return m_level.getWorldType();
 	}
 
+	public int getHP() {
+		return m_HP;
+	}
+
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+	
 	void takeDamage(int DMG) {
 		m_currentStunt.getDamage(DMG);
 	}

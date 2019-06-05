@@ -13,6 +13,11 @@ public class Stunt {
 	BufferedImage m_sprite;
 	Entity m_entity;
 
+	Stunt(IAutomaton automaton, Color c) {
+		m_automaton = automaton;
+		m_c = c;
+	}
+
 	Stunt(IAutomaton automaton, Entity entity, Color c) {
 		m_automaton = automaton;
 		m_entity = entity;
@@ -29,7 +34,7 @@ public class Stunt {
 
 		switch (d) {
 		case NORTH:
-			if (m_entity.m_bounds.y == 0) {
+			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
 			}
 			if (m_entity.wontCollide(d)) {
