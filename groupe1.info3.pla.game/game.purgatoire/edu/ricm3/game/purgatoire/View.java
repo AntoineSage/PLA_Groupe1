@@ -68,11 +68,9 @@ public class View extends GameView implements Transformable {
 				Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 		g2.setColor(m_model.m_nextLevel.m_c);
 		g2.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
-
-		g.setColor(m_current.getPlayerColor());
-		g.fillRect(50, 50, 50, 50);
-
+		
 		paint(g1, m_model.getPlayer());
+		paint(g1, m_model.getSpecial());
 
 		g1.dispose();
 		g2.dispose();

@@ -30,6 +30,8 @@ public class Model extends GameModel implements Transformable {
 	Level m_currentLevel, m_nextLevel;
 	Player m_player;
 	IAutomaton m_aut;
+	Special m_special;
+
 	// TODO lastTransform and transform() in Controller?
 
 	long lastUpdate;
@@ -39,7 +41,9 @@ public class Model extends GameModel implements Transformable {
 		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
 		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
-
+		m_special = new Special(m_currentLevel, 40, 40 , 3, 3);
+		
+		
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
 			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
@@ -63,6 +67,10 @@ public class Model extends GameModel implements Transformable {
 	public Player getPlayer() {
 		return m_player;
 	}
+	
+	public Special getSpecial() {
+		return m_special;
+	}
 
 	void printWorld() {
 		if (m_wt == WorldType.HEAVEN)
@@ -85,6 +93,7 @@ public class Model extends GameModel implements Transformable {
 		m_player.transform();
 		m_currentLevel.transform();
 		m_nextLevel.transform();
+		m_special.transform();
 	}
 
 	public void step(long now, Controller controller) {
