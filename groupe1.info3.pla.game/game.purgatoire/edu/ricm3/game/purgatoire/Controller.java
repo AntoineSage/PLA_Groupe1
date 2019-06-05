@@ -49,7 +49,7 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
+		m_view.step(now);
 
 	}
 
@@ -61,7 +61,20 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_RIGHT: 
+			m_model.m_player.moveR();
+			break;
+		case KeyEvent.VK_LEFT: 
+			m_model.m_player.moveL();
+			break;
+		case KeyEvent.VK_UP: 
+			m_model.m_player.moveUP();
+			break;
+		case KeyEvent.VK_DOWN: 
+			m_model.m_player.moveDown();
+			break;
+		}
 
 	}
 

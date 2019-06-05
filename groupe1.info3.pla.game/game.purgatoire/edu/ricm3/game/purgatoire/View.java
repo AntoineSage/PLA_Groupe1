@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import edu.ricm3.game.GameView;
@@ -25,14 +26,42 @@ public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
 	Model m_model;
+	int m_yG1; // position de g1 par rapport à g
 
 	public View(Model m) {
 		m_model = m;
+		m_yG1 = Options.LVL_HEIGHT - Options.NB_BLOCKS_WIN;
+	}
+
+	protected void step(long now) {
+		if (m_model.m_player.m_bounds.y < (Options.LVL_HEIGHT - 1) - (Options.NB_BLOCKS_WIN - 1) / 2) {
+			m_yG1 = m_model.m_player.m_bounds.y - (Options.NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2;
+		} else {
+			m_yG1 = Options.LVL_HEIGHT - Options.NB_BLOCKS_WIN;
+		}
 	}
 
 	@Override
 	protected void _paint(Graphics g) {
-		// TODO Auto-generated method stub
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, getWidth(), getHeight());
 
+		Graphics g1 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * Options.BLOCK_SIZE) / 2, -m_yG1,
+				Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
+		g1.setColor(m_model.m_currentLevel.m_c);
+		g1.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
+
+		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * Options.BLOCK_SIZE) / 2,
+				((-m_yG1) - Options.LVL_HEIGHT) * Options.BLOCK_SIZE, Options.LVL_WIDTH * Options.BLOCK_SIZE,
+				Options.LVL_HEIGHT * Options.BLOCK_SIZE);
+		g2.setColor(m_model.m_nextLevel.m_c);
+		g2.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
+
+		g1.setColor(Color.red);
+		g1.fillRect(m_model.m_player.m_bounds.x * Options.BLOCK_SIZE,
+				m_model.m_player.m_bounds.y * Options.BLOCK_SIZE - (m_yG1) * Options.BLOCK_SIZE,
+				m_model.m_player.m_bounds.width * Options.BLOCK_SIZE,
+				m_model.m_player.m_bounds.height * Options.BLOCK_SIZE);
 	}
+
 }
