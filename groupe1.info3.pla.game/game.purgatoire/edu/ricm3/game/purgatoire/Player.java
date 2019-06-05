@@ -17,6 +17,36 @@ public class Player extends Entity {
 	}
 
 	@Override
-	void step(long now) {
+	void step(long now) {}
+
+	void moveUP() {
+		System.out.println(m_bounds.y);
+		if (m_bounds.y == 0) {
+			m_level.m_model.nextLevel();
+		}
+		m_bounds.y--;
+	}
+
+	void moveDown() {
+		if (m_bounds.y < Options.LVL_HEIGHT - 1 - m_bounds.height) {
+			m_bounds.y++;
+		}
+	}
+
+	void moveR() {
+		if (m_bounds.x < Options.LVL_WIDTH - m_bounds.height) {
+			m_bounds.x++;
+		}
+	}
+
+	void moveL() {
+		if (m_bounds.x > 0) {
+			m_bounds.x--;
+		}
+	}
+
+	void nextLevel(Level newLevel) {
+		m_level = newLevel;
+		m_bounds.y = Options.LVL_HEIGHT - 1 - 3;
 	}
 }

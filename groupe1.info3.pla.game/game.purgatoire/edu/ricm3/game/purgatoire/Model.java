@@ -17,6 +17,8 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
+
 import edu.ricm3.game.GameModel;
 
 public class Model extends GameModel implements Transformable {
@@ -27,10 +29,11 @@ public class Model extends GameModel implements Transformable {
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = new Level(this);
-		m_nextLevel = new Level(this);
-		m_player = new Player(this, m_currentLevel, 0, 0, 3, 3);
+		m_currentLevel = new Level(this, Color.BLUE);
+		m_nextLevel = new Level(this, Color.pink);
+		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 1 - 3, 3, 3);
 	}
+
 
 	@Override
 	public void step(long now) {
@@ -71,5 +74,11 @@ public class Model extends GameModel implements Transformable {
 
 	public WorldType getWorldType() {
 		return m_wt;
+	}
+
+	void nextLevel() {
+		m_currentLevel = m_nextLevel;
+		m_nextLevel = new Level(this, Color.GREEN);
+		m_player.nextLevel(m_currentLevel);
 	}
 }
