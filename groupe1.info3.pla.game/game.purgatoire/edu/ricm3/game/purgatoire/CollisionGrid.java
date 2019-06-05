@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import ricm3.interpreter.IDirection;
 
 public class CollisionGrid {
-	
+
 	LinkedList<Entity> grid[][];
-	
+
 	public CollisionGrid() {
 		for(int i = 0; i < Options.LVL_WIDTH; i++) {
 			for(int j = 0; j < Options.LVL_HEIGHT; j++) {
@@ -16,13 +16,32 @@ public class CollisionGrid {
 			}
 		}
 	}
-	
+
 	void addEntity(Entity entity) {
-		int x,y,width,height;
-		x=entity.m_bounds.x;
-		y=entity.m_bounds.y;
-		width=entity.m_bounds.width;
-		height=entity.m_bounds.height;
+		if (isOk(entity) == true) {
+			int x, y, width, height;
+			x = entity.m_bounds.x;
+			y = entity.m_bounds.y;
+			width = entity.m_bounds.width;
+			height = entity.m_bounds.height;
+			for(int i = 0; i < x+width; i ++)
+				for(int j = 0; j< y+height; j++) {
+					grid[i][j].add(entity);
+			}
+		}
+	}
+
+	boolean isOk(Entity entity) {
+		int x, y, width, height;
+		x = entity.m_bounds.x;
+		y = entity.m_bounds.y;
+		width = entity.m_bounds.width;
+		height = entity.m_bounds.height;
+		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
+			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
+				return true;
+			}
+		return false;
 	}
 
 	public void updateEntity(Entity e, int x, int y) {
@@ -56,13 +75,40 @@ public class CollisionGrid {
 			}			
 			break;
 		case NORTH:
+			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = grid[i][entity.m_bounds.y -1].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		case SOUTH:
+			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		case WEST:
+			for(int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+				Iterator<Entity> iter = grid[entity.m_bounds.x -1][i].iterator();
+				while(iter.hasNext()) {
+					Entity e = iter.next();
+					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+						return false;
+					}
+				}
+			}
 			break;
 		default:
-			break;
+			throw new IllegalStateException();
 		
 		}
 		return true;

@@ -30,10 +30,10 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
-	
+
 	void step(long now) {
 	}
-	
+
 	WorldType getWorldType() {
 		return m_level.getWorldType();
 	}

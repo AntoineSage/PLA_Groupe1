@@ -26,6 +26,7 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
+
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 0) {
