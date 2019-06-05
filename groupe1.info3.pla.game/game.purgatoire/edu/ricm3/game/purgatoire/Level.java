@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Level {
@@ -13,8 +14,6 @@ public class Level {
 	Entity collisionGrid[][];
 	Color m_c;
 
-
-
 	Level(Model model, Color c) {
 		m_c = c;
 		m_model = model;
@@ -22,7 +21,18 @@ public class Level {
 		m_obstacles = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
 	}
-	
+
+	Level(LinkedList<Entity> obstacles) {
+		m_obstacles = obstacles;
+		Iterator<Entity> iter = m_obstacles.iterator();
+		Entity tmp;
+		while (iter.hasNext()) {
+			tmp = iter.next();
+			collisionGrid.addEntity(tmp);
+		}
+	}
+
+
 	Level(Model model) {
 		this(model, Color.WHITE);
 	}
