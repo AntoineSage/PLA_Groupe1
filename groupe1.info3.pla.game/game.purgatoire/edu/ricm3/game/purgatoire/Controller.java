@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import edu.ricm3.game.GameController;
+import ricm3.interpreter.IDirection;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -82,16 +83,16 @@ public class Controller extends GameController implements ActionListener {
 		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_player.moveR();
+			m_model.m_player.m_currentStunt.tryMove(IDirection.EAST);
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_player.moveL();
+			m_model.m_player.m_currentStunt.tryMove(IDirection.WEST);
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_player.moveUP();
+			m_model.m_player.m_currentStunt.tryMove(IDirection.NORTH);
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_player.moveDown();
+			m_model.m_player.m_currentStunt.tryMove(IDirection.SOUTH);
 			break;
 		}
 		m_allKeyPressed.add(e);

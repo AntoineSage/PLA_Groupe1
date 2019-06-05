@@ -10,9 +10,9 @@ public class HellPlayerStunt extends Stunt {
 		super(null, entity, Color.RED);
 	}
 
-	void tryMove(IDirection d) {
-		
-	}
+//	void tryMove(IDirection d) {
+//		
+//	}
 	
 	@Override
 	void pop() {
@@ -24,10 +24,10 @@ public class HellPlayerStunt extends Stunt {
 		System.out.println("wizz hell");
 	}
 
-	@Override
-	void move(int x, int y) {
-		System.out.println("Move hell");
-	}
+//	@Override
+//	void move(int x, int y) {
+//		System.out.println("Move hell");
+//	}
 
 	@Override
 	void hit(IDirection d) {

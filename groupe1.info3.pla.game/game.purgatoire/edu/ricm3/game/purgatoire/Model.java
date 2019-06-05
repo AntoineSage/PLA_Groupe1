@@ -38,7 +38,7 @@ public class Model extends GameModel implements Transformable {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
-		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH)/2, Options.LVL_HEIGHT - 3, 3, 3);
 
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
