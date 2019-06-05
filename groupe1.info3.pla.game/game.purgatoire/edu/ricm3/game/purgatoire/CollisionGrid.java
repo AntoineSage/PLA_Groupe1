@@ -1,5 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
+import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -7,9 +8,10 @@ import ricm3.interpreter.IDirection;
 
 public class CollisionGrid {
 
-	LinkedList<Entity> grid[][];
+	List<Entity> grid[][];
 
 	public CollisionGrid() {
+		grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
 		for(int i = 0; i < Options.LVL_WIDTH; i++) {
 			for(int j = 0; j < Options.LVL_HEIGHT; j++) {
 				grid[i][j] = new LinkedList<Entity>();
@@ -79,7 +81,7 @@ public class CollisionGrid {
 				Iterator<Entity> iter = grid[i][entity.m_bounds.y -1].iterator();
 				while(iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+					if(entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
@@ -90,7 +92,7 @@ public class CollisionGrid {
 				Iterator<Entity> iter = grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
 				while(iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+					if(entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
@@ -101,7 +103,7 @@ public class CollisionGrid {
 				Iterator<Entity> iter = grid[entity.m_bounds.x -1][i].iterator();
 				while(iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_collidingTypes)) {
+					if(entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}

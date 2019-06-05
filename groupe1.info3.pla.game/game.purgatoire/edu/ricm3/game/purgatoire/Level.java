@@ -22,6 +22,7 @@ public class Level {
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+		collisionGrid = new CollisionGrid();
 	}
 
 	Level(LinkedList<Entity> obstacles) {

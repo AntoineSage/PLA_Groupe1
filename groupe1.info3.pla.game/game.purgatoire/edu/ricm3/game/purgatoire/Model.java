@@ -39,7 +39,7 @@ public class Model extends GameModel implements Transformable {
 		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
 		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
-
+		m_currentLevel.collisionGrid.addEntity(m_player);
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
 			List<IAutomaton> automatons = ((AI_Definitions) ast).make();

@@ -1,5 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
+import ricm3.interpreter.IEntityType;
+
 public class Player extends Entity {
 	int m_karma;
 	int m_XP;
@@ -10,6 +12,7 @@ public class Player extends Entity {
 		m_model = model;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt.setAttachedEntity(this);
+		m_type = IEntityType.PLAYER;
 	}
 
 	void addKarma(Entity e) {
