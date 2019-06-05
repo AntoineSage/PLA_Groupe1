@@ -2,11 +2,17 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 
+import ricm3.interpreter.IDirection;
+
 public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
 		super(null, entity, Color.BLUE);
 	}
 
+	void tryMove(IDirection d) {
+		
+	}
+	
 	@Override
 	void pop() {
 		System.out.println("pop heaven");
@@ -18,11 +24,12 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void move() {
+	void move(int x, int y) {
+		
 	}
 
 	@Override
-	void hit() {
+	void hit(IDirection d) {
 		System.out.println("hit heaven");
 	}
 
@@ -32,7 +39,7 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage() {
+	void getDamage(int DMG) {
 		System.out.println("getDamage heaven");
 	}
 }

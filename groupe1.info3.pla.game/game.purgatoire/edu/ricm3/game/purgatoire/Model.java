@@ -53,7 +53,7 @@ public class Model extends GameModel implements Transformable {
 		m_soul = new Soul(m_currentLevel, m_heavenSoulStunt, m_hellSoulStunt, 20, 12, 3, 3);
 		m_heavenObstacleStunt = new HeavenObstacleStunt();
 		m_hellObstacleStunt = new HellObstacleStunt();
-		m_obstacle = new Obstacle(m_currentLevel, m_heavenObstacleStunt, m_hellObstacleStunt, 20, 8, 2, 2);
+		m_obstacle = new Obstacle(m_currentLevel, m_heavenObstacleStunt, m_hellObstacleStunt, 30, 8, 2, 2);
 
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");

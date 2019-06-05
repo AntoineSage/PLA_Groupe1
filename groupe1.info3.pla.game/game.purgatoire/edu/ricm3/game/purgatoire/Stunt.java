@@ -30,53 +30,55 @@ public class Stunt {
 		m_sprite = sprite;
 	}
 
-	void move(IDirection d) {
+	void tryMove(IDirection d) {
 		switch (d) {
-		case EAST:
-			m_entity.m_bounds.x++;
-			System.out.println("EAST");
-			break;
 		case NORTH:
-			m_entity.m_bounds.y--;
-			System.out.println("NORTH");
+			if (m_entity.m_bounds.y == 0) {
+				m_entity.m_level.m_model.nextLevel();
+			}
+			move(0, -1);
 			break;
 		case SOUTH:
-			m_entity.m_bounds.y++;
-			System.out.println("SOUTH");
+			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
+				move(0,1);
+			}
+			break;
+		case EAST:
+			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
+				move(1,0);
+			}
 			break;
 		case WEST:
-			m_entity.m_bounds.x--;
-			System.out.println("WEST");
-			break;
-		case FRONT:
-
-		case BACK:
-
-		case LEFT:
-
-		case RIGHT:
-
-		default:
+			if (m_entity.m_bounds.x > 0) {
+				move(-1,0);
+			}
 			break;
 		}
 	}
 
 	void pop() {
+		System.out.println("pop de base");
 	}
 
 	void wizz() {
+		System.out.println("wizz de base");
 	}
 
-	void move() {
+	void hit(IDirection d) {
+		System.out.println("hit de base");
 	}
 
-	void hit() {
+	void move(int x, int y) {
+		m_entity.m_bounds.x += x;
+		m_entity.m_bounds.y += y;
 	}
 
 	void egg() {
+		System.out.println("egg de base");
 	}
 
-	void getDamage() {
+	void getDamage(int DMG) {
+		m_entity.m_HP -= DMG;
 	}
 
 	public void setAttachedEntity(Entity entity) {
