@@ -9,9 +9,9 @@ public class HeavenPlayerStunt extends Stunt {
 		super(null, entity, Color.BLUE);
 	}
 
-	void tryMove(IDirection d) {
-		
-	}
+//	void tryMove(IDirection d) {
+//		
+//	}
 	
 	@Override
 	void pop() {
@@ -23,10 +23,10 @@ public class HeavenPlayerStunt extends Stunt {
 		System.out.println("wizz heaven");
 	}
 
-	@Override
-	void move(int x, int y) {
-		
-	}
+//	@Override
+//	void move(int x, int y) {
+//		
+//	}
 
 	@Override
 	void hit(IDirection d) {

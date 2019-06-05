@@ -33,13 +33,13 @@ public class Stunt {
 	void tryMove(IDirection d) {
 		switch (d) {
 		case NORTH:
-			if (m_entity.m_bounds.y == 0) {
+			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
-			}
+			}			
 			move(0, -1);
 			break;
 		case SOUTH:
-			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
+			if (m_entity.m_bounds.y <=  Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				move(0,1);
 			}
 			break;

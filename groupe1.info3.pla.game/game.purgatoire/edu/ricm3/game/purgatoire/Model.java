@@ -50,13 +50,13 @@ public class Model extends GameModel implements Transformable {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
-		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
 		m_heavenSoulStunt = new HeavenSoulStunt();
 		m_hellSoulStunt = new HellSoulStunt();
 		m_soul = new Soul(m_currentLevel, m_heavenSoulStunt, m_hellSoulStunt, 20, 12, 3, 3);
 		m_heavenObstacleStunt = new HeavenObstacleStunt();
 		m_hellObstacleStunt = new HellObstacleStunt();
 		m_obstacle = new Obstacle(m_currentLevel, m_heavenObstacleStunt, m_hellObstacleStunt, 30, 8, 2, 2);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH)/2, Options.LVL_HEIGHT - 3, 3, 3);
 
 		m_special = new Special(m_currentLevel, 40, 40 , 3, 3);
 		
