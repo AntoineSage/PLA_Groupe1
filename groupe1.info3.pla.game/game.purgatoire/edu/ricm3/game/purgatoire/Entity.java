@@ -3,6 +3,7 @@ package edu.ricm3.game.purgatoire;
 import java.awt.Rectangle;
 
 import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 
 public class Entity {
 	int m_HP, m_maxHP;
@@ -11,7 +12,8 @@ public class Entity {
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
 	Rectangle m_bounds;
-
+	IEntityType m_type;
+	
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
