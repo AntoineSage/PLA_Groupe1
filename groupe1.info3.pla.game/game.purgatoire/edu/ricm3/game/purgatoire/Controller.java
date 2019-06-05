@@ -135,7 +135,7 @@ public class Controller extends GameController implements ActionListener {
 	public void step(long now) {
 		if (m_lastTransform == 0)
 			m_lastTransform = now;
-		if (now - m_lastTransform > 2000) {
+		if (now - m_lastTransform > 5000) {
 			m_model.transform();
 			m_view.transform();
 			m_model.printWorld();
@@ -155,6 +155,7 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT:
 			m_model.m_player.moveR();

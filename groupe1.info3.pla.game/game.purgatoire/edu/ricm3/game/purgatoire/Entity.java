@@ -32,6 +32,7 @@ public class Entity {
 	}
 
 	void step(long now) {
+		m_currentStunt.m_automaton.step(this, null);
 	}
 
 	WorldType getWorldType() {

@@ -13,6 +13,11 @@ public class Stunt {
 	BufferedImage m_sprite;
 	Entity m_entity;
 
+	Stunt(IAutomaton automaton, Color c) {
+		m_automaton = automaton;
+		m_c = c;
+	}
+
 	Stunt(IAutomaton automaton, Entity entity, Color c) {
 		m_automaton = automaton;
 		m_entity = entity;
