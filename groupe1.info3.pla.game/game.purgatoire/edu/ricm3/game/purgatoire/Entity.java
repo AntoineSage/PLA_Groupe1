@@ -39,6 +39,14 @@ public class Entity {
 		return m_level.getWorldType();
 	}
 
+	public int getHP() {
+		return m_HP;
+	}
+
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+	
 	void takeDamage(int DMG) {
 		m_currentStunt.getDamage(DMG);
 	}

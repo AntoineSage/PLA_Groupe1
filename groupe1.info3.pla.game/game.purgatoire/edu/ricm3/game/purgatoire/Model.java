@@ -41,6 +41,7 @@ public class Model extends GameModel implements Transformable {
 	HellObstacleStunt m_hellObstacleStunt;
 	Special m_special;
 
+	int m_period, m_totalTime, m_totalDistance;
 	// TODO lastTransform and transform() in Controller?
 
 	long lastUpdatePlayer, lastUpdateSoul;
