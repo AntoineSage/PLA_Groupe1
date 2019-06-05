@@ -24,7 +24,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import edu.ricm3.game.GameController;
@@ -80,15 +79,30 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_RIGHT:
+			m_model.m_player.moveR();
+			break;
+		case KeyEvent.VK_LEFT:
+			m_model.m_player.moveL();
+			break;
+		case KeyEvent.VK_UP:
+			m_model.m_player.moveUP();
+			break;
+		case KeyEvent.VK_DOWN:
+			m_model.m_player.moveDown();
+			break;
+		}
 		m_allKeyPressed.add(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			KeyEvent key = iter.next();
-			if(key.getKeyCode() == e.getKeyCode()){
+			if (key.getKeyCode() == e.getKeyCode()) {
 				iter.remove();
 				// m_allKeyPressed.remove(key);
 			}
@@ -139,9 +153,9 @@ public class Controller extends GameController implements ActionListener {
 
 	public boolean isKeyPressed(int e) {
 		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			KeyEvent key = iter.next();
-			if(key.getKeyCode() == e){
+			if (key.getKeyCode() == e) {
 				return true;
 			}
 		}

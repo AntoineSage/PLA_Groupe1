@@ -36,9 +36,9 @@ public class Model extends GameModel implements Transformable {
 	
 	public Model() {
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = new Level(this, Color.BLUE);
+		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
-		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 1 - 3, 3, 3);
+		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
 
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
@@ -90,7 +90,7 @@ public class Model extends GameModel implements Transformable {
 	public void step(long now, Controller controller) {
 		if(now - lastUpdate > 1000 / 30) {
 			lastUpdate = now;
-			m_player.step(now, controller);
+			//m_player.step(now, controller);
 		}
 	}
 
