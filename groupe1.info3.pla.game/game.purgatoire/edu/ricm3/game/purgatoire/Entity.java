@@ -17,13 +17,13 @@ public class Entity {
 
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
-		m_level.addEntity(this);
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
 		m_hellStunt .setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
+		m_level.addEntity(this);
 		transform();
 	}
 
