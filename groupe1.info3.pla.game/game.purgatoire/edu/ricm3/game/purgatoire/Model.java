@@ -30,10 +30,11 @@ public class Model extends GameModel implements Transformable {
 	Level m_currentLevel, m_nextLevel;
 	Player m_player;
 	IAutomaton m_aut;
+	int m_period, m_totalTime, m_totalDistance;
 	// TODO lastTransform and transform() in Controller?
 
 	long lastUpdate;
-	
+
 	public Model() {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = new Level(this, Color.yellow);
@@ -88,9 +89,9 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void step(long now, Controller controller) {
-		if(now - lastUpdate > 1000 / 30) {
+		if (now - lastUpdate > 1000 / 30) {
 			lastUpdate = now;
-			//m_player.step(now, controller);
+			// m_player.step(now, controller);
 		}
 	}
 

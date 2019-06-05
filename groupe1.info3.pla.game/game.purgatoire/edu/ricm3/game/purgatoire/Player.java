@@ -3,6 +3,8 @@ package edu.ricm3.game.purgatoire;
 public class Player extends Entity {
 	int m_karma;
 	int m_XP;
+	private int m_maxXP;
+	private int m_rank;
 	Model m_model;
 
 	public Player(Model model, Level level, int x, int y, int width, int height) {
@@ -25,7 +27,7 @@ public class Player extends Entity {
 	}
 
 	void moveUP() {
-	
+
 		if (m_bounds.y == 0) {
 
 			m_level.m_model.nextLevel();
@@ -55,4 +57,21 @@ public class Player extends Entity {
 		m_level = newLevel;
 		m_bounds.y = Options.LVL_HEIGHT - 1 - 3;
 	}
+
+	public int getKarma() {
+		return m_karma;
+	}
+
+	public int getXP() {
+		return m_XP;
+	}
+
+	public int getMaxXP() {
+		return m_maxXP;
+	}
+
+	public int getRank() {
+		return m_rank;
+	}
+
 }
