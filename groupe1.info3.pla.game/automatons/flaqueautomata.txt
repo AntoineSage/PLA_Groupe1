@@ -1,0 +1,4 @@
+Flaque(Init){
+*(Init):
+	|Cell(N,@) ? pop : (Init) 	//TODO changer N par "sur moi"
+}

@@ -39,6 +39,8 @@ public class Model extends GameModel implements Transformable {
 	HellSoulStunt m_hellSoulStunt;
 	HeavenObstacleStunt m_heavenObstacleStunt;
 	HellObstacleStunt m_hellObstacleStunt;
+	Special m_special;
+
 	// TODO lastTransform and transform() in Controller?
 
 	long lastUpdatePlayer, lastUpdateSoul;
@@ -55,6 +57,9 @@ public class Model extends GameModel implements Transformable {
 		m_hellObstacleStunt = new HellObstacleStunt();
 		m_obstacle = new Obstacle(m_currentLevel, m_heavenObstacleStunt, m_hellObstacleStunt, 30, 8, 2, 2);
 
+		m_special = new Special(m_currentLevel, 40, 40 , 3, 3);
+		
+		
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
 			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
@@ -82,6 +87,10 @@ public class Model extends GameModel implements Transformable {
 
 	public Player getPlayer() {
 		return m_player;
+	}
+	
+	public Special getSpecial() {
+		return m_special;
 	}
 
 	public Soul getSoul() {
@@ -111,6 +120,7 @@ public class Model extends GameModel implements Transformable {
 		m_obstacle.transform();
 		m_currentLevel.transform();
 		m_nextLevel.transform();
+		m_special.transform();
 	}
 
 	public void step(long now, Controller controller) {
