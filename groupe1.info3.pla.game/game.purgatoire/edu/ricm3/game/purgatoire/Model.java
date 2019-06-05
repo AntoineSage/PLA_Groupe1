@@ -19,25 +19,57 @@ package edu.ricm3.game.purgatoire;
 
 import edu.ricm3.game.GameModel;
 
-public class Model extends GameModel {
-	WorldType m_wt;
+public class Model extends GameModel implements Transformable {
+	private WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
-	Player m_player;
+	private Player m_player;
+	// TODO lastTransform and transform() in Controller?
 
 	public Model() {
-	}
-
-	void transform() {
+		m_wt = WorldType.HEAVEN;
+		m_currentLevel = new Level(this);
+		m_nextLevel = new Level(this);
+		m_player = new Player(this, m_currentLevel, 0, 0, 3, 3);
 	}
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
+	}
 
+	WorldType getWorld() {
+		return m_wt;
+	}
+
+	public Player getPlayer() {
+		return m_player;
+	}
+
+	void printWorld() {
+		if (m_wt == WorldType.HEAVEN)
+			System.out.println("Heaven");
+		else
+			System.out.println("Hell");
+	}
+
+	public void transform() {
+		// TODO put world change in Controller?
+//		if (m_wt == WorldType.HEAVEN)
+//			if (m_player.m_karma < 0)
+//				m_wt = WorldType.HELL;
+//			else if (m_player.m_karma > 0)
+//				m_wt =WorldType.HEAVEN;
+		if(m_wt == WorldType.HEAVEN) m_wt = WorldType.HELL;
+		else m_wt = WorldType.HEAVEN;
+		m_player.transform();
+		m_currentLevel.transform();
+		m_nextLevel.transform();
 	}
 
 	@Override
 	public void shutdown() {
-		// TODO Auto-generated method stub
+	}
+
+	public WorldType getWorldType() {
+		return m_wt;
 	}
 }

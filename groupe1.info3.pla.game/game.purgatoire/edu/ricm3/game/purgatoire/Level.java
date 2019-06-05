@@ -11,24 +11,23 @@ public class Level {
 	Entity m_special;
 	Entity collisionGrid[][];
 
-	Level(Model model, Entity special) {
+	Level(Model model) {
 		m_model = model;
-		m_special = special;
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
-
 	}
 
 	void step() {
 
 	}
 
-	void transform() {
-
+	WorldType getWorldType() {
+		return m_model.getWorldType();
 	}
 
-	WorldType getWorldType() {
-		return m_model.m_wt;
+	void transform() {
+		System.out.println("Level transform");
+		// TODO appeler transform sur les listes(souls,obstacles...)
 	}
 }
