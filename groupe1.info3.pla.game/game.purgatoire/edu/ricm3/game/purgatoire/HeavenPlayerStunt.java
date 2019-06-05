@@ -9,10 +9,6 @@ public class HeavenPlayerStunt extends Stunt {
 		super(null, entity, Color.BLUE);
 	}
 
-	void tryMove(IDirection d) {
-		
-	}
-	
 	@Override
 	void pop() {
 		System.out.println("pop heaven");
