@@ -25,7 +25,7 @@ public class Player extends Entity {
 	}
 
 	void moveUP() {
-	
+
 		if (m_bounds.y == 0) {
 
 			m_level.m_model.nextLevel();

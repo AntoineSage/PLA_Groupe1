@@ -33,8 +33,6 @@ public class View extends GameView implements Transformable {
 
 	public View(Model m) {
 		m_model = m;
-		m_heaven = new WorldSprites(Color.blue);
-		m_hell = new WorldSprites(Color.red);
 		m_yG1 = Options.LVL_HEIGHT + 1 - Options.NB_BLOCKS_WIN;
 		transform();
 	}
@@ -68,11 +66,11 @@ public class View extends GameView implements Transformable {
 				Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 		g2.setColor(m_model.m_nextLevel.m_c);
 		g2.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
-
-		g.setColor(m_current.getPlayerColor());
-		g.fillRect(50, 50, 50, 50);
-
+		transform();
+		
+		paint(g1, m_model.getObstacle());
 		paint(g1, m_model.getPlayer());
+		paint(g1, m_model.getSoul());
 
 		g1.dispose();
 		g2.dispose();
