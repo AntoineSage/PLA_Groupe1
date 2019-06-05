@@ -11,7 +11,7 @@ public class Level {
 	LinkedList<Entity> m_obstacles;
 	LinkedList<Entity> m_entities;
 	Entity m_special;
-	Entity collisionGrid[][];
+	CollisionGrid collisionGrid;
 	Color m_c;
 
 	Level(Model model, Color c) {
@@ -47,5 +47,10 @@ public class Level {
 	void transform() {
 		System.out.println("Level transform");
 		// TODO appeler transform sur les listes(souls,obstacles...)
+	}
+
+	// Update the collisionGrid with the future new values translated by x and y.
+	public void updateEntity(Entity e, int x, int y) {
+		collisionGrid.updateEntity(e, x, y);
 	}
 }

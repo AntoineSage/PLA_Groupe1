@@ -25,11 +25,6 @@ public class HellPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void move(int x, int y) {
-		System.out.println("Move hell");
-	}
-
-	@Override
 	void hit(IDirection d) {
 		System.out.println("hit hell");
 	}

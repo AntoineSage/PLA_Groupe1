@@ -24,11 +24,6 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void move(int x, int y) {
-		
-	}
-
-	@Override
 	void hit(IDirection d) {
 		System.out.println("hit heaven");
 	}

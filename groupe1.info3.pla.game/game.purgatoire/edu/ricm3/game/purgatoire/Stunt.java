@@ -63,9 +63,9 @@ public class Stunt {
 		System.out.println("hit de base");
 	}
 
-	void move(int x, int y) {
-		m_entity.m_bounds.x += x;
-		m_entity.m_bounds.y += y;
+	private void move(int x, int y) {
+		m_entity.m_level.updateEntity(m_entity, x, y);
+		m_entity.m_bounds.translate(x, y);
 	}
 
 	void egg() {
