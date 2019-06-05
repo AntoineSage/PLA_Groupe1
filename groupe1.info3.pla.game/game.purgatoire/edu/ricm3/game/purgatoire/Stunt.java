@@ -26,6 +26,7 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
+
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 0) {
@@ -35,17 +36,17 @@ public class Stunt {
 			break;
 		case SOUTH:
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
-				move(0,1);
+				move(0, 1);
 			}
 			break;
 		case EAST:
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
-				move(1,0);
+				move(1, 0);
 			}
 			break;
 		case WEST:
 			if (m_entity.m_bounds.x > 0) {
-				move(-1,0);
+				move(-1, 0);
 			}
 			break;
 		}

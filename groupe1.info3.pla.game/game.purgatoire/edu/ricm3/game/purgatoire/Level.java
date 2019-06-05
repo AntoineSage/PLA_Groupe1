@@ -32,7 +32,6 @@ public class Level {
 		}
 	}
 
-
 	Level(Model model) {
 		this(model, Color.WHITE);
 	}

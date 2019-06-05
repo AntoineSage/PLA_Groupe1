@@ -24,8 +24,6 @@ public class Player extends Entity {
 		m_currentStunt.m_automaton.step(this, controller);
 	}
 
-	
-
 	void nextLevel(Level newLevel) {
 		m_level = newLevel;
 		m_bounds.y = Options.LVL_HEIGHT - 1 - 3;
