@@ -79,6 +79,7 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_RIGHT:
 			m_model.m_player.moveR();

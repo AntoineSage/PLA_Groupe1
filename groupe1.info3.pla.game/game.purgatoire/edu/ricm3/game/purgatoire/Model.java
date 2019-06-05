@@ -90,7 +90,7 @@ public class Model extends GameModel implements Transformable {
 	public void step(long now, Controller controller) {
 		if(now - lastUpdate > 1000 / 30) {
 			lastUpdate = now;
-			m_player.step(now, controller);
+			//m_player.step(now, controller);
 		}
 	}
 

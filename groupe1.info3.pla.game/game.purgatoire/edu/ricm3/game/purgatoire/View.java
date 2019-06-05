@@ -59,15 +59,13 @@ public class View extends GameView implements Transformable {
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		Graphics g1 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * Options.BLOCK_SIZE) / 2,
-				-m_yG1 * (Options.BLOCK_SIZE + 1), Options.LVL_WIDTH * Options.BLOCK_SIZE,
+		Graphics g1 = g.create(0, -m_yG1 * (Options.BLOCK_SIZE + 1), Options.LVL_WIDTH * Options.BLOCK_SIZE,
 				Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 		g1.setColor(m_model.m_currentLevel.m_c);
 		g1.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 
-		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * Options.BLOCK_SIZE) / 2,
-				((-m_yG1) - Options.LVL_HEIGHT) * Options.BLOCK_SIZE, Options.LVL_WIDTH * Options.BLOCK_SIZE,
-				Options.LVL_HEIGHT * Options.BLOCK_SIZE);
+		Graphics g2 = g.create(0, ((-m_yG1) - Options.LVL_HEIGHT) * (Options.BLOCK_SIZE - 1),
+				Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 		g2.setColor(m_model.m_nextLevel.m_c);
 		g2.fillRect(0, 0, Options.LVL_WIDTH * Options.BLOCK_SIZE, Options.LVL_HEIGHT * Options.BLOCK_SIZE);
 
