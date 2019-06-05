@@ -10,9 +10,7 @@ public class HellPlayerStunt extends Stunt {
 		super(null, entity, Color.RED);
 	}
 
-	void tryMove(IDirection d) {
 		
-	}
 	
 	@Override
 	void pop() {

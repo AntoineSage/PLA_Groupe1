@@ -24,32 +24,7 @@ public class Player extends Entity {
 		m_currentStunt.m_automaton.step(this, controller);
 	}
 
-	void moveUP() {
 	
-		if (m_bounds.y == 0) {
-
-			m_level.m_model.nextLevel();
-		}
-		m_bounds.y--;
-	}
-
-	void moveDown() {
-		if (m_bounds.y < Options.LVL_HEIGHT - m_bounds.height) {
-			m_bounds.y++;
-		}
-	}
-
-	void moveR() {
-		if (m_bounds.x < Options.LVL_WIDTH - m_bounds.height) {
-			m_bounds.x++;
-		}
-	}
-
-	void moveL() {
-		if (m_bounds.x > 0) {
-			m_bounds.x--;
-		}
-	}
 
 	void nextLevel(Level newLevel) {
 		m_level = newLevel;
