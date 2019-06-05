@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -12,9 +13,10 @@ public class Entity {
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
 	Rectangle m_bounds;
-	IEntityType m_type; // type of the Entity (cat, soul...)
-	IDirection m_direction;// work in progress direction of the entity
-
+	IEntityType m_type;
+	List<IEntityType> m_collidingTypes ;
+	IDirection m_direction;
+	
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
@@ -60,5 +62,9 @@ public class Entity {
 
 	public void hit(IDirection d) {
 		m_currentStunt.hit(d);
+	}
+
+	public boolean wontCollide(IDirection d) {
+		return m_level.wontCollide(this, d);
 	}
 }

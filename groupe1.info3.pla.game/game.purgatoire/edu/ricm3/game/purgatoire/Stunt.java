@@ -32,21 +32,29 @@ public class Stunt {
 			if (m_entity.m_bounds.y == 0) {
 				m_entity.m_level.m_model.nextLevel();
 			}
-			move(0, -1);
+			if (m_entity.wontCollide(d)) {
+				move(0, -1);
+			}
 			break;
 		case SOUTH:
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
-				move(0, 1);
+				if (m_entity.wontCollide(d)) {
+					move(0, 1);
+				}
 			}
 			break;
 		case EAST:
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
-				move(1, 0);
+				if (m_entity.wontCollide(d)) {
+					move(1, 0);
+				}
 			}
 			break;
 		case WEST:
 			if (m_entity.m_bounds.x > 0) {
-				move(-1, 0);
+				if (m_entity.wontCollide(d)) {
+					move(-1, 0);
+				}
 			}
 			break;
 		}
