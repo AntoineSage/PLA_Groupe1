@@ -12,6 +12,6 @@ public class HeavenSoulStunt extends Stunt {
 	}
 	
 	HeavenSoulStunt(){
-		super(null, null, Color.DARK_GRAY);
+		super(Singleton.getNewSoulHeavenAut(), null, Color.DARK_GRAY);
 	}
 }

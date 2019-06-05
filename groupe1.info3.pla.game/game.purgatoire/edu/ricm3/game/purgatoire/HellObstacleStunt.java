@@ -12,6 +12,6 @@ public class HellObstacleStunt extends Stunt {
 	}
 
 	HellObstacleStunt() {
-		super(null, null, Color.pink);
+		super(Singleton.getNewObstacleHellAut(), null, Color.pink);
 	}
 }

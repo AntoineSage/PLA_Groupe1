@@ -37,7 +37,7 @@ public class Stunt {
 			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
 			}
-			if (m_entity.wontCollide(d)) {
+			else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
 			break;

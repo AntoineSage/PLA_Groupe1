@@ -24,12 +24,13 @@ import edu.ricm3.game.GameUI;
 
 public class GameMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalAccessException {
 
 		// construct the game elements: model, controller, and view.
 		Model model = new Model();
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
+		Singleton.setController(controller);
 
 		Dimension d = new Dimension(786, 801);
 		new GameUI(model, view, controller, d);

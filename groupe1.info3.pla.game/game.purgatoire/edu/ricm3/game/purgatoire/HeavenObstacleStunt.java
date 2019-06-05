@@ -12,7 +12,7 @@ public class HeavenObstacleStunt extends Stunt {
 	}
 
 	HeavenObstacleStunt() {
-		super(null, null, Color.red);
+		super(Singleton.getNewObstacleHeavenAut(), null, Color.red);
 	}
 
 }

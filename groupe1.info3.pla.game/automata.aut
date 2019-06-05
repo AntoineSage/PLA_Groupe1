@@ -1,4 +1,4 @@
-ProtoPlayer(Init){
+Player(Init){
   * (Init):
   | Key(FU) ? Move(N) :(Init)
   | Key(FD) ? Move(S) :(Init)

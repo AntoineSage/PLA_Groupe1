@@ -4,11 +4,11 @@ import java.awt.Color;
 
 public class HeavenSpecialStunt extends Stunt {
 	HeavenSpecialStunt(Entity entity) {
-		super(null, entity, Color.ORANGE);
+		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
 	}
 	
 	HeavenSpecialStunt() {
-		super(null, null, Color.ORANGE);
+		super(Singleton.getNewSpecialHeavenAut(), null, Color.ORANGE);
 	}
 
 	@Override

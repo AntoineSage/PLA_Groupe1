@@ -16,13 +16,13 @@ public class IAutomaton {
 		this.behaviours = behaviours ;
 	}
 	
-	public boolean step(Entity e, Controller controller) {
+	public boolean step(Entity e) {
 		Iterator<IBehaviour> iter = behaviours.iterator();
 		while(iter.hasNext()) {
 			IBehaviour behaviour = iter.next();
 			if (behaviour.source.m_name.equals(current.m_name)) {
 				try {
-					current = behaviour.step(e, controller);
+					current = behaviour.step(e);
 				} catch (NoFeasibleTransition exception) {
 					return false; 
 				}
@@ -30,5 +30,9 @@ public class IAutomaton {
 			}
 		}
 		throw new IllegalStateException();		
+	}
+
+	public IAutomaton copy() {
+		return new IAutomaton(current.copy(), behaviours);
 	}
 }

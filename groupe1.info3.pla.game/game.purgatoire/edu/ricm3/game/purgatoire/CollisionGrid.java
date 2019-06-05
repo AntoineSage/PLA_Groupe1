@@ -12,8 +12,8 @@ public class CollisionGrid {
 
 	public CollisionGrid() {
 		grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
-		for(int i = 0; i < Options.LVL_WIDTH; i++) {
-			for(int j = 0; j < Options.LVL_HEIGHT; j++) {
+		for (int i = 0; i < Options.LVL_WIDTH; i++) {
+			for (int j = 0; j < Options.LVL_HEIGHT; j++) {
 				grid[i][j] = new LinkedList<Entity>();
 			}
 		}
@@ -21,14 +21,10 @@ public class CollisionGrid {
 
 	void addEntity(Entity entity) {
 		if (isOk(entity) == true) {
-			int x, y, width, height;
-			x = entity.m_bounds.x;
-			y = entity.m_bounds.y;
-			width = entity.m_bounds.width;
-			height = entity.m_bounds.height;
-			for(int i = 0; i < x+width; i ++)
-				for(int j = 0; j< y+height; j++) {
+			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				for (int j = entity.m_bounds.y; j < entity.m_bounds.y + entity.m_bounds.height; j++) {
 					grid[i][j].add(entity);
+				}
 			}
 		}
 	}
@@ -47,63 +43,63 @@ public class CollisionGrid {
 	}
 
 	public void updateEntity(Entity e, int x, int y) {
-		for(int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
-			for(int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
+		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
 				grid[i][j].remove(e);
 			}
 		}
-		
-		for(int i = e.m_bounds.x + x; i < e.m_bounds.x + x + e.m_bounds.width; i++) {
-			for(int j = e.m_bounds.y; j <  e.m_bounds.y + y + e.m_bounds.height; j++) {
-				if(grid[i][j] == null) {
+
+		for (int i = e.m_bounds.x + x; i < e.m_bounds.x + x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y + y; j < e.m_bounds.y + y + e.m_bounds.height; j++) {
+				if (grid[i][j] == null) {
 					grid[i][j] = new LinkedList<Entity>();
 				}
-				grid[i][j].add(e);					
+				grid[i][j].add(e);
 			}
 		}
 	}
 
 	public boolean wontCollide(Entity entity, IDirection d) {
-		switch(d) {
+		switch (d) {
 		case EAST:
-			for(int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
 				Iterator<Entity> iter = grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
-				while(iter.hasNext()) {
+				while (iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_type)) {
+					if (entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
-			}			
+			}
 			break;
 		case NORTH:
-			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
-				Iterator<Entity> iter = grid[i][entity.m_bounds.y -1].iterator();
-				while(iter.hasNext()) {
+			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = grid[i][entity.m_bounds.y - 1].iterator();
+				while (iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_type)) {
+					if (entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
 			}
 			break;
 		case SOUTH:
-			for(int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
 				Iterator<Entity> iter = grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
-				while(iter.hasNext()) {
+				while (iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_type)) {
+					if (entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
 			}
 			break;
 		case WEST:
-			for(int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
-				Iterator<Entity> iter = grid[entity.m_bounds.x -1][i].iterator();
-				while(iter.hasNext()) {
+			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+				Iterator<Entity> iter = grid[entity.m_bounds.x - 1][i].iterator();
+				while (iter.hasNext()) {
 					Entity e = iter.next();
-					if(entity.m_type.isCollidingWith(e.m_type)) {
+					if (entity.m_type.isCollidingWith(e.m_type)) {
 						return false;
 					}
 				}
@@ -111,8 +107,16 @@ public class CollisionGrid {
 			break;
 		default:
 			throw new IllegalStateException();
-		
+
 		}
 		return true;
+	}
+
+	public void removeEntity(Entity e) {
+		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
+				grid[i][j].remove(e);
+			}
+		}		
 	}
 }

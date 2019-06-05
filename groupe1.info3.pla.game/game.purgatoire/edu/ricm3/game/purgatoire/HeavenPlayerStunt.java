@@ -6,7 +6,7 @@ import ricm3.interpreter.IDirection;
 
 public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
-		super(null, entity, Color.BLUE);
+		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 	}
 
 	@Override

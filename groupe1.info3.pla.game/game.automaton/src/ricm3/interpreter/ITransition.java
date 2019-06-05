@@ -16,8 +16,8 @@ public class ITransition {
 		this.target = target ;
 	}
 	
-	boolean feasible(Entity e, Controller controller) {
-		return condition.eval(e, controller);
+	boolean feasible(Entity e) {
+		return condition.eval(e);
 	}
 	
 	IState exec(Entity e) {

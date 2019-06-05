@@ -1,8 +1,5 @@
 package ricm3.interpreter;
 
-import java.util.Iterator;
-import java.util.List;
-
 public class IEntityType {
 	public enum IType {
 		ADVERSARY, DANGER, GATE, JUMP, MISSILE, OBSTACLE, PICK, TEAM, VOID, PLAYER, ANYTHING

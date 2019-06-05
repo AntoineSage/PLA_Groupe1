@@ -12,6 +12,6 @@ public class HellSoulStunt extends Stunt{
 	}
 	
 	HellSoulStunt(){
-		super(null,null, Color.green);
+		super(Singleton.getNewSoulHellAut(),null, Color.green);
 	}
 }

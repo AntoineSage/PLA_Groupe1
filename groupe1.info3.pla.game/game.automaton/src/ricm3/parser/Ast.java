@@ -1,6 +1,7 @@
 package ricm3.parser;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -534,7 +535,7 @@ public class Ast {
 
 		@Override
 		public List<IAutomaton> make() {
-			List<IAutomaton> automatons = new LinkedList<IAutomaton>();
+			List<IAutomaton> automatons = new ArrayList<IAutomaton>();
 			Iterator<Automaton> iter = automata.iterator();
 			while(iter.hasNext()) {
 				automatons.add(iter.next().make());

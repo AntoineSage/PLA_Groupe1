@@ -35,7 +35,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import edu.ricm3.game.GameController;
-import ricm3.interpreter.IDirection;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -146,7 +145,7 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().egg();
 			m_lastTransform = now;
 		}
-		m_model.step(now, this);
+		m_model.step(now);
 		m_view.step(now);
 	}
 

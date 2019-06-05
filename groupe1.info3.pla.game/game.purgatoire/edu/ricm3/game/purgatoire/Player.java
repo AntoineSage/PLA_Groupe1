@@ -21,15 +21,13 @@ public class Player extends Entity {
 
 	@Override
 	void step(long now) {
-	}
-
-	void step(long now, Controller controller) {
-		m_currentStunt.m_automaton.step(this, controller);
+		m_currentStunt.m_automaton.step(this);
 	}
 
 	void nextLevel(Level newLevel) {
 		m_level = newLevel;
-		m_bounds.y = Options.LVL_HEIGHT - 2;
+		m_bounds.y = Options.LVL_HEIGHT - 3;
+		m_level.addEntity(this);
 	}
 
 	public int getKarma() {

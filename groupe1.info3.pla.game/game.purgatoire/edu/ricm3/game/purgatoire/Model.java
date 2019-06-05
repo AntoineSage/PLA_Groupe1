@@ -42,35 +42,11 @@ public class Model extends GameModel implements Transformable {
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = new Level(this, Color.yellow);
-		m_nextLevel = new Level(this, Color.pink);
-
+		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
+		
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
-		m_currentLevel.collisionGrid.addEntity(m_player);
-
-		m_obstacle = new Obstacle(m_currentLevel, 30, 8, 2, 2);
-		m_soul = new Soul(m_currentLevel, 20, 12, 3, 3);
-		m_special = new Special(m_currentLevel, 40, 40, 3, 3);
-
-		try {
-			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
-			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
-			IAutomaton m_aut = automatons.get(0);
-			m_player.m_heavenStunt.m_automaton = m_aut;
-			m_player.m_hellStunt.m_automaton = m_aut;
-			m_soul.m_heavenStunt.m_automaton = automatons.get(1);
-			m_soul.m_hellStunt.m_automaton = automatons.get(2);
-			m_obstacle.m_heavenStunt.m_automaton = automatons.get(3);
-			m_obstacle.m_hellStunt.m_automaton = automatons.get(3);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void step(long now) {
+		m_currentLevel.addEntity(m_player);
 	}
 
 	WorldType getWorld() {
@@ -108,23 +84,22 @@ public class Model extends GameModel implements Transformable {
 		else
 			m_wt = WorldType.HEAVEN;
 		m_player.transform();
-		m_soul.transform();
-		m_obstacle.transform();
 		m_currentLevel.transform();
 		m_nextLevel.transform();
-		m_special.transform();
 	}
 
-	public void step(long now, Controller controller) {
-		if (now - lastUpdatePlayer > 1000 / 30) {
-			lastUpdatePlayer = now;
-			m_player.step(now, controller);
-		}
-		if (now - lastUpdateSoul > 500) {
-			lastUpdateSoul = now;
-			m_soul.step(now);
-			m_obstacle.step(now);
-		}
+	public void step(long now) {
+		m_currentLevel.step(now);
+		m_nextLevel.step(now);
+//		if (now - lastUpdatePlayer > 1000 / 30) {
+//			lastUpdatePlayer = now;
+//			m_player.step(now, controller);
+//		}
+//		if (now - lastUpdateSoul > 500) {
+//			lastUpdateSoul = now;
+//			m_soul.step(now);
+//			m_obstacle.step(now);
+//		}
 	}
 
 	@Override
@@ -137,7 +112,7 @@ public class Model extends GameModel implements Transformable {
 
 	void nextLevel() {
 		m_currentLevel = m_nextLevel;
-		m_nextLevel = new Level(this, Color.GREEN);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);
 	}
 

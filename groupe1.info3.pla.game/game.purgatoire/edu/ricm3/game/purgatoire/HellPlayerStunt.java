@@ -7,7 +7,7 @@ import ricm3.interpreter.IDirection;
 public class HellPlayerStunt extends Stunt {
 
 	HellPlayerStunt(Entity entity) {
-		super(null, entity, Color.RED);
+		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
 	}
 	
 	@Override

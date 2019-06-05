@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.ricm3.game.purgatoire.Controller;
 import edu.ricm3.game.purgatoire.Entity;
+import edu.ricm3.game.purgatoire.Singleton;
 import ricm3.parser.Ast.Parameter;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
@@ -18,7 +19,7 @@ abstract public class ICondition {
 	public ICondition(List<Parameter> parameters) {
 	}
 
-	abstract boolean eval(Entity e, Controller controller);
+	abstract boolean eval(Entity e);
 
 	abstract public static class IUnaryOp extends ICondition {
 		protected ICondition m_condition;
@@ -34,8 +35,8 @@ abstract public class ICondition {
 	public static class INot extends IUnaryOp {
 
 		@Override
-		boolean eval(Entity e, Controller controller) {
-			return !m_condition.eval(e, controller);
+		boolean eval(Entity e) {
+			return !m_condition.eval(e);
 		}
 
 	}
@@ -56,8 +57,8 @@ abstract public class ICondition {
 	public static class IAnd extends IBinaryOp {
 
 		@Override
-		boolean eval(Entity e, Controller controller) {
-			return m_condition1.eval(e, controller) && m_condition2.eval(e, controller);
+		boolean eval(Entity e) {
+			return m_condition1.eval(e) && m_condition2.eval(e);
 		}
 
 	}
@@ -65,8 +66,8 @@ abstract public class ICondition {
 	public static class IOr extends IBinaryOp {
 
 		@Override
-		boolean eval(Entity e, Controller controller) {
-			return m_condition1.eval(e, controller) || m_condition2.eval(e, controller);
+		boolean eval(Entity e) {
+			return m_condition1.eval(e) || m_condition2.eval(e);
 		}
 
 	}
@@ -75,7 +76,8 @@ abstract public class ICondition {
 		public ITrue() {
 		}
 
-		boolean eval(Entity e, Controller controller) {
+		@Override
+		boolean eval(Entity e) {
 			return true;
 		}
 	}
@@ -92,8 +94,8 @@ abstract public class ICondition {
 			m_key = (int)parameters.get(0).make();
 		}
 
-		boolean eval(Entity e, Controller controller) {
-			return controller.isKeyPressed(m_key);
+		boolean eval(Entity e) {
+			return Singleton.getController().isKeyPressed(m_key);
 		}
 	}
 

@@ -16,11 +16,11 @@ public class IBehaviour {
 		this.transitions = transitions ;
 	}
 	
-	IState step(Entity e, Controller controller) throws NoFeasibleTransition {
+	IState step(Entity e) throws NoFeasibleTransition {
 		Iterator<ITransition> iter = transitions.iterator();
 		while(iter.hasNext()) {
 			ITransition transition = iter.next();
-			if(transition.feasible(e, controller)) {
+			if(transition.feasible(e)) {
 				transition.exec(e);
 				return transition.target;
 			}

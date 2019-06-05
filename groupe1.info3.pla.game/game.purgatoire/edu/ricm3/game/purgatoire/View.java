@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Iterator;
 
 import edu.ricm3.game.GameView;
 
@@ -87,24 +88,20 @@ public class View extends GameView implements Transformable {
 		System.out.println("GGGGGg:" + m_yG1);
 		Graphics g1 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2,
 				m_yG1 * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE,
-				(Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
+				(Options.LVL_HEIGHT) * BLOCK_SIZE);
 		System.out.println("GGGGGg:" + m_yG1);
 		g1.setColor(m_model.m_currentLevel.m_c);
 		g1.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
 		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2,
 				(m_yG1 - Options.LVL_HEIGHT) *BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE,
-				(Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
+				(Options.LVL_HEIGHT) * BLOCK_SIZE);
 
 		g2.setColor(m_model.m_nextLevel.m_c);
 		g2.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 		
-		paint(g1, m_model.getPlayer());
-		paint(g1, m_model.getSpecial());
-
-		paint(g1, m_model.getObstacle());
-		paint(g1, m_model.getPlayer());
-		paint(g1, m_model.getSoul());
+		paint(g1, m_model.m_currentLevel);
+		paint(g2, m_model.m_nextLevel);
 
 		g1.dispose();
 		g2.dispose();
@@ -114,7 +111,22 @@ public class View extends GameView implements Transformable {
 		g.setColor(e.m_currentStunt.m_c);
 		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE,
 				e.m_bounds.width * BLOCK_SIZE, e.m_bounds.height * BLOCK_SIZE);
+	}
 
+	private void paint(Graphics g, Level lvl) {
+		Iterator<Entity> iter = lvl.m_obstacles.iterator();
+		while(iter.hasNext()) {
+			paint(g, iter.next());
+		}
+		if(lvl.m_special != null)
+		paint(g, lvl.m_special);
+		if(lvl.m_player!= null)
+		paint(g, lvl.m_player);
+		
+		iter = lvl.m_souls.iterator();
+		while(iter.hasNext()) {
+			paint(g, iter.next());
+		}
 	}
 
 }
