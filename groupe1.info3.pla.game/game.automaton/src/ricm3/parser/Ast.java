@@ -13,7 +13,7 @@ import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IBehaviour;
 import ricm3.interpreter.ICondition;
 import ricm3.interpreter.IDirection;
-import ricm3.interpreter.IEntity;
+import ricm3.interpreter.IEntityType;
 import ricm3.interpreter.ICondition.IAnd;
 import ricm3.interpreter.ICondition.IBinaryOp;
 import ricm3.interpreter.ICondition.IKey;
@@ -273,19 +273,19 @@ public class Ast {
 		}
 
 		@Override
-		public IEntity make() {
+		public IEntityType make() {
 			switch(value.toString()) {
-			case "A": return IEntity.ADVERSARY;
-			case "D": return IEntity.DANGER;
-			case "G": return IEntity.GATE;
-			case "J": return IEntity.JUMP;
-			case "M": return IEntity.MISSILE;
-			case "O": return IEntity.OBSTACLE;
-			case "P": return IEntity.PICK;
-			case "T": return IEntity.TEAM;
-			case "V": return IEntity.VOID;
-			case "@": return IEntity.PLAYER;
-			case "_": return IEntity.ANYTHING;
+			case "A": return IEntityType.ADVERSARY;
+			case "D": return IEntityType.DANGER;
+			case "G": return IEntityType.GATE;
+			case "J": return IEntityType.JUMP;
+			case "M": return IEntityType.MISSILE;
+			case "O": return IEntityType.OBSTACLE;
+			case "P": return IEntityType.PICK;
+			case "T": return IEntityType.TEAM;
+			case "V": return IEntityType.VOID;
+			case "@": return IEntityType.PLAYER;
+			case "_": return IEntityType.ANYTHING;
 			}
 			throw new IllegalStateException();
 		}
