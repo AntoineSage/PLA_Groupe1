@@ -26,9 +26,9 @@ import ricm3.parser.AutomataParser;
 import ricm3.parser.Ast.AI_Definitions;
 
 public class Model extends GameModel implements Transformable {
-	private WorldType m_wt;
+	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
-	private Player m_player;
+	Player m_player;
 	IAutomaton m_aut;
 	// TODO lastTransform and transform() in Controller?
 
@@ -36,9 +36,9 @@ public class Model extends GameModel implements Transformable {
 	
 	public Model() {
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = new Level(this, Color.BLUE);
+		m_currentLevel = new Level(this, Color.yellow);
 		m_nextLevel = new Level(this, Color.pink);
-		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 1 - 3, 3, 3);
+		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
 
 		try {
 			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
@@ -90,7 +90,7 @@ public class Model extends GameModel implements Transformable {
 	public void step(long now, Controller controller) {
 		if(now - lastUpdate > 1000 / 30) {
 			lastUpdate = now;
-			m_player.step(now, controller);
+			//m_player.step(now, controller);
 		}
 	}
 

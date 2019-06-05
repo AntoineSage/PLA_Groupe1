@@ -17,20 +17,24 @@ public class Player extends Entity {
 	}
 
 	@Override
-	void step(long now) {}
+	void step(long now) {
+	}
 
-	void step(long now, Controller controller) {m_currentStunt.m_automaton.step(this, controller);}
+	void step(long now, Controller controller) {
+		m_currentStunt.m_automaton.step(this, controller);
+	}
 
 	void moveUP() {
-		System.out.println(m_bounds.y);
+	
 		if (m_bounds.y == 0) {
+
 			m_level.m_model.nextLevel();
 		}
 		m_bounds.y--;
 	}
 
 	void moveDown() {
-		if (m_bounds.y < Options.LVL_HEIGHT - 1 - m_bounds.height) {
+		if (m_bounds.y < Options.LVL_HEIGHT - m_bounds.height) {
 			m_bounds.y++;
 		}
 	}
