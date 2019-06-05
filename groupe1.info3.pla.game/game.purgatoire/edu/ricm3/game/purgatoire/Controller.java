@@ -141,7 +141,7 @@ public class Controller extends GameController implements ActionListener {
 			m_model.printWorld();
 			m_model.getPlayer().pop();
 			m_model.getPlayer().wizz();
-			m_model.getPlayer().hit();
+			m_model.getPlayer().hit(m_model.m_player.m_direction);
 			m_model.getPlayer().egg();
 			m_lastTransform = now;
 		}

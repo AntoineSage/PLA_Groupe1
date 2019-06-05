@@ -13,12 +13,14 @@ public class Entity {
 	Level m_level;
 	Rectangle m_bounds;
 	IEntityType m_type;
+	IDirection m_direction;
 
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
 		m_hellStunt = hell;
 		m_bounds = new Rectangle(x, y, width, height);
+		m_direction = IDirection.NORTH;
 		transform();
 	}
 
@@ -43,13 +45,13 @@ public class Entity {
 	public int getMaxHP() {
 		return m_maxHP;
 	}
-
-	void takeDamage() {
-		m_currentStunt.getDamage();
+	
+	void takeDamage(int DMG) {
+		m_currentStunt.getDamage(DMG);
 	}
 
 	public void move(IDirection d) {
-		m_currentStunt.move(d);
+		m_currentStunt.tryMove(d);
 	}
 
 	public void pop() {
@@ -64,7 +66,7 @@ public class Entity {
 		m_currentStunt.egg();
 	}
 
-	public void hit() {
-		m_currentStunt.hit();
+	public void hit(IDirection d) {
+		m_currentStunt.hit(d);
 	}
 }
