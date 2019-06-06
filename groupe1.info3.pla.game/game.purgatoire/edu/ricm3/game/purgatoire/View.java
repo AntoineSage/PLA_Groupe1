@@ -19,11 +19,14 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.Iterator;
 
 import edu.ricm3.game.GameView;
+import edu.ricm3.game.purgatoire.Controller.GraphicUI;
 
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;
@@ -35,6 +38,7 @@ public class View extends GameView {
 //	private WorldSprites m_current;
 	int BLOCK_SIZE = (Options.WIN_WIDTH - 2 * Options.UI_PANEL_SIZE) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
+	private List<GraphicUI> m_graphicUIs;
 
 	public View(Model m) {
 		m_model = m;
@@ -55,6 +59,7 @@ public class View extends GameView {
 
 			}
 		});
+		m_graphicUIs = new LinkedList<GraphicUI>();
 	}
 
 	public void step(long now) {
@@ -94,6 +99,13 @@ public class View extends GameView {
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
 
+		paint(g1, m_model.getPlayer());
+
+		Iterator<GraphicUI> iter = m_graphicUIs.iterator();
+		while (iter.hasNext()) {
+			iter.next().paint(g);
+		}
+		
 		g1.dispose();
 		g2.dispose();
 	}
@@ -118,6 +130,10 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+	}
+	
+	public void addGraphicUI(GraphicUI g) {
+		m_graphicUIs.add(g);
 	}
 
 }
