@@ -19,6 +19,7 @@ public class Player extends Entity {
 	void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
 	}
+	
 
 	@Override
 	void step(long now) {
@@ -59,5 +60,9 @@ public class Player extends Entity {
 			m_model.transform();
 		}
 		m_karma = 0;
+	}
+
+	public void addHp(int heal) {
+		m_HP = Math.min(m_maxHP, m_HP + heal);
 	}
 }

@@ -4,14 +4,15 @@ Player(Init){
   | Key(s) ? Move(S) :(Step1)
   | Key(q) ? Move(O) :(Step1)
   | Key(d) ? Move(E) :(Step1)
-  | True ? Egg :(Step1)
+  | True ? Wait :(Step1)
   
   * (Step1): 
   | Key(FU) ? Hit(N) :(Init)
   | Key(FD) ? Hit(S) :(Init)
   | Key(FL) ? Hit(O) :(Init)
   | Key(FR) ? Hit(E) :(Init)
-  | True ? Egg :(Init)
+  | Key(p) ? Pop() :(Init)
+  | True ? Wait :(Init)
 }
 
 SoulsHeaven(Init){
@@ -34,4 +35,14 @@ SoulsHell(Init){
 
 Obstacle(Init){
 	* (Init)
+}
+
+Cat(Init){
+*(Init):
+
+}
+
+Flaque(Init){
+*(Init):
+	|Cell(N,@) ? Pop() : (Init)
 }

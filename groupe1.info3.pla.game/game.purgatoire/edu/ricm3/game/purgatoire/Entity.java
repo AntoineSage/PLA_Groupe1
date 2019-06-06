@@ -34,9 +34,14 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
+	
+	
+	void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
 
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(this);
 	}
 
 	WorldType getWorldType() {
@@ -95,8 +100,9 @@ public class Entity {
 		throw new IllegalStateException("Not yet implemented");
 	}
 	
-	// To improve
+	// To improve	 
 	public Entity superposedWith(IEntityType type) {
-		 return m_level.m_collisionGrid.testCollisionWithType(this, type);
+		return m_level.m_collisionGrid.testCollisionWithType(this, type);
+	
 	}
 }
