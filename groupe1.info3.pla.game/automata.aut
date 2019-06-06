@@ -20,12 +20,12 @@ SoulsHeaven(Init){
 }
 
 SoulsHell(Init){
-	* (Init): True ? Move(O) :(Step1)
-	* (Step1): True ? Move(O) :(Step2)
-	* (Step2): True ? Move(O) :(Step3)
-	* (Step3): True ? Move(E) :(Step4)
-	* (Step4): True ? Move(E) :(Step5)
-	* (Step5): True ? Move(E) :(Init)
+	* (Init): True ? Move(E) :(Step1)
+	* (Step1): True ? Move(E) :(Step2)
+	* (Step2): True ? Move(E) :(Step3)
+	* (Step3): True ? Move(O) :(Step4)
+	* (Step4): True ? Move(O) :(Step5)
+	* (Step5): True ? Move(O) :(Init)
 }
 
 Obstacle(Init){
