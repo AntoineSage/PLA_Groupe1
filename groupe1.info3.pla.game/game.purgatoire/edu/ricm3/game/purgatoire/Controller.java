@@ -131,6 +131,17 @@ public class Controller extends GameController implements ActionListener {
 		m_game.addEast(east);
 	}
 
+	private void updateUI() {
+		m_periodLabel.setText("period: " + m_model.m_period + "s");
+		m_karmaLabel.setText("karma: " + m_model.m_player.getKarma());
+		
+		m_HPLabel.setText("HP: " + m_model.m_player.getHP() + "/" + m_model.m_player.getMaxHP());
+		m_XPLabel.setText("XP: " + m_model.m_player.getXP() + "/" + m_model.m_player.getMaxXP());
+		m_rankLabel.setText("rank: " + m_model.m_player.getRank());
+		m_totalTimeLabel.setText("total time: " + m_model.m_totalTime + "s");
+		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance + "m");
+	}
+	
 	@Override
 	public void step(long now) {
 		if (m_lastTransform == 0)
@@ -147,6 +158,7 @@ public class Controller extends GameController implements ActionListener {
 		}
 		m_model.step(now, this);
 		m_view.step(now);
+		updateUI();
 	}
 
 	@Override
