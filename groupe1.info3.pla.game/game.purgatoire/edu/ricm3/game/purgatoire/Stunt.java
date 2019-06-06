@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 
 public class Stunt {
 
@@ -92,5 +93,9 @@ public class Stunt {
 
 	public void setAttachedEntity(Entity entity) {
 		m_entity = entity;
+	}
+
+	public boolean isEntityAt(IEntityType type, IDirection direction) {
+		throw new IllegalStateException("Not yet implemented");
 	}
 }

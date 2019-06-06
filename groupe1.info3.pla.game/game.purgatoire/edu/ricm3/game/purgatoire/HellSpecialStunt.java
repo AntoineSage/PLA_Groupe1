@@ -37,4 +37,9 @@ public class HellSpecialStunt extends Stunt {
 			
 	}
 
+	@Override
+	public boolean isEntityAt(IEntityType type, IDirection direction) {
+		return m_entity.superposedWith(type) != null;
+	}
+
 }

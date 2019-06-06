@@ -1,5 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
+import java.util.Spliterator.OfPrimitive;
+
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -47,4 +49,17 @@ public class Player extends Entity {
 		return m_rank;
 	}
 
+	void addXP(double coef) {
+		m_XP += m_karma * coef;
+	}
+
+	void testKarma() {
+		if (m_karma >= 0 && m_model.m_wt == WorldType.HEAVEN || m_karma <= 0 && m_model.m_wt == WorldType.HELL) {
+			addXP(Options.COEF_KARMA_POS);
+		} else {
+			addXP(Options.COEF_KARMA_NEG);
+			m_model.transform();
+		}
+		m_karma = 0;
+	}
 }
