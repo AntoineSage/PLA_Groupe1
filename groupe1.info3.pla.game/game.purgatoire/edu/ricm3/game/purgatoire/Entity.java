@@ -33,6 +33,11 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
+	
+	
+	void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
 
 	void step(long now) {
 		m_currentStunt.m_automaton.step(this);
@@ -90,7 +95,7 @@ public class Entity {
 		throw new IllegalStateException("Not yet implemented");
 	}
 	
-	public boolean superposedWith(IEntityType type) {
+	public Entity superposedWith(IEntityType type) {
 		throw new IllegalStateException("Not yet implemented");
 	}
 }

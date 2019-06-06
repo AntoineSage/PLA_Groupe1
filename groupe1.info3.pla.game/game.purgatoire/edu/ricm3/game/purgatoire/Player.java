@@ -18,6 +18,7 @@ public class Player extends Entity {
 	void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
 	}
+	
 
 	@Override
 	void step(long now) {
