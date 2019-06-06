@@ -42,7 +42,6 @@ public class Model extends GameModel implements Transformable {
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
-		m_currentLevel.addEntity(m_player);
 	}
 
 	WorldType getWorld() {
