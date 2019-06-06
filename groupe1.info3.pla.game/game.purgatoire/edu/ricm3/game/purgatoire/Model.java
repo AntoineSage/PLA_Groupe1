@@ -18,13 +18,8 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.util.List;
 
 import edu.ricm3.game.GameModel;
-import ricm3.interpreter.IAutomaton;
-import ricm3.parser.Ast;
-import ricm3.parser.Ast.AI_Definitions;
-import ricm3.parser.AutomataParser;
 
 public class Model extends GameModel implements Transformable {
 	WorldType m_wt;
@@ -39,15 +34,14 @@ public class Model extends GameModel implements Transformable {
 	int m_period, m_totalTime, m_totalDistance;
 	// TODO lastTransform and transform() in Controller?
 
-	long lastUpdatePlayer, lastUpdateSoul;
+	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
-		
+
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
-		m_currentLevel.addEntity(m_player);
 	}
 
 	WorldType getWorld() {
@@ -94,8 +88,22 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void step(long now) {
+		if (lastSecond == 0) {
+			lastSecond = now;
+		}
 		m_currentLevel.step(now);
 		m_nextLevel.step(now);
+		if (now - lastSecond > 1000) {
+			m_period++;
+			lastSecond = now;
+			System.out.println("karma = " + m_player.m_karma);
+		}
+		if (m_period == Options.TOTAL_PERIOD) {
+			m_player.testKarma();
+			m_period = 0;
+			System.out.println("XP : " + m_player.m_XP);
+			System.out.println("test karma!");
+		}
 //		if (now - lastUpdatePlayer > 1000 / 30) {
 //			lastUpdatePlayer = now;
 //			m_player.step(now, controller);

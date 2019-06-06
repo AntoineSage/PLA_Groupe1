@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 
 public class CollisionGrid {
 
@@ -117,6 +118,20 @@ public class CollisionGrid {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
 				grid[i][j].remove(e);
 			}
-		}		
+		}
+	}
+
+	public Entity testCollisionWithType(Entity e, IEntityType type) {
+		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
+				Iterator<Entity> iter = grid[i][j].iterator();
+				while(iter.hasNext()) {
+					Entity eInList = iter.next();
+					if(eInList.m_type == type) return eInList;
+				}
+			}
+		}
+		
+		return null;
 	}
 }
