@@ -1,0 +1,8 @@
+SoulsHeaven(Init){
+	* (Init): True ? Move(N) :(Step1)
+	* (Step1): True ? Move(N) :(Step2)
+	* (Step2): True ? Move(N) :(Step3)
+	* (Step3): True ? Move(S) :(Step4)
+	* (Step4): True ? Move(S) :(Step5)
+	* (Step5): True ? Move(S) :(Init)
+}

@@ -1,26 +1,33 @@
 package ricm3.parser;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import edu.ricm3.game.purgatoire.Controller;
 import ricm3.interpreter.IAction;
+import ricm3.interpreter.IAction.IHit;
 import ricm3.interpreter.IAction.IMove;
+import ricm3.interpreter.IAction.IPop;
+import ricm3.interpreter.IAction.IWait;
+import ricm3.interpreter.IAction.IWizz;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IBehaviour;
 import ricm3.interpreter.ICondition;
-import ricm3.interpreter.IDirection;
-import ricm3.interpreter.IEntityType;
 import ricm3.interpreter.ICondition.IAnd;
 import ricm3.interpreter.ICondition.IBinaryOp;
+import ricm3.interpreter.ICondition.ICell;
+import ricm3.interpreter.ICondition.IClosest;
 import ricm3.interpreter.ICondition.IKey;
+import ricm3.interpreter.ICondition.IMyDir;
 import ricm3.interpreter.ICondition.INot;
 import ricm3.interpreter.ICondition.IOr;
 import ricm3.interpreter.ICondition.ITrue;
 import ricm3.interpreter.ICondition.IUnaryOp;
+import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 import ricm3.interpreter.IState;
 import ricm3.interpreter.ITransition;
 
@@ -418,9 +425,9 @@ public class Ast {
 			switch(name.toString()) {
 			case "True" : return new ITrue();
 			case "Key" : return new IKey(parameters);
-//			case "MyDir" : return new MyDir(parameters);
-//			case "Cell" : return new Cell(parameters);
-//			case "Closest" : return new Closest(parameters);
+			case "MyDir" : return new IMyDir(parameters);
+			case "Cell" : return new ICell(parameters);
+			case "Closest" : return new IClosest(parameters);
 //			case "GotPower" : return new GotPower();
 //			case "GotStuff" : return new GotStuff();
 			}
@@ -430,13 +437,13 @@ public class Ast {
 		@Override
 		public IAction make_action() {
 			switch(name.toString()) {
-//			case "Wait" :
-//			case "Wizz" :d
-//			case "Pop" :d
+			case "Wait" : return new IWait(); 
+			case "Wizz" : return new IWizz(parameters);
+			case "Pop" : return new IPop(parameters);
 			case "Move" : return new IMove(parameters);
 //			case "Jump" :d
 //			case "Turn" :d
-//			case "Hit" :d
+			case "Hit" : return new IHit(parameters);
 //			case "Protect" :d
 //			case "Pick" :d
 //			case "Throw" :d
@@ -534,7 +541,7 @@ public class Ast {
 
 		@Override
 		public List<IAutomaton> make() {
-			List<IAutomaton> automatons = new LinkedList<IAutomaton>();
+			List<IAutomaton> automatons = new ArrayList<IAutomaton>();
 			Iterator<Automaton> iter = automata.iterator();
 			while(iter.hasNext()) {
 				automatons.add(iter.next().make());

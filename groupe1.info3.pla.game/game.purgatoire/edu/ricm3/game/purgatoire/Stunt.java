@@ -13,6 +13,11 @@ public class Stunt {
 	BufferedImage m_sprite;
 	Entity m_entity;
 
+	Stunt(IAutomaton automaton, Color c) {
+		m_automaton = automaton;
+		m_c = c;
+	}
+
 	Stunt(IAutomaton automaton, Entity entity, Color c) {
 		m_automaton = automaton;
 		m_entity = entity;
@@ -25,37 +30,46 @@ public class Stunt {
 		m_sprite = sprite;
 	}
 
-	void tryMove(IDirection d) {
+	public void tryMove(IDirection d) {
+
 		switch (d) {
 		case NORTH:
-			if (m_entity.m_bounds.y == 0) {
+			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
 			}
-			move(0, -1);
+			else if (m_entity.wontCollide(d)) {
+				move(0, -1);
+			}
 			break;
 		case SOUTH:
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
-				move(0,1);
+				if (m_entity.wontCollide(d)) {
+					move(0, 1);
+				}
 			}
 			break;
 		case EAST:
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
-				move(1,0);
+				if (m_entity.wontCollide(d)) {
+					move(1, 0);
+				}
 			}
 			break;
 		case WEST:
 			if (m_entity.m_bounds.x > 0) {
-				move(-1,0);
+				if (m_entity.wontCollide(d)) {
+					move(-1, 0);
+				}
 			}
 			break;
 		}
 	}
 
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop de base");
 	}
 
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz de base");
 	}
 
@@ -63,9 +77,9 @@ public class Stunt {
 		System.out.println("hit de base");
 	}
 
-	void move(int x, int y) {
-		m_entity.m_bounds.x += x;
-		m_entity.m_bounds.y += y;
+	private void move(int x, int y) {
+		m_entity.m_level.updateEntity(m_entity, x, y);
+		m_entity.m_bounds.translate(x, y);
 	}
 
 	void egg() {

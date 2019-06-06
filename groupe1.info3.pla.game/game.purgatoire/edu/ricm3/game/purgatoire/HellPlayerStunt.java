@@ -7,26 +7,17 @@ import ricm3.interpreter.IDirection;
 public class HellPlayerStunt extends Stunt {
 
 	HellPlayerStunt(Entity entity) {
-		super(null, entity, Color.RED);
-	}
-
-	void tryMove(IDirection d) {
-		
+		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
 	}
 	
 	@Override
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop hell");
 	}
 
 	@Override
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz hell");
-	}
-
-	@Override
-	void move(int x, int y) {
-		System.out.println("Move hell");
 	}
 
 	@Override

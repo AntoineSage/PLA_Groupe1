@@ -1,15 +1,16 @@
 package edu.ricm3.game.purgatoire;
 
 public class Options {
-
-	static final int WIN_HEIGHT = 880;
-	static final int WIN_WIDTH = 768;
+		
+	static int WIN_HEIGHT = 756;
+	static int WIN_WIDTH = 786;
 	static final int LVL_HEIGHT = 84;
-	static final int LVL_WIDTH = 48;
-	static final int NB_BLOCKS_WIN = 55;
-	static final int BLOCK_SIZE = WIN_HEIGHT / NB_BLOCKS_WIN;
+	static final int LVL_WIDTH = 45;
 	static final int UI_PANEL_SIZE = 150;
 	static final int UI_MARGIN = 15;
-	static final int TOTAL_PERIOD = 30000;
-
+	static final int TOTAL_PERIOD = 5;
+	public static final String AUT_FILE = "automata.aut";
+	static final double COEF_KARMA_POS = 0.2;
+	static final double COEF_KARMA_NEG = -0.3;
+	
 }

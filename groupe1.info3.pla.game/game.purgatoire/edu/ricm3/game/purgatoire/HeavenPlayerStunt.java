@@ -6,26 +6,17 @@ import ricm3.interpreter.IDirection;
 
 public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
-		super(null, entity, Color.BLUE);
+		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 	}
 
-	void tryMove(IDirection d) {
-		
-	}
-	
 	@Override
-	void pop() {
+	void pop(IDirection d) {
 		System.out.println("pop heaven");
 	}
 
 	@Override
-	void wizz() {
+	void wizz(IDirection d) {
 		System.out.println("wizz heaven");
-	}
-
-	@Override
-	void move(int x, int y) {
-		
 	}
 
 	@Override

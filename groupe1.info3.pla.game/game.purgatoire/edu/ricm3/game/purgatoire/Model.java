@@ -18,43 +18,30 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.util.List;
+
 import edu.ricm3.game.GameModel;
-import ricm3.interpreter.IAutomaton;
-import ricm3.parser.Ast;
-import ricm3.parser.AutomataParser;
-import ricm3.parser.Ast.AI_Definitions;
 
 public class Model extends GameModel implements Transformable {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
+
 	Player m_player;
-	IAutomaton m_aut;
+	Soul m_soul;
+	Obstacle m_obstacle;
+	Special m_special;
+
 	int m_period, m_totalTime, m_totalDistance;
 	// TODO lastTransform and transform() in Controller?
 
-	long lastUpdate;
+	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = new Level(this, Color.yellow);
-		m_nextLevel = new Level(this, Color.pink);
-		m_player = new Player(this, m_currentLevel, 24, Options.LVL_HEIGHT - 3, 3, 3);
+		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		try {
-			Ast ast = AutomataParser.from_file("ProtoPlayer.aut");
-			List<IAutomaton> automatons = ((AI_Definitions) ast).make();
-			m_aut = automatons.get(0);
-			m_player.m_heavenStunt.m_automaton = m_aut;
-			m_player.m_hellStunt.m_automaton = m_aut;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void step(long now) {
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
+		m_currentLevel.addEntity(m_player);
 	}
 
 	WorldType getWorld() {
@@ -63,6 +50,14 @@ public class Model extends GameModel implements Transformable {
 
 	public Player getPlayer() {
 		return m_player;
+	}
+
+	public Special getSpecial() {
+		return m_special;
+	}
+
+	public Soul getSoul() {
+		return m_soul;
 	}
 
 	void printWorld() {
@@ -88,11 +83,32 @@ public class Model extends GameModel implements Transformable {
 		m_nextLevel.transform();
 	}
 
-	public void step(long now, Controller controller) {
-		if (now - lastUpdate > 1000 / 30) {
-			lastUpdate = now;
-			// m_player.step(now, controller);
+	public void step(long now) {
+		if (lastSecond == 0) {
+			lastSecond = now;
 		}
+		m_currentLevel.step(now);
+		m_nextLevel.step(now);
+		if (now - lastSecond > 1000) {
+			m_period++;
+			lastSecond = now;
+			System.out.println("karma = " + m_player.m_karma);
+		}
+		if (m_period == Options.TOTAL_PERIOD) {
+			m_player.testKarma();
+			m_period = 0;
+			System.out.println("XP : " + m_player.m_XP);
+			System.out.println("test karma!");
+		}
+//		if (now - lastUpdatePlayer > 1000 / 30) {
+//			lastUpdatePlayer = now;
+//			m_player.step(now, controller);
+//		}
+//		if (now - lastUpdateSoul > 500) {
+//			lastUpdateSoul = now;
+//			m_soul.step(now);
+//			m_obstacle.step(now);
+//		}
 	}
 
 	@Override
@@ -105,7 +121,11 @@ public class Model extends GameModel implements Transformable {
 
 	void nextLevel() {
 		m_currentLevel = m_nextLevel;
-		m_nextLevel = new Level(this, Color.GREEN);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);
+	}
+
+	public Obstacle getObstacle() {
+		return m_obstacle;
 	}
 }

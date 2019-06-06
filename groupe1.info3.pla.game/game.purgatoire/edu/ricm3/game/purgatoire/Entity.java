@@ -18,9 +18,12 @@ public class Entity {
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
 		m_heavenStunt = heaven;
+		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
+		m_hellStunt .setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
+		m_level.addEntity(this);
 		transform();
 	}
 
@@ -32,6 +35,7 @@ public class Entity {
 	}
 
 	void step(long now) {
+		m_currentStunt.m_automaton.step(this);
 	}
 
 	WorldType getWorldType() {
@@ -50,16 +54,16 @@ public class Entity {
 		m_currentStunt.getDamage(DMG);
 	}
 
-	public void move(IDirection d) {
+	public void tryMove(IDirection d) {
 		m_currentStunt.tryMove(d);
 	}
 
-	public void pop() {
-		m_currentStunt.pop();
+	public void pop(IDirection d) {
+		m_currentStunt.pop(d);
 	}
 
-	public void wizz() {
-		m_currentStunt.wizz();
+	public void wizz(IDirection d) {
+		m_currentStunt.wizz(d);
 	}
 
 	public void egg() {
@@ -68,5 +72,25 @@ public class Entity {
 
 	public void hit(IDirection d) {
 		m_currentStunt.hit(d);
+	}
+
+	public boolean wontCollide(IDirection d) {
+		return m_level.wontCollide(this, d);
+	}
+
+	public boolean isDir(IDirection m_dir) {
+		return m_direction == m_dir;
+	}
+
+	public boolean isEntityAt(IEntityType type, IDirection direction) {
+		throw new IllegalStateException("Not yet implemented");
+	}
+
+	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
+		throw new IllegalStateException("Not yet implemented");
+	}
+	
+	public boolean superposedWith(IEntityType type) {
+		throw new IllegalStateException("Not yet implemented");
 	}
 }

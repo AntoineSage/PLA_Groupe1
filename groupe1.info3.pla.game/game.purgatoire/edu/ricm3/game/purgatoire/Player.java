@@ -1,5 +1,9 @@
 package edu.ricm3.game.purgatoire;
 
+import java.util.Spliterator.OfPrimitive;
+
+import ricm3.interpreter.IEntityType;
+
 public class Player extends Entity {
 	int m_karma;
 	int m_XP;
@@ -10,8 +14,7 @@ public class Player extends Entity {
 	public Player(Model model, Level level, int x, int y, int width, int height) {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
-		m_heavenStunt.setAttachedEntity(this);
-		m_hellStunt.setAttachedEntity(this);
+		m_type = IEntityType.PLAYER;
 	}
 
 	void addKarma(Entity e) {
@@ -20,42 +23,13 @@ public class Player extends Entity {
 
 	@Override
 	void step(long now) {
-	}
-
-	void step(long now, Controller controller) {
-		m_currentStunt.m_automaton.step(this, controller);
-	}
-
-	void moveUP() {
-
-		if (m_bounds.y == 0) {
-
-			m_level.m_model.nextLevel();
-		}
-		m_bounds.y--;
-	}
-
-	void moveDown() {
-		if (m_bounds.y < Options.LVL_HEIGHT - m_bounds.height) {
-			m_bounds.y++;
-		}
-	}
-
-	void moveR() {
-		if (m_bounds.x < Options.LVL_WIDTH - m_bounds.height) {
-			m_bounds.x++;
-		}
-	}
-
-	void moveL() {
-		if (m_bounds.x > 0) {
-			m_bounds.x--;
-		}
+		m_currentStunt.m_automaton.step(this);
 	}
 
 	void nextLevel(Level newLevel) {
 		m_level = newLevel;
-		m_bounds.y = Options.LVL_HEIGHT - 1 - 3;
+		m_bounds.y = Options.LVL_HEIGHT - 3;
+		m_level.addEntity(this);
 	}
 
 	public int getKarma() {
@@ -74,4 +48,17 @@ public class Player extends Entity {
 		return m_rank;
 	}
 
+	void addXP(double coef) {
+		m_XP += m_karma * coef;
+	}
+
+	void testKarma() {
+		if (m_karma >= 0 && m_model.m_wt == WorldType.HEAVEN || m_karma <= 0 && m_model.m_wt == WorldType.HELL) {
+			addXP(Options.COEF_KARMA_POS);
+		} else {
+			addXP(Options.COEF_KARMA_NEG);
+			m_model.transform();
+		}
+		m_karma = 0;
+	}
 }

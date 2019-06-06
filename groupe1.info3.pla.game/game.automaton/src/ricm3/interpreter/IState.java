@@ -15,4 +15,8 @@ public class IState {
 		m_name = name;
 		m_id = id;
 	}
+
+	public IState copy() {
+		return new IState(m_name, m_id);
+	}
 }
