@@ -104,4 +104,14 @@ public abstract class IAction {
 		}
 	}
 
+	public static class IEgg extends IAction {
+
+		public IEgg() {
+		}
+
+		void exec(Entity e) {
+			e.egg();
+		}
+	}
+
 }

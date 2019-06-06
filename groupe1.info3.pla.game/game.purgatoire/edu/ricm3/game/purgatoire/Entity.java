@@ -20,7 +20,7 @@ public class Entity {
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
-		m_hellStunt .setAttachedEntity(this);
+		m_hellStunt.setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
@@ -35,7 +35,7 @@ public class Entity {
 	}
 
 	void step(long now) {
-		m_currentStunt.step(this);
+		m_currentStunt.step(now);
 	}
 
 	WorldType getWorldType() {
@@ -49,15 +49,15 @@ public class Entity {
 	public int getMaxHP() {
 		return m_maxHP;
 	}
-	
+
 	public void setKarmaToGive(int karmaToGive) {
 		m_karmaToGive = karmaToGive;
 	}
-	
+
 	void die() {
 		m_level.removeEntity(this);
 	}
-	
+
 	void takeDamage(int DMG) {
 		m_currentStunt.getDamage(DMG);
 	}
@@ -95,21 +95,36 @@ public class Entity {
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-//		if(m_type2 == IEntityType.PLAYER) {
-//			m_level.m_player;
-//		}
+		if (m_type2 == IEntityType.PLAYER && m_level.m_player != null) {
+			return isGoodDirection(m_direction2, this, m_level.m_player);
+		}
 		return false;
 	}
-	
-	public boolean isGoodDirection(IDirection m_direction, Entity hostEntity, Entity researchedEntity) {
-//		switch()
+
+	public boolean isGoodDirection(IDirection d, Entity hostEntity, Entity researchedEntity) {
+		switch (d) {
+		case NORTH:
+			if (hostEntity.m_bounds.y > researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case SOUTH:
+			if (hostEntity.m_bounds.y < researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case EAST:
+			if (hostEntity.m_bounds.x < researchedEntity.m_bounds.x)
+				return true;
+			break;
+		case WEST:
+			if (hostEntity.m_bounds.x > researchedEntity.m_bounds.x)
+				return true;
+			break;
+		}
 		return false;
 	}
-	
-	
-	
+
 	// To improve
 	public Entity superposedWith(IEntityType type) {
-		 return m_level.m_collisionGrid.testCollisionWithType(this, type);
+		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}
 }

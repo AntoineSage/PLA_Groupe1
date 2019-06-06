@@ -21,14 +21,36 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
-
+		m_entity.die();
+		System.out.println("pop heaven soul");
 	}
 
 	@Override
-	public void step(Entity e) {
+	void wizz(IDirection d) {
+		System.out.println("wizz heaven soul");
+	}
+
+	@Override
+	void hit(IDirection d) {
+		System.out.println("hit heaven soul");
+	}
+
+	@Override
+	void egg() {
+		System.out.println("egg heaven soul");
+	}
+
+	@Override
+	void getDamage(int DMG) {
+		System.out.println("getDamage heaven soul");
+	}
+
+	@Override
+	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			isPlayer.addKarma(m_entity);
+			isPlayer.takeDamage(m_entity.m_DMG);
 			m_entity.die();
 		}
 		m_automaton.step(m_entity);

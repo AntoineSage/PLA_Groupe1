@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IDirection;
 
 public class HeavenObstacleStunt extends Stunt {
 
@@ -13,6 +14,31 @@ public class HeavenObstacleStunt extends Stunt {
 
 	HeavenObstacleStunt() {
 		super(Singleton.getNewObstacleHeavenAut(), null, Color.red);
+	}
+	
+	@Override
+	void pop(IDirection d) {
+		System.out.println("pop heaven");
+	}
+
+	@Override
+	void wizz(IDirection d) {
+		System.out.println("wizz heaven");
+	}
+
+	@Override
+	void hit(IDirection d) {
+		System.out.println("hit heaven");
+	}
+
+	@Override
+	void egg() {
+		System.out.println("egg heaven");
+	}
+
+	@Override
+	void getDamage(int DMG) {
+		System.out.println("getDamage heaven");
 	}
 
 }
