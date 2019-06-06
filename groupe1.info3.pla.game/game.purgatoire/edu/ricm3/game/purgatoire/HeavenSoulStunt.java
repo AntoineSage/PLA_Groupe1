@@ -41,11 +41,6 @@ public class HeavenSoulStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven soul");
-	}
-
-	@Override
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {

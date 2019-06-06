@@ -13,11 +13,13 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
+		m_DMG = 1;
 	}
 
 	void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
 	}
+	
 
 	@Override
 	void step(long now) {
@@ -58,5 +60,9 @@ public class Player extends Entity {
 			m_model.transform();
 		}
 		m_karma = 0;
+	}
+
+	public void addHp(int heal) {
+		m_HP = Math.min(m_maxHP, m_HP + heal);
 	}
 }

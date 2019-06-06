@@ -25,6 +25,7 @@ public class Entity {
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
 		transform();
+		m_HP = 1;
 	}
 
 	public void transform() {
@@ -33,7 +34,8 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
-
+	
+	
 	void step(long now) {
 		m_currentStunt.step(now);
 	}
@@ -52,10 +54,6 @@ public class Entity {
 
 	public void setKarmaToGive(int karmaToGive) {
 		m_karmaToGive = karmaToGive;
-	}
-
-	void die() {
-		m_level.removeEntity(this);
 	}
 
 	void takeDamage(int DMG) {
@@ -82,6 +80,10 @@ public class Entity {
 		m_currentStunt.hit(d);
 	}
 
+	void die() {
+		m_level.removeEntity(this);
+	}
+	
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}
@@ -123,7 +125,7 @@ public class Entity {
 		return false;
 	}
 
-	// To improve
+	// To improve	 
 	public Entity superposedWith(IEntityType type) {
 		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}

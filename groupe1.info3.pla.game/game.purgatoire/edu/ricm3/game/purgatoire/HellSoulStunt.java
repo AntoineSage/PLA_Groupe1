@@ -39,11 +39,6 @@ public class HellSoulStunt extends Stunt {
 	void egg() {
 		System.out.println("egg hell soul");
 	}
-
-	@Override
-	void getDamage(int DMG) {
-		System.out.println("getdamage hell soul");
-	}
 	
 	@Override
 	public void step(long now) {

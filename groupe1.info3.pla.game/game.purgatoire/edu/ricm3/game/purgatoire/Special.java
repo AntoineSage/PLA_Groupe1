@@ -11,5 +11,6 @@ public class Special extends Entity {
 	public Special(Level level, int x, int y, int width, int height) {
 		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), x, y, width, height);
 		m_type = IEntityType.TEAM;
-	}	
+		this.setKarmaToGive(1);
+	}
 }

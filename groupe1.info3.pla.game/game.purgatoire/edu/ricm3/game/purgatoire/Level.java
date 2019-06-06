@@ -116,7 +116,7 @@ public class Level {
 
 	public void step(long now) {
 		removeEntities();
-		if (now - lastUpdatePlayer > 1000 / 30) {
+		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
