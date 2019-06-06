@@ -17,6 +17,6 @@ public class HeavenNestStunt extends Stunt{
 	
 	@Override
 	void egg() {
-		System.out.println("egg de Nid (Heaven) ");
+		System.out.println("egg de Nid");
 	}
 }
