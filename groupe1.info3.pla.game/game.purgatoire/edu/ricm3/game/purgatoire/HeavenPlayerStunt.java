@@ -12,6 +12,7 @@ public class HeavenPlayerStunt extends Stunt {
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop heaven");
+		dash(d);
 	}
 
 	@Override

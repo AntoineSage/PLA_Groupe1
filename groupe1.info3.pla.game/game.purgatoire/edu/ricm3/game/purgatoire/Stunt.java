@@ -13,7 +13,9 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-
+	int m_rangeDash = 10;
+	int m_cooldownDash = 5;
+	
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -62,6 +64,12 @@ public class Stunt {
 				}
 			}
 			break;
+		}
+	}
+
+	void dash(IDirection d) {
+		for (int i = 0; i < m_rangeDash; i++) {
+			tryMove(d);
 		}
 	}
 
