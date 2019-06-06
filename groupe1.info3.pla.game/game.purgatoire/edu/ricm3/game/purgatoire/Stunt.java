@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 
 public class Stunt {
 

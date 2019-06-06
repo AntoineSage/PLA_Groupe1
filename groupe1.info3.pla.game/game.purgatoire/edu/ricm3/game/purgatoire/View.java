@@ -50,9 +50,9 @@ public class View extends GameView {
 				System.out.printf("%d %d\n", getWidth(), getHeight());
 				Options.WIN_HEIGHT = getHeight();
 				Options.WIN_WIDTH = getWidth();
+
 				BLOCK_SIZE = (Options.WIN_WIDTH - 2 * Options.UI_PANEL_SIZE) / Options.LVL_WIDTH;
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
-
 			}
 		});
 	}
