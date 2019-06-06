@@ -41,6 +41,7 @@ public class Stunt {
 			else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
+			m_entity.m_direction = IDirection.NORTH;
 			break;
 		case SOUTH:
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
@@ -48,6 +49,7 @@ public class Stunt {
 					move(0, 1);
 				}
 			}
+			m_entity.m_direction = IDirection.SOUTH;
 			break;
 		case EAST:
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
@@ -55,6 +57,7 @@ public class Stunt {
 					move(1, 0);
 				}
 			}
+			m_entity.m_direction = IDirection.EAST;
 			break;
 		case WEST:
 			if (m_entity.m_bounds.x > 0) {
@@ -62,6 +65,7 @@ public class Stunt {
 					move(-1, 0);
 				}
 			}
+			m_entity.m_direction = IDirection.WEST;
 			break;
 		}
 	}
@@ -93,6 +97,9 @@ public class Stunt {
 
 	void getDamage(int DMG) {
 		m_entity.m_HP -= DMG;
+		if(m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
 	}
 
 	public void setAttachedEntity(Entity entity) {

@@ -29,7 +29,8 @@ public class HeavenSpecialStunt extends Stunt {
 	void wizz(IDirection d) {
 		System.out.println("wizz cat");
 	}
+	
 	@Override
-	public void step(Entity e) {
+	void getDamage(int DMG) {
 	}
 }

@@ -13,6 +13,7 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
+		m_DMG = 1;
 	}
 
 	void addKarma(Entity e) {

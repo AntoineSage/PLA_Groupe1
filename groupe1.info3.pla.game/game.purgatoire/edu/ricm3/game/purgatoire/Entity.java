@@ -25,6 +25,7 @@ public class Entity {
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
 		transform();
+		m_HP = 1;
 	}
 
 	public void transform() {
@@ -79,6 +80,10 @@ public class Entity {
 		m_currentStunt.hit(d);
 	}
 
+	void die() {
+		m_level.removeEntity(this);
+	}
+	
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}
