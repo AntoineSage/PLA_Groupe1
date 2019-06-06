@@ -13,7 +13,9 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-
+	int m_rangeDash = 10;
+	int m_cooldownDash = 5;
+	
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -37,10 +39,10 @@ public class Stunt {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
-			}
-			else if (m_entity.wontCollide(d)) {
+			} else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
+			m_entity.m_direction = IDirection.NORTH;
 			break;
 		case SOUTH:
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
@@ -48,6 +50,7 @@ public class Stunt {
 					move(0, 1);
 				}
 			}
+			m_entity.m_direction = IDirection.SOUTH;
 			break;
 		case EAST:
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
@@ -55,6 +58,7 @@ public class Stunt {
 					move(1, 0);
 				}
 			}
+			m_entity.m_direction = IDirection.EAST;
 			break;
 		case WEST:
 			if (m_entity.m_bounds.x > 0) {
@@ -62,7 +66,18 @@ public class Stunt {
 					move(-1, 0);
 				}
 			}
+			m_entity.m_direction = IDirection.WEST;
 			break;
+		}
+	}
+	
+	public void step(Entity e) {
+		m_automaton.step(m_entity);
+	}
+
+	void dash(IDirection d) {
+		for (int i = 0; i < m_rangeDash; i++) {
+			tryMove(d);
 		}
 	}
 
@@ -89,6 +104,9 @@ public class Stunt {
 
 	void getDamage(int DMG) {
 		m_entity.m_HP -= DMG;
+		if(m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
 	}
 
 	public void setAttachedEntity(Entity entity) {
@@ -96,6 +114,10 @@ public class Stunt {
 	}
 
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
-		throw new IllegalStateException("Not yet implemented");
+		return m_entity.superposedWith(type) != null;
+	}
+
+	public void step(long now) {
+		m_automaton.step(m_entity);
 	}
 }

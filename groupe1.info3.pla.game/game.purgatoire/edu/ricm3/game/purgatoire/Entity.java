@@ -20,11 +20,12 @@ public class Entity {
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
-		m_hellStunt .setAttachedEntity(this);
+		m_hellStunt.setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
 		transform();
+		m_HP = 1;
 	}
 
 	public void transform() {
@@ -33,9 +34,10 @@ public class Entity {
 		else
 			m_currentStunt = m_hellStunt;
 	}
-
+	
+	
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(now);
 	}
 
 	WorldType getWorldType() {
@@ -49,7 +51,11 @@ public class Entity {
 	public int getMaxHP() {
 		return m_maxHP;
 	}
-	
+
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
+
 	void takeDamage(int DMG) {
 		m_currentStunt.getDamage(DMG);
 	}
@@ -74,6 +80,10 @@ public class Entity {
 		m_currentStunt.hit(d);
 	}
 
+	void die() {
+		m_level.removeEntity(this);
+	}
+	
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}
@@ -87,11 +97,36 @@ public class Entity {
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-		throw new IllegalStateException("Not yet implemented");
+		if (m_type2 == IEntityType.PLAYER && m_level.m_player != null) {
+			return isGoodDirection(m_direction2, this, m_level.m_player);
+		}
+		return false;
 	}
-	
-	// To improve
+
+	public boolean isGoodDirection(IDirection d, Entity hostEntity, Entity researchedEntity) {
+		switch (d) {
+		case NORTH:
+			if (hostEntity.m_bounds.y > researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case SOUTH:
+			if (hostEntity.m_bounds.y < researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case EAST:
+			if (hostEntity.m_bounds.x < researchedEntity.m_bounds.x)
+				return true;
+			break;
+		case WEST:
+			if (hostEntity.m_bounds.x > researchedEntity.m_bounds.x)
+				return true;
+			break;
+		}
+		return false;
+	}
+
+	// To improve	 
 	public Entity superposedWith(IEntityType type) {
-		 return m_level.m_collisionGrid.testCollisionWithType(this, type);
+		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}
 }

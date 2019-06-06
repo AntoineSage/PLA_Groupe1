@@ -35,7 +35,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import edu.ricm3.game.GameController;
-import ricm3.interpreter.IDirection;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -147,8 +146,11 @@ public class Controller extends GameController implements ActionListener {
 		m_allKeyPressed.add(e);
 		if (e.getKeyCode() == KeyEvent.VK_A) {
 			m_model.m_player.m_karma += 50;
-		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.m_player.m_karma -= 50;
+		}else if (e.getKeyCode() == KeyEvent.VK_H) {
+			m_model.m_player.m_currentStunt.hit(m_model.m_player.m_direction);
 		}
 	}
 
