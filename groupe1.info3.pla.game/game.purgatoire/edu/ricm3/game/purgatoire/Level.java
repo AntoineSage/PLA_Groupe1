@@ -12,6 +12,7 @@ public class Level {
 	Model m_model;
 	List<Entity> m_souls;
 	List<Entity> m_obstacles;
+	List<Entity> m_nest;
 	List<Entity> m_entities;
 	Entity m_special;
 	Entity m_player;
@@ -27,6 +28,7 @@ public class Level {
 
 		m_obstacles = new LinkedList<Entity>();
 		m_souls = new LinkedList<Entity>();
+		m_nest = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_entities = new LinkedList<Entity>();
@@ -47,7 +49,9 @@ public class Level {
 		m_model = model;
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
+		m_nest = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+
 		m_collisionGrid = new CollisionGrid();
 	}
 
@@ -58,6 +62,10 @@ public class Level {
 
 		if (e instanceof Soul) {
 			m_souls.add(e);
+		}
+
+		if (e instanceof Nest) {
+			m_nest.add(e);
 		}
 
 		if (e instanceof Special) {
@@ -79,6 +87,10 @@ public class Level {
 
 		if (e instanceof Soul) {
 			m_souls.remove(e);
+		}
+		
+		if (e instanceof Nest) {
+			m_nest.remove(e);
 		}
 
 		if (e instanceof Special) {
@@ -114,7 +126,8 @@ public class Level {
 
 	void transform() {
 		Iterator<Entity> iter = m_entities.iterator();
-		while(iter.hasNext())iter.next().transform();
+		while (iter.hasNext())
+			iter.next().transform();
 	}
 
 	public boolean wontCollide(Entity entity, IDirection d) {
@@ -134,6 +147,11 @@ public class Level {
 				iter.next().step(now);
 			}
 			iter = m_obstacles.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+
+			iter = m_nest.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

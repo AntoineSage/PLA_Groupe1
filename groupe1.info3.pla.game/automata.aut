@@ -31,3 +31,9 @@ SoulsHell(Init){
 Obstacle(Init){
 	* (Init)
 }
+
+Nest(Init){
+	* (Init): True ? Move(E) :(Step1)
+	* (Step1): True ? Move(N) :(Step2)
+	* (Step2): True ? Move(S) :(Init)
+}

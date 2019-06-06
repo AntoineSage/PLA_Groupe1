@@ -127,6 +127,11 @@ public class View extends GameView implements Transformable {
 		while(iter.hasNext()) {
 			paint(g, iter.next());
 		}
+		
+		iter = lvl.m_nest.iterator();
+		while(iter.hasNext()) {
+			paint(g, iter.next());
+		}
 	}
 
 }

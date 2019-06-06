@@ -33,6 +33,7 @@ public class Model extends GameModel implements Transformable {
 	Player m_player;
 	Soul m_soul;
 	Obstacle m_obstacle;
+	Nest m_nest;
 	Special m_special;
 
 	int m_period, m_totalTime, m_totalDistance;
@@ -63,6 +64,10 @@ public class Model extends GameModel implements Transformable {
 
 	public Soul getSoul() {
 		return m_soul;
+	}
+	
+	public Nest getNest() {
+		return m_nest;
 	}
 
 	void printWorld() {
