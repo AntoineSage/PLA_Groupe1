@@ -13,6 +13,5 @@ public class Soul extends Entity {
 		m_type = IEntityType.ADVERSARY;
 		this.setKarmaToGive(10);
 	}
-	
-	
+
 }

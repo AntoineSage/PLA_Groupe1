@@ -1,7 +1,5 @@
 package edu.ricm3.game.purgatoire;
 
-import java.util.Spliterator.OfPrimitive;
-
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {

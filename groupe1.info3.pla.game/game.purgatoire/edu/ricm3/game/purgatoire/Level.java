@@ -71,7 +71,7 @@ public class Level {
 		m_entities.add(e);
 		m_collisionGrid.addEntity(e);
 	}
-
+	
 	public void removeEntity(Entity e) {
 		if (e instanceof Obstacle) {
 			m_obstacles.remove(e);

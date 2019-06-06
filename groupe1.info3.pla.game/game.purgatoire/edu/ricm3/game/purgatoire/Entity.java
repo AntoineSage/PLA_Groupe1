@@ -93,10 +93,18 @@ public class Entity {
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
 		return m_currentStunt.isEntityAt(type, direction);
 	}
-
+/*
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-		throw new IllegalStateException("Not yet implemented");
+		if(m_type2 == IEntityType.PLAYER) {
+			m_level.m_player;
+		}
 	}
+	
+	public boolean isGoodDirection(IDirection m_direction, Entity hostEntity, Entity researchedEntity) {
+		switch()
+	}*/
+	
+	
 	
 	// To improve
 	public Entity superposedWith(IEntityType type) {

@@ -37,8 +37,7 @@ public class Stunt {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
-			}
-			else if (m_entity.wontCollide(d)) {
+			} else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
 			break;
@@ -94,7 +93,11 @@ public class Stunt {
 	public void setAttachedEntity(Entity entity) {
 		m_entity = entity;
 	}
-	
+
+	public boolean isEntityAt(IEntityType type, IDirection direction) {
+		return m_entity.superposedWith(type) != null;
+	}
+
 	public void step(Entity e) {
 		m_automaton.step(e);
 	}

@@ -24,11 +24,13 @@ public class HeavenSoulStunt extends Stunt {
 
 	}
 
-	void step() {
+	@Override
+	public void step(Entity e) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
-		if (isPlayer.m_type != null) {
+		if (isPlayer != null) {
 			isPlayer.addKarma(m_entity);
 			m_entity.die();
 		}
+		m_automaton.step(m_entity);
 	}
 }
