@@ -128,7 +128,7 @@ public class Level {
 			if (m_player != null)
 				m_player.step(now);
 		}
-		if (now - lastUpdateOthers > 500) {
+		if (now - lastUpdateOthers > 200) {
 			Iterator<Entity> iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);

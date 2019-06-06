@@ -21,6 +21,7 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
+		m_entity.die();
 		System.out.println("pop heaven soul");
 	}
 

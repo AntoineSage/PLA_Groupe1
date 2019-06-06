@@ -19,18 +19,10 @@ public class HellSoulStunt extends Stunt {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
 	}
 
-	@Override
-	public void step(Entity e) {
-		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
-		if (isPlayer != null) {
-			m_entity.die();
-		}
-		m_automaton.step(m_entity);
-	}
 	
 	@Override
 	void pop(IDirection d) {
-		System.out.println("pop hell soul");
+		m_entity.die();
 	}
 
 	@Override
@@ -51,5 +43,14 @@ public class HellSoulStunt extends Stunt {
 	@Override
 	void getDamage(int DMG) {
 		System.out.println("getdamage hell soul");
+	}
+	
+	@Override
+	public void step(Entity e) {
+		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
+		if (isPlayer != null) {
+			m_entity.die();
+		}
+		m_automaton.step(m_entity);
 	}
 }

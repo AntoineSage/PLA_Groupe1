@@ -44,6 +44,8 @@ public class IEntityType {
 			}
 		case ADVERSARY:
 			switch (type.m_type) {
+			case ADVERSARY:
+				return true;
 			default:
 				return false;
 			}
