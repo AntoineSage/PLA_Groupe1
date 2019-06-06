@@ -134,18 +134,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void step(long now) {
-		if (m_lastTransform == 0)
-			m_lastTransform = now;
-		if (now - m_lastTransform > 5000) {
-			m_model.transform();
-			m_view.transform();
-			m_model.printWorld();
-			m_model.getPlayer().pop(IDirection.NORTH);
-			m_model.getPlayer().wizz(IDirection.NORTH);
-			m_model.getPlayer().hit(m_model.m_player.m_direction);
-			m_model.getPlayer().egg();
-			m_lastTransform = now;
-		}
 		m_model.step(now);
 		m_view.step(now);
 	}
@@ -157,6 +145,11 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		m_allKeyPressed.add(e);
+		if (e.getKeyCode() == KeyEvent.VK_A) {
+			m_model.m_player.m_karma += 50;
+		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+			m_model.m_player.m_karma -= 50;
+		}
 	}
 
 	@Override
