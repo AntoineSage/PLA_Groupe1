@@ -1,7 +1,5 @@
 package edu.ricm3.game.purgatoire;
 
-import java.util.Spliterator.OfPrimitive;
-
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -15,6 +13,7 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
+		m_DMG = 1;
 	}
 
 	void addKarma(Entity e) {

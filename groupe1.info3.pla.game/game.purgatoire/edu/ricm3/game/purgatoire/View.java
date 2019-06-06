@@ -93,7 +93,7 @@ public class View extends GameView {
 
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
-
+		
 		g1.dispose();
 		g2.dispose();
 	}
@@ -102,6 +102,16 @@ public class View extends GameView {
 		g.setColor(e.m_currentStunt.m_c);
 		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
 				e.m_bounds.height * BLOCK_SIZE);
+	}
+	
+	private void paintGrid(Graphics g) {
+		g.setColor(Color.BLACK);
+		for(int i = 0; i < Options.LVL_HEIGHT; i++) {
+			g.drawLine(0,i*BLOCK_SIZE, Options.LVL_WIDTH*BLOCK_SIZE, i*BLOCK_SIZE);
+		}
+		for(int i = 0; i < Options.LVL_WIDTH; i++) {
+			g.drawLine(i*BLOCK_SIZE,0,i*BLOCK_SIZE, Options.LVL_HEIGHT*BLOCK_SIZE);
+		}
 	}
 
 	private void paint(Graphics g, Level lvl) {
