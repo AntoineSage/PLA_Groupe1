@@ -33,7 +33,7 @@ public class View extends GameView implements Transformable {
 	private WorldSprites m_heaven;
 	private WorldSprites m_hell;
 	private WorldSprites m_current;
-	int BLOCK_SIZE = (Options.WIN_WIDTH - 2*Options.UI_PANEL_SIZE)/Options.LVL_WIDTH;
+	int BLOCK_SIZE = (Options.WIN_WIDTH )/Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT/BLOCK_SIZE;
 
 	public View(Model m) {
@@ -53,7 +53,7 @@ public class View extends GameView implements Transformable {
 				Options.WIN_HEIGHT = getHeight();
 				Options.WIN_WIDTH = getWidth();
 				System.out.println("WIIIIIIIIIIIIN " + NB_BLOCKS_WIN );
-				BLOCK_SIZE = (Options.WIN_WIDTH - 2*Options.UI_PANEL_SIZE)/Options.LVL_WIDTH;
+				BLOCK_SIZE = (Options.WIN_WIDTH)/Options.LVL_WIDTH;
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT/BLOCK_SIZE;
 
 			}

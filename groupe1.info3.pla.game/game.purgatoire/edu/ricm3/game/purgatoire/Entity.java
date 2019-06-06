@@ -83,14 +83,14 @@ public class Entity {
 	}
 
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
-		throw new IllegalStateException("Not yet implemented");
+		return m_currentStunt.isEntityAt(type, direction);
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
 		throw new IllegalStateException("Not yet implemented");
 	}
-	
-	public boolean superposedWith(IEntityType type) {
-		throw new IllegalStateException("Not yet implemented");
-	}
+//	
+//	public Entity superposedWith(IEntityType type) {
+//		// m_level.m_collisionGrid.
+//	}
 }
