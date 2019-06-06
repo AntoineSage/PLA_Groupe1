@@ -1,8 +1,7 @@
-soulsHell(Init){
-	* (Init): Move(L) : (Step1)
-	* (Step1): Move(L) : (Step2)
-	* (Step2): Move(L) : (Step3)
-	* (Step3): Move(R) : (Step4)
-	* (Step4): Move(R) : (Step5)
-	* (Step5): Move(R) : (Init)
+SoulsHell(Init){
+	* (Init):
+	|Closest(@,N) ? Move(N) :(Init)
+	|Closest(@,E) ? Move(E) :(Init)
+	|Closest(@,O) ? Move(O) :(Init)
+	|Closest(@,S) ? Move(S) :(Init)
 }
