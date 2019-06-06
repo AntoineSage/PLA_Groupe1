@@ -150,9 +150,6 @@ public class Controller extends GameController implements ActionListener {
 		if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.m_player.m_karma -= 50;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_C) {
-			m_model.m_player.m_currentStunt.pop(m_model.m_player.m_direction);
-		}
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class Entity {
 	}
 
 	void step(long now) {
-		m_currentStunt.step(this);
+		m_currentStunt.step(now);
 	}
 
 	WorldType getWorldType() {

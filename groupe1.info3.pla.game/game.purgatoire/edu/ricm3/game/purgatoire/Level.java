@@ -71,7 +71,7 @@ public class Level {
 		m_entities.add(e);
 		m_collisionGrid.addEntity(e);
 	}
-	
+
 	public void removeEntity(Entity e) {
 		if (e instanceof Obstacle) {
 			m_obstacles.remove(e);
@@ -114,7 +114,8 @@ public class Level {
 
 	void transform() {
 		Iterator<Entity> iter = m_entities.iterator();
-		while(iter.hasNext())iter.next().transform();
+		while (iter.hasNext())
+			iter.next().transform();
 	}
 
 	public boolean wontCollide(Entity entity, IDirection d) {
@@ -122,7 +123,6 @@ public class Level {
 	}
 
 	public void step(long now) {
-
 		if (now - lastUpdatePlayer > 1000 / 30) {
 			lastUpdatePlayer = now;
 			if (m_player != null)

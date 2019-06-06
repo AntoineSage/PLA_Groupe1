@@ -46,7 +46,7 @@ public class HeavenSoulStunt extends Stunt {
 	}
 
 	@Override
-	public void step(Entity e) {
+	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			isPlayer.addKarma(m_entity);

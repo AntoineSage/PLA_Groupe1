@@ -21,7 +21,7 @@ public class Player extends Entity {
 
 	@Override
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(now);;
 	}
 
 	void nextLevel(Level newLevel) {

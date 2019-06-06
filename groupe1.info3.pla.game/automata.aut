@@ -8,6 +8,7 @@ Player(Init){
   | Key(s) ? Move(S) :(Init)
   | Key(q) ? Move(O) :(Init)
   | Key(d) ? Move(E) :(Init)
+  | Key(c) ? Pop :(Init)
 }
 
 SoulsHeaven(Init){

@@ -106,7 +106,7 @@ public class Stunt {
 		return m_entity.superposedWith(type) != null;
 	}
 
-	public void step(Entity e) {
-		m_automaton.step(e);
+	public void step(long now) {
+		m_automaton.step(m_entity);
 	}
 }
