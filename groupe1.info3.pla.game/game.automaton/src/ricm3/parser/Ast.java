@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ricm3.interpreter.IAction;
+import ricm3.interpreter.IAction.IEgg;
 import ricm3.interpreter.IAction.IHit;
 import ricm3.interpreter.IAction.IMove;
 import ricm3.interpreter.IAction.IPop;
@@ -451,7 +452,7 @@ public class Ast {
 //			case "Get" :
 //			case "Power" :
 //			case "Kamikaze" :
-//			case "Egg" :
+			case "Egg" : return new IEgg();
 			}
 			throw new IllegalStateException();
 		}
