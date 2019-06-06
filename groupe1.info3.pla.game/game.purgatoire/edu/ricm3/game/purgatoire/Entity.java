@@ -35,7 +35,7 @@ public class Entity {
 	}
 
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(this);
 	}
 
 	WorldType getWorldType() {
@@ -48,6 +48,14 @@ public class Entity {
 
 	public int getMaxHP() {
 		return m_maxHP;
+	}
+	
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
+	
+	void die() {
+		m_level.removeEntity(this);
 	}
 	
 	void takeDamage(int DMG) {
@@ -90,7 +98,7 @@ public class Entity {
 		throw new IllegalStateException("Not yet implemented");
 	}
 	
-	public boolean superposedWith(IEntityType type) {
+	public Entity superposedWith(IEntityType type) {
 		throw new IllegalStateException("Not yet implemented");
 	}
 }

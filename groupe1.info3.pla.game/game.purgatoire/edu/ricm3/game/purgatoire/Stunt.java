@@ -93,4 +93,8 @@ public class Stunt {
 	public void setAttachedEntity(Entity entity) {
 		m_entity = entity;
 	}
+	
+	public void step(Entity e) {
+		m_automaton.step(e);
+	}
 }

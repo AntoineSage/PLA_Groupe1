@@ -4,7 +4,7 @@ import ricm3.interpreter.IEntityType;
 
 public class Special extends Entity {
 
-	Special(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
+	Special(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, int karmaToGive) {
 		super(level, heaven, hell, x, y, width, height);
 	}
 
