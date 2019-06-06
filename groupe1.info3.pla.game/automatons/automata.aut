@@ -46,3 +46,7 @@ Flaque(Init){
 *(Init):
 	|Cell(N,@) ? Pop() : (Init)
 }
+
+Nest(Init){
+	* (Init): True ? Egg() :(Init)
+}

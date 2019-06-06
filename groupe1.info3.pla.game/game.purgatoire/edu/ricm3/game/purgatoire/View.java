@@ -130,6 +130,11 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+		
+		iter = lvl.m_nest.iterator();
+		while(iter.hasNext()) {
+			paint(g, iter.next());
+		}
 	}
 
 }

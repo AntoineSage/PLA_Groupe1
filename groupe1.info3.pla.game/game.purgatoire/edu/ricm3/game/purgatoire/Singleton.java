@@ -22,6 +22,9 @@ public class Singleton {
 
 	private static IAutomaton m_specialHellAut;
 	private static IAutomaton m_specialHeavenAut;
+	
+	private static IAutomaton m_nestHellAut;
+	private static IAutomaton m_nestHeavenAut;
 
 	private static Controller m_controller;
 	
@@ -46,6 +49,9 @@ public class Singleton {
 
 		m_specialHellAut = automatons.get(5);
 		m_specialHeavenAut = automatons.get(4);
+
+		m_nestHellAut = automatons.get(6);
+		m_nestHeavenAut = automatons.get(6);
 	}
 
 	public Singleton getSingleton() {
@@ -95,5 +101,13 @@ public class Singleton {
 	
 	public static IAutomaton getNewSpecialHeavenAut() {
 		return m_specialHeavenAut.copy();
+	}
+	
+	public static IAutomaton getNewNestHellAut() {
+		return m_nestHellAut.copy();
+	}
+	
+	public static IAutomaton getNewNestHeavenAut() {
+		return m_nestHeavenAut.copy();
 	}
 }

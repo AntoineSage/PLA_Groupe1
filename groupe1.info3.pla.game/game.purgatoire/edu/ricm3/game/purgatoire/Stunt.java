@@ -2,6 +2,7 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -99,6 +100,7 @@ public class Stunt {
 	}
 
 	void egg() {
+		
 		System.out.println("egg de base");
 	}
 
