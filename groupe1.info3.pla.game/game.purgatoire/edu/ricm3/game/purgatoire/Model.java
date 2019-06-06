@@ -30,10 +30,11 @@ public class Model extends GameModel implements Transformable {
 	Obstacle m_obstacle;
 	Special m_special;
 
-	int m_period, m_totalTime, m_totalDistance;
+	int m_totalTime, m_totalDistance;
+	double m_period;
 	// TODO lastTransform and transform() in Controller?
 
-	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
+	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
@@ -68,12 +69,6 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void transform() {
-		// TODO put world change in Controller?
-//		if (m_wt == WorldType.HEAVEN)
-//			if (m_player.m_karma < 0)
-//				m_wt = WorldType.HELL;
-//			else if (m_player.m_karma > 0)
-//				m_wt =WorldType.HEAVEN;
 		if (m_wt == WorldType.HEAVEN)
 			m_wt = WorldType.HELL;
 		else
@@ -84,31 +79,19 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void step(long now) {
-		if (lastSecond == 0) {
-			lastSecond = now;
+		if (lastPeriodUpdate == 0) {
+			lastPeriodUpdate = now;
 		}
 		m_currentLevel.step(now);
 		m_nextLevel.step(now);
-		if (now - lastSecond > 1000) {
-			m_period++;
-			lastSecond = now;
-			System.out.println("karma = " + m_player.m_karma);
+		if (now - lastPeriodUpdate > 100) {
+			m_period += now - lastPeriodUpdate;
+			lastPeriodUpdate = now;
 		}
-		if (m_period == Options.TOTAL_PERIOD) {
+		if (m_period >= Options.TOTAL_PERIOD) {
 			m_player.testKarma();
 			m_period = 0;
-			System.out.println("XP : " + m_player.m_XP);
-			System.out.println("test karma!");
 		}
-//		if (now - lastUpdatePlayer > 1000 / 30) {
-//			lastUpdatePlayer = now;
-//			m_player.step(now, controller);
-//		}
-//		if (now - lastUpdateSoul > 500) {
-//			lastUpdateSoul = now;
-//			m_soul.step(now);
-//			m_obstacle.step(now);
-//		}
 	}
 
 	@Override

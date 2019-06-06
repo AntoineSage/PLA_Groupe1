@@ -47,7 +47,7 @@ public class View extends GameView {
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
 		m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
 
-		//transform();
+		// transform();
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
@@ -103,9 +103,9 @@ public class View extends GameView {
 
 		Iterator<GraphicUI> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
-			iter.next().paint(g);
+			iter.next().repaint();
 		}
-		
+
 		g1.dispose();
 		g2.dispose();
 	}
@@ -131,7 +131,7 @@ public class View extends GameView {
 			paint(g, iter.next());
 		}
 	}
-	
+
 	public void addGraphicUI(GraphicUI g) {
 		m_graphicUIs.add(g);
 	}

@@ -17,10 +17,12 @@ public class Player extends Entity {
 
 	public void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
+		Singleton.getController().updateUI();
 	}
-	
+
 	public void addKarma(int karma) {
 		m_karma += karma;
+		Singleton.getController().updateUI();
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class Player extends Entity {
 	public void setMaxXP(int maxXP) {
 		m_maxXP = maxXP;
 	}
-	
+
 	public int getMaxXP() {
 		return m_maxXP;
 	}
@@ -57,10 +59,12 @@ public class Player extends Entity {
 	public void addXP(double coef) {
 		m_XP += m_karma * coef;
 		m_XP = Math.max(m_XP, 0);
+		Singleton.getController().updateUI();
 	}
-	
+
 	@Override
 	public void addHP(int HP) {
+		Singleton.getController().updateUI();
 		super.addHP(HP);
 	}
 

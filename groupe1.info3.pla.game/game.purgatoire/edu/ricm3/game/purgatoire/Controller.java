@@ -18,6 +18,7 @@
 
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -37,18 +38,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import edu.ricm3.game.GameController;
-import edu.ricm3.game.GameView;
-import ricm3.interpreter.IDirection;
 
 public class Controller extends GameController implements ActionListener {
 
-//	static class GraphicUI extends Canvas {
-	static class GraphicUI extends GameView {
+	static class GraphicUI extends Canvas {
 		private static final long serialVersionUID = -4828379213574397971L;
 		private Color m_color;
 		private View m_view;
 		private Rectangle m_rect;
-		
+
 		public GraphicUI(Color c, View v, int x, int y, int w, int h) {
 			m_color = c;
 			m_view = v;
@@ -58,25 +56,22 @@ public class Controller extends GameController implements ActionListener {
 		}
 
 		@Override
-		public void _paint(Graphics g) {
+		public void paint(Graphics g) {
 			g.setColor(m_color);
 			g.fillRect(m_rect.x, m_rect.y, m_rect.width, m_rect.height);
 		}
-		
-//		@Override
-//		public final void paint(Graphics g) {
-//			_paint(g);
-//			repaint();
-//		}
-	
+
+		public void repaint(int val) {
+			m_rect.y = val;
+			repaint();
+		}
+
 	}
-	
+
 	Model m_model;
 	View m_view;
-	private long m_lastTransform;
 	Queue<KeyEvent> m_allKeyPressed;
 	public GraphicUI m_karmaBar, m_HPBar, m_XPBar, m_periodCircle;
-//	public GameView bar;
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 
 	public Controller(Model model, View view) {
@@ -101,21 +96,18 @@ public class Controller extends GameController implements ActionListener {
 
 		Container westInside = new Container();
 		westInside.setLayout(new BoxLayout(westInside, BoxLayout.Y_AXIS));
-		
+
 		Container karmaBar = new Container();
 		karmaBar.setLayout(new GridBagLayout());
-		
-		m_periodLabel = new Label("period: " + m_model.m_period + "s");
+
+		m_periodLabel = new Label();
 		m_periodLabel.setAlignment(Label.CENTER);
 		m_karmaBar = new GraphicUI(Color.orange, m_view, 0, 0, 30, 150);
-//		bar = new GraphicUI(Color.orange, m_view);
-//		bar.setPreferredSize(new Dimension(30, 150));
-		m_karmaLabel = new Label("karma: " + m_model.m_player.getKarma());
+		m_karmaLabel = new Label();
 		m_karmaLabel.setAlignment(Label.CENTER);
-		
+
 		westInside.add(m_periodLabel);
 		karmaBar.add(m_karmaBar);
-//		karmaBar.add(bar);
 		westInside.add(karmaBar);
 		westInside.add(m_karmaLabel);
 
@@ -140,16 +132,16 @@ public class Controller extends GameController implements ActionListener {
 		XP.setLayout(new BoxLayout(XP, BoxLayout.Y_AXIS));
 
 		m_HPBar = new GraphicUI(Color.red, m_view, 100, 200, 30, 150);
-		m_HPLabel = new Label("HP: " + m_model.m_player.getHP() + "/" + m_model.m_player.getMaxHP());
+		m_HPLabel = new Label();
 		m_HPLabel.setAlignment(Label.CENTER);
 		m_XPBar = new GraphicUI(Color.blue, m_view, 500, 500, 30, 150);
-		m_XPLabel = new Label("XP: " + m_model.m_player.getXP() + "/" + m_model.m_player.getMaxXP());
+		m_XPLabel = new Label();
 		m_XPLabel.setAlignment(Label.CENTER);
-		m_rankLabel = new Label("rank: " + m_model.m_player.getRank());
+		m_rankLabel = new Label();
 		m_rankLabel.setAlignment(Label.CENTER);
-		m_totalTimeLabel = new Label("total time: " + m_model.m_totalTime + "s");
+		m_totalTimeLabel = new Label();
 		m_totalTimeLabel.setAlignment(Label.CENTER);
-		m_totalDistanceLabel = new Label("total distance: " + m_model.m_totalDistance + "m");
+		m_totalDistanceLabel = new Label();
 		m_totalDistanceLabel.setAlignment(Label.CENTER);
 
 		HP.add(m_HPBar);
@@ -170,19 +162,20 @@ public class Controller extends GameController implements ActionListener {
 
 		m_game.addWest(west);
 		m_game.addEast(east);
+		updateUI();
 	}
 
-	private void updateUI() {
-		m_periodLabel.setText("period: " + m_model.m_period + "s");
+	public void updateUI() {
+		m_periodLabel.setText(String.format("period: %.1f%n", (Options.TOTAL_PERIOD - m_model.m_period) / 1000));
 		m_karmaLabel.setText("karma: " + m_model.m_player.getKarma());
-		
+
 		m_HPLabel.setText("HP: " + m_model.m_player.getHP() + "/" + m_model.m_player.getMaxHP());
 		m_XPLabel.setText("XP: " + m_model.m_player.getXP() + "/" + m_model.m_player.getMaxXP());
 		m_rankLabel.setText("rank: " + m_model.m_player.getRank());
 		m_totalTimeLabel.setText("total time: " + m_model.m_totalTime + "s");
 		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance + "m");
 	}
-	
+
 	@Override
 	public void step(long now) {
 		m_model.step(now);
@@ -198,9 +191,9 @@ public class Controller extends GameController implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 		m_allKeyPressed.add(e);
 		if (e.getKeyCode() == KeyEvent.VK_A) {
-			m_model.m_player.m_karma += 50;
+			m_model.getPlayer().addKarma(+50);
 		} else if (e.getKeyCode() == KeyEvent.VK_E) {
-			m_model.m_player.m_karma -= 50;
+			m_model.getPlayer().addKarma(-50);
 		}
 	}
 
