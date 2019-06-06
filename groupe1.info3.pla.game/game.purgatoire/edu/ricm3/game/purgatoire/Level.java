@@ -22,6 +22,8 @@ public class Level {
 	private long lastUpdatePlayer;
 	private long lastUpdateOthers;
 
+	List<Entity> m_toRemove;
+
 	Level(Model model, Color c, List<Entity> obstacles, List<Entity> souls, Special special) {
 		m_model = model;
 		m_c = c;
@@ -32,6 +34,8 @@ public class Level {
 
 		m_collisionGrid = new CollisionGrid();
 		m_entities = new LinkedList<Entity>();
+
+		m_toRemove = new LinkedList<Entity>();
 
 		Iterator<Entity> iter = obstacles.iterator();
 		while (iter.hasNext()) {
@@ -53,6 +57,7 @@ public class Level {
 		m_entities = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
+		m_toRemove = new LinkedList<Entity>();
 	}
 
 	public void addEntity(Entity e) {
@@ -81,24 +86,7 @@ public class Level {
 	}
 
 	public void removeEntity(Entity e) {
-		if (e instanceof Obstacle) {
-			m_obstacles.remove(e);
-		}
-
-		if (e instanceof Soul) {
-			m_souls.remove(e);
-		}
-		
-		if (e instanceof Nest) {
-			m_nest.remove(e);
-		}
-
-		if (e instanceof Special) {
-			m_special = null;
-		}
-
-		m_entities.remove(e);
-		m_collisionGrid.removeEntity(e);
+		m_toRemove.add(e);
 	}
 
 	// Update the collisionGrid with the future new values translated by x and y.
@@ -135,13 +123,13 @@ public class Level {
 	}
 
 	public void step(long now) {
-
-		if (now - lastUpdatePlayer > 1000 / 30) {
+		removeEntities();
+		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
 		}
-		if (now - lastUpdateOthers > 500) {
+		if (now - lastUpdateOthers > 200) {
 			Iterator<Entity> iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
@@ -158,6 +146,28 @@ public class Level {
 			if (m_special != null)
 				m_special.step(now);
 			lastUpdateOthers = now;
+		}
+	}
+
+	private void removeEntities() {
+		Iterator<Entity> iter = m_toRemove.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			if (e instanceof Obstacle) {
+				m_obstacles.remove(e);
+			}
+
+			if (e instanceof Soul) {
+				m_souls.remove(e);
+			}
+
+			if (e instanceof Special) {
+				m_special = null;
+			}
+
+			m_entities.remove(e);
+			m_collisionGrid.removeEntity(e);
+			iter.remove();
 		}
 	}
 }

@@ -47,12 +47,11 @@ public class Singleton {
 		m_obstacleHellAut = automatons.get(3);
 		m_obstacleHeavenAut = automatons.get(3);
 
-		m_specialHellAut = automatons.get(3);
-		m_specialHeavenAut = automatons.get(3);
-		
-		m_nestHellAut = automatons.get(4);
-		m_nestHeavenAut = automatons.get(4);
-		
+		m_specialHellAut = automatons.get(5);
+		m_specialHeavenAut = automatons.get(4);
+
+		m_nestHellAut = automatons.get(6);
+		m_nestHeavenAut = automatons.get(6);
 	}
 
 	public Singleton getSingleton() {

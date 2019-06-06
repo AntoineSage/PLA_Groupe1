@@ -86,7 +86,7 @@ SKIP:  { " " | "\t" | "\n" | "\r" }
 
 TOKEN: { < CONDITION: "True" | "Key" | "MyDir" | "Cell" | "Closest" | "GotPower" | "GotStuff" > }
 
-TOKEN: { < ACTION: "Egg" | "Get" | "Hit" | "Jump" | "Kamikaze" | "Move" | "Pick" | "Pop" | "Power" | "Protect" | "Store" | "Throw" | "Turn" | "Wizz" > }
+TOKEN: { < ACTION: "Egg" | "Get" | "Hit" | "Jump" | "Kamikaze" | "Move" | "Pick" | "Pop" | "Power" | "Protect" | "Store" | "Throw" | "Turn" | "Wizz" | "Wait" > }
 
 TOKEN : { < SPECIAL_KEY: "SPACE" | "ENTER" | "FU" | "FD" | "FL" | "FR" > }
 

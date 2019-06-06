@@ -9,7 +9,7 @@ public class Options {
 	static final int UI_PANEL_SIZE = 150;
 	static final int UI_MARGIN = 15;
 	static final int TOTAL_PERIOD = 5;
-	public static final String AUT_FILE = "automata.aut";
+	public static final String AUT_FILE = "automatons/automata.aut";
 	static final double COEF_KARMA_POS = 0.2;
 	static final double COEF_KARMA_NEG = -0.3;
 	
