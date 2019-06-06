@@ -161,6 +161,10 @@ public class Level {
 				m_souls.remove(e);
 			}
 
+			if (e instanceof Nest) {
+				m_nest.remove(e);
+			}
+
 			if (e instanceof Special) {
 				m_special = null;
 			}
