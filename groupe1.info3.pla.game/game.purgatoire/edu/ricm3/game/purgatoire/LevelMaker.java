@@ -15,8 +15,8 @@ public class LevelMaker {
 		new Obstacle(level, 10, 30, 20, 2);
 		new Obstacle(level, 10, 32, 2, 20);
 
-		new Nest(level, 30, 20, 4, 4);
-		new Nest(level, 30, 10, 4, 4);
+		new Nest(level, 30, 20, 3, 3);
+		new Nest(level, 30, 10, 3, 3);
 
 		return level;
 	}
