@@ -8,6 +8,7 @@ Player(Init){
   | Key(s) ? Move(S) :(Init)
   | Key(q) ? Move(O) :(Init)
   | Key(d) ? Move(E) :(Init)
+  | Key(p) ? Pop() :(Init)
 }
 
 SoulsHeaven(Init){
@@ -30,4 +31,14 @@ SoulsHell(Init){
 
 Obstacle(Init){
 	* (Init)
+}
+
+Cat(Init){
+*(Init):
+
+}
+
+Flaque(Init){
+*(Init):
+	|Cell(N,@) ? Pop() : (Init)
 }

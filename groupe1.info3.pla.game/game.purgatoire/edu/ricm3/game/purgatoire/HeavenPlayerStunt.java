@@ -3,6 +3,7 @@ package edu.ricm3.game.purgatoire;
 import java.awt.Color;
 
 import ricm3.interpreter.IDirection;
+import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
@@ -11,7 +12,11 @@ public class HeavenPlayerStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
-		System.out.println("pop heaven");
+		Special special = (Special)m_entity.superposedWith(IEntityType.TEAM);
+		if(special != null) {
+			special.pop(null);
+		}
+		System.out.println("pop heaven player");
 	}
 
 	@Override

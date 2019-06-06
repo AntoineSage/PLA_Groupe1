@@ -1,7 +1,5 @@
 package edu.ricm3.game.purgatoire;
 
-import java.util.Spliterator.OfPrimitive;
-
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -61,5 +59,9 @@ public class Player extends Entity {
 			m_model.transform();
 		}
 		m_karma = 0;
+	}
+
+	public void addHp(int heal) {
+		m_HP = Math.min(m_maxHP, m_HP + heal);
 	}
 }

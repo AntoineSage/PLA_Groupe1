@@ -7,8 +7,6 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenSpecialStunt extends Stunt {
 
-	Player isPlayer;
-
 	HeavenSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
 	}
@@ -19,6 +17,11 @@ public class HeavenSpecialStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
+		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
+		if (player != null) {
+			System.out.println("sur chat");
+			player.addKarma(m_entity);
+		}
 		System.out.println("pop cat");
 	}
 
@@ -28,10 +31,5 @@ public class HeavenSpecialStunt extends Stunt {
 	}
 	@Override
 	public void step(Entity e) {
-		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
-		if (isPlayer != null) {
-			System.out.println("sur chat");
-			isPlayer.addKarma(m_entity);
-		}
 	}
 }
