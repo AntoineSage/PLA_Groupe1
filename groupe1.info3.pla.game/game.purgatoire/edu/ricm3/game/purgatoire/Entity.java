@@ -46,8 +46,16 @@ public class Entity {
 		return m_HP;
 	}
 
+	public void addHP(int HP) {
+		m_HP += HP;
+	}
+	
 	public int getMaxHP() {
 		return m_maxHP;
+	}
+	
+	public void addMaxHP(int maxHP) {
+		m_maxHP += maxHP;
 	}
 	
 	void takeDamage(int DMG) {

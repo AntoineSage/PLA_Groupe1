@@ -31,13 +31,11 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
-
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
-			}
-			else if (m_entity.wontCollide(d)) {
+			} else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
 			break;
@@ -61,6 +59,8 @@ public class Stunt {
 					move(-1, 0);
 				}
 			}
+			break;
+		default:
 			break;
 		}
 	}
@@ -87,7 +87,7 @@ public class Stunt {
 	}
 
 	void getDamage(int DMG) {
-		m_entity.m_HP -= DMG;
+		m_entity.addHP(-DMG);
 	}
 
 	public void setAttachedEntity(Entity entity) {

@@ -1,15 +1,13 @@
 package edu.ricm3.game.purgatoire;
 
-import java.util.Spliterator.OfPrimitive;
-
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
-	int m_karma;
-	int m_XP;
+	private int m_karma;
+	private int m_XP;
 	private int m_maxXP;
 	private int m_rank;
-	Model m_model;
+	private Model m_model;
 
 	public Player(Model model, Level level, int x, int y, int width, int height) {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
@@ -17,16 +15,20 @@ public class Player extends Entity {
 		m_type = IEntityType.PLAYER;
 	}
 
-	void addKarma(Entity e) {
+	public void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
+	}
+	
+	public void addKarma(int karma) {
+		m_karma += karma;
 	}
 
 	@Override
-	void step(long now) {
+	public void step(long now) {
 		m_currentStunt.m_automaton.step(this);
 	}
 
-	void nextLevel(Level newLevel) {
+	public void nextLevel(Level newLevel) {
 		m_level = newLevel;
 		m_bounds.y = Options.LVL_HEIGHT - 3;
 		m_level.addEntity(this);
@@ -40,6 +42,10 @@ public class Player extends Entity {
 		return m_XP;
 	}
 
+	public void setMaxXP(int maxXP) {
+		m_maxXP = maxXP;
+	}
+	
 	public int getMaxXP() {
 		return m_maxXP;
 	}
@@ -48,11 +54,17 @@ public class Player extends Entity {
 		return m_rank;
 	}
 
-	void addXP(double coef) {
+	public void addXP(double coef) {
 		m_XP += m_karma * coef;
+		m_XP = Math.max(m_XP, 0);
+	}
+	
+	@Override
+	public void addHP(int HP) {
+		super.addHP(HP);
 	}
 
-	void testKarma() {
+	public void testKarma() {
 		if (m_karma >= 0 && m_model.m_wt == WorldType.HEAVEN || m_karma <= 0 && m_model.m_wt == WorldType.HELL) {
 			addXP(Options.COEF_KARMA_POS);
 		} else {
