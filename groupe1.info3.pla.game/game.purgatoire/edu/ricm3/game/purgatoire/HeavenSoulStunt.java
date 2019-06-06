@@ -21,7 +21,27 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
+		System.out.println("pop heaven soul");
+	}
 
+	@Override
+	void wizz(IDirection d) {
+		System.out.println("wizz heaven soul");
+	}
+
+	@Override
+	void hit(IDirection d) {
+		System.out.println("hit heaven soul");
+	}
+
+	@Override
+	void egg() {
+		System.out.println("egg heaven soul");
+	}
+
+	@Override
+	void getDamage(int DMG) {
+		System.out.println("getDamage heaven soul");
 	}
 
 	@Override
