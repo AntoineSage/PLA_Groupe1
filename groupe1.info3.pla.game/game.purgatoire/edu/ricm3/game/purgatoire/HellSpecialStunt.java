@@ -25,6 +25,10 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
+	void getDamage(int DMG) {
+	}
+	
+	@Override
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
 		return m_entity.superposedWith(type) != null;
 	}

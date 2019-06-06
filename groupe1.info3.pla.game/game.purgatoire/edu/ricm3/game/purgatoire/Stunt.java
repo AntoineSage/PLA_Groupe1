@@ -94,7 +94,7 @@ public class Stunt {
 	void getDamage(int DMG) {
 		m_entity.m_HP -= DMG;
 		if(m_entity.m_HP <= 0) {
-			//m_entity.die();
+			m_entity.die();
 		}
 	}
 

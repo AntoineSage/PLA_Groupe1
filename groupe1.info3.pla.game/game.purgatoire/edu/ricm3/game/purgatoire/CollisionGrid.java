@@ -124,7 +124,7 @@ public class CollisionGrid {
 	public Entity testCollisionWithType(Entity e, IEntityType type) {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
-				Iterator<Entity> iter = grid[i][j].iterator();
+				Iterator<Entity> iter = m_grid[i][j].iterator();
 				while(iter.hasNext()) {
 					Entity eInList = iter.next();
 					if(eInList.m_type == type) return eInList;
