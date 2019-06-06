@@ -19,8 +19,6 @@ public class HellSpecialStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
-		isPlayer.addKarma(m_entity);
-		isPlayer.m_HP --;
 		System.out.println("pop flaque");
 	}
 
@@ -28,13 +26,15 @@ public class HellSpecialStunt extends Stunt {
 	void wizz(IDirection d) {
 		System.out.println("wizz flaque");
 	}
-	void step() {
+	@Override
+	public void step(Entity e) {
 		isPlayer = (Player)m_entity.superposedWith(IEntityType.PLAYER);
 		if(isPlayer != null) {
-			this.pop(IDirection.SOUTH);
-			this.wizz(IDirection.SOUTH);
+			System.out.println("sur flaque");
+			isPlayer.addKarma(m_entity);
+			m_entity.m_HP ++;
 		}
-			
+		m_automaton.step(m_entity);	
 	}
 
 	@Override

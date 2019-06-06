@@ -40,7 +40,7 @@ public class Entity {
 	}
 
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(this);
 	}
 
 	WorldType getWorldType() {
@@ -95,8 +95,9 @@ public class Entity {
 		throw new IllegalStateException("Not yet implemented");
 	}
 	
-		 return m_level.m_collisionGrid.testCollisionWithType(this, type);
+	// To improve	 
 	public Entity superposedWith(IEntityType type) {
-	// To improve
+		return m_level.m_collisionGrid.testCollisionWithType(this, type);
+	
 	}
 }

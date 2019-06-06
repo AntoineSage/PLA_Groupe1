@@ -65,6 +65,10 @@ public class Stunt {
 			break;
 		}
 	}
+	
+	public void step(Entity e) {
+		m_automaton.step(m_entity);
+	}
 
 	void pop(IDirection d) {
 		System.out.println("pop de base");

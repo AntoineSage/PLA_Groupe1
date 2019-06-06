@@ -26,12 +26,12 @@ public class HeavenSpecialStunt extends Stunt {
 	void wizz(IDirection d) {
 		System.out.println("wizz cat");
 	}
-
-	void step() {
+	@Override
+	public void step(Entity e) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
-			this.pop(IDirection.EAST);
-			this.wizz(IDirection.EAST);
+			System.out.println("sur chat");
+			isPlayer.addKarma(m_entity);
 		}
 	}
 }
