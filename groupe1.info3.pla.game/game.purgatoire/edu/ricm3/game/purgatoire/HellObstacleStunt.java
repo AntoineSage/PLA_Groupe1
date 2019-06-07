@@ -10,6 +10,8 @@ public class HellObstacleStunt extends Stunt {
 
 	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_entity.m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
+		m_entity.m_DMG = Options.HELL_OBSTACLE_DMG;
 	}
 
 	HellObstacleStunt() {

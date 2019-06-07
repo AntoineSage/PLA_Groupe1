@@ -13,6 +13,9 @@ public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
+		m_entity.m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
+		m_entity.m_DMG = Options.HEAVEN_PLAYER_DMG;
+
 	}
 
 	@Override

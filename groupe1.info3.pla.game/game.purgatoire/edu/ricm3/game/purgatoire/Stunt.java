@@ -2,7 +2,6 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -14,8 +13,8 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-	int m_rangeDash = 10;
-	int m_cooldownDash = 5;
+	int m_rangeDash = Options.DASH_SIZE;
+	int m_cooldownDash = Options.DASH_CD;
 	
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;

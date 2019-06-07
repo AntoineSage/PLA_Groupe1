@@ -10,6 +10,8 @@ public class HellSpecialStunt extends Stunt {
 	
 	HellSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
+		m_entity.m_maxHP = Options.HELL_SPCL_HP_MAX;
+		m_entity.m_DMG = Options.HELL_SPCL_DMG;
 	}
 	
 	HellSpecialStunt() {
@@ -22,7 +24,7 @@ public class HellSpecialStunt extends Stunt {
 		if(player != null) {
 			System.out.println("sur flaque");
 			player.addKarma(m_entity);
-			player.addHp(5);
+			player.addHp(Options.HELL_SPCL_HP_TOGIVE);
 		}
 		System.out.println("pop flaque");
 	}

@@ -29,6 +29,7 @@ public class Entity {
 	}
 
 	public void transform() {
+		//TODO chanegr après changement Options 
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
 		else

@@ -3,6 +3,8 @@ package edu.ricm3.game.purgatoire;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
+	int m_maxTotalHP;
+	int m_maxKarma;
 	int m_karma;
 	int m_XP;
 	private int m_maxXP;
@@ -13,7 +15,9 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_DMG = 1;
+		m_XP = Options.PLAYER_XP;
+		m_HP = Options.PLAYER_HP;
+		m_maxKarma = Options.PLAYER_KARMA_MAX;
 	}
 
 	void addKarma(Entity e) {
@@ -51,6 +55,15 @@ public class Player extends Entity {
 	void addXP(double coef) {
 		m_XP += m_karma * coef;
 	}
+	
+	public int getMaxKarma() {
+		return m_maxKarma;
+	}
+	
+	public int getMaxTotalHP(){
+		return m_maxTotalHP;
+	}
+	
 
 	void testKarma() {
 		if (m_karma >= 0 && m_model.m_wt == WorldType.HEAVEN || m_karma <= 0 && m_model.m_wt == WorldType.HELL) {

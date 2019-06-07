@@ -13,6 +13,8 @@ public class HeavenSoulStunt extends Stunt {
 
 	HeavenSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_entity.m_maxHP = Options.HEAVEN_SOUL_HP_MAX;
+		m_entity.m_DMG = Options.HEAVEN_SOUL_DMG;
 	}
 
 	HeavenSoulStunt() {
