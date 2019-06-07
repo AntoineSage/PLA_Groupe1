@@ -28,5 +28,6 @@ public class Missile extends Entity {
 			Entity entity = iter.next();
 			entity.m_currentStunt.getDamage(m_DMG);
 		}
+		die();
 	}
 }
