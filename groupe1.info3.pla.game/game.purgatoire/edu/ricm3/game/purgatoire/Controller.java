@@ -157,7 +157,7 @@ public class Controller extends GameController implements ActionListener {
 		m_XPLabel.setText("XP: " + m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
 		m_rankLabel.setText("rank: " + m_model.getPlayer().getRank());
 		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
-		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance + "m");
+		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
 	}
 
 	@Override

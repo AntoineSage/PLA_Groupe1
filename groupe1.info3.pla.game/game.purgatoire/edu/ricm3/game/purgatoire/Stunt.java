@@ -99,6 +99,8 @@ public class Stunt {
 	private void move(int x, int y) {
 		m_entity.m_level.updateEntity(m_entity, x, y);
 		m_entity.m_bounds.translate(x, y);
+		m_entity.m_level.m_model.m_totalDistance -= y;
+		Singleton.getController().updateUI();
 	}
 
 	void egg() {

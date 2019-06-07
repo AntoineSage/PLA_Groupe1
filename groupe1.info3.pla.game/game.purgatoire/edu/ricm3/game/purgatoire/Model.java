@@ -31,7 +31,7 @@ public class Model extends GameModel {
 	Nest m_nest;
 	Special m_special;
 
-	int m_totalDistance; // TODO distance
+	int m_totalDistance;
 	double m_period, m_totalTime;
 
 	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
