@@ -96,13 +96,13 @@ public class Model extends GameModel implements Transformable {
 		if (now - lastSecond > 1000) {
 			m_period++;
 			lastSecond = now;
-			System.out.println("karma = " + m_player.m_karma);
+			//System.out.println("karma = " + m_player.m_karma);
 		}
 		if (m_period == Options.TOTAL_PERIOD) {
 			m_player.testKarma();
 			m_period = 0;
-			System.out.println("XP : " + m_player.m_XP);
-			System.out.println("test karma!");
+			//System.out.println("XP : " + m_player.m_XP);
+			//System.out.println("test karma!");
 		}
 //		if (now - lastUpdatePlayer > 1000 / 30) {
 //			lastUpdatePlayer = now;

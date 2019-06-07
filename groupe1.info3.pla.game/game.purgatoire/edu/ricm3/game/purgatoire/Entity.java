@@ -129,4 +129,9 @@ public class Entity {
 	public Entity superposedWith(IEntityType type) {
 		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}
+	
+	public boolean superposedWith(IEntityType type, IDirection direction) {
+		return m_level.m_collisionGrid.wontCollide(this, direction);
+	}
+	
 }

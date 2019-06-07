@@ -50,4 +50,5 @@ public class HeavenSoulStunt extends Stunt {
 		}
 		m_automaton.step(m_entity);
 	}
+	
 }

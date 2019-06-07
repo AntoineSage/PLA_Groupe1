@@ -145,8 +145,8 @@ public class Level {
 			lastUpdateOthers = now;
 		}
 		
-		if(now - lastUpdateNest > Options.NEST_SPAWN_DELAY) {
 			Iterator<Entity> iter = m_nest.iterator();
+			if(now - lastUpdateNest > Options.NEST_SPAWN_DELAY) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

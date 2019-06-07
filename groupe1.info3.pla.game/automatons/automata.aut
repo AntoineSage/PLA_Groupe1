@@ -16,7 +16,7 @@ Player(Init){
   | True ? Wait :(Init)
 }
 
-SoulsHeaven(Init){
+SoulsHell(Init){
 	* (Init):
 	|Closest(@,N) ? Move(N) :(Init)
 	|Closest(@,E) ? Move(E) :(Init)
@@ -24,7 +24,7 @@ SoulsHeaven(Init){
 	|Closest(@,S) ? Move(S) :(Init)
 }
 
-SoulsHell(Init){
+SoulsHeaven(Init){
 	* (Init): True ? Move(E) :(Step1)
 	* (Step1): True ? Move(E) :(Step2)
 	* (Step2): True ? Move(E) :(Step3)
@@ -32,6 +32,8 @@ SoulsHell(Init){
 	* (Step4): True ? Move(O) :(Step5)
 	* (Step5): True ? Move(O) :(Init)
 }
+
+
 
 Obstacle(Init){
 	* (Init)
@@ -48,5 +50,7 @@ Flaque(Init){
 }
 
 Nest(Init){
-	* (Init): True ? Egg() :(Init)
+	* (Init)
+	|True ? Egg() : (Step1)
+	* (Step1): True ? Pop() :(Init)
 }

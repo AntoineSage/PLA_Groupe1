@@ -122,4 +122,5 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
+	
 }

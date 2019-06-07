@@ -108,7 +108,7 @@ public class HeavenPlayerStunt extends Stunt {
 
 	@Override
 	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+		//System.out.println("getDamage heaven");
 	}
 
 	@Override
