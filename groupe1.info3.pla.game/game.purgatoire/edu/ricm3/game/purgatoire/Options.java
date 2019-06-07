@@ -21,7 +21,7 @@ public class Options {
 	static int HELL_PLAYER_DMG = 1;
 	static int HELL_PLAYER_HP_MAX = 1;
 	static int HEAVEN_PLAYER_DMG = 1;
-	static int HEAVEN_PLAYER_HP_MAX = 1;
+    static int HEAVEN_PLAYER_HP_MAX = 10;
 	
 	static int PLAYER_MAX_TOTAL_HP = 150;
 	static int PLAYER_HP = 50;

@@ -9,8 +9,8 @@ public class HeavenSpecialStunt extends Stunt {
 
 	HeavenSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
-		m_entity.m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
-		m_entity.m_DMG = Options.HEAVEN_SPCL_DMG;
+		m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
+		m_DMG = Options.HEAVEN_SPCL_DMG;
 	}
 
 	HeavenSpecialStunt() {

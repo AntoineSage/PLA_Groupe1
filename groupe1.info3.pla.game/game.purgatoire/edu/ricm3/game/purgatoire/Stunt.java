@@ -15,6 +15,7 @@ public class Stunt {
 	Entity m_entity;
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
+	int m_maxHP, m_DMG;
 	
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;

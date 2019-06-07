@@ -93,6 +93,6 @@ public class Player extends Entity {
 	}
 
 	public void addHp(int heal) {
-		m_HP = Math.min(m_maxHP, m_HP + heal);
+		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + heal);
 	}
 }
