@@ -24,8 +24,6 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
-		m_HP = Options.MAX_HP;
-		m_maxHP = Options.MAX_HP;
 		transform();
 		m_HP = 1;
 	}
@@ -131,6 +129,8 @@ public class Entity {
 		case WEST:
 			if (hostEntity.m_bounds.x > researchedEntity.m_bounds.x)
 				return true;
+			break;
+		default:
 			break;
 		}
 		return false;

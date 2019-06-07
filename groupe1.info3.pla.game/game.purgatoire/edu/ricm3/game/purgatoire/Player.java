@@ -13,7 +13,7 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_maxXP = Options.PLAYER_MAX_XP;
+		m_maxXP = Options.PLAYER_XP_MAX;
 		m_XP = Options.PLAYER_XP;
 		m_HP = Options.PLAYER_HP;
 		m_maxTotalHP = Options.PLAYER_MAX_TOTAL_HP;
@@ -71,15 +71,6 @@ public class Player extends Entity {
 		m_XP = Math.max(m_XP, 0);
 		Singleton.getController().updateUI();
 	}
-	
-	public int getMaxKarma() {
-		return m_maxKarma;
-	}
-	
-	public int getMaxTotalHP(){
-		return m_maxTotalHP;
-	}
-	
 
 	@Override
 	public void addHP(int HP) {
