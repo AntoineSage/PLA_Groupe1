@@ -8,17 +8,20 @@ import ricm3.interpreter.IEntityType;
 
 public class Missile extends Entity {
 
-	Player m_player;
+	Entity m_player;
 
-	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
+	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, Entity p) {
 		super(level, heaven, hell, x, y, width, height);
 		m_type = IEntityType.MISSILE;
+		m_player = p;
 	}
 
-	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction) {
+	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction, Entity p) {
 		super(level, heaven, hell, x, y, width, height);
 		m_type = IEntityType.MISSILE;
 		m_direction = direction;
+		m_player = p;
+		m_DMG = 1;
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
-import ricm3.interpreter.IEntityType;
 
 public class HellMissileStunt extends Stunt {
 
@@ -43,10 +42,6 @@ public class HellMissileStunt extends Stunt {
 	
 	@Override
 	public void step(long now) {
-		Entity entity = m_entity.m_level.m_collisionGrid.testCollisionWithType(m_entity, IEntityType.ADVERSARY);
-		if (entity != null) {
-			entity.die();
-		}
 		m_automaton.step(m_entity);
 	}
 

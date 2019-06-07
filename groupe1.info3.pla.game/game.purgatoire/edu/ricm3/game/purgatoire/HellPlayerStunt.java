@@ -29,28 +29,37 @@ public class HellPlayerStunt extends Stunt {
 	@Override
 	void hit(IDirection d) {
 		if (m_missileTimer.end()) {
-			m_missileTimer.start(1000/2);
+			m_missileTimer.start(1000 / 2);
 			Missile missile;
 			switch (d) {
 			case NORTH:
-				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d);
-				m_missiles.add(missile);
+				if (m_entity.m_bounds.y > 0) {
+					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+							m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
+					m_missiles.add(missile);
+				}
 				break;
 			case SOUTH:
-				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + 3, 1, 1, d);
-				m_missiles.add(missile);
+				if (m_entity.m_bounds.y != Options.LVL_HEIGHT - m_entity.m_bounds.height) {
+					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+							m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
+					m_missiles.add(missile);
+				}
 				break;
 			case EAST:
-				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 1, 1, 1, d);
-				m_missiles.add(missile);
+				if (m_entity.m_bounds.x != Options.LVL_WIDTH - m_entity.m_bounds.width) {
+
+					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+							m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+					m_missiles.add(missile);
+				}
 				break;
 			case WEST:
-				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d);
-				m_missiles.add(missile);
+				if (m_entity.m_bounds.x != 0) {
+					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+							m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+					m_missiles.add(missile);
+				}
 				break;
 			}
 		}

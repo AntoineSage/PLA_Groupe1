@@ -2,7 +2,7 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+import java.util.List;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -38,45 +38,48 @@ public class Stunt {
 
 		switch (d) {
 		case NORTH:
-			if (m_entity.m_bounds.y == 1) {
-				goingOut(d);
-			} else if (m_entity.wontCollide(d)) {
-				move(0, -1);
-			}
+			System.out.println("HERE");
 			m_entity.m_direction = IDirection.NORTH;
+			if (m_entity.m_bounds.y <= 1) {
+				goingOut(d);
+			} else {
+				if (nobodyCollideWithEntity()) {
+					move(0, -1);
+				}
+			}
 			break;
 		case SOUTH:
+			m_entity.m_direction = IDirection.SOUTH;
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(0, 1);
 				}
-			}else {
+			} else {
 				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.SOUTH;
 			break;
 		case EAST:
+			m_entity.m_direction = IDirection.EAST;
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(1, 0);
 				}
-			}else {
+			} else {
 				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.EAST;
 			break;
 		case WEST:
+			m_entity.m_direction = IDirection.WEST;
 			if (m_entity.m_bounds.x > 0) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(-1, 0);
 				}
-			}else {
+			} else {
 				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.WEST;
 			break;
 		case FRONT:
-			switch(m_entity.m_direction) {
+			switch (m_entity.m_direction) {
 			case NORTH:
 				tryMove(IDirection.NORTH);
 				break;
@@ -94,7 +97,7 @@ public class Stunt {
 			}
 			break;
 		case BACK:
-			switch(m_entity.m_direction) {
+			switch (m_entity.m_direction) {
 			case NORTH:
 				tryMove(IDirection.NORTH);
 				break;
@@ -112,7 +115,7 @@ public class Stunt {
 			}
 			break;
 		case LEFT:
-			switch(m_entity.m_direction) {
+			switch (m_entity.m_direction) {
 			case NORTH:
 				tryMove(IDirection.NORTH);
 				break;
@@ -130,7 +133,7 @@ public class Stunt {
 			}
 			break;
 		case RIGHT:
-			switch(m_entity.m_direction) {
+			switch (m_entity.m_direction) {
 			case NORTH:
 				tryMove(IDirection.NORTH);
 				break;
@@ -174,12 +177,8 @@ public class Stunt {
 	}
 
 	private void move(int x, int y) {
-//		m_entity.m_level.m_collisionGrid.testCollision();
-//		if(testCollision!= null) {
-//			m_entity.enterInCollisionWith(entities);
-//		}
-//		m_entity.m_level.updateEntity(m_entity, x, y);
-//		m_entity.m_bounds.translate(x, y);
+		m_entity.m_level.updateEntity(m_entity, x, y);
+		m_entity.m_bounds.translate(x, y);
 	}
 
 	void egg() {
@@ -201,9 +200,23 @@ public class Stunt {
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
 		return m_entity.superposedWith(type) != null;
 	}
-	
-	void goingOut(IDirection d){
-		
+
+	public boolean nobodyCollideWithEntity() {
+		if (m_entity instanceof Missile) {
+			System.out.println("x: " + m_entity.m_bounds.x + "y: " + m_entity.m_bounds.y);
+		}
+		List<Entity> colliders = m_entity.m_level.m_collisionGrid.testCollisionFutur(m_entity, m_entity.m_direction);
+		if (!colliders.isEmpty()) {
+			System.out.println("isNotEmpry");
+			m_entity.enterInCollisionWith(colliders);
+			return false;
+
+		}
+		return true;
+	}
+
+	void goingOut(IDirection d) {
+
 	}
 
 	public void step(long now) {
