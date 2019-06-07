@@ -20,11 +20,12 @@ public class Entity {
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
-		m_hellStunt .setAttachedEntity(this);
+		m_hellStunt.setAttachedEntity(this);
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
-		m_maxHP = 100; // TODO max HP in constructor parameter
+		m_HP = Options.MAX_HP;
+		m_maxHP = Options.MAX_HP;
 		transform();
 	}
 
@@ -50,15 +51,15 @@ public class Entity {
 	public void addHP(int HP) {
 		m_HP += HP;
 	}
-	
+
 	public int getMaxHP() {
 		return m_maxHP;
 	}
-	
+
 	public void addMaxHP(int maxHP) {
 		m_maxHP += maxHP;
 	}
-	
+
 	void takeDamage(int DMG) {
 		m_currentStunt.getDamage(DMG);
 	}
@@ -98,9 +99,9 @@ public class Entity {
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
 		throw new IllegalStateException("Not yet implemented");
 	}
-	
-	// To improve
+
+	// TODO to improve
 	public Entity superposedWith(IEntityType type) {
-		 return m_level.m_collisionGrid.testCollisionWithType(this, type);
+		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}
 }

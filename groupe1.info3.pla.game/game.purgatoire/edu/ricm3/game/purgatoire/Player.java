@@ -3,9 +3,9 @@ package edu.ricm3.game.purgatoire;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
-	private int m_karma;
-	private int m_XP;
-	private int m_maxXP;
+	private int m_maxTotalHP;
+	private int m_karma, m_maxKarma;
+	private int m_XP, m_maxXP;
 	private int m_rank;
 	private Model m_model;
 
@@ -13,6 +13,11 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
+		m_maxXP = Options.MAX_XP;
+		m_maxKarma = Options.MAX_KARMA;
+		m_HP = Options.PLAYER_MAX_HP;
+		m_maxHP = Options.PLAYER_MAX_HP;
+		m_maxTotalHP = Options.PLAYER_MAX_HP;
 	}
 
 	public void addKarma(Entity e) {
@@ -22,6 +27,10 @@ public class Player extends Entity {
 
 	public void addKarma(int karma) {
 		m_karma += karma;
+		if (m_karma > getMaxKarma())
+			m_karma = getMaxKarma();
+		else if (m_karma < -getMaxKarma())
+			m_karma = -getMaxKarma();
 		Singleton.getController().updateUI();
 	}
 
@@ -40,12 +49,12 @@ public class Player extends Entity {
 		return m_karma;
 	}
 
-	public int getXP() {
-		return m_XP;
+	public int getMaxKarma() {
+		return m_maxKarma;
 	}
 
-	public void setMaxXP(int maxXP) {
-		m_maxXP = maxXP;
+	public int getXP() {
+		return m_XP;
 	}
 
 	public int getMaxXP() {
@@ -64,8 +73,12 @@ public class Player extends Entity {
 
 	@Override
 	public void addHP(int HP) {
-		Singleton.getController().updateUI();
 		super.addHP(HP);
+		Singleton.getController().updateUI();
+	}
+
+	public int getMaxTotalHP() {
+		return m_maxTotalHP;
 	}
 
 	public void testKarma() {

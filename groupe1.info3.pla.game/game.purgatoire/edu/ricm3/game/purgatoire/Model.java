@@ -30,9 +30,8 @@ public class Model extends GameModel implements Transformable {
 	Obstacle m_obstacle;
 	Special m_special;
 
-	int m_totalTime, m_totalDistance;
-	double m_period;
-	// TODO lastTransform and transform() in Controller?
+	int m_totalDistance; // TODO distance
+	double m_period, m_totalTime;
 
 	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
 
@@ -85,6 +84,7 @@ public class Model extends GameModel implements Transformable {
 		m_nextLevel.step(now);
 		if (now - lastPeriodUpdate > 100) {
 			m_period += now - lastPeriodUpdate;
+			m_totalTime += now - lastPeriodUpdate;
 			lastPeriodUpdate = now;
 		}
 		if (m_period >= Options.TOTAL_PERIOD) {

@@ -6,12 +6,19 @@ public class Options {
 	static int WIN_WIDTH = 786;
 	static final int LVL_HEIGHT = 84;
 	static final int LVL_WIDTH = 45;
-	static final int UI_PANEL_SIZE = 150;
-	static final int UI_MARGIN = 15;
+
+	static final int UI_PANEL_SIZE = 300;
+	static final int UI_BAR_HEIGHT = 150;
+	static final int UI_BAR_WIDTH = 30;
+
 	static final int TOTAL_PERIOD = 5000;
 	public static final String AUT_FILE = "automata.aut";
 	static final double COEF_KARMA_POS = 0.2;
 	static final double COEF_KARMA_NEG = -0.3;
-	static final int MAX_TOTAL_HP = 150;
+
+	static final int PLAYER_MAX_HP = 150;
+	static final int MAX_HP = 150;
+	static final int MAX_XP = 150;
+	static final int MAX_KARMA = 150;
 
 }
