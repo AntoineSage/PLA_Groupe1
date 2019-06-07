@@ -12,5 +12,6 @@ public class Options {
 	public static final String AUT_FILE = "automatons/automata.aut";
 	static final double COEF_KARMA_POS = 0.2;
 	static final double COEF_KARMA_NEG = -0.3;
+	static final long NEST_SPAWN_DELAY = 3000;
 	
 }

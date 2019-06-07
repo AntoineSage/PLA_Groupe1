@@ -19,7 +19,6 @@ public class HellNestStunt extends Stunt {
 	@Override
 	void egg() {
 		int x, y, width, height, randX, randY;
-		// milieu Nest
 		width = m_entity.m_bounds.width;
 		height = m_entity.m_bounds.height;
 		x = (2 * m_entity.m_bounds.x + (width )) / 2;
@@ -37,8 +36,7 @@ public class HellNestStunt extends Stunt {
 			randY = y - r.nextInt(height + 2);
 		else
 			randY = y + r.nextInt(height + 2);
-		if (m_entity.m_level.m_collisionGrid.isOk(new Soul(m_entity.m_level, randX, randY, 2, 2)))
-			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX, randY, 2, 2));
-		System.out.println("egg de Nid ");
+		if (m_entity.m_level.m_collisionGrid.isOk(randX-2, randY-2, 2, 2))
+			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX-2, randY-2, 2, 2));
 	}
 }

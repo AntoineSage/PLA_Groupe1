@@ -42,6 +42,14 @@ public class CollisionGrid {
 			}
 		return false;
 	}
+	
+	boolean isOk(int x, int y, int width, int height) {
+		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
+			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
+				return true;
+			}
+		return false;
+	}
 
 	public void updateEntity(Entity e, int x, int y) {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {

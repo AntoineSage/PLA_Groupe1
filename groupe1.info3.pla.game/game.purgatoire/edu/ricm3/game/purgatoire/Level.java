@@ -21,6 +21,7 @@ public class Level {
 	Color m_c;
 	private long lastUpdatePlayer;
 	private long lastUpdateOthers;
+	private long lastUpdateNest;
 
 	List<Entity> m_toRemove;
 
@@ -139,13 +140,17 @@ public class Level {
 				iter.next().step(now);
 			}
 
-			iter = m_nest.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
 			if (m_special != null)
 				m_special.step(now);
 			lastUpdateOthers = now;
+		}
+		
+		if(now - lastUpdateNest > Options.NEST_SPAWN_DELAY) {
+			Iterator<Entity> iter = m_nest.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+			lastUpdateNest = now;
 		}
 	}
 
