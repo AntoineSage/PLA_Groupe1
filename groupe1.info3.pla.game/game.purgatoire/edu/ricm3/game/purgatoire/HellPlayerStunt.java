@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import ricm3.interpreter.IDirection;
 
-public class HellPlayerStunt extends Stunt {
+public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	HellPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
@@ -36,4 +36,9 @@ public class HellPlayerStunt extends Stunt {
 	void getDamage(int DMG) {
 		System.out.println("getDamage hell");
 	}
+	
+	public String getRankName() {
+		return Options.PLAYER_RANKS_HELL[((Player) m_entity).getRank()];
+	}
+	
 }

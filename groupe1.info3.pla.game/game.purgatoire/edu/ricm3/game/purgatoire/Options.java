@@ -29,6 +29,11 @@ public class Options {
 	static int PLAYER_XP_MAX = 150;
 	static int PLAYER_KARMA_MAX = 150;
 
+	static final int[] PLAYER_RANKS = { 0, 100, 200, 300 };
+	static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 1;
+	static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
+	static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
+
 	// NEST OPTIONS
 	static int HELL_NEST_DMG = 1;
 	static int HELL_NEST_HP_MAX = 1;

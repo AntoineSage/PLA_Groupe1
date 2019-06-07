@@ -6,7 +6,7 @@ import java.util.Iterator;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
-public class HeavenPlayerStunt extends Stunt {
+public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_dashTimer;
 
@@ -15,7 +15,7 @@ public class HeavenPlayerStunt extends Stunt {
 		m_dashTimer = new Timer(m_cooldownDash);
 		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
 		m_DMG = Options.HEAVEN_PLAYER_DMG;
-
+		m_entity = (Player) m_entity;
 	}
 
 	@Override
@@ -114,6 +114,10 @@ public class HeavenPlayerStunt extends Stunt {
 	@Override
 	void getDamage(int DMG) {
 		System.out.println("getDamage heaven");
+	}
+
+	public String getRankName() {
+		return Options.PLAYER_RANKS_HEAVEN[((Player) m_entity).getRank()];
 	}
 
 	@Override

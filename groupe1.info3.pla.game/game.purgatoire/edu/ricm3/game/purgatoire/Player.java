@@ -5,7 +5,7 @@ import ricm3.interpreter.IEntityType;
 public class Player extends Entity {
 	private int m_maxTotalHP;
 	private int m_karma, m_maxKarma;
-	private int m_XP, m_maxXP;
+	private int m_XP;
 	private int m_rank;
 	private Model m_model;
 
@@ -13,7 +13,6 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_maxXP = Options.PLAYER_XP_MAX;
 		m_XP = Options.PLAYER_XP;
 		m_HP = Options.PLAYER_HP;
 		m_maxTotalHP = Options.PLAYER_MAX_TOTAL_HP;
@@ -32,6 +31,14 @@ public class Player extends Entity {
 		else if (m_karma < -getMaxKarma())
 			m_karma = -getMaxKarma();
 		Singleton.getController().updateUI();
+	}
+
+	public void updateRank() {
+		if (m_XP >= getMaxXP()) {
+			m_rank++;
+		} else if (m_XP < getMinXP()) {
+			m_rank--;
+		}
 	}
 
 	@Override
@@ -57,17 +64,26 @@ public class Player extends Entity {
 		return m_XP;
 	}
 
+	public int getMinXP() {
+		return Options.PLAYER_RANKS[m_rank];
+	}
+
 	public int getMaxXP() {
-		return m_maxXP;
+		return Options.PLAYER_RANKS[m_rank + 1];
 	}
 
 	public int getRank() {
 		return m_rank;
 	}
 
+	public String getRankName() {
+		return ((PlayerStunt) m_currentStunt).getRankName();
+	}
+
 	public void addXP(double coef) {
 		m_XP += Math.abs(m_karma) * coef;
 		m_XP = Math.max(m_XP, 0);
+		updateRank();
 		Singleton.getController().updateUI();
 	}
 
