@@ -17,7 +17,7 @@ public class HeavenObstacleStunt extends Stunt {
 	HeavenObstacleStunt() {
 		super(Singleton.getNewObstacleHeavenAut(), null, Color.red);
 	}
-	
+
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop heaven");

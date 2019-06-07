@@ -6,7 +6,7 @@ public class LevelMaker {
 	public static Level makeTestLevel(Model model, Color c) {
 		Level level = new Level(model, c);
 
-		new Special(level, 0, 0,Options.SPCL_WIDTH ,Options.SPCL_HEIGHT );
+		new Special(level, 0, 0, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
 
 		new Soul(level, 10, 10, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
 		new Soul(level, 14, 10, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);

@@ -28,14 +28,13 @@ public class Entity {
 	}
 
 	public void transform() {
-		//TODO chanegr après changement Options 
+		// TODO chanegr après changement Options
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
 		else
 			m_currentStunt = m_hellStunt;
 	}
-	
-	
+
 	void step(long now) {
 		m_currentStunt.step(now);
 	}
@@ -57,7 +56,7 @@ public class Entity {
 	}
 
 	public void addMaxHP(int maxHP) {
-		m_maxHP += maxHP;
+		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	public void setKarmaToGive(int karmaToGive) {
@@ -91,7 +90,7 @@ public class Entity {
 	void die() {
 		m_level.removeEntity(this);
 	}
-	
+
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}

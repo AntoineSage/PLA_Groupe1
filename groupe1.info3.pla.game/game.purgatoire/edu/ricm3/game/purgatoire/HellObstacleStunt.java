@@ -17,7 +17,7 @@ public class HellObstacleStunt extends Stunt {
 	HellObstacleStunt() {
 		super(Singleton.getNewObstacleHellAut(), null, Color.pink);
 	}
-	
+
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop hell obstacle");

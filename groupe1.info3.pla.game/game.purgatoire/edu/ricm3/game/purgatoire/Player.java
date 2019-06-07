@@ -24,7 +24,6 @@ public class Player extends Entity {
 		m_karma += e.m_karmaToGive;
 		Singleton.getController().updateUI();
 	}
-	
 
 	public void addKarma(int karma) {
 		m_karma += karma;

@@ -16,7 +16,7 @@ public class Stunt {
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
 	int m_maxHP, m_DMG;
-	
+
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -72,7 +72,7 @@ public class Stunt {
 			break;
 		}
 	}
-	
+
 	public void step(Entity e) {
 		m_automaton.step(m_entity);
 	}
@@ -101,13 +101,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		
+
 		System.out.println("egg de base");
 	}
 
 	void getDamage(int DMG) {
 		m_entity.addHP(-DMG);
-		if(m_entity.m_HP <= 0) {
+		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}

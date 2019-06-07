@@ -21,7 +21,7 @@ import java.awt.Color;
 
 import edu.ricm3.game.GameModel;
 
-public class Model extends GameModel implements Transformable {
+public class Model extends GameModel {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 
@@ -59,7 +59,7 @@ public class Model extends GameModel implements Transformable {
 	public Soul getSoul() {
 		return m_soul;
 	}
-	
+
 	public Nest getNest() {
 		return m_nest;
 	}

@@ -24,7 +24,7 @@ public class HellNestStunt extends Stunt {
 		// milieu Nest
 		width = m_entity.m_bounds.width;
 		height = m_entity.m_bounds.height;
-		x = (2 * m_entity.m_bounds.x + (width )) / 2;
+		x = (2 * m_entity.m_bounds.x + (width)) / 2;
 		y = (2 * m_entity.m_bounds.y + (height)) / 2;
 		Random r = new Random();
 		double tmpX = Math.random();

@@ -11,7 +11,7 @@ public class HellPlayerStunt extends Stunt {
 		m_maxHP = Options.HELL_PLAYER_HP_MAX;
 		m_DMG = Options.HELL_PLAYER_DMG;
 	}
-	
+
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop hell");
