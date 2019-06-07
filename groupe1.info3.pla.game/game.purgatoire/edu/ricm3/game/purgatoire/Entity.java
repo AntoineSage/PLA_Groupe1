@@ -24,6 +24,7 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
+		m_maxHP = 100; // TODO max HP in constructor parameter
 		transform();
 	}
 

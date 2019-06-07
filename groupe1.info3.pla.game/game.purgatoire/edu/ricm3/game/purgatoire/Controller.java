@@ -18,14 +18,11 @@
 
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Label;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -36,34 +33,34 @@ import java.util.Queue;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import edu.ricm3.game.GameController;
 
 public class Controller extends GameController implements ActionListener {
 
-	static class GraphicUI extends Canvas {
+	static class GraphicUI extends JComponent {
 		private static final long serialVersionUID = -4828379213574397971L;
-		private Color m_color;
 		private View m_view;
-		private Rectangle m_rect;
+		private int m_x, m_y;
 
 		public GraphicUI(Color c, View v, int x, int y, int w, int h) {
-			m_color = c;
 			m_view = v;
-			m_rect = new Rectangle(x, y, w, h);
+			m_x = x;
+			m_y = y;
 			m_view.addGraphicUI(this);
+			setForeground(c);
+			setLocation(x, y);
+			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+//			setVisible(true);
 		}
 
 		@Override
-		public void paint(Graphics g) {
-			g.setColor(m_color);
-			g.fillRect(m_rect.x, m_rect.y, m_rect.width, m_rect.height);
-		}
-
-		public void repaint(int val) {
-			m_rect.y = val;
-			repaint();
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.fillRect(m_x, m_y, getWidth(), getHeight());
 		}
 
 	}
@@ -71,7 +68,7 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 	Queue<KeyEvent> m_allKeyPressed;
-	public GraphicUI m_karmaBar, m_HPBar, m_XPBar, m_periodCircle;
+	GraphicUI m_karmaBar, m_HPBar, m_XPBar, m_periodCircle;
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 
 	public Controller(Model model, View view) {
@@ -88,21 +85,21 @@ public class Controller extends GameController implements ActionListener {
 	public void notifyVisible() {
 		// West container
 
-		Container west = new Container();
+		JPanel west = new JPanel();
 //		west.setLayout(new FlowLayout(FlowLayout.CENTER, 0, Options.UI_MARGIN));
 //		west.setLayout(new BoxLayout(west, BoxLayout.X_AXIS));
 		west.setLayout(new GridBagLayout());
 		west.setPreferredSize(new Dimension(Options.UI_PANEL_SIZE, 0));
 
-		Container westInside = new Container();
+		JPanel westInside = new JPanel();
 		westInside.setLayout(new BoxLayout(westInside, BoxLayout.Y_AXIS));
 
-		Container karmaBar = new Container();
+		JPanel karmaBar = new JPanel();
 		karmaBar.setLayout(new GridBagLayout());
 
 		m_periodLabel = new Label();
 		m_periodLabel.setAlignment(Label.CENTER);
-		m_karmaBar = new GraphicUI(Color.orange, m_view, 0, 0, 30, 150);
+		m_karmaBar = new GraphicUI(Color.green, m_view, 0, 0, 30, 150);
 		m_karmaLabel = new Label();
 		m_karmaLabel.setAlignment(Label.CENTER);
 
@@ -117,24 +114,28 @@ public class Controller extends GameController implements ActionListener {
 
 		// East container
 
-		Container east = new Container();
+		JPanel east = new JPanel();
 		east.setLayout(new GridBagLayout());
 		east.setPreferredSize(new Dimension(Options.UI_PANEL_SIZE, 0));
 
-		Container eastInside = new Container();
+		JPanel eastInside = new JPanel();
 		eastInside.setLayout(new BoxLayout(eastInside, BoxLayout.Y_AXIS));
 
-		Container bars = new Container();
-		bars.setLayout(new BoxLayout(bars, BoxLayout.X_AXIS));
-		Container HP = new Container();
+		JPanel eastBars = new JPanel();
+		eastBars.setLayout(new BoxLayout(eastBars, BoxLayout.X_AXIS));
+		JPanel HP = new JPanel();
 		HP.setLayout(new BoxLayout(HP, BoxLayout.Y_AXIS));
-		Container XP = new Container();
+		JPanel XP = new JPanel();
 		XP.setLayout(new BoxLayout(XP, BoxLayout.Y_AXIS));
+		JPanel HPBar = new JPanel();
+		HPBar.setLayout(new GridBagLayout());
+		JPanel XPBar = new JPanel();
+		XPBar.setLayout(new GridBagLayout());
 
-		m_HPBar = new GraphicUI(Color.red, m_view, 100, 200, 30, 150);
+		m_HPBar = new GraphicUI(Color.red, m_view, 0, 0, 30, 150);
 		m_HPLabel = new Label();
 		m_HPLabel.setAlignment(Label.CENTER);
-		m_XPBar = new GraphicUI(Color.blue, m_view, 500, 500, 30, 150);
+		m_XPBar = new GraphicUI(Color.blue, m_view, 0, 0, 30, 150);
 		m_XPLabel = new Label();
 		m_XPLabel.setAlignment(Label.CENTER);
 		m_rankLabel = new Label();
@@ -144,14 +145,16 @@ public class Controller extends GameController implements ActionListener {
 		m_totalDistanceLabel = new Label();
 		m_totalDistanceLabel.setAlignment(Label.CENTER);
 
-		HP.add(m_HPBar);
+		HPBar.add(m_HPBar);
+		HP.add(HPBar);
 		HP.add(m_HPLabel);
-		XP.add(m_XPBar);
+		XPBar.add(m_XPBar);
+		XP.add(XPBar);
 		XP.add(m_XPLabel);
-		bars.add(HP);
-		bars.add(XP);
+		eastBars.add(HP);
+		eastBars.add(XP);
 
-		eastInside.add(bars);
+		eastInside.add(eastBars);
 		eastInside.add(m_rankLabel);
 		eastInside.add(m_totalTimeLabel);
 		eastInside.add(m_totalDistanceLabel);

@@ -57,7 +57,7 @@ public class Player extends Entity {
 	}
 
 	public void addXP(double coef) {
-		m_XP += m_karma * coef;
+		m_XP += Math.abs(m_karma) * coef;
 		m_XP = Math.max(m_XP, 0);
 		Singleton.getController().updateUI();
 	}
