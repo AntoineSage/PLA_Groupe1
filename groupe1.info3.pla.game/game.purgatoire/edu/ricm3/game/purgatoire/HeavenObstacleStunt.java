@@ -20,6 +20,8 @@ public class HeavenObstacleStunt extends Stunt {
 	
 	@Override
 	void pop(IDirection d) {
+		dash(m_entity.m_direction);
+		System.out.println("dash Obstacle");
 		System.out.println("pop heaven");
 	}
 

@@ -34,7 +34,9 @@ SoulsHell(Init){
 }
 
 Obstacle(Init){
-	* (Init)
+	* (Init):
+	| Key(m) ? Pop() : (Init)
+	| Key(n) ? Wizz() : (Init)
 }
 
 Cat(Init){
