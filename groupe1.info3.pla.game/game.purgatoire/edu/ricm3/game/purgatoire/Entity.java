@@ -46,7 +46,7 @@ public class Entity {
 	}
 
 	public void addHP(int HP) {
-		m_HP += HP;
+		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
 	}
 
 	public int getMaxHP() {

@@ -80,6 +80,7 @@ public class Player extends Entity {
 		return ((PlayerStunt) m_currentStunt).getRankName();
 	}
 
+	// TODO if last level is reached, don't gain more XP
 	public void addXP(double coef) {
 		m_XP += Math.abs(m_karma) * coef;
 		m_XP = Math.max(m_XP, 0);
@@ -107,8 +108,4 @@ public class Player extends Entity {
 		m_karma = 0;
 	}
 
-	// TODO remove addHp
-	public void addHp(int heal) {
-		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + heal);
-	}
 }

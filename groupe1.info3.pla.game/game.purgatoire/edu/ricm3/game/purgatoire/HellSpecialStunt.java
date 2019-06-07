@@ -23,7 +23,7 @@ public class HellSpecialStunt extends Stunt {
 		if (player != null) {
 			System.out.println("sur flaque");
 			player.addKarma(m_entity);
-			player.addHp(Options.HELL_SPCL_HP_TOGIVE);
+			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
 		}
 		System.out.println("pop flaque");
 	}
