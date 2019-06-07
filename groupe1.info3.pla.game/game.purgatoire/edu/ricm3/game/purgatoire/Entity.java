@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -123,6 +124,10 @@ public class Entity {
 			break;
 		}
 		return false;
+	}
+	
+	public void enterInCollisionWith(List<Entity> entities) {
+		
 	}
 
 	// To improve	 

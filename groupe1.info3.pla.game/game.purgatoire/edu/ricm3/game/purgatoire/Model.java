@@ -37,7 +37,7 @@ public class Model extends GameModel implements Transformable {
 	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
 
 	public Model() {
-		m_wt = WorldType.HEAVEN;
+		m_wt = WorldType.HELL;
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 

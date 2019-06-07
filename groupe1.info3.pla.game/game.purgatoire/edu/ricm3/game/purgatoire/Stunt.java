@@ -16,7 +16,7 @@ public class Stunt {
 	Entity m_entity;
 	int m_rangeDash = 10;
 	int m_cooldownDash = 5;
-	
+
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -39,7 +39,7 @@ public class Stunt {
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
-				m_entity.m_level.m_model.nextLevel();
+				goingOut(d);
 			} else if (m_entity.wontCollide(d)) {
 				move(0, -1);
 			}
@@ -50,6 +50,8 @@ public class Stunt {
 				if (m_entity.wontCollide(d)) {
 					move(0, 1);
 				}
+			}else {
+				goingOut(d);
 			}
 			m_entity.m_direction = IDirection.SOUTH;
 			break;
@@ -58,6 +60,8 @@ public class Stunt {
 				if (m_entity.wontCollide(d)) {
 					move(1, 0);
 				}
+			}else {
+				goingOut(d);
 			}
 			m_entity.m_direction = IDirection.EAST;
 			break;
@@ -66,12 +70,87 @@ public class Stunt {
 				if (m_entity.wontCollide(d)) {
 					move(-1, 0);
 				}
+			}else {
+				goingOut(d);
 			}
 			m_entity.m_direction = IDirection.WEST;
 			break;
+		case FRONT:
+			switch(m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case BACK:
+			switch(m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case LEFT:
+			switch(m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case RIGHT:
+			switch(m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
 		}
+
 	}
-	
+
 	public void step(Entity e) {
 		m_automaton.step(m_entity);
 	}
@@ -100,13 +179,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		
+
 		System.out.println("egg de base");
 	}
 
 	void getDamage(int DMG) {
 		m_entity.m_HP -= DMG;
-		if(m_entity.m_HP <= 0) {
+		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}
@@ -117,6 +196,10 @@ public class Stunt {
 
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
 		return m_entity.superposedWith(type) != null;
+	}
+	
+	void goingOut(IDirection d){
+		
 	}
 
 	public void step(long now) {

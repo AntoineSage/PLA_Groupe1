@@ -50,3 +50,7 @@ Flaque(Init){
 Nest(Init){
 	* (Init): True ? Egg() :(Init)
 }
+
+Missile(Init){
+	* (Init): True ? Move(F) : (Init)
+}
