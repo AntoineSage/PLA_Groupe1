@@ -13,7 +13,8 @@ public class HellMissileStunt extends Stunt {
 	}
 	
 	HellMissileStunt(){
-		super(Singleton.getNewMissileHellAut(), null, Color.DARK_GRAY);
+		super(Singleton.getNewMissileHellAut(), Color.DARK_GRAY);
+		m_DMG = Options.HELL_MISSILE_DMG;
 	}
 	
 	@Override

@@ -156,7 +156,6 @@ public class CollisionGrid {
 
 	public List<Entity> testCollisionFutur(Entity entity, IDirection d) {
 		List<Entity> colliders = new LinkedList<Entity>();
-
 		switch (d) {
 		case EAST:
 			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
@@ -165,6 +164,7 @@ public class CollisionGrid {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
 						colliders.add(e);
+						
 					}
 				}
 			}

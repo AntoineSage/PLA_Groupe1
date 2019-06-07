@@ -31,5 +31,6 @@ public class Missile extends Entity {
 			entity.m_currentStunt.getDamage(m_currentStunt.m_DMG);
 		}
 		die();
+		
 	}
 }

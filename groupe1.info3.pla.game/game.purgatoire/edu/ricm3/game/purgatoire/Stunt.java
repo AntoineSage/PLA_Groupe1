@@ -190,6 +190,7 @@ public class Stunt {
 	void getDamage(int DMG) {
 		m_entity.addHP(-DMG);
 		if (m_entity.m_HP <= 0) {
+			
 			m_entity.die();
 		}
 	}
@@ -204,11 +205,9 @@ public class Stunt {
 
 	public boolean nobodyCollideWithEntity() {
 		if (m_entity instanceof Missile) {
-			System.out.println("x: " + m_entity.m_bounds.x + "y: " + m_entity.m_bounds.y);
 		}
 		List<Entity> colliders = m_entity.m_level.m_collisionGrid.testCollisionFutur(m_entity, m_entity.m_direction);
 		if (!colliders.isEmpty()) {
-			System.out.println("isNotEmpry");
 			m_entity.enterInCollisionWith(colliders);
 			return false;
 
