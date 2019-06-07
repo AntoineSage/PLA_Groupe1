@@ -1,0 +1,4 @@
+sprite_sheet = ironman.png
+SOUTH = 1;2;3;4
+EAST = 9;10;11;12
+NORTH = 13;14;15;16
