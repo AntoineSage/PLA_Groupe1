@@ -61,6 +61,7 @@ public class Bars {
 
 	}
 
+	// TODO change how XP is displayed (min and max can change)
 	static class XPBar extends JComponent {
 		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;

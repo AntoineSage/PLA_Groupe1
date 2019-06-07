@@ -60,6 +60,7 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void notifyVisible() {
 		// TODO center bars
+		// TODO add Hell or Heaven Label
 
 		// West container
 

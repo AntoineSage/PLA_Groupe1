@@ -79,11 +79,16 @@ public class Options {
 	static int DASH_CD = 5;
 
 	// ENTITIES SIZE
+	static int PLAYER_HEIGHT = 3; // TODO use player width and height in code
+	static int PLAYER_WIDTH = 3;
 	static int SOUL_HEIGHT = 2;
 	static int SOUL_WIDTH = 2;
 	static int NEST_HEIGHT = 3;
 	static int NEST_WIDTH = 3;
 	static int SPCL_HEIGHT = 5;
 	static int SPCL_WIDTH = 5;
+
+	// TODO echo options
+	static final boolean ECHO_A = true;
 
 }

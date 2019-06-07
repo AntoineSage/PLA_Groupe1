@@ -91,6 +91,7 @@ public class Player extends Entity {
 		m_karma = 0;
 	}
 
+	// TODO remove addHp
 	public void addHp(int heal) {
 		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + heal);
 	}
