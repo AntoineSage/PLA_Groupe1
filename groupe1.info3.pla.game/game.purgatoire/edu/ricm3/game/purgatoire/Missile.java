@@ -1,5 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
+import java.util.Iterator;
 import java.util.List;
 
 import ricm3.interpreter.IDirection;
@@ -22,7 +23,10 @@ public class Missile extends Entity {
 
 	@Override
 	public void enterInCollisionWith(List<Entity> entities) {
-
+		Iterator<Entity> iter = entities.iterator();
+		while(iter.hasNext()) {
+			Entity entity = iter.next();
+			entity.m_currentStunt.getDamage(m_DMG);
+		}
 	}
-
 }
