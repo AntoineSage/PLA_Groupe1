@@ -10,8 +10,8 @@ public class HellSpecialStunt extends Stunt {
 	
 	HellSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
-		m_entity.m_maxHP = Options.HELL_SPCL_HP_MAX;
-		m_entity.m_DMG = Options.HELL_SPCL_DMG;
+		m_maxHP = Options.HELL_SPCL_HP_MAX;
+		m_DMG = Options.HELL_SPCL_DMG;
 	}
 	
 	HellSpecialStunt() {

@@ -13,8 +13,8 @@ public class HellSoulStunt extends Stunt {
 
 	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		m_entity.m_maxHP = Options.HELL_SOUL_HP_MAX;
-		m_entity.m_DMG = Options.HELL_SOUL_DMG;
+		m_maxHP = Options.HELL_SOUL_HP_MAX;
+		m_DMG = Options.HELL_SOUL_DMG;
 	}
 
 	HellSoulStunt() {

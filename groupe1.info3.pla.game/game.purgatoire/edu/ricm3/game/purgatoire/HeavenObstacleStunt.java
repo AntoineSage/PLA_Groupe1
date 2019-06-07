@@ -10,8 +10,8 @@ public class HeavenObstacleStunt extends Stunt {
 
 	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		m_entity.m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
-		m_entity.m_DMG = Options.HEAVEN_OBSTACLE_DMG;
+		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
+		m_DMG = Options.HEAVEN_OBSTACLE_DMG;
 	}
 
 	HeavenObstacleStunt() {

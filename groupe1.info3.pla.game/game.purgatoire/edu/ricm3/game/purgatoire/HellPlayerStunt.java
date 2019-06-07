@@ -8,8 +8,8 @@ public class HellPlayerStunt extends Stunt {
 
 	HellPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
-		m_entity.m_maxHP = Options.HELL_PLAYER_HP_MAX;
-		m_entity.m_DMG = Options.HELL_PLAYER_DMG;
+		m_maxHP = Options.HELL_PLAYER_HP_MAX;
+		m_DMG = Options.HELL_PLAYER_DMG;
 	}
 	
 	@Override

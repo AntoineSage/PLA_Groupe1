@@ -6,8 +6,7 @@ import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Entity {
-	int m_HP, m_maxHP;
-	int m_DMG;
+	int m_HP;
 	int m_karmaToGive;
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
@@ -50,7 +49,7 @@ public class Entity {
 	}
 
 	public int getMaxHP() {
-		return m_maxHP;
+		return m_currentStunt.m_maxHP;
 	}
 
 	public void setKarmaToGive(int karmaToGive) {
