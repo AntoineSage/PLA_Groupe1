@@ -14,6 +14,8 @@ public class HellPlayerStunt extends Stunt {
 		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);
+		m_maxHP = Options.HELL_PLAYER_HP_MAX;
+		m_DMG = Options.HELL_PLAYER_DMG;
 	}
 
 	@Override

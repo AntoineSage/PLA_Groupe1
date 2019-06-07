@@ -18,10 +18,13 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import edu.ricm3.game.GameView;
 
@@ -35,6 +38,7 @@ public class View extends GameView {
 //	private WorldSprites m_current;
 	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
+	private List<Component> m_graphicUIs;
 
 	public View(Model m) {
 		m_model = m;
@@ -43,20 +47,21 @@ public class View extends GameView {
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
 		m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
 
-		//transform();
+		// transform();
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
 				System.out.printf("%d %d\n", getWidth(), getHeight());
 				Options.WIN_HEIGHT = getHeight();
-				
+
 				int tmp = getWidth();
 				Options.WIN_WIDTH = tmp == 0 ? Options.WIN_WIDTH : tmp;
-				
+
 				BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 			}
 		});
+		m_graphicUIs = new LinkedList<Component>();
 	}
 
 	public void step(long now) {
@@ -95,7 +100,16 @@ public class View extends GameView {
 
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
-		
+
+		paint(g1, m_model.getPlayer());
+
+		Iterator<Component> iter = m_graphicUIs.iterator();
+		while (iter.hasNext()) {
+			Component graphic = iter.next();
+			graphic.repaint();
+//			graphic.revalidate();
+		}
+
 		g1.dispose();
 		g2.dispose();
 	}
@@ -105,16 +119,16 @@ public class View extends GameView {
 		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
 				e.m_bounds.height * BLOCK_SIZE);
 	}
-	
-	private void paintGrid(Graphics g) {
-		g.setColor(Color.BLACK);
-		for(int i = 0; i < Options.LVL_HEIGHT; i++) {
-			g.drawLine(0,i*BLOCK_SIZE, Options.LVL_WIDTH*BLOCK_SIZE, i*BLOCK_SIZE);
-		}
-		for(int i = 0; i < Options.LVL_WIDTH; i++) {
-			g.drawLine(i*BLOCK_SIZE,0,i*BLOCK_SIZE, Options.LVL_HEIGHT*BLOCK_SIZE);
-		}
-	}
+
+//	private void paintGrid(Graphics g) {
+//		g.setColor(Color.BLACK);
+//		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
+//			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
+//		}
+//		for (int i = 0; i < Options.LVL_WIDTH; i++) {
+//			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
+//		}
+//	}
 
 	private void paint(Graphics g, Level lvl) {
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
@@ -130,9 +144,9 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
-		
+
 		iter = lvl.m_nest.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
 
@@ -140,6 +154,10 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+	}
+
+	public void addGraphicUI(Component g) {
+		m_graphicUIs.add(g);
 	}
 
 }

@@ -10,6 +10,8 @@ public class HeavenNestStunt extends Stunt {
 
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
+		m_DMG = Options.HEAVEN_NEST_DMG;
 	}
 
 	HeavenNestStunt() {
@@ -21,7 +23,7 @@ public class HeavenNestStunt extends Stunt {
 		int x, y, width, height, randX, randY;
 		width = m_entity.m_bounds.width;
 		height = m_entity.m_bounds.height;
-		x = ((2 * m_entity.m_bounds.x) + width ) / 2;
+		x = ((2 * m_entity.m_bounds.x) + width) / 2;
 		y = ((2 * m_entity.m_bounds.y) + height) / 2;
 		Random r = new Random();
 		double tmpX = Math.random();
@@ -39,7 +41,6 @@ public class HeavenNestStunt extends Stunt {
 			randY = y + r.nextInt(height + 2);
 
 		if (m_entity.m_level.m_collisionGrid.isOk(new Soul(m_entity.m_level, randX, randY, 2, 2)))
-			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX-2, randY-2, 2, 2));
-		System.out.println("egg de Nid ");
+			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2));
 	}
 }

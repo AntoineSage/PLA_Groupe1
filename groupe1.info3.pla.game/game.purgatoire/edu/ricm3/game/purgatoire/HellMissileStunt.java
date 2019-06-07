@@ -9,7 +9,7 @@ public class HellMissileStunt extends Stunt {
 
 	HellMissileStunt(IAutomaton automaton, Color c) {
 		super(automaton, c);
-		// TODO Auto-generated constructor stub
+		m_DMG = Options.HELL_MISSILE_DMG;
 	}
 	
 	HellMissileStunt(){

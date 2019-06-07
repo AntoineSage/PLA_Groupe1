@@ -11,6 +11,7 @@ public class CollisionGrid {
 
 	List<Entity> m_grid[][];
 
+	@SuppressWarnings("unchecked")
 	public CollisionGrid() {
 		m_grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
 		for (int i = 0; i < Options.LVL_WIDTH; i++) {

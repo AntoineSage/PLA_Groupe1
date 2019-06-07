@@ -21,7 +21,6 @@ public class Missile extends Entity {
 		m_type = IEntityType.MISSILE;
 		m_direction = direction;
 		m_player = p;
-		m_DMG = 1;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class Missile extends Entity {
 		Iterator<Entity> iter = entities.iterator();
 		while(iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.m_currentStunt.getDamage(m_DMG);
+			entity.m_currentStunt.getDamage(m_currentStunt.m_DMG);
 		}
 		die();
 	}

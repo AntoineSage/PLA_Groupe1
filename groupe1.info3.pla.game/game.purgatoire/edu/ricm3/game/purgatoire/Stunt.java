@@ -14,8 +14,10 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-	int m_rangeDash = 10;
-	int m_cooldownDash = 5;
+	int m_rangeDash = Options.DASH_SIZE;
+	int m_cooldownDash = Options.DASH_CD;
+	int m_maxHP, m_DMG;
+	int m_karmaToGive;
 
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
@@ -35,10 +37,8 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
-
 		switch (d) {
 		case NORTH:
-			System.out.println("HERE");
 			m_entity.m_direction = IDirection.NORTH;
 			if (m_entity.m_bounds.y <= 1) {
 				goingOut(d);
@@ -150,6 +150,8 @@ public class Stunt {
 				break;
 			}
 			break;
+		default:
+			break;
 		}
 
 	}
@@ -182,12 +184,11 @@ public class Stunt {
 	}
 
 	void egg() {
-
 		System.out.println("egg de base");
 	}
 
 	void getDamage(int DMG) {
-		m_entity.m_HP -= DMG;
+		m_entity.addHP(-DMG);
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
@@ -222,4 +223,9 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
+
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
+
 }
