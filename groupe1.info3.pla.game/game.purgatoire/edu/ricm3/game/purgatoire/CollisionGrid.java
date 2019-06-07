@@ -3,6 +3,7 @@ package edu.ricm3.game.purgatoire;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.ZipInputStream;
 
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -133,5 +134,21 @@ public class CollisionGrid {
 		}
 		
 		return null;
+	}
+
+	public List<Entity> testCollision(Entity e) {
+		List<Entity> colliders = new LinkedList<Entity>();
+		
+		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
+				Iterator<Entity> iter = m_grid[i][j].iterator();
+				while(iter.hasNext()) {
+					Entity eInList = iter.next();
+					if(eInList != e) colliders.add(eInList);
+				}
+			}
+		}
+		
+		return colliders.size() == 0 ? null : colliders;
 	}
 }
