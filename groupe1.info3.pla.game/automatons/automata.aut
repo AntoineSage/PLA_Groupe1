@@ -1,0 +1,52 @@
+Player(Init){
+  * (Init):
+  | Key(z) ? Move(N) :(Step1)
+  | Key(s) ? Move(S) :(Step1)
+  | Key(q) ? Move(O) :(Step1)
+  | Key(d) ? Move(E) :(Step1)
+  | True ? Wait :(Step1)
+  
+  * (Step1): 
+  | Key(FU) ? Hit(N) :(Init)
+  | Key(FD) ? Hit(S) :(Init)
+  | Key(FL) ? Hit(O) :(Init)
+  | Key(FR) ? Hit(E) :(Init)
+  | Key(p) ? Pop() :(Init)
+  | Key(w) ? Wizz() :(Init)
+  | True ? Wait :(Init)
+}
+
+SoulsHeaven(Init){
+	* (Init):
+	|Closest(@,N) ? Move(N) :(Init)
+	|Closest(@,E) ? Move(E) :(Init)
+	|Closest(@,O) ? Move(O) :(Init)
+	|Closest(@,S) ? Move(S) :(Init)
+}
+
+SoulsHell(Init){
+	* (Init): True ? Move(E) :(Step1)
+	* (Step1): True ? Move(E) :(Step2)
+	* (Step2): True ? Move(E) :(Step3)
+	* (Step3): True ? Move(O) :(Step4)
+	* (Step4): True ? Move(O) :(Step5)
+	* (Step5): True ? Move(O) :(Init)
+}
+
+Obstacle(Init){
+	* (Init)
+}
+
+Cat(Init){
+*(Init):
+
+}
+
+Flaque(Init){
+*(Init):
+	|Cell(N,@) ? Pop() : (Init)
+}
+
+Nest(Init){
+	* (Init): True ? Egg() :(Init)
+}

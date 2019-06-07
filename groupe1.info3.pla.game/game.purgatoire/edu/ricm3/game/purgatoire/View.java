@@ -119,6 +119,16 @@ public class View extends GameView {
 		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
 				e.m_bounds.height * BLOCK_SIZE);
 	}
+	
+	private void paintGrid(Graphics g) {
+		g.setColor(Color.BLACK);
+		for(int i = 0; i < Options.LVL_HEIGHT; i++) {
+			g.drawLine(0,i*BLOCK_SIZE, Options.LVL_WIDTH*BLOCK_SIZE, i*BLOCK_SIZE);
+		}
+		for(int i = 0; i < Options.LVL_WIDTH; i++) {
+			g.drawLine(i*BLOCK_SIZE,0,i*BLOCK_SIZE, Options.LVL_HEIGHT*BLOCK_SIZE);
+		}
+	}
 
 	private void paint(Graphics g, Level lvl) {
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
@@ -132,6 +142,11 @@ public class View extends GameView {
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
+			paint(g, iter.next());
+		}
+		
+		iter = lvl.m_nest.iterator();
+		while(iter.hasNext()) {
 			paint(g, iter.next());
 		}
 	}

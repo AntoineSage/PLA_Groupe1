@@ -12,6 +12,7 @@ public class Level {
 	Model m_model;
 	List<Entity> m_souls;
 	List<Entity> m_obstacles;
+	List<Entity> m_nest;
 	List<Entity> m_entities;
 	Entity m_special;
 	Entity m_player;
@@ -21,15 +22,20 @@ public class Level {
 	private long lastUpdatePlayer;
 	private long lastUpdateOthers;
 
+	List<Entity> m_toRemove;
+
 	Level(Model model, Color c, List<Entity> obstacles, List<Entity> souls, Special special) {
 		m_model = model;
 		m_c = c;
 
 		m_obstacles = new LinkedList<Entity>();
 		m_souls = new LinkedList<Entity>();
+		m_nest = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_entities = new LinkedList<Entity>();
+
+		m_toRemove = new LinkedList<Entity>();
 
 		Iterator<Entity> iter = obstacles.iterator();
 		while (iter.hasNext()) {
@@ -47,8 +53,11 @@ public class Level {
 		m_model = model;
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
+		m_nest = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+
 		m_collisionGrid = new CollisionGrid();
+		m_toRemove = new LinkedList<Entity>();
 	}
 
 	public void addEntity(Entity e) {
@@ -58,6 +67,10 @@ public class Level {
 
 		if (e instanceof Soul) {
 			m_souls.add(e);
+		}
+
+		if (e instanceof Nest) {
+			m_nest.add(e);
 		}
 
 		if (e instanceof Special) {
@@ -73,20 +86,7 @@ public class Level {
 	}
 
 	public void removeEntity(Entity e) {
-		if (e instanceof Obstacle) {
-			m_obstacles.remove(e);
-		}
-
-		if (e instanceof Soul) {
-			m_souls.remove(e);
-		}
-
-		if (e instanceof Special) {
-			m_special = null;
-		}
-
-		m_entities.remove(e);
-		m_collisionGrid.removeEntity(e);
+		m_toRemove.add(e);
 	}
 
 	// Update the collisionGrid with the future new values translated by x and y.
@@ -114,7 +114,8 @@ public class Level {
 
 	void transform() {
 		Iterator<Entity> iter = m_entities.iterator();
-		while(iter.hasNext())iter.next().transform();
+		while (iter.hasNext())
+			iter.next().transform();
 	}
 
 	public boolean wontCollide(Entity entity, IDirection d) {
@@ -122,13 +123,13 @@ public class Level {
 	}
 
 	public void step(long now) {
-
-		if (now - lastUpdatePlayer > 1000 / 30) {
+		removeEntities();
+		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
 		}
-		if (now - lastUpdateOthers > 500) {
+		if (now - lastUpdateOthers > 200) {
 			Iterator<Entity> iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
@@ -137,9 +138,40 @@ public class Level {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
+
+			iter = m_nest.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
 			if (m_special != null)
 				m_special.step(now);
 			lastUpdateOthers = now;
+		}
+	}
+
+	private void removeEntities() {
+		Iterator<Entity> iter = m_toRemove.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			if (e instanceof Obstacle) {
+				m_obstacles.remove(e);
+			}
+
+			if (e instanceof Soul) {
+				m_souls.remove(e);
+			}
+
+			if (e instanceof Nest) {
+				m_nest.remove(e);
+			}
+
+			if (e instanceof Special) {
+				m_special = null;
+			}
+
+			m_entities.remove(e);
+			m_collisionGrid.removeEntity(e);
+			iter.remove();
 		}
 	}
 }

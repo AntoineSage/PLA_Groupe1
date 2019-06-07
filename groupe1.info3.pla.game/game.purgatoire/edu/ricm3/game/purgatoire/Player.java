@@ -13,17 +13,18 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_maxXP = Options.MAX_XP;
-		m_maxKarma = Options.MAX_KARMA;
-		m_HP = Options.PLAYER_MAX_HP;
-		m_maxHP = Options.PLAYER_MAX_HP;
-		m_maxTotalHP = Options.PLAYER_MAX_HP;
+		m_maxXP = Options.PLAYER_MAX_XP;
+		m_XP = Options.PLAYER_XP;
+		m_HP = Options.PLAYER_HP;
+		m_maxTotalHP = Options.PLAYER_MAX_TOTAL_HP;
+		m_maxKarma = Options.PLAYER_KARMA_MAX;
 	}
 
 	public void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
 		Singleton.getController().updateUI();
 	}
+	
 
 	public void addKarma(int karma) {
 		m_karma += karma;
@@ -35,8 +36,8 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+	void step(long now) {
+		m_currentStunt.step(now);
 	}
 
 	public void nextLevel(Level newLevel) {
@@ -70,6 +71,15 @@ public class Player extends Entity {
 		m_XP = Math.max(m_XP, 0);
 		Singleton.getController().updateUI();
 	}
+	
+	public int getMaxKarma() {
+		return m_maxKarma;
+	}
+	
+	public int getMaxTotalHP(){
+		return m_maxTotalHP;
+	}
+	
 
 	@Override
 	public void addHP(int HP) {
@@ -89,5 +99,9 @@ public class Player extends Entity {
 			m_model.transform();
 		}
 		m_karma = 0;
+	}
+
+	public void addHp(int heal) {
+		m_HP = Math.min(m_maxHP, m_HP + heal);
 	}
 }
