@@ -84,7 +84,7 @@ public class Options {
 	static int DASH_CD = 5;
 
 	// ENTITIES SIZE
-	static int PLAYER_HEIGHT = 3; // TODO use player width and height in code
+	static int PLAYER_HEIGHT = 3; // TODO fix ArrayIndexOutOfBoundsException when size is changed
 	static int PLAYER_WIDTH = 3;
 	static int SOUL_HEIGHT = 2;
 	static int SOUL_WIDTH = 2;
