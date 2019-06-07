@@ -1,21 +1,22 @@
 package edu.ricm3.game.purgatoire;
 
-import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class CollisionGrid {
 
-	List<Entity> grid[][];
+	List<Entity> m_grid[][];
 
+	@SuppressWarnings("unchecked")
 	public CollisionGrid() {
-		grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
+		m_grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
 		for (int i = 0; i < Options.LVL_WIDTH; i++) {
 			for (int j = 0; j < Options.LVL_HEIGHT; j++) {
-				grid[i][j] = new LinkedList<Entity>();
+				m_grid[i][j] = new LinkedList<Entity>();
 			}
 		}
 	}
@@ -24,7 +25,7 @@ public class CollisionGrid {
 		if (isOk(entity) == true) {
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
 				for (int j = entity.m_bounds.y; j < entity.m_bounds.y + entity.m_bounds.height; j++) {
-					grid[i][j].add(entity);
+					m_grid[i][j].add(entity);
 				}
 			}
 		}
@@ -46,16 +47,16 @@ public class CollisionGrid {
 	public void updateEntity(Entity e, int x, int y) {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
-				grid[i][j].remove(e);
+				m_grid[i][j].remove(e);
 			}
 		}
 
 		for (int i = e.m_bounds.x + x; i < e.m_bounds.x + x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y + y; j < e.m_bounds.y + y + e.m_bounds.height; j++) {
-				if (grid[i][j] == null) {
-					grid[i][j] = new LinkedList<Entity>();
+				if (m_grid[i][j] == null) {
+					m_grid[i][j] = new LinkedList<Entity>();
 				}
-				grid[i][j].add(e);
+				m_grid[i][j].add(e);
 			}
 		}
 	}
@@ -64,7 +65,7 @@ public class CollisionGrid {
 		switch (d) {
 		case EAST:
 			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
-				Iterator<Entity> iter = grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -75,7 +76,7 @@ public class CollisionGrid {
 			break;
 		case NORTH:
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
-				Iterator<Entity> iter = grid[i][entity.m_bounds.y - 1].iterator();
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y - 1].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -86,7 +87,7 @@ public class CollisionGrid {
 			break;
 		case SOUTH:
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
-				Iterator<Entity> iter = grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -97,7 +98,7 @@ public class CollisionGrid {
 			break;
 		case WEST:
 			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
-				Iterator<Entity> iter = grid[entity.m_bounds.x - 1][i].iterator();
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x - 1][i].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -116,7 +117,7 @@ public class CollisionGrid {
 	public void removeEntity(Entity e) {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
-				grid[i][j].remove(e);
+				m_grid[i][j].remove(e);
 			}
 		}
 	}
@@ -124,14 +125,15 @@ public class CollisionGrid {
 	public Entity testCollisionWithType(Entity e, IEntityType type) {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
-				Iterator<Entity> iter = grid[i][j].iterator();
-				while(iter.hasNext()) {
+				Iterator<Entity> iter = m_grid[i][j].iterator();
+				while (iter.hasNext()) {
 					Entity eInList = iter.next();
-					if(eInList.m_type == type) return eInList;
+					if (eInList.m_type == type)
+						return eInList;
 				}
 			}
 		}
-		
+
 		return null;
 	}
 }

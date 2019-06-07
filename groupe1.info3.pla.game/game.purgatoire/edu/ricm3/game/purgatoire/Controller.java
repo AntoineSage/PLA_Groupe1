@@ -177,6 +177,8 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().addKarma(+50);
 		} else if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.getPlayer().addKarma(-50);
+		} else if (e.getKeyCode() == KeyEvent.VK_H) {
+			m_model.getPlayer().m_currentStunt.hit(m_model.m_player.m_direction);
 		}
 	}
 

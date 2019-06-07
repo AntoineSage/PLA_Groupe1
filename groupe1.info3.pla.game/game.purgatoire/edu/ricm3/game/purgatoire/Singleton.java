@@ -13,7 +13,7 @@ public class Singleton {
 
 	private static IAutomaton m_playerHellAut;
 	private static IAutomaton m_playerHeavenAut;
-	
+
 	private static IAutomaton m_soulHellAut;
 	private static IAutomaton m_soulHeavenAut;
 
@@ -23,16 +23,19 @@ public class Singleton {
 	private static IAutomaton m_specialHellAut;
 	private static IAutomaton m_specialHeavenAut;
 
+	private static IAutomaton m_nestHellAut;
+	private static IAutomaton m_nestHeavenAut;
+
 	private static Controller m_controller;
-	
+
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
 			ast = AutomataParser.from_file(file);
 		} catch (Exception e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
-		
+
 		List<IAutomaton> automatons = ((AI_Definitions) ast).make();
 
 		m_playerHellAut = automatons.get(0);
@@ -44,56 +47,67 @@ public class Singleton {
 		m_obstacleHellAut = automatons.get(3);
 		m_obstacleHeavenAut = automatons.get(3);
 
-		m_specialHellAut = automatons.get(3);
-		m_specialHeavenAut = automatons.get(3);
+		m_specialHellAut = automatons.get(5);
+		m_specialHeavenAut = automatons.get(4);
+
+		m_nestHellAut = automatons.get(6);
+		m_nestHeavenAut = automatons.get(6);
 	}
 
 	public Singleton getSingleton() {
 		return m_singleton;
 	}
-	
+
 	public static Controller getController() {
 		return m_controller;
 	}
-	
+
 	public static void setController(Controller controller) throws IllegalAccessException {
-		if(m_controller == null ) {
-			m_controller = controller;			
+		if (m_controller == null) {
+			m_controller = controller;
 		} else {
 			throw new IllegalAccessException("controller can only be set one time");
 		}
-		
+
 	}
-	
+
 	public static IAutomaton getNewPlayerHellAut() {
 		return m_playerHellAut.copy();
 	}
-	
+
 	public static IAutomaton getNewPlayerHeavenAut() {
 		return m_playerHeavenAut.copy();
 	}
-	
+
 	public static IAutomaton getNewObstacleHellAut() {
 		return m_obstacleHellAut.copy();
 	}
-	
+
 	public static IAutomaton getNewObstacleHeavenAut() {
 		return m_obstacleHeavenAut.copy();
 	}
-	
+
 	public static IAutomaton getNewSoulHellAut() {
 		return m_soulHellAut.copy();
 	}
-	
+
 	public static IAutomaton getNewSoulHeavenAut() {
 		return m_soulHeavenAut.copy();
 	}
-	
+
 	public static IAutomaton getNewSpecialHellAut() {
 		return m_specialHellAut.copy();
 	}
-	
+
 	public static IAutomaton getNewSpecialHeavenAut() {
 		return m_specialHeavenAut.copy();
+	}
+
+	public static IAutomaton getNewNestHellAut() {
+		return m_nestHellAut.copy();
+	}
+
+	public static IAutomaton getNewNestHeavenAut() {
+		return m_nestHeavenAut.copy();
 	}
 }

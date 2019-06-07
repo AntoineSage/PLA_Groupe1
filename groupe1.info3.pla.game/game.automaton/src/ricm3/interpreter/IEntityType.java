@@ -26,41 +26,43 @@ public class IEntityType {
 	public boolean isCollidingWith(IEntityType type) {
 		switch (m_type) {
 		case PLAYER:
-			switch(type.m_type) {
-			case PLAYER :
-			case OBSTACLE :
-			case DANGER :
+			switch (type.m_type) {
+			case PLAYER:
+			case OBSTACLE:
+			case DANGER:
 				return true;
 			default:
 				return false;
 			}
 		case TEAM:
-			switch(type.m_type) {
-			case OBSTACLE :
-			case DANGER :
+			switch (type.m_type) {
+			case OBSTACLE:
+			case DANGER:
 				return true;
 			default:
 				return false;
 			}
 		case ADVERSARY:
-			switch(type.m_type) {
+			switch (type.m_type) {
+			case ADVERSARY:
+				return true;
 			default:
 				return false;
 			}
 		case OBSTACLE:
-			switch(type.m_type) {
-			case PLAYER :
-			case OBSTACLE :
-			case DANGER :
+			switch (type.m_type) {
+			case PLAYER:
+			case OBSTACLE:
+			case DANGER:
 				return true;
 			default:
 				return false;
 			}
 		case DANGER:
-			switch(type.m_type) {
-			case PLAYER :
-			case OBSTACLE :
-			case DANGER :
+			switch (type.m_type) {
+			case PLAYER:
+			case OBSTACLE:
+			case DANGER:
 				return true;
 			default:
 				return false;

@@ -21,13 +21,14 @@ import java.awt.Color;
 
 import edu.ricm3.game.GameModel;
 
-public class Model extends GameModel implements Transformable {
+public class Model extends GameModel {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 
 	Player m_player;
 	Soul m_soul;
 	Obstacle m_obstacle;
+	Nest m_nest;
 	Special m_special;
 
 	int m_totalDistance; // TODO distance
@@ -57,6 +58,10 @@ public class Model extends GameModel implements Transformable {
 
 	public Soul getSoul() {
 		return m_soul;
+	}
+
+	public Nest getNest() {
+		return m_nest;
 	}
 
 	void printWorld() {

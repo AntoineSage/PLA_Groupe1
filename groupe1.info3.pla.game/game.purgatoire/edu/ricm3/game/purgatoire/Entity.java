@@ -6,9 +6,7 @@ import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Entity {
-	int m_HP, m_maxHP;
-	int m_DMG;
-	int m_karmaToGive;
+	int m_HP;
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
 	Rectangle m_bounds;
@@ -24,12 +22,12 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
-		m_HP = Options.MAX_HP;
-		m_maxHP = Options.MAX_HP;
 		transform();
+		m_HP = 1;
 	}
 
 	public void transform() {
+		// TODO chanegr après changement Options
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
 		else
@@ -37,7 +35,7 @@ public class Entity {
 	}
 
 	void step(long now) {
-		m_currentStunt.m_automaton.step(this);
+		m_currentStunt.step(now);
 	}
 
 	WorldType getWorldType() {
@@ -53,11 +51,11 @@ public class Entity {
 	}
 
 	public int getMaxHP() {
-		return m_maxHP;
+		return m_currentStunt.m_maxHP;
 	}
 
 	public void addMaxHP(int maxHP) {
-		m_maxHP += maxHP;
+		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	void takeDamage(int DMG) {
@@ -84,6 +82,10 @@ public class Entity {
 		m_currentStunt.hit(d);
 	}
 
+	void die() {
+		m_level.removeEntity(this);
+	}
+
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}
@@ -97,7 +99,34 @@ public class Entity {
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-		throw new IllegalStateException("Not yet implemented");
+		if (m_type2 == IEntityType.PLAYER && m_level.m_player != null) {
+			return isGoodDirection(m_direction2, this, m_level.m_player);
+		}
+		return false;
+	}
+
+	public boolean isGoodDirection(IDirection d, Entity hostEntity, Entity researchedEntity) {
+		switch (d) {
+		case NORTH:
+			if (hostEntity.m_bounds.y > researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case SOUTH:
+			if (hostEntity.m_bounds.y < researchedEntity.m_bounds.y)
+				return true;
+			break;
+		case EAST:
+			if (hostEntity.m_bounds.x < researchedEntity.m_bounds.x)
+				return true;
+			break;
+		case WEST:
+			if (hostEntity.m_bounds.x > researchedEntity.m_bounds.x)
+				return true;
+			break;
+		default:
+			break;
+		}
+		return false;
 	}
 
 	// TODO to improve
