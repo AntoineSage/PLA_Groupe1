@@ -6,9 +6,7 @@ import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Entity {
-	int m_HP, m_maxHP;
-	int m_DMG;
-	int m_karmaToGive;
+	int m_HP;
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
 	Rectangle m_bounds;
@@ -29,13 +27,13 @@ public class Entity {
 	}
 
 	public void transform() {
+		// TODO chanegr après changement Options
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
 		else
 			m_currentStunt = m_hellStunt;
 	}
-	
-	
+
 	void step(long now) {
 		m_currentStunt.step(now);
 	}
@@ -48,12 +46,16 @@ public class Entity {
 		return m_HP;
 	}
 
-	public int getMaxHP() {
-		return m_maxHP;
+	public void addHP(int HP) {
+		m_HP += HP;
 	}
 
-	public void setKarmaToGive(int karmaToGive) {
-		m_karmaToGive = karmaToGive;
+	public int getMaxHP() {
+		return m_currentStunt.m_maxHP;
+	}
+
+	public void addMaxHP(int maxHP) {
+		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	void takeDamage(int DMG) {
@@ -83,7 +85,7 @@ public class Entity {
 	void die() {
 		m_level.removeEntity(this);
 	}
-	
+
 	public boolean wontCollide(IDirection d) {
 		return m_level.wontCollide(this, d);
 	}
@@ -121,11 +123,13 @@ public class Entity {
 			if (hostEntity.m_bounds.x > researchedEntity.m_bounds.x)
 				return true;
 			break;
+		default:
+			break;
 		}
 		return false;
 	}
 
-	// To improve	 
+	// TODO to improve
 	public Entity superposedWith(IEntityType type) {
 		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}

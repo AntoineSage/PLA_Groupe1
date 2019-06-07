@@ -11,6 +11,7 @@ public class CollisionGrid {
 
 	List<Entity> m_grid[][];
 
+	@SuppressWarnings("unchecked")
 	public CollisionGrid() {
 		m_grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
 		for (int i = 0; i < Options.LVL_WIDTH; i++) {
@@ -134,13 +135,14 @@ public class CollisionGrid {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
 				Iterator<Entity> iter = m_grid[i][j].iterator();
-				while(iter.hasNext()) {
+				while (iter.hasNext()) {
 					Entity eInList = iter.next();
-					if(eInList.m_type == type) return eInList;
+					if (eInList.m_type == type)
+						return eInList;
 				}
 			}
 		}
-		
+
 		return null;
 	}
 	

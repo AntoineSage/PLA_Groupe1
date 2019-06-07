@@ -14,6 +14,8 @@ Timer m_timer;
 	
 	HellNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HELL_NEST_HP_MAX;
+		m_DMG = Options.HELL_NEST_DMG;
 		m_timer = new Timer(5000);
 	}
 

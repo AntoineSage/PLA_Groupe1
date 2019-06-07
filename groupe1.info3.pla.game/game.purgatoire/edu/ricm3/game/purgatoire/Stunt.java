@@ -2,7 +2,6 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -14,9 +13,11 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-	int m_rangeDash = 10;
-	int m_cooldownDash = 5;
-	
+	int m_rangeDash = Options.DASH_SIZE;
+	int m_cooldownDash = Options.DASH_CD;
+	int m_maxHP, m_DMG;
+	int m_karmaToGive;
+
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -35,7 +36,6 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
-
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
@@ -69,9 +69,11 @@ public class Stunt {
 			}
 			m_entity.m_direction = IDirection.WEST;
 			break;
+		default:
+			break;
 		}
 	}
-	
+
 	public void step(Entity e) {
 		m_automaton.step(m_entity);
 	}
@@ -100,13 +102,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		
-		System.out.println("egg de base");
+		// TODO egg de base 
+		System.out.println("egg de base : NYI");
 	}
 
 	void getDamage(int DMG) {
-		m_entity.m_HP -= DMG;
-		if(m_entity.m_HP <= 0) {
+		m_entity.addHP(-DMG);
+		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}
@@ -121,6 +123,10 @@ public class Stunt {
 
 	public void step(long now) {
 		m_automaton.step(m_entity);
+	}
+	
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
 	}
 	
 }

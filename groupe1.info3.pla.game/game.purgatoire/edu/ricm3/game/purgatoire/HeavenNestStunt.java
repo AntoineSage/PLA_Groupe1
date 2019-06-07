@@ -17,6 +17,8 @@ public class HeavenNestStunt extends Stunt {
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
 		m_timerWizz = new Timer(5000);
+		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
+		m_DMG = Options.HEAVEN_NEST_DMG;
 	}
 
 	HeavenNestStunt() {
