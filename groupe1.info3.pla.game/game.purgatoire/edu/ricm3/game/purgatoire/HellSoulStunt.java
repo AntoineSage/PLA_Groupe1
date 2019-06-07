@@ -13,13 +13,14 @@ public class HellSoulStunt extends Stunt {
 
 	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HELL_SOUL_HP_MAX;
+		m_DMG = Options.HELL_SOUL_DMG;
 	}
 
 	HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
 	}
 
-	
 	@Override
 	void pop(IDirection d) {
 		m_entity.die();
@@ -39,7 +40,7 @@ public class HellSoulStunt extends Stunt {
 	void egg() {
 		System.out.println("egg hell soul");
 	}
-	
+
 	@Override
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
