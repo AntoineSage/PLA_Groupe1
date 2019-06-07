@@ -20,7 +20,9 @@ public class Level {
 	CollisionGrid m_collisionGrid;
 	Color m_c;
 	private long lastUpdatePlayer;
-	private long lastUpdateOthers;
+	private long lastUpdateSouls;
+	private long lastUpdateObstacles;
+	private long lastUpdateNests;
 
 	List<Entity> m_toRemove;
 
@@ -124,28 +126,35 @@ public class Level {
 
 	public void step(long now) {
 		removeEntities();
+		Iterator<Entity> iter;
 		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
 		}
-		if (now - lastUpdateOthers > 200) {
-			Iterator<Entity> iter = m_souls.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
-			iter = m_obstacles.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
 
-			iter = m_nest.iterator();
+		if (now - lastUpdateSouls > 1000 / 60) {
+			iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
 			if (m_special != null)
 				m_special.step(now);
-			lastUpdateOthers = now;
+			lastUpdateSouls = now;
+		}
+		if (now - lastUpdateObstacles > 2000) {
+			iter = m_obstacles.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+			lastUpdateObstacles = now;
+		}
+		if (now - lastUpdateNests > 1000) {
+			iter = m_nest.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+			lastUpdateNests = now;
 		}
 	}
 

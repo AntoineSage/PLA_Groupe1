@@ -13,14 +13,13 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_DMG = 1;
+		setDMG(100);
 	}
 
 	void addKarma(Entity e) {
 		m_karma += e.m_karmaToGive;
 	}
 	
-
 	@Override
 	void step(long now) {
 		m_currentStunt.step(now);;

@@ -37,8 +37,8 @@ public class HellObstacleStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getdamage hell obstacle");
+	void takeDamage(int DMG) {
+		System.out.println("takedamage hell obstacle");
 	}
 
 }

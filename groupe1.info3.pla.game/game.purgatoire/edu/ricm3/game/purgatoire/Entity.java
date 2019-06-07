@@ -7,7 +7,7 @@ import ricm3.interpreter.IEntityType;
 
 public class Entity {
 	int m_HP, m_maxHP;
-	int m_DMG;
+	private int m_DMG;
 	int m_karmaToGive;
 	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
 	Level m_level;
@@ -28,6 +28,10 @@ public class Entity {
 		m_HP = 1;
 	}
 
+	public void setDMG(int DMG) {
+		m_DMG = DMG;
+	}
+	
 	public void transform() {
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
@@ -51,13 +55,17 @@ public class Entity {
 	public int getMaxHP() {
 		return m_maxHP;
 	}
+	
+	public int getDMG() {
+		return (m_DMG * m_currentStunt.m_buffedDMG);
+	}
 
 	public void setKarmaToGive(int karmaToGive) {
 		m_karmaToGive = karmaToGive;
 	}
 
 	void takeDamage(int DMG) {
-		m_currentStunt.getDamage(DMG);
+		m_currentStunt.takeDamage(m_currentStunt.m_weaknessBuff*DMG);
 	}
 
 	public void tryMove(IDirection d) {

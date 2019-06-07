@@ -37,7 +37,8 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
+	void takeDamage(int DMG) {
+		System.out.println("takeDMG flaque");
 	}
 	
 	@Override

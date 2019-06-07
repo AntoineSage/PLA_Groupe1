@@ -31,6 +31,7 @@ public class HeavenSpecialStunt extends Stunt {
 	}
 	
 	@Override
-	void getDamage(int DMG) {
+	void takeDamage(int DMG) {
+		System.out.println("takeDMG cat");
 	}
 }

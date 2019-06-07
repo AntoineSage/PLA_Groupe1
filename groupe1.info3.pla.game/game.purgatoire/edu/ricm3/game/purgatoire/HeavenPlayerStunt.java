@@ -9,7 +9,7 @@ import ricm3.interpreter.IEntityType;
 public class HeavenPlayerStunt extends Stunt {
 
 	Timer m_dashTimer;
-
+	
 	HeavenPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
@@ -27,8 +27,8 @@ public class HeavenPlayerStunt extends Stunt {
 
 	@Override
 	void wizz(IDirection d) {
-		Special special = (Special)m_entity.superposedWith(IEntityType.TEAM);
-		if(special != null) {
+		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
+		if (special != null) {
 			special.pop(null);
 		}
 		System.out.println("wizz heaven player");
@@ -46,7 +46,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.takeDamage(m_entity.getDMG());
 					}
 				}
 				y--;
@@ -61,7 +61,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.takeDamage(m_entity.getDMG());
 					}
 				}
 				y++;
@@ -76,7 +76,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.takeDamage(m_entity.getDMG());
 					}
 				}
 				x++;
@@ -88,10 +88,10 @@ public class HeavenPlayerStunt extends Stunt {
 			xMin = x - 2 * m_entity.m_bounds.width;
 			while (x > 1 && x > xMin) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x-1][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x - 1][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.takeDamage(m_entity.getDMG());
 					}
 				}
 				x--;
@@ -107,10 +107,10 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+	void takeDamage(int DMG) {
+		System.out.println("takeDamage heaven");
 	}
-
+	
 	@Override
 	public void step(long now) {
 		super.step(now);
@@ -118,4 +118,5 @@ public class HeavenPlayerStunt extends Stunt {
 			m_dashTimer.m_previousNow = now;
 		m_dashTimer.step(now);
 	}
+
 }

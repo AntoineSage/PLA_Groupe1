@@ -16,7 +16,10 @@ public class Stunt {
 	Entity m_entity;
 	int m_rangeDash = 10;
 	int m_cooldownDash = 5;
-	
+	int m_durationBuff = 5;
+	int m_buffedDMG = 1; // value of DMG when buffed
+	int m_weaknessBuff = 1; // value applied on the DMG when buff
+
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -71,7 +74,7 @@ public class Stunt {
 			break;
 		}
 	}
-	
+
 	public void step(Entity e) {
 		m_automaton.step(m_entity);
 	}
@@ -80,6 +83,11 @@ public class Stunt {
 		for (int i = 0; i < m_rangeDash; i++) {
 			tryMove(d);
 		}
+	}
+
+	void buff(float buffDMG, float debuffWeakness) {
+		m_buffedDMG = (int) (1 + buffDMG / 100);
+		m_weaknessBuff = (int) (1 + debuffWeakness/ 100);
 	}
 
 	void pop(IDirection d) {
@@ -100,13 +108,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		
+
 		System.out.println("egg de base");
 	}
 
-	void getDamage(int DMG) {
+	void takeDamage(int DMG) {
 		m_entity.m_HP -= DMG;
-		if(m_entity.m_HP <= 0) {
+		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}

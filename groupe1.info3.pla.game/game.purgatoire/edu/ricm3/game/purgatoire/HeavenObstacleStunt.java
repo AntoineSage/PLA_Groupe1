@@ -37,8 +37,8 @@ public class HeavenObstacleStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+	void takeDamage(int DMG) {
+		System.out.println("takeDamage heaven");
 	}
 
 }

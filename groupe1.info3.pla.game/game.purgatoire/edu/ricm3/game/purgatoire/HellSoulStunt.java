@@ -9,17 +9,19 @@ import ricm3.interpreter.IEntityType;
 
 public class HellSoulStunt extends Stunt {
 
+	long lastUpdate;
+
 	Player isPlayer;
 
 	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+
 	}
 
 	HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
 	}
 
-	
 	@Override
 	void pop(IDirection d) {
 		m_entity.die();
@@ -39,13 +41,16 @@ public class HellSoulStunt extends Stunt {
 	void egg() {
 		System.out.println("egg hell soul");
 	}
-	
+
 	@Override
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			m_entity.die();
 		}
-		m_automaton.step(m_entity);
+		if (now - lastUpdate > 500) {
+			m_automaton.step(m_entity);
+			lastUpdate = now;
+		}
 	}
 }
