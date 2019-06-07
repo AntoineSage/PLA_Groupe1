@@ -11,8 +11,8 @@ public class Options {
 	static final int UI_BAR_HEIGHT = 150;
 	static final int UI_BAR_WIDTH = 30;
 
-	static final int TOTAL_PERIOD = 5;
-	public static final String AUT_FILE = "automata.aut";
+	static final int TOTAL_PERIOD = 5000;
+	public static final String AUT_FILE = "automatons/automata.aut";
 
 	static final double COEF_KARMA_POS = 0.2;
 	static final double COEF_KARMA_NEG = -0.3;
@@ -40,21 +40,23 @@ public class Options {
 	// SOUL OPTIONS
 	static int HELL_SOUL_DMG = 1;
 	static int HELL_SOUL_HP_MAX = 1;
+	static int HELL_SOUL_KARMA_TOGIVE = 10;
 	static int HEAVEN_SOUL_DMG = 1;
 	static int HEAVEN_SOUL_HP_MAX = 1;
+	static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
 	static int SOUL_HP = 10;
-	static int SOUL_KARMA_TOGIVE = 10;
 
 	// SPCL OPTIONS
 	static int HELL_SPCL_DMG = 1;
 	static int HELL_SPCL_HP_MAX = 1;
 	static int HELL_SPCL_HP_TOGIVE = 5;
+	static int HELL_SPCL_KARMA_TOGIVE = 10;
 	static int HEAVEN_SPCL_DMG = 1;
 	static int HEAVEN_SPCL_HP_MAX = 1;
+	static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
 
 	static int SPCL_HP = 1;
-	static int SPCL_KARMA_TOGIVE = 1;
 
 	// OBSTACLE OPTIONS
 	static int HELL_OBSTACLE_DMG = 0;

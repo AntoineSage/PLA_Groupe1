@@ -41,6 +41,5 @@ public class HellNestStunt extends Stunt {
 			randY = y + r.nextInt(height + 2);
 		if (m_entity.m_level.m_collisionGrid.isOk(new Soul(m_entity.m_level, randX, randY, 2, 2)))
 			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX, randY, 2, 2));
-		System.out.println("egg de Nid ");
 	}
 }

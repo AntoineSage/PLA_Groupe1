@@ -16,6 +16,7 @@ public class Stunt {
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
 	int m_maxHP, m_DMG;
+	int m_karmaToGive;
 
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
@@ -101,8 +102,8 @@ public class Stunt {
 	}
 
 	void egg() {
-
-		System.out.println("egg de base");
+		// TODO egg de base 
+		System.out.println("egg de base : NYI");
 	}
 
 	void getDamage(int DMG) {
@@ -123,4 +124,9 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
+	
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
+	
 }

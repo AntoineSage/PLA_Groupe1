@@ -42,6 +42,5 @@ public class HeavenNestStunt extends Stunt {
 
 		if (m_entity.m_level.m_collisionGrid.isOk(new Soul(m_entity.m_level, randX, randY, 2, 2)))
 			m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2));
-		System.out.println("egg de Nid ");
 	}
 }
