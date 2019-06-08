@@ -15,11 +15,13 @@ public class HellSoulStunt extends Stunt {
 
 	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-
+		m_maxHP = Options.HELL_SOUL_HP_MAX;
+		setDMG(Options.HELL_SOUL_DMG);
 	}
 
 	HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
+		setDMG(Options.HEAVEN_SOUL_DMG);
 	}
 
 	@Override
@@ -46,7 +48,8 @@ public class HellSoulStunt extends Stunt {
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
-			m_entity.die();
+			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
+			m_entity.takeDamage(m_entity.m_HP);
 		}
 		if (now - lastUpdate > 500) {
 			m_automaton.step(m_entity);

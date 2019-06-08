@@ -9,6 +9,8 @@ public class HeavenSpecialStunt extends Stunt {
 
 	HeavenSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
+		m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
+		setDMG(Options.HEAVEN_SPCL_DMG);
 	}
 
 	HeavenSpecialStunt() {
@@ -29,7 +31,7 @@ public class HeavenSpecialStunt extends Stunt {
 	void wizz(IDirection d) {
 		System.out.println("wizz cat");
 	}
-	
+
 	@Override
 	void takeDamage(int DMG) {
 		System.out.println("takeDMG cat");

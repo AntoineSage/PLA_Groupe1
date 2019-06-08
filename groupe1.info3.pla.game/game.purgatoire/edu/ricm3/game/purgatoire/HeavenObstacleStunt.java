@@ -10,12 +10,14 @@ public class HeavenObstacleStunt extends Stunt {
 
 	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
+		setDMG(Options.HEAVEN_OBSTACLE_DMG);
 	}
 
 	HeavenObstacleStunt() {
 		super(Singleton.getNewObstacleHeavenAut(), null, Color.red);
 	}
-	
+
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop heaven");

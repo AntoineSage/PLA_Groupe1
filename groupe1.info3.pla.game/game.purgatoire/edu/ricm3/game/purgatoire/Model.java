@@ -21,7 +21,7 @@ import java.awt.Color;
 
 import edu.ricm3.game.GameModel;
 
-public class Model extends GameModel implements Transformable {
+public class Model extends GameModel {
 	WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 
@@ -31,10 +31,10 @@ public class Model extends GameModel implements Transformable {
 	Nest m_nest;
 	Special m_special;
 
-	int m_period, m_totalTime, m_totalDistance;
-	// TODO lastTransform and transform() in Controller?
+	int m_totalDistance; // TODO distance
+	double m_period, m_totalTime;
 
-	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
+	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
 
 	public Model() {
 		m_wt = WorldType.HEAVEN;
@@ -59,7 +59,7 @@ public class Model extends GameModel implements Transformable {
 	public Soul getSoul() {
 		return m_soul;
 	}
-	
+
 	public Nest getNest() {
 		return m_nest;
 	}
@@ -72,12 +72,6 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void transform() {
-		// TODO put world change in Controller?
-//		if (m_wt == WorldType.HEAVEN)
-//			if (m_player.m_karma < 0)
-//				m_wt = WorldType.HELL;
-//			else if (m_player.m_karma > 0)
-//				m_wt =WorldType.HEAVEN;
 		if (m_wt == WorldType.HEAVEN)
 			m_wt = WorldType.HELL;
 		else
@@ -88,28 +82,20 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void step(long now) {
-		if (lastSecond == 0) {
-			lastSecond = now;
+		if (lastPeriodUpdate == 0) {
+			lastPeriodUpdate = now;
 		}
 		m_currentLevel.step(now);
 		m_nextLevel.step(now);
-		if (now - lastSecond > 10000) {
-			m_period++;
-			lastSecond = now;
+		if (now - lastPeriodUpdate > 100) {
+			m_period += now - lastPeriodUpdate;
+			m_totalTime += now - lastPeriodUpdate;
+			lastPeriodUpdate = now;
 		}
-		if (m_period == Options.TOTAL_PERIOD) {
+		if (m_period >= Options.TOTAL_PERIOD) {
 			m_player.testKarma();
 			m_period = 0;
 		}
-//		if (now - lastUpdatePlayer > 1000 / 30) {
-//			lastUpdatePlayer = now;
-//			m_player.step(now, controller);
-//		}
-//		if (now - lastUpdateSoul > 500) {
-//			lastUpdateSoul = now;
-//			m_soul.step(now);
-//			m_obstacle.step(now);
-//		}
 	}
 
 	@Override

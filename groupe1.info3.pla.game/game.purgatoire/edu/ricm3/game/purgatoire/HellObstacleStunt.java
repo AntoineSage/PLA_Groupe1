@@ -10,12 +10,14 @@ public class HellObstacleStunt extends Stunt {
 
 	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
+		setDMG(Options.HELL_OBSTACLE_DMG);
 	}
 
 	HellObstacleStunt() {
 		super(Singleton.getNewObstacleHellAut(), null, Color.pink);
 	}
-	
+
 	@Override
 	void pop(IDirection d) {
 		System.out.println("pop hell obstacle");

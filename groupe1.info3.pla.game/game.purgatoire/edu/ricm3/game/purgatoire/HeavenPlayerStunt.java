@@ -9,10 +9,13 @@ import ricm3.interpreter.IEntityType;
 public class HeavenPlayerStunt extends Stunt {
 
 	Timer m_dashTimer;
-	
+
 	HeavenPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
+		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
+		setDMG(Options.HEAVEN_PLAYER_DMG);
+
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(m_entity.getDMG());
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y--;
@@ -61,7 +64,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(m_entity.getDMG());
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y++;
@@ -76,7 +79,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(m_entity.getDMG());
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x++;
@@ -91,12 +94,14 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x - 1][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(m_entity.getDMG());
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x--;
 			}
 			m_entity.m_direction = IDirection.WEST;
+			break;
+		default:
 			break;
 		}
 	}
@@ -106,11 +111,6 @@ public class HeavenPlayerStunt extends Stunt {
 		System.out.println("egg heaven");
 	}
 
-	@Override
-	void takeDamage(int DMG) {
-		System.out.println("takeDamage heaven");
-	}
-	
 	@Override
 	public void step(long now) {
 		super.step(now);

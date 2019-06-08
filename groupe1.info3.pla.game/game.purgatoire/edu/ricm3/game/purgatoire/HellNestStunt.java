@@ -10,6 +10,8 @@ public class HellNestStunt extends Stunt {
 
 	HellNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
+		m_maxHP = Options.HELL_NEST_HP_MAX;
+		setDMG(Options.HELL_NEST_DMG);
 	}
 
 	HellNestStunt() {
@@ -22,7 +24,7 @@ public class HellNestStunt extends Stunt {
 		// milieu Nest
 		width = m_entity.m_bounds.width;
 		height = m_entity.m_bounds.height;
-		x = (2 * m_entity.m_bounds.x + (width )) / 2;
+		x = (2 * m_entity.m_bounds.x + (width)) / 2;
 		y = (2 * m_entity.m_bounds.y + (height)) / 2;
 		Random r = new Random();
 		double tmpX = Math.random();

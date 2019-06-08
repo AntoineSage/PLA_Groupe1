@@ -15,12 +15,14 @@ public class HeavenSoulStunt extends Stunt {
 
 	HeavenSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		lastUpdate = (long) 0;
+		m_maxHP = Options.HEAVEN_SOUL_HP_MAX;
+		setDMG(Options.HEAVEN_SOUL_DMG);
 	}
 
 	HeavenSoulStunt() {
 		super(Singleton.getNewSoulHeavenAut(), null, Color.DARK_GRAY);
 		lastUpdate = (long) 0;
+		setDMG(Options.HEAVEN_SOUL_DMG);
 	}
 
 	@Override
@@ -51,8 +53,8 @@ public class HeavenSoulStunt extends Stunt {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			isPlayer.addKarma(m_entity);
-			isPlayer.takeDamage(m_entity.getDMG());
-			m_entity.die();
+			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
+			m_entity.takeDamage(m_entity.m_HP);
 		}
 		if (lastUpdate - now > 500) {
 			m_automaton.step(m_entity);

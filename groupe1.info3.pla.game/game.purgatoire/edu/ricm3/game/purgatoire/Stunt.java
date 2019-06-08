@@ -2,7 +2,6 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -14,11 +13,14 @@ public class Stunt {
 	Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
-	int m_rangeDash = 10;
-	int m_cooldownDash = 5;
-	int m_durationBuff = 5;
-	int m_buffedDMG = 1; // value of DMG when buffed
-	int m_weaknessBuff = 1; // value applied on the DMG when buff
+	int m_rangeDash = Options.DASH_SIZE;
+	int m_cooldownDash = Options.DASH_CD;
+	int m_durationBuff = Options.BUFF_DURATION;
+	int m_maxHP;
+	private int m_DMG;
+	int m_karmaToGive;
+	float m_DMGBuff = 1;
+	float m_weaknessBuff = 1;
 
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
@@ -38,7 +40,6 @@ public class Stunt {
 	}
 
 	public void tryMove(IDirection d) {
-
 		switch (d) {
 		case NORTH:
 			if (m_entity.m_bounds.y == 1) {
@@ -72,6 +73,8 @@ public class Stunt {
 			}
 			m_entity.m_direction = IDirection.WEST;
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -85,9 +88,9 @@ public class Stunt {
 		}
 	}
 
-	void buff(float buffDMG, float debuffWeakness) {
-		m_buffedDMG = (int) (1 + buffDMG / 100);
-		m_weaknessBuff = (int) (1 + debuffWeakness/ 100);
+	void buff(int buffDMG, int debuffWeakness) {
+		m_DMGBuff = (float) (1 + buffDMG / 100.0);
+		m_weaknessBuff = (float) (1 + debuffWeakness / 100.0);
 	}
 
 	void pop(IDirection d) {
@@ -108,15 +111,23 @@ public class Stunt {
 	}
 
 	void egg() {
-
-		System.out.println("egg de base");
+		// TODO egg de base
+		System.out.println("egg de base : NYI");
 	}
 
 	void takeDamage(int DMG) {
-		m_entity.m_HP -= DMG;
+		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
+	}
+
+	int getDMG() {
+		return (int) ((float) (m_DMGBuff * m_DMG));
+	}
+
+	void setDMG(int DMG) {
+		m_DMG = DMG;
 	}
 
 	public void setAttachedEntity(Entity entity) {
@@ -130,4 +141,9 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
+
+	public void setKarmaToGive(int karmaToGive) {
+		m_karmaToGive = karmaToGive;
+	}
+
 }
