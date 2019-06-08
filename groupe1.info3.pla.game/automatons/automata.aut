@@ -18,10 +18,10 @@ Player(Init){
 
 SoulsHell(Init){
 	* (Init):
-	|Closest(@,N) ? Move(N) :(Init)
+	|Closest(@,S) ? Move(S) :(Init)
 	|Closest(@,E) ? Move(E) :(Init)
 	|Closest(@,O) ? Move(O) :(Init)
-	|Closest(@,S) ? Move(S) :(Init)
+	|Closest(@,N) ? Move(N) :(Init)
 }
 
 SoulsHeaven(Init){
@@ -50,7 +50,15 @@ Flaque(Init){
 }
 
 Nest(Init){
+<<<<<<< HEAD
 	* (Init)
 	|True ? Egg() : (Step1)
 	* (Step1): True ? Wizz() :(Init)
+=======
+	* (Init): True ? Egg() :(Init)
+}
+
+Missile(Init){
+	* (Init): True ? Move(F) : (Init)
+>>>>>>> d31caafc3bd9a19950ba7b1af81d153164602631
 }

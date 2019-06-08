@@ -149,6 +149,11 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+
+		iter = lvl.m_missiles.iterator();
+		while (iter.hasNext()) {
+			paint(g, iter.next());
+		}
 	}
 
 	public void addGraphicUI(Component g) {

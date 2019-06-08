@@ -26,6 +26,9 @@ public class Singleton {
 	private static IAutomaton m_nestHellAut;
 	private static IAutomaton m_nestHeavenAut;
 
+	private static IAutomaton m_missileHellAut;
+	private static IAutomaton m_missileHeavenAut;
+
 	private static Controller m_controller;
 
 	private Singleton(String file) {
@@ -52,6 +55,10 @@ public class Singleton {
 
 		m_nestHellAut = automatons.get(6);
 		m_nestHeavenAut = automatons.get(6);
+
+		m_missileHellAut = automatons.get(7);
+		m_missileHeavenAut = automatons.get(7);
+
 	}
 
 	public Singleton getSingleton() {
@@ -109,5 +116,14 @@ public class Singleton {
 
 	public static IAutomaton getNewNestHeavenAut() {
 		return m_nestHeavenAut.copy();
+	}
+
+	public static IAutomaton getNewMissileHellAut() {
+		return m_missileHellAut.copy();
+	}
+
+	public static IAutomaton getNewMissileHeavenAut() {
+		return m_missileHeavenAut.copy();
+
 	}
 }

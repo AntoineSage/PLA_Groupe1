@@ -2,6 +2,7 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
@@ -38,40 +39,121 @@ public class Stunt {
 	public void tryMove(IDirection d) {
 		switch (d) {
 		case NORTH:
-			if (m_entity.m_bounds.y == 1) {
-				m_entity.m_level.m_model.nextLevel();
-			} else if (m_entity.wontCollide(d)) {
-				move(0, -1);
-			}
 			m_entity.m_direction = IDirection.NORTH;
+			if (m_entity.m_bounds.y <= 1) {
+				goingOut(d);
+			} else {
+				if (nobodyCollideWithEntity()) {
+					move(0, -1);
+				}
+			}
 			break;
 		case SOUTH:
+			m_entity.m_direction = IDirection.SOUTH;
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(0, 1);
 				}
+			} else {
+				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.SOUTH;
 			break;
 		case EAST:
+			m_entity.m_direction = IDirection.EAST;
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(1, 0);
 				}
+			} else {
+				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.EAST;
 			break;
 		case WEST:
+			m_entity.m_direction = IDirection.WEST;
 			if (m_entity.m_bounds.x > 0) {
-				if (m_entity.wontCollide(d)) {
+				if (nobodyCollideWithEntity()) {
 					move(-1, 0);
 				}
+			} else {
+				goingOut(d);
 			}
-			m_entity.m_direction = IDirection.WEST;
+			break;
+		case FRONT:
+			switch (m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case BACK:
+			switch (m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case LEFT:
+			switch (m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
+			break;
+		case RIGHT:
+			switch (m_entity.m_direction) {
+			case NORTH:
+				tryMove(IDirection.NORTH);
+				break;
+			case SOUTH:
+				tryMove(IDirection.SOUTH);
+				break;
+			case EAST:
+				tryMove(IDirection.EAST);
+				break;
+			case WEST:
+				tryMove(IDirection.WEST);
+				break;
+			default:
+				break;
+			}
 			break;
 		default:
 			break;
 		}
+
 	}
 
 	public void step(Entity e) {
@@ -102,13 +184,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		// TODO egg de base 
-		System.out.println("egg de base : NYI");
+		System.out.println("egg de base");
 	}
 
 	void getDamage(int DMG) {
 		m_entity.addHP(-DMG);
 		if (m_entity.m_HP <= 0) {
+			
 			m_entity.die();
 		}
 	}
@@ -121,12 +203,28 @@ public class Stunt {
 		return m_entity.superposedWith(type) != null;
 	}
 
+	public boolean nobodyCollideWithEntity() {
+		if (m_entity instanceof Missile) {
+		}
+		List<Entity> colliders = m_entity.m_level.m_collisionGrid.testCollisionFutur(m_entity, m_entity.m_direction);
+		if (!colliders.isEmpty()) {
+			m_entity.enterInCollisionWith(colliders);
+			return false;
+
+		}
+		return true;
+	}
+
+	void goingOut(IDirection d) {
+
+	}
+
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
-	
+
 	public void setKarmaToGive(int karmaToGive) {
 		m_karmaToGive = karmaToGive;
 	}
-	
+
 }

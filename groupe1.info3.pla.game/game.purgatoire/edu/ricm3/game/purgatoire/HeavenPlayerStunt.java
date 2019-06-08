@@ -115,6 +115,13 @@ public class HeavenPlayerStunt extends Stunt {
 	void getDamage(int DMG) {
 		//System.out.println("getDamage heaven");
 	}
+	
+	@Override
+	void goingOut(IDirection d){
+		if(d == IDirection.NORTH) {
+			m_entity.m_level.m_model.nextLevel();
+		}
+	}
 
 	@Override
 	public void step(long now) {
