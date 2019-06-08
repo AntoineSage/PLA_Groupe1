@@ -16,7 +16,9 @@ public class Options {
 
 	static final double COEF_KARMA_POS = 0.2;
 	static final double COEF_KARMA_NEG = -0.3;
-	static long NEST_SPAWN_DELAY = 3000;
+	
+	// NEST OPTIONS
+	static final long NEST_SPAWN_DELAY = 3000;
 	
 
 	// PLAYER OPTIONS

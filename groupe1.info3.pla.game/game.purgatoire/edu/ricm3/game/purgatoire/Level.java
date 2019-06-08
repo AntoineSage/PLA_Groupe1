@@ -22,6 +22,7 @@ public class Level {
 	private long lastUpdatePlayer;
 	private long lastUpdateOthers;
 	private long lastUpdateNest;
+	public  long nest_spawn_period = Options.NEST_SPAWN_DELAY;
 
 	List<Entity> m_toRemove;
 
@@ -146,7 +147,7 @@ public class Level {
 		}
 		
 			Iterator<Entity> iter = m_nest.iterator();
-			if(now - lastUpdateNest > Options.NEST_SPAWN_DELAY) {
+			if(now - lastUpdateNest > nest_spawn_period) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

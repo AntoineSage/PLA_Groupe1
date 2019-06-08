@@ -35,7 +35,6 @@ public class HeavenNestStunt extends Stunt {
 			int y = m_entity.m_bounds.y;
 			m_entity.m_level.addEntity(new Obstacle(m_entity.m_level, x, y, width, height));
 			m_entity.m_level.removeEntity(m_entity);
-			System.out.println("wizz Nest");
 			m_timerWizz.start(5000);
 		}
 	}
@@ -44,7 +43,7 @@ public class HeavenNestStunt extends Stunt {
 	void pop(IDirection direction) {
 
 		if (m_timerWizz.end()) {
-			Options.NEST_SPAWN_DELAY = 500 ;
+			this.m_entity.m_level.nest_spawn_period /= 2;
 			System.out.println("pop Nest");
 		}
 	}
