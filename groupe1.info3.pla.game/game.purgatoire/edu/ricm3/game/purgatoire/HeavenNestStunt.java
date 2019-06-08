@@ -12,7 +12,6 @@ public class HeavenNestStunt extends Stunt {
 
 	Timer m_timerWizz;
 	Timer m_timerPop;
-	long m_spawn;
 	
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);

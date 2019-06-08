@@ -10,31 +10,40 @@ import ricm3.interpreter.IEntityType;
 
 public class HellNestStunt extends Stunt {
 	
-Timer m_timer;
+	Timer m_timerWizz;
+	Timer m_timerPop;
 	
 	HellNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		m_maxHP = Options.HELL_NEST_HP_MAX;
-		m_DMG = Options.HELL_NEST_DMG;
-		m_timer = new Timer(5000);
+		m_timerWizz = new Timer(5000);
+		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
+		m_DMG = Options.HEAVEN_NEST_DMG;
 	}
 
 	HellNestStunt() {
 		super(Singleton.getNewNestHellAut(), null, Color.GRAY);
-		m_timer = new Timer(5000);
+		m_timerWizz = new Timer(5000);
 	}
-	
+
 	@Override
-	void wizz( IDirection direction) {
-		if(m_timer.end()) {
-		int width = m_entity.m_bounds.width;
-		int height = m_entity.m_bounds.height;
-		int x = m_entity.m_bounds.x;
-		int y = m_entity.m_bounds.y;
-		m_entity.m_level.addEntity(new Obstacle(m_entity.m_level,x,y,width,height));
-		m_entity.m_level.removeEntity(m_entity);
-		System.out.println("wizz Nest");
-		m_timer.start(5000);
+	void wizz(IDirection direction) {
+		if (m_timerWizz.end()) {
+			int width = m_entity.m_bounds.width;
+			int height = m_entity.m_bounds.height;
+			int x = m_entity.m_bounds.x;
+			int y = m_entity.m_bounds.y;
+			m_entity.m_level.addEntity(new Obstacle(m_entity.m_level, x, y, width, height));
+			m_entity.m_level.removeEntity(m_entity);
+			m_timerWizz.start(5000);
+		}
+	}
+
+	@Override
+	void pop(IDirection direction) {
+
+		if (m_timerWizz.end()) {
+			this.m_entity.m_level.nest_spawn_period /= 2;
+			System.out.println("pop Nest");
 		}
 	}
 
@@ -55,21 +64,22 @@ Timer m_timer;
 
 			else
 				randX = x + r.nextInt(width + 2);
-			
+
 			if (tmpY >= 0.5)
 				randY = y - r.nextInt(height + 2);
 			else
 				randY = y + r.nextInt(height + 2);
-			
-			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY,randX - 2, randY - 2, 2, 2))
+
+			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2))
 				m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2));
 			break;
 		}
 	}
+
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_timer.step(now);
-		
+		m_timerWizz.step(now);
+
 	}
 }
