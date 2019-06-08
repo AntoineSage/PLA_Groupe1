@@ -112,6 +112,13 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
+	void goingOut(IDirection d) {
+		if (d == IDirection.NORTH) {
+			m_entity.m_level.m_model.nextLevel();
+		}
+	}
+
+	@Override
 	public void step(long now) {
 		super.step(now);
 		if (m_dashTimer.m_previousNow == 0)

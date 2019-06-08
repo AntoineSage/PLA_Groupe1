@@ -45,7 +45,7 @@ public class Options {
 	static int HEAVEN_SOUL_HP_MAX = 1;
 	static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
-	static int SOUL_HP = 10;
+	static int SOUL_HP = 1;
 
 	// SPCL OPTIONS
 	static int HELL_SPCL_DMG = 1;
@@ -66,13 +66,13 @@ public class Options {
 
 	static int OBSTACLE_HP = 1;
 
-	/*
-	 * MISSILE OPTIONS static int HELL_MISSILE_DMG = 1; static int
-	 * HELL_MISSILE_HP_MAX = 1; static int HEAVEN_MISSILE_DMG = 1; static int
-	 * HEAVEN_MISSILE_HP_MAX = 1;
-	 *
-	 * static int MISSILE_HP = 1;
-	 */
+	// MISSILE OPTIONS
+	static int HELL_MISSILE_DMG = 1;
+	static int HELL_MISSILE_HP_MAX = 1;
+	static int HEAVEN_MISSILE_DMG = 1;
+	static int HEAVEN_MISSILE_HP_MAX = 1;
+
+	static int MISSILE_HP = 1;
 
 	// DASH SIZE AND COOLDOWN
 	static int DASH_SIZE = 10;
