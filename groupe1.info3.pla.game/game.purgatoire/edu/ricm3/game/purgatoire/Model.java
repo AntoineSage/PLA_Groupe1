@@ -18,8 +18,10 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 
 import edu.ricm3.game.GameModel;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 
 public class Model extends GameModel implements Transformable {
 	WorldType m_wt;
@@ -42,6 +44,13 @@ public class Model extends GameModel implements Transformable {
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
+		try {
+			m_player.m_currentStunt.m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.NORTH, 3);
+			m_player.m_currentStunt.m_animation.resume();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	WorldType getWorld() {

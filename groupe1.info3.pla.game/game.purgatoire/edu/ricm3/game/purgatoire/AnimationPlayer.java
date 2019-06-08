@@ -30,14 +30,19 @@ public class AnimationPlayer {
 	}
 	
 	public void changeTo(AnimType type) {
-		if(m_type != type) m_type = type;
-		m_position = 0;
+		m_Playing = true;
+		if(m_type.getValue() != type.getValue()) {
+			m_type = type;
+			m_position = 0;
+		}
 	}
 	
 	public void step() {
 		if(m_Playing && m_stepsSinceLastUpdate > m_framesPerStep) {
 			m_stepsSinceLastUpdate = 0;
 			m_position = (m_position + 1) % m_animation.length(m_type);
+		} else {
+			m_stepsSinceLastUpdate++;
 		}
 	}
 	

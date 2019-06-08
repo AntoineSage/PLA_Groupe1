@@ -2,8 +2,8 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -13,10 +13,11 @@ public class Stunt {
 	IAutomaton m_automaton;
 	Color m_c;
 	BufferedImage m_sprite;
+	AnimationPlayer m_animation;
 	Entity m_entity;
 	int m_rangeDash = 10;
 	int m_cooldownDash = 5;
-	
+
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
 		m_c = c;
@@ -41,6 +42,7 @@ public class Stunt {
 			if (m_entity.m_bounds.y == 1) {
 				m_entity.m_level.m_model.nextLevel();
 			} else if (m_entity.wontCollide(d)) {
+				m_animation.changeTo(AnimType.NORTH);
 				move(0, -1);
 			}
 			m_entity.m_direction = IDirection.NORTH;
@@ -71,7 +73,7 @@ public class Stunt {
 			break;
 		}
 	}
-	
+
 	public void step(Entity e) {
 		m_automaton.step(m_entity);
 	}
@@ -100,13 +102,13 @@ public class Stunt {
 	}
 
 	void egg() {
-		
+
 		System.out.println("egg de base");
 	}
 
 	void getDamage(int DMG) {
 		m_entity.m_HP -= DMG;
-		if(m_entity.m_HP <= 0) {
+		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}

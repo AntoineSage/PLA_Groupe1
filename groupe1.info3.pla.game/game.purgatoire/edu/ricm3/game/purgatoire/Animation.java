@@ -14,7 +14,7 @@ public class Animation {
 	private List<BufferedImage> m_sprites[];
 
 	public enum AnimType {
-		NORTH(1), SOUTH(2), EAST(3), IDLE(4);
+		NORTH(0), SOUTH(1), EAST(2), IDLE(3);
 
 		private final int value;
 
@@ -37,8 +37,6 @@ public class Animation {
 		
 		File file = new File(fileName);
 		Scanner sc = new Scanner(file);
-
-		int i = 0;
 
 		// Opening and splitting the .png file using the first line of the file 
 		if (sc.hasNextLine()) {
@@ -64,7 +62,7 @@ public class Animation {
 			
 			ArrayList<BufferedImage> tmp = new ArrayList<BufferedImage>();
 			for (String string : numbers) {
-				tmp.add(splitImage[Integer.parseInt(string)]);
+				tmp.add(splitImage[Integer.parseInt(string) - 1]);
 			}
 			switch(type) {
 			case "NORTH":
@@ -78,7 +76,7 @@ public class Animation {
 			}
 
 		}
-
+		sc.close();
 		return sprites;
 	}
 

@@ -1,4 +1,5 @@
-sprite_sheet = sprites/ironman.png
+sprite_sheet = sprites/angel_NORTH.png
 SOUTH = 1;2;3;4
-EAST = 9;10;11;12
-NORTH = 13;14;15;16
+EAST = 1;2;3;4
+NORTH = 1;2;3;4
+IDLE = 1;2;3;4

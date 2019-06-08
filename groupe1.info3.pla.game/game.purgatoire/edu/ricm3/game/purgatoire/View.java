@@ -43,16 +43,16 @@ public class View extends GameView {
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
 		m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
 
-		//transform();
+		// transform();
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
 				System.out.printf("%d %d\n", getWidth(), getHeight());
 				Options.WIN_HEIGHT = getHeight();
-				
+
 				int tmp = getWidth();
 				Options.WIN_WIDTH = tmp == 0 ? Options.WIN_WIDTH : tmp;
-				
+
 				BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 			}
@@ -95,7 +95,7 @@ public class View extends GameView {
 
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
-		
+
 		g1.dispose();
 		g2.dispose();
 	}
@@ -105,14 +105,14 @@ public class View extends GameView {
 		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
 				e.m_bounds.height * BLOCK_SIZE);
 	}
-	
+
 	private void paintGrid(Graphics g) {
 		g.setColor(Color.BLACK);
-		for(int i = 0; i < Options.LVL_HEIGHT; i++) {
-			g.drawLine(0,i*BLOCK_SIZE, Options.LVL_WIDTH*BLOCK_SIZE, i*BLOCK_SIZE);
+		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
+			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
 		}
-		for(int i = 0; i < Options.LVL_WIDTH; i++) {
-			g.drawLine(i*BLOCK_SIZE,0,i*BLOCK_SIZE, Options.LVL_HEIGHT*BLOCK_SIZE);
+		for (int i = 0; i < Options.LVL_WIDTH; i++) {
+			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
 		}
 	}
 
@@ -121,20 +121,28 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+
 		if (lvl.m_special != null)
 			paint(g, lvl.m_special);
+
 		if (lvl.m_player != null)
-			paint(g, lvl.m_player);
+			paintAnimation(g, lvl.m_player);
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
-		
+
 		iter = lvl.m_nest.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
+	}
+
+	private void paintAnimation(Graphics g, Entity e) {
+		e.m_currentStunt.m_animation.step();
+		g.drawImage(e.m_currentStunt.m_animation.getSprite(), e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE,
+				e.m_bounds.width * BLOCK_SIZE, e.m_bounds.height * BLOCK_SIZE, null);
 	}
 
 }
