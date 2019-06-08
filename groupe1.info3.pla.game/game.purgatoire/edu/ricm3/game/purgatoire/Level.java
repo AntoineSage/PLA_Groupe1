@@ -14,6 +14,7 @@ public class Level {
 	List<Entity> m_obstacles;
 	List<Entity> m_nest;
 	List<Entity> m_entities;
+	List<Entity> m_missiles;
 	Entity m_special;
 	Entity m_player;
 
@@ -31,6 +32,7 @@ public class Level {
 		m_obstacles = new LinkedList<Entity>();
 		m_souls = new LinkedList<Entity>();
 		m_nest = new LinkedList<Entity>();
+		m_missiles = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_entities = new LinkedList<Entity>();
@@ -55,6 +57,7 @@ public class Level {
 		m_obstacles = new LinkedList<Entity>();
 		m_nest = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+		m_missiles = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_toRemove = new LinkedList<Entity>();
@@ -79,6 +82,10 @@ public class Level {
 
 		if (e instanceof Player) {
 			m_player = e;
+		}
+
+		if (e instanceof Missile) {
+			m_missiles.add(e);
 		}
 
 		m_entities.add(e);
@@ -128,6 +135,12 @@ public class Level {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
+			
+			Iterator<Entity> iter = m_souls.iterator();
+			iter = m_missiles.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
 		}
 		if (now - lastUpdateOthers > 200) {
 			Iterator<Entity> iter = m_souls.iterator();
@@ -143,6 +156,7 @@ public class Level {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
+
 			if (m_special != null)
 				m_special.step(now);
 			lastUpdateOthers = now;
@@ -167,6 +181,10 @@ public class Level {
 
 			if (e instanceof Special) {
 				m_special = null;
+			}
+
+			if (e instanceof Missile) {
+				m_missiles.remove(e);
 			}
 
 			m_entities.remove(e);

@@ -11,6 +11,7 @@ public class CollisionGrid {
 
 	List<Entity> m_grid[][];
 
+	@SuppressWarnings("unchecked")
 	public CollisionGrid() {
 		m_grid = new List[Options.LVL_WIDTH][Options.LVL_HEIGHT];
 		for (int i = 0; i < Options.LVL_WIDTH; i++) {
@@ -125,13 +126,86 @@ public class CollisionGrid {
 		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
 				Iterator<Entity> iter = m_grid[i][j].iterator();
-				while(iter.hasNext()) {
+				while (iter.hasNext()) {
 					Entity eInList = iter.next();
-					if(eInList.m_type == type) return eInList;
+					if (eInList.m_type == type)
+						return eInList;
 				}
 			}
 		}
-		
+
 		return null;
+	}
+
+	public List<Entity> testCollision(Entity e) {
+		List<Entity> colliders = new LinkedList<Entity>();
+
+		for (int i = e.m_bounds.x; i < e.m_bounds.x + e.m_bounds.width; i++) {
+			for (int j = e.m_bounds.y; j < e.m_bounds.y + e.m_bounds.height; j++) {
+				Iterator<Entity> iter = m_grid[i][j].iterator();
+				while (iter.hasNext()) {
+					Entity eInList = iter.next();
+					if (eInList != e)
+						colliders.add(eInList);
+				}
+			}
+		}
+
+		return colliders.size() == 0 ? null : colliders;
+	}
+
+	public List<Entity> testCollisionFutur(Entity entity, IDirection d) {
+		List<Entity> colliders = new LinkedList<Entity>();
+		switch (d) {
+		case EAST:
+			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (entity.m_type.isCollidingWith(e.m_type)) {
+						colliders.add(e);
+						
+					}
+				}
+			}
+			break;
+		case NORTH:
+			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y - 1].iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (entity.m_type.isCollidingWith(e.m_type)) {
+						colliders.add(e);
+					}
+				}
+			}
+			break;
+		case SOUTH:
+			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (entity.m_type.isCollidingWith(e.m_type)) {
+						colliders.add(e);
+					}
+				}
+			}
+			break;
+		case WEST:
+			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x - 1][i].iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (entity.m_type.isCollidingWith(e.m_type)) {
+						colliders.add(e);
+					}
+				}
+			}
+			break;
+		default:
+			throw new IllegalStateException();
+
+		}
+		return colliders;
 	}
 }

@@ -13,6 +13,9 @@ public class HeavenPlayerStunt extends Stunt {
 	HeavenPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
+		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
+		m_DMG = Options.HEAVEN_PLAYER_DMG;
+
 	}
 
 	@Override
@@ -27,8 +30,8 @@ public class HeavenPlayerStunt extends Stunt {
 
 	@Override
 	void wizz(IDirection d) {
-		Special special = (Special)m_entity.superposedWith(IEntityType.TEAM);
-		if(special != null) {
+		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
+		if (special != null) {
 			special.pop(null);
 		}
 		System.out.println("wizz heaven player");
@@ -46,7 +49,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
 					}
 				}
 				y--;
@@ -61,7 +64,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
 					}
 				}
 				y++;
@@ -76,7 +79,7 @@ public class HeavenPlayerStunt extends Stunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
 					}
 				}
 				x++;
@@ -88,15 +91,17 @@ public class HeavenPlayerStunt extends Stunt {
 			xMin = x - 2 * m_entity.m_bounds.width;
 			while (x > 1 && x > xMin) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x-1][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x - 1][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_entity.m_DMG);
+						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
 					}
 				}
 				x--;
 			}
 			m_entity.m_direction = IDirection.WEST;
+			break;
+		default:
 			break;
 		}
 	}
@@ -109,6 +114,13 @@ public class HeavenPlayerStunt extends Stunt {
 	@Override
 	void getDamage(int DMG) {
 		System.out.println("getDamage heaven");
+	}
+	
+	@Override
+	void goingOut(IDirection d){
+		if(d == IDirection.NORTH) {
+			m_entity.m_level.m_model.nextLevel();
+		}
 	}
 
 	@Override
