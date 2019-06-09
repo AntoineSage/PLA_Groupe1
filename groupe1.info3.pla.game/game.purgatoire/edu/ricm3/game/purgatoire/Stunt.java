@@ -104,7 +104,7 @@ public class Stunt {
 	}
 
 	void egg() {
-		// TODO egg de base 
+		// TODO egg de base
 		System.out.println("egg de base : NYI");
 	}
 
@@ -126,9 +126,9 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
-	
+
 	public void setKarmaToGive(int karmaToGive) {
 		m_karmaToGive = karmaToGive;
 	}
-	
+
 }
