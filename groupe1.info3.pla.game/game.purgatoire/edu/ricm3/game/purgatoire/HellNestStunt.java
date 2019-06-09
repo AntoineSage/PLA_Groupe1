@@ -17,8 +17,8 @@ public class HellNestStunt extends Stunt {
 		super(automaton, entity, sprite);
 		m_timerWizz = new Timer(5000);
 		m_timerPop = new Timer(5000);
-		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
-		m_DMG = Options.HEAVEN_NEST_DMG;
+		setDMG(Options.HELL_NEST_DMG);
+		m_maxHP = Options.HELL_NEST_HP_MAX;
 	}
 
 	HellNestStunt() {

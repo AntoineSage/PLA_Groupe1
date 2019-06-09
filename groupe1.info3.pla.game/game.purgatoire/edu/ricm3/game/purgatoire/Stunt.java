@@ -16,8 +16,12 @@ public class Stunt {
 	Entity m_entity;
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
-	int m_maxHP, m_DMG;
+	int m_durationBuff = Options.BUFF_DURATION;
+	int m_maxHP;
+	private int m_DMG;
 	int m_karmaToGive;
+	float m_DMGBuff = 1;
+	float m_weaknessBuff = 1;
 
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
@@ -166,6 +170,11 @@ public class Stunt {
 		}
 	}
 
+	void buff(int buffDMG, int debuffWeakness) {
+		m_DMGBuff = (float) (1 + buffDMG / 100.0);
+		m_weaknessBuff = (float) (1 + debuffWeakness / 100.0);
+	}
+
 	void pop(IDirection d) {
 		System.out.println("pop de base");
 	}
@@ -187,12 +196,19 @@ public class Stunt {
 		System.out.println("egg de base");
 	}
 
-	void getDamage(int DMG) {
-		m_entity.addHP(-DMG);
+	void takeDamage(int DMG) {
+		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
-			
 			m_entity.die();
 		}
+	}
+
+	int getDMG() {
+		return (int) ((float) (m_DMGBuff * m_DMG));
+	}
+
+	void setDMG(int DMG) {
+		m_DMG = DMG;
 	}
 
 	public void setAttachedEntity(Entity entity) {

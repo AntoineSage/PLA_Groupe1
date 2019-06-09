@@ -18,7 +18,7 @@ public class HeavenNestStunt extends Stunt {
 		m_timerWizz = new Timer(5000);
 		m_timerPop = new Timer(5000);
 		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
-		m_DMG = Options.HEAVEN_NEST_DMG;
+		setDMG(Options.HEAVEN_NEST_DMG);
 	}
 
 	HeavenNestStunt() {

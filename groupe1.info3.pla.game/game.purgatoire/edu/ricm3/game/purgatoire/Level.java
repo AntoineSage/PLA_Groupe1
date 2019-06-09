@@ -21,9 +21,10 @@ public class Level {
 	CollisionGrid m_collisionGrid;
 	Color m_c;
 	private long lastUpdatePlayer;
-	private long lastUpdateOthers;
-	private long lastUpdateNest;
 	public  long nest_spawn_period = Options.NEST_SPAWN_DELAY;
+	private long lastUpdateSouls;
+	private long lastUpdateObstacles;
+	private long lastUpdateNests;
 
 	List<Entity> m_toRemove;
 
@@ -67,14 +68,17 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		if (e instanceof Obstacle) {
+			if(m_obstacles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_obstacles.add(e);
 		}
 
 		if (e instanceof Soul) {
+			if(m_souls.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_souls.add(e);
 		}
 
 		if (e instanceof Nest) {
+			if(m_nest.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_nest.add(e);
 		}
 
@@ -87,6 +91,7 @@ public class Level {
 		}
 
 		if (e instanceof Missile) {
+			if(m_missiles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_missiles.add(e);
 		}
 
@@ -133,35 +138,40 @@ public class Level {
 
 	public void step(long now) {
 		removeEntities();
+		Iterator<Entity> iter;
 		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
-			
-			Iterator<Entity> iter = m_souls.iterator();
+			iter = m_souls.iterator();
 			iter = m_missiles.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
 		}
-		if (now - lastUpdateOthers > 200) {
-			Iterator<Entity> iter = m_souls.iterator();
+
+		if (now - lastUpdateSouls > 1000 / 60) {
+			iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
+			if (m_special != null)
+				m_special.step(now);
+			lastUpdateSouls = now;
+		}
+		if (now - lastUpdateObstacles > 2000) {
 			iter = m_obstacles.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
-
+			lastUpdateObstacles = now;
+		}
+		if (now - lastUpdateNests > 1000) {
 			iter = m_nest.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
-
-			if (m_special != null)
-				m_special.step(now);
-			lastUpdateOthers = now;
+			lastUpdateNests = now;
 		}
 		
 			Iterator<Entity> iter = m_nest.iterator();
@@ -191,6 +201,10 @@ public class Level {
 
 			if (e instanceof Special) {
 				m_special = null;
+			}
+
+			if (e instanceof Player) {
+				m_player = null;
 			}
 
 			if (e instanceof Missile) {

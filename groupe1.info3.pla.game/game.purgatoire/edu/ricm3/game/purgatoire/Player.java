@@ -74,6 +74,7 @@ public class Player extends Entity {
 	@Override
 	public void addHP(int HP) {
 		super.addHP(HP);
+		System.out.println("DAMAGE TAKEN");
 		Singleton.getController().updateUI();
 	}
 
