@@ -16,13 +16,15 @@ public class HeavenNestStunt extends Stunt {
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
 		m_timerWizz = new Timer(5000);
+		m_timerPop = new Timer(5000);
 		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
 		m_DMG = Options.HEAVEN_NEST_DMG;
 	}
 
 	HeavenNestStunt() {
-		super(Singleton.getNewNestHellAut(), null, Color.GRAY);
+		super(Singleton.getNewNestHeavenAut(), null, Color.GRAY);
 		m_timerWizz = new Timer(5000);
+		m_timerPop = new Timer(5000);
 	}
 
 	@Override
@@ -41,9 +43,9 @@ public class HeavenNestStunt extends Stunt {
 	@Override
 	void pop(IDirection direction) {
 
-		if (m_timerWizz.end()) {
+		if (m_timerPop.end() && m_entity.m_level.nest_spawn_period > 500) {
 			this.m_entity.m_level.nest_spawn_period /= 2;
-			System.out.println("pop Nest");
+			m_timerPop.start(5000);
 		}
 	}
 
@@ -80,6 +82,6 @@ public class HeavenNestStunt extends Stunt {
 	public void step(long now) {
 		super.step(now);
 		m_timerWizz.step(now);
-
+		m_timerPop.step(now);
 	}
 }
