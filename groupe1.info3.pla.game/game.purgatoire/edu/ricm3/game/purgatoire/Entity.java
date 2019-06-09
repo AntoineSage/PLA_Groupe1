@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -25,7 +26,7 @@ public class Entity {
 		transform();
 		m_HP = 1;
 	}
-
+	
 	public void transform() {
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
@@ -52,13 +53,17 @@ public class Entity {
 	public int getMaxHP() {
 		return m_currentStunt.m_maxHP;
 	}
-
+	/*
+	public int getDMG() {
+		return (m_DMG * m_currentStunt.m_buffedDMG);
+	}
+*/
 	public void addMaxHP(int maxHP) {
 		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	void takeDamage(int DMG) {
-		m_currentStunt.getDamage(DMG);
+		m_currentStunt.takeDamage((int) m_currentStunt.m_weaknessBuff*DMG);
 	}
 
 	public void tryMove(IDirection d) {
@@ -126,6 +131,10 @@ public class Entity {
 			break;
 		}
 		return false;
+	}
+	
+	public void enterInCollisionWith(List<Entity> entities) {
+		
 	}
 
 	// TODO to improve

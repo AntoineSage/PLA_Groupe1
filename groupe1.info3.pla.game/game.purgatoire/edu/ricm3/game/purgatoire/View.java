@@ -101,8 +101,6 @@ public class View extends GameView {
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
 
-		paint(g1, m_model.getPlayer());
-
 		Iterator<Component> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
 			Component graphic = iter.next();
@@ -146,6 +144,11 @@ public class View extends GameView {
 		}
 
 		iter = lvl.m_nest.iterator();
+		while (iter.hasNext()) {
+			paint(g, iter.next());
+		}
+
+		iter = lvl.m_missiles.iterator();
 		while (iter.hasNext()) {
 			paint(g, iter.next());
 		}
