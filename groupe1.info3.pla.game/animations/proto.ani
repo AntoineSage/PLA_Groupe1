@@ -1,0 +1,5 @@
+sprite_sheet = sprites/angel_NORTH.png
+SOUTH = 1;2;3;4
+EAST = 1;2;3;4
+NORTH = 1;2;3;4
+IDLE = 2;2;2;2

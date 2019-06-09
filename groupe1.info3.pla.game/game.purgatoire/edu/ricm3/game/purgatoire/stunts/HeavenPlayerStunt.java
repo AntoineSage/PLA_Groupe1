@@ -1,25 +1,44 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
+import edu.ricm3.game.purgatoire.Animation;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
-public class HeavenPlayerStunt extends Stunt {
+public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_dashTimer;
 
-	HeavenPlayerStunt(Entity entity) {
-		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
+	public HeavenPlayerStunt() {
+		super(Singleton.getNewPlayerHeavenAut(), null, Color.BLUE);
+		
+		try {
+			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"),
+					AnimType.IDLE, 2);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_animation.resume();
+		
 		m_dashTimer = new Timer(m_cooldownDash);
 		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
-		m_DMG = Options.HEAVEN_PLAYER_DMG;
-
+		setDMG(Options.HEAVEN_PLAYER_DMG);
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		if (m_dashTimer.end()) {
 			dash(m_entity.m_direction);
 			System.out.println("dash");
@@ -29,16 +48,16 @@ public class HeavenPlayerStunt extends Stunt {
 	}
 
 	@Override
-	void wizz(IDirection d) {
-		Special special = (Special)m_entity.superposedWith(IEntityType.TEAM);
-		if(special != null) {
+	public void wizz(IDirection d) {
+		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
+		if (special != null) {
 			special.pop(null);
 		}
 		System.out.println("wizz heaven player");
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		int y, yMin, yMax, x, xMin, xMax;
 		switch (d) {
 		case NORTH:
@@ -46,10 +65,10 @@ public class HeavenPlayerStunt extends Stunt {
 			yMin = y - 2 * m_entity.m_bounds.height;
 			while (y > 1 && y > yMin) {
 				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y - 1).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);//enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y--;
@@ -61,10 +80,10 @@ public class HeavenPlayerStunt extends Stunt {
 			yMax = y + 2 * m_entity.m_bounds.height;
 			while (y < Options.LVL_HEIGHT && y < yMax) {
 				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);//enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y++;
@@ -76,10 +95,10 @@ public class HeavenPlayerStunt extends Stunt {
 			xMax = x + 2 * m_entity.m_bounds.width;
 			while (x < Options.LVL_WIDTH && x < xMax) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);//enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x++;
@@ -91,27 +110,35 @@ public class HeavenPlayerStunt extends Stunt {
 			xMin = x - 2 * m_entity.m_bounds.width;
 			while (x > 1 && x > xMin) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x-1][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x - 1, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);//enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x--;
 			}
 			m_entity.m_direction = IDirection.WEST;
 			break;
+		default:
+			break;
 		}
 	}
 
 	@Override
-	void egg() {
-		System.out.println("egg heaven");
+	public void egg() {
+		System.out.println("egg heaven player");
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+	void goingOut(IDirection d) {
+		if (d == IDirection.NORTH) {
+			m_entity.m_level.m_model.nextLevel();
+		}
+	}
+
+	public String getRankName() {
+		return Options.PLAYER_RANKS_HEAVEN[((Player) m_entity).getRank()];
 	}
 
 	@Override
@@ -121,4 +148,5 @@ public class HeavenPlayerStunt extends Stunt {
 			m_dashTimer.m_previousNow = now;
 		m_dashTimer.step(now);
 	}
+
 }

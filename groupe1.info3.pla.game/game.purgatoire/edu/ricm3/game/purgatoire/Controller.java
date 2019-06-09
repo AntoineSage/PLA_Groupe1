@@ -18,8 +18,6 @@
 
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Canvas;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Label;
@@ -29,26 +27,35 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
+import java.util.Stack;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 import edu.ricm3.game.GameController;
+import edu.ricm3.game.purgatoire.Bars.HPBar;
+import edu.ricm3.game.purgatoire.Bars.KarmaBar;
+import edu.ricm3.game.purgatoire.Bars.XPBar;
 
 public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
-	private long m_lastTransform;
-	Queue<KeyEvent> m_allKeyPressed;
-	Canvas m_karmaBar, m_HPBar, m_XPBar, m_periodCircle;
+	// private long m_lastTransform;
+	List<Integer> m_allKeyPressed;
+	Stack<Integer> m_directionKey;
+	HPBar m_HPBar, m_periodCircle;
+	XPBar m_XPBar;
+	KarmaBar m_karmaBar;
+
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
-		m_allKeyPressed = new LinkedList<KeyEvent>();
+		m_allKeyPressed = new LinkedList<Integer>();
+		m_directionKey = new Stack<Integer>();
 	}
 
 	@Override
@@ -57,25 +64,32 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void notifyVisible() {
+		// TODO center bars
+		// TODO add Hell or Heaven Label
+
 		// West container
 
-		Container west = new Container();
+		JPanel west = new JPanel();
 //		west.setLayout(new FlowLayout(FlowLayout.CENTER, 0, Options.UI_MARGIN));
 //		west.setLayout(new BoxLayout(west, BoxLayout.X_AXIS));
 		west.setLayout(new GridBagLayout());
 		west.setPreferredSize(new Dimension(Options.UI_PANEL_SIZE, 0));
 
-		Container westInside = new Container();
+		JPanel westInside = new JPanel();
 		westInside.setLayout(new BoxLayout(westInside, BoxLayout.Y_AXIS));
 
-		m_periodLabel = new Label("period: " + m_model.m_period + "s");
+		JPanel karmaBar = new JPanel();
+		karmaBar.setLayout(new GridBagLayout());
+
+		m_periodLabel = new Label();
 		m_periodLabel.setAlignment(Label.CENTER);
-		m_karmaBar = new Canvas();
-		m_karmaLabel = new Label("karma: " + m_model.m_player.getKarma());
+		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
+		m_karmaLabel = new Label();
 		m_karmaLabel.setAlignment(Label.CENTER);
 
 		westInside.add(m_periodLabel);
-		westInside.add(m_karmaBar);
+		karmaBar.add(m_karmaBar);
+		westInside.add(karmaBar);
 		westInside.add(m_karmaLabel);
 
 		west.add(westInside);
@@ -84,57 +98,115 @@ public class Controller extends GameController implements ActionListener {
 
 		// East container
 
-		Container east = new Container();
+		JPanel east = new JPanel();
 		east.setLayout(new GridBagLayout());
 		east.setPreferredSize(new Dimension(Options.UI_PANEL_SIZE, 0));
 
-		Container eastInside = new Container();
+		JPanel eastInside = new JPanel();
 		eastInside.setLayout(new BoxLayout(eastInside, BoxLayout.Y_AXIS));
 
-		Container bars = new Container();
-		bars.setLayout(new BoxLayout(bars, BoxLayout.X_AXIS));
-		Container HP = new Container();
+		JPanel eastBars = new JPanel();
+		eastBars.setLayout(new BoxLayout(eastBars, BoxLayout.X_AXIS));
+		JPanel HP = new JPanel();
 		HP.setLayout(new BoxLayout(HP, BoxLayout.Y_AXIS));
-		Container XP = new Container();
+		JPanel XP = new JPanel();
 		XP.setLayout(new BoxLayout(XP, BoxLayout.Y_AXIS));
+		JPanel HPBarContainer = new JPanel();
+		HPBarContainer.setLayout(new GridBagLayout());
+		JPanel XPBarContainer = new JPanel();
+		XPBarContainer.setLayout(new GridBagLayout());
 
-		m_HPBar = new Canvas();
-		m_HPLabel = new Label("HP: " + m_model.m_player.getHP() + "/" + m_model.m_player.getMaxHP());
+		m_HPBar = new HPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
+		m_HPLabel = new Label();
 		m_HPLabel.setAlignment(Label.CENTER);
-		m_XPBar = new Canvas();
-		m_XPLabel = new Label("XP: " + m_model.m_player.getXP() + "/" + m_model.m_player.getMaxXP());
+		m_XPBar = new XPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
+		m_XPLabel = new Label();
 		m_XPLabel.setAlignment(Label.CENTER);
-		m_rankLabel = new Label("rank: " + m_model.m_player.getRank());
+		m_rankLabel = new Label();
 		m_rankLabel.setAlignment(Label.CENTER);
-		m_totalTimeLabel = new Label("total time: " + m_model.m_totalTime + "s");
+		m_totalTimeLabel = new Label();
 		m_totalTimeLabel.setAlignment(Label.CENTER);
-		m_totalDistanceLabel = new Label("total distance: " + m_model.m_totalDistance + "m");
+		m_totalDistanceLabel = new Label();
 		m_totalDistanceLabel.setAlignment(Label.CENTER);
 
-		HP.add(m_HPBar);
+		HPBarContainer.add(m_HPBar);
+		HP.add(HPBarContainer);
 		HP.add(m_HPLabel);
-		XP.add(m_XPBar);
+		XPBarContainer.add(m_XPBar);
+		XP.add(XPBarContainer);
 		XP.add(m_XPLabel);
-		bars.add(HP);
-		bars.add(XP);
+		eastBars.add(HP);
+		eastBars.add(XP);
 
-		eastInside.add(bars);
+		eastInside.add(eastBars);
 		eastInside.add(m_rankLabel);
 		eastInside.add(m_totalTimeLabel);
 		eastInside.add(m_totalDistanceLabel);
 
-		east.add(Box.createRigidArea(new Dimension(Options.UI_MARGIN, 0)));
 		east.add(eastInside);
-		east.add(Box.createRigidArea(new Dimension(Options.UI_MARGIN, 0)));
 
 		m_game.addWest(west);
 		m_game.addEast(east);
+		updateUI();
+	}
+
+	public void updateUI() {
+		updateTimeUI();
+		updateKarmaUI();
+		updateHPUI();
+		updateXPUI();
+		updateRankUI();
+		updateDistanceUI();
+	}
+
+	public void updateTimeUI() {
+		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.m_period) / 1000));
+		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
+	}
+
+	public void updateKarmaUI() {
+		m_karmaBar.updateHeights(m_model.getPlayer().getKarma(), m_model.getPlayer().getMaxKarma());
+		m_karmaLabel.setText("karma: " + m_model.getPlayer().getKarma());
+
+		if (Options.ECHO_PLAYER_KARMA_CHANGE)
+			System.out.println("Player new karma: " + m_model.getPlayer().getKarma());
+	}
+
+	public void updateHPUI() {
+		m_HPBar.updateHeights(m_model.getPlayer().getHP(), m_model.getPlayer().getMaxHP(),
+				m_model.getPlayer().getMaxTotalHP());
+		m_HPLabel.setText("HP: " + m_model.getPlayer().getHP() + "/" + m_model.getPlayer().getMaxHP());
+
+		if (Options.ECHO_PLAYER_HP_CHANGE)
+			System.out.println("Player new HP: " + m_model.getPlayer().getHP());
+	}
+
+	public void updateXPUI() {
+		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMinXP(),
+				m_model.getPlayer().getMaxXP());
+		m_XPLabel.setText("XP: " + m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
+
+		if (Options.ECHO_PLAYER_XP_CHANGE)
+			System.out.println("Player new XP: " + m_model.getPlayer().getXP());
+	}
+
+	public void updateRankUI() {
+		m_rankLabel.setText("rank: " + (m_model.getPlayer().getRank() + 1) + " - " + m_model.getPlayer().getRankName());
+
+		if (Options.ECHO_PLAYER_RANK_CHANGE)
+			System.out.println("Player new rank: " + (m_model.getPlayer().getRank() + 1));
+	}
+
+	// TODO fix distance when changing world
+	public void updateDistanceUI() {
+		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
 	}
 
 	@Override
 	public void step(long now) {
 		m_model.step(now);
 		m_view.step(now);
+		updateUI(); // TODO remove this call to updateUI
 	}
 
 	@Override
@@ -143,25 +215,34 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		m_allKeyPressed.add(e);
-		if (e.getKeyCode() == KeyEvent.VK_A) {
-			m_model.m_player.m_karma += 50;
+		int code = e.getKeyCode();
+		if (isDirectionKey(code)) {
+			m_directionKey.push(code);
+		} else {
+			m_allKeyPressed.add(code);
 		}
-		if (e.getKeyCode() == KeyEvent.VK_E) {
-			m_model.m_player.m_karma -= 50;
-		}else if (e.getKeyCode() == KeyEvent.VK_H) {
-			m_model.m_player.m_currentStunt.hit(m_model.m_player.m_direction);
+
+		if (e.getKeyCode() == KeyEvent.VK_A) {
+			m_model.getPlayer().addKarma(+50);
+		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+			m_model.getPlayer().addKarma(-50);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		int code = e.getKeyCode();
+		Iterator<Integer> iter = null;
+		if (isDirectionKey(code)) {
+			iter = m_directionKey.iterator();
+		} else {
+			iter = m_allKeyPressed.iterator();
+		}
+
 		while (iter.hasNext()) {
-			KeyEvent key = iter.next();
-			if (key.getKeyCode() == e.getKeyCode()) {
+			int key = iter.next();
+			if (key == code) {
 				iter.remove();
-				// m_allKeyPressed.remove(key);
 			}
 		}
 	}
@@ -194,14 +275,24 @@ public class Controller extends GameController implements ActionListener {
 	public void mouseMoved(MouseEvent e) {
 	}
 
-	public boolean isKeyPressed(int e) {
-		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
-		while (iter.hasNext()) {
-			KeyEvent key = iter.next();
-			if (key.getKeyCode() == e) {
-				return true;
+	public boolean isKeyPressed(int code) {
+		if (isDirectionKey(code)) {
+			if (m_directionKey.size() > 0) {
+				return code == m_directionKey.peek();
+			}
+		} else {
+			Iterator<Integer> iter = m_allKeyPressed.iterator();
+			while (iter.hasNext()) {
+				int key = iter.next();
+				if (key == code) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	private static boolean isDirectionKey(int e) {
+		return e == KeyEvent.VK_Z | e == KeyEvent.VK_Q | e == KeyEvent.VK_S | e == KeyEvent.VK_D;
 	}
 }

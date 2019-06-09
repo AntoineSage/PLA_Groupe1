@@ -1,7 +1,7 @@
 package ricm3.interpreter;
 
 import edu.ricm3.game.purgatoire.Controller;
-import edu.ricm3.game.purgatoire.Entity;
+import edu.ricm3.game.purgatoire.entities.Entity;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 

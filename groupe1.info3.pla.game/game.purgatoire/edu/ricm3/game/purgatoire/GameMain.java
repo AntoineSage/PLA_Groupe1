@@ -32,7 +32,7 @@ public class GameMain {
 		Controller controller = new Controller(model, view);
 		Singleton.setController(controller);
 
-		Dimension d = new Dimension(786, 801);
+		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		new GameUI(model, view, controller, d);
 
 		return;
