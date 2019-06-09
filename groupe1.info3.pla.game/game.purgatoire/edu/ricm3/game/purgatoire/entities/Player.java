@@ -17,8 +17,8 @@ public class Player extends Entity {
 	private int m_rank;
 	private Model m_model;
 
-	public Player(Model model, Level level, int x, int y, int width, int height) {
-		super(level, new HeavenPlayerStunt(null), new HellPlayerStunt(null), x, y, width, height);
+	public Player(Model model, Level level, int x, int y) {
+		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
 		m_XP = Options.PLAYER_XP;
@@ -49,11 +49,6 @@ public class Player extends Entity {
 			m_rank--;
 			Singleton.getController().updateRankUI();
 		}
-	}
-
-	@Override
-	public void step(long now) {
-		m_currentStunt.step(now);
 	}
 
 	public void nextLevel(Level newLevel) {
@@ -112,7 +107,8 @@ public class Player extends Entity {
 	}
 
 	public void testKarma() {
-		if (m_karma >= 0 && m_model.m_wt == WorldType.HEAVEN || m_karma <= 0 && m_model.m_wt == WorldType.HELL) {
+		if (m_karma >= 0 && m_model.getWorldType() == WorldType.HEAVEN
+				|| m_karma <= 0 && m_model.getWorldType() == WorldType.HELL) {
 			addXP(Options.COEF_KARMA_POS);
 		} else {
 			addXP(Options.COEF_KARMA_NEG);

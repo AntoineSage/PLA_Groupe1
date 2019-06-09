@@ -16,8 +16,12 @@ public class Soul extends Entity {
 	public Soul(Level level, int x, int y, int width, int height) {
 		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, width, height);
 		m_type = IEntityType.ADVERSARY;
-		m_heavenStunt.setKarmaToGive(Options.HEAVEN_SOUL_KARMA_TOGIVE);
-		m_hellStunt.setKarmaToGive(Options.HELL_SOUL_KARMA_TOGIVE);
+		m_HP = Options.SOUL_HP;
+	}
+
+	public Soul(Level level, int x, int y) {
+		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+		m_type = IEntityType.ADVERSARY;
 		m_HP = Options.SOUL_HP;
 	}
 

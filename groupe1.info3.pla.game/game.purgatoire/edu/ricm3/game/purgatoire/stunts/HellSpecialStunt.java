@@ -15,10 +15,12 @@ public class HellSpecialStunt extends Stunt {
 		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
 		m_maxHP = Options.HELL_SPCL_HP_MAX;
 		setDMG(Options.HELL_SPCL_DMG);
+		m_karmaToGive = Options.HELL_SPCL_KARMA_TOGIVE;
 	}
 
 	public HellSpecialStunt() {
 		super(Singleton.getNewSpecialHellAut(), null, Color.CYAN);
+		m_karmaToGive = Options.HELL_SPCL_KARMA_TOGIVE;
 	}
 
 	@Override
@@ -35,11 +37,6 @@ public class HellSpecialStunt extends Stunt {
 	@Override
 	public void wizz(IDirection d) {
 		System.out.println("wizz flaque");
-	}
-
-	@Override
-	public void step(Entity e) {
-		m_automaton.step(e);
 	}
 
 	@Override

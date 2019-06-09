@@ -31,7 +31,7 @@ public class Missile extends Entity {
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.m_currentStunt.takeDamage(m_currentStunt.getDMG());
+			entity.takeDamage(m_currentStunt.getDMG());
 		}
 		die();
 	}

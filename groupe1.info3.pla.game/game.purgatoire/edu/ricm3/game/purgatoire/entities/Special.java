@@ -16,8 +16,12 @@ public class Special extends Entity {
 	public Special(Level level, int x, int y, int width, int height) {
 		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), x, y, width, height);
 		m_type = IEntityType.TEAM;
-		m_heavenStunt.setKarmaToGive(Options.HEAVEN_SPCL_KARMA_TOGIVE);
-		m_hellStunt.setKarmaToGive(Options.HELL_SPCL_KARMA_TOGIVE);
+		m_HP = Options.SPCL_HP;
+	}
+
+	public Special(Level level, int x, int y) {
+		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), x, y, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+		m_type = IEntityType.TEAM;
 		m_HP = Options.SPCL_HP;
 	}
 }

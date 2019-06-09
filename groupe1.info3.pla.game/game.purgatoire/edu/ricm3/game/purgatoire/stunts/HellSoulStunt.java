@@ -21,11 +21,13 @@ public class HellSoulStunt extends Stunt {
 		super(automaton, entity, sprite);
 		m_maxHP = Options.HELL_SOUL_HP_MAX;
 		setDMG(Options.HELL_SOUL_DMG);
+		m_karmaToGive = Options.HELL_SOUL_KARMA_TOGIVE;
 	}
 
 	public HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
 		setDMG(Options.HEAVEN_SOUL_DMG);
+		m_karmaToGive = Options.HELL_SOUL_KARMA_TOGIVE;
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			System.out.println("GIVE DAMAGE");
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
-			m_entity.takeDamage(m_entity.m_HP);
+			m_entity.pop(m_entity.m_direction);
 		}
 		if (now - lastUpdate > 500) {
 			m_automaton.step(m_entity);

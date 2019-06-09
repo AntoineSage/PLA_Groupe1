@@ -16,10 +16,9 @@ public class Options {
 
 	public static final double COEF_KARMA_POS = 0.2;
 	public static final double COEF_KARMA_NEG = -0.3;
-	
+
 	// NEST OPTIONS
 	public static final long NEST_SPAWN_DELAY = 3000;
-	
 
 	// PLAYER OPTIONS
 	public static int HELL_PLAYER_DMG = 100;

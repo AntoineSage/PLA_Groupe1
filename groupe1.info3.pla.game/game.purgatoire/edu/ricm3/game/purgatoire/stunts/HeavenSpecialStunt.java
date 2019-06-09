@@ -15,10 +15,12 @@ public class HeavenSpecialStunt extends Stunt {
 		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
 		m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
 		setDMG(Options.HEAVEN_SPCL_DMG);
+		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
 	}
 
 	public HeavenSpecialStunt() {
 		super(Singleton.getNewSpecialHeavenAut(), null, Color.ORANGE);
+		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
 	}
 
 	@Override

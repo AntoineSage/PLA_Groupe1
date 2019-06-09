@@ -23,27 +23,27 @@ public class HeavenObstacleStunt extends Stunt {
 
 	@Override
 	public void pop(IDirection d) {
-		System.out.println("pop heaven");
+		System.out.println("pop heaven obstacle");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
-		System.out.println("wizz heaven");
+		System.out.println("wizz heaven obstacle");
 	}
 
 	@Override
 	public void hit(IDirection d) {
-		System.out.println("hit heaven");
+		System.out.println("hit heaven obstacle");
 	}
 
 	@Override
 	public void egg() {
-		System.out.println("egg heaven");
+		System.out.println("egg heaven obstacle");
 	}
 
 	@Override
 	public void takeDamage(int DMG) {
-		System.out.println("takeDamage heaven");
+		System.out.println("takeDamage heaven obstacle");
 	}
 
 }

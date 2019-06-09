@@ -7,6 +7,7 @@ import java.util.List;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import ricm3.interpreter.IAutomaton;
@@ -16,10 +17,12 @@ import ricm3.interpreter.IEntityType;
 public class Stunt {
 
 	public AnimationPlayer m_animation;
-	IAutomaton m_automaton;
 	public Color m_c;
-	BufferedImage m_sprite;
+	public BufferedImage m_sprite;
+
+	IAutomaton m_automaton;
 	Entity m_entity;
+
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
 	int m_durationBuff = Options.BUFF_DURATION;
@@ -40,7 +43,7 @@ public class Stunt {
 		m_c = c;
 	}
 
-	Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		m_automaton = automaton;
 		m_entity = entity;
 		m_sprite = sprite;
@@ -50,6 +53,7 @@ public class Stunt {
 		switch (d) {
 		case NORTH:
 			m_entity.m_direction = IDirection.NORTH;
+			if(m_animation!= null)m_animation.changeTo(AnimType.NORTH);
 			if (m_entity.m_bounds.y <= 1) {
 				goingOut(d);
 			} else {
@@ -166,10 +170,6 @@ public class Stunt {
 
 	}
 
-	public void step(Entity e) {
-		m_automaton.step(m_entity);
-	}
-
 	void dash(IDirection d) {
 		for (int i = 0; i < m_rangeDash; i++) {
 			tryMove(d);
@@ -241,15 +241,9 @@ public class Stunt {
 	}
 
 	void goingOut(IDirection d) {
-
 	}
 
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
-
-	public void setKarmaToGive(int karmaToGive) {
-		m_karmaToGive = karmaToGive;
-	}
-
 }

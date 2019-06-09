@@ -1,11 +1,15 @@
 package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
+import edu.ricm3.game.purgatoire.Animation;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
@@ -16,8 +20,18 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_dashTimer;
 
-	public HeavenPlayerStunt(Entity entity) {
-		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
+	public HeavenPlayerStunt() {
+		super(Singleton.getNewPlayerHeavenAut(), null, Color.BLUE);
+		
+		try {
+			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"),
+					AnimType.IDLE, 3);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_animation.resume();
+		
 		m_dashTimer = new Timer(m_cooldownDash);
 		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
 		setDMG(Options.HEAVEN_PLAYER_DMG);
@@ -113,7 +127,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void egg() {
-		System.out.println("egg heaven");
+		System.out.println("egg heaven player");
 	}
 
 	@Override

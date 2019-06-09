@@ -34,11 +34,11 @@ public class Animation {
 	private static List<BufferedImage>[] spritesFromFile(String fileName) throws FileNotFoundException {
 		List<BufferedImage>[] sprites = new List[4];
 		BufferedImage[] splitImage = null;
-		
+
 		File file = new File(fileName);
 		Scanner sc = new Scanner(file);
 
-		// Opening and splitting the .png file using the first line of the file 
+		// Opening and splitting the .png file using the first line of the file
 		if (sc.hasNextLine()) {
 			String line = sc.nextLine();
 			String words[] = line.split("\\s*=\\s*");
@@ -51,7 +51,7 @@ public class Animation {
 				ex.printStackTrace();
 				System.exit(-1);
 			}
-		} 
+		}
 
 		// Defining animation with the next lines of the file
 		while (sc.hasNextLine()) {
@@ -59,12 +59,12 @@ public class Animation {
 			String words[] = line.split("\\s*=\\s*");
 			String type = words[0];
 			String numbers[] = words[1].split("\\s*;\\s*");
-			
+
 			ArrayList<BufferedImage> tmp = new ArrayList<BufferedImage>();
 			for (String string : numbers) {
 				tmp.add(splitImage[Integer.parseInt(string) - 1]);
 			}
-			switch(type) {
+			switch (type) {
 			case "NORTH":
 				sprites[AnimType.NORTH.getValue()] = tmp;
 			case "SOUTH":
@@ -86,7 +86,7 @@ public class Animation {
 		int cols = width / 32;
 		int rows = height / 32;
 		BufferedImage[] splitImage = new BufferedImage[cols * rows];
-		
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				int x = j * 32;
@@ -94,7 +94,7 @@ public class Animation {
 				splitImage[(i * cols) + j] = image.getSubimage(x, y, 32, 32);
 			}
 		}
-		
+
 		return splitImage;
 	}
 

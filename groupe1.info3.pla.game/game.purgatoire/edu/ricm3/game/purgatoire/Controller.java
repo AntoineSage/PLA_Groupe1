@@ -42,7 +42,7 @@ public class Controller extends GameController implements ActionListener {
 
 	Model m_model;
 	View m_view;
-	private long m_lastTransform;
+	// private long m_lastTransform;
 	List<Integer> m_allKeyPressed;
 	Stack<Integer> m_directionKey;
 	HPBar m_HPBar, m_periodCircle;
@@ -277,8 +277,8 @@ public class Controller extends GameController implements ActionListener {
 
 	public boolean isKeyPressed(int code) {
 		if (isDirectionKey(code)) {
-			if(m_directionKey.size() > 0) {
-				return code == m_directionKey.peek();				
+			if (m_directionKey.size() > 0) {
+				return code == m_directionKey.peek();
 			}
 		} else {
 			Iterator<Integer> iter = m_allKeyPressed.iterator();

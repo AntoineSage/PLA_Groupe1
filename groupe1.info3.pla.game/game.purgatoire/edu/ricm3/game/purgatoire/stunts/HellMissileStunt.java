@@ -13,12 +13,12 @@ public class HellMissileStunt extends Stunt {
 		super(automaton, c);
 		setDMG(Options.HELL_MISSILE_DMG);
 	}
-	
-	HellMissileStunt(){
+
+	HellMissileStunt() {
 		super(Singleton.getNewMissileHellAut(), Color.DARK_GRAY);
 		setDMG(Options.HELL_MISSILE_DMG);
 	}
-	
+
 	@Override
 	public void pop(IDirection d) {
 		m_entity.die();
@@ -38,11 +38,11 @@ public class HellMissileStunt extends Stunt {
 	public void egg() {
 		System.out.println("egg hell soul");
 	}
-	
-	void goingOut(IDirection d){
+
+	void goingOut(IDirection d) {
 		m_entity.die();
 	}
-	
+
 	@Override
 	public void step(long now) {
 		m_automaton.step(m_entity);

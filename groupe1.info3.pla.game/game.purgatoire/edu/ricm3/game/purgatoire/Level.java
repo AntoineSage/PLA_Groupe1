@@ -15,62 +15,45 @@ import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
+	Color m_c;
 
 	public Model m_model;
+
 	List<Entity> m_souls;
 	List<Entity> m_obstacles;
 	List<Entity> m_nest;
-	List<Entity> m_entities;
 	List<Entity> m_missiles;
+
 	Entity m_special;
 	public Entity m_player;
 
+	List<Entity> m_entities;
+	List<Entity> m_toRemove;
+
 	public CollisionGrid m_collisionGrid;
-	Color m_c;
+
 	private long lastUpdatePlayer;
-	public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
+	// public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
 	private long lastUpdateSouls;
 	private long lastUpdateObstacles;
 	private long lastUpdateNests;
 
-	List<Entity> m_toRemove;
-
-	Level(Model model, Color c, List<Entity> obstacles, List<Entity> souls, Special special) {
-		m_model = model;
-		m_c = c;
-
-		m_obstacles = new LinkedList<Entity>();
-		m_souls = new LinkedList<Entity>();
-		m_nest = new LinkedList<Entity>();
-		m_missiles = new LinkedList<Entity>();
-
-		m_collisionGrid = new CollisionGrid();
-		m_entities = new LinkedList<Entity>();
-
-		m_toRemove = new LinkedList<Entity>();
-
-		Iterator<Entity> iter = obstacles.iterator();
-		while (iter.hasNext()) {
-			addEntity(iter.next());
-		}
-		iter = souls.iterator();
-		while (iter.hasNext()) {
-			addEntity(iter.next());
-		}
-		addEntity(special);
-	}
-
 	Level(Model model, Color c) {
 		m_c = c;
 		m_model = model;
+
 		m_souls = new LinkedList<Entity>();
 		m_obstacles = new LinkedList<Entity>();
 		m_nest = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
 		m_missiles = new LinkedList<Entity>();
+		m_toRemove = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
-		m_toRemove = new LinkedList<Entity>();
+	}
+
+	Level(Model model) {
+		this(model, Color.WHITE);
 	}
 
 	public void addEntity(Entity e) {
@@ -119,34 +102,6 @@ public class Level {
 		m_collisionGrid.updateEntity(e, x, y);
 	}
 
-	Level(List<Entity> obstacles) {
-		m_obstacles = obstacles;
-		Iterator<Entity> iter = m_obstacles.iterator();
-		Entity tmp;
-		while (iter.hasNext()) {
-			tmp = iter.next();
-			m_collisionGrid.addEntity(tmp);
-		}
-	}
-
-	Level(Model model) {
-		this(model, Color.WHITE);
-	}
-
-	public WorldType getWorldType() {
-		return m_model.getWorldType();
-	}
-
-	void transform() {
-		Iterator<Entity> iter = m_entities.iterator();
-		while (iter.hasNext())
-			iter.next().transform();
-	}
-
-	public boolean wontCollide(Entity entity, IDirection d) {
-		return m_collisionGrid.wontCollide(entity, d);
-	}
-
 	public void step(long now) {
 		removeEntities();
 		Iterator<Entity> iter;
@@ -181,7 +136,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > nest_spawn_period) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_DELAY) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
@@ -221,5 +176,19 @@ public class Level {
 			m_collisionGrid.removeEntity(e);
 			iter.remove();
 		}
+	}
+
+	public boolean wontCollide(Entity entity, IDirection d) {
+		return m_collisionGrid.wontCollide(entity, d);
+	}
+
+	void transform() {
+		Iterator<Entity> iter = m_entities.iterator();
+		while (iter.hasNext())
+			iter.next().transform();
+	}
+
+	public WorldType getWorldType() {
+		return m_model.getWorldType();
 	}
 }

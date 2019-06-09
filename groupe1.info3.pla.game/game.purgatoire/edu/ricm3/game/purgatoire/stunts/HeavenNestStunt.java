@@ -1,36 +1,27 @@
 package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Obstacle;
 import edu.ricm3.game.purgatoire.entities.Soul;
-import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class HeavenNestStunt extends Stunt {
-
+	long m_NestSpawnPeriod = Options.NEST_SPAWN_DELAY;
 	Timer m_timerWizz;
 	Timer m_timerPop;
-
-	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-		super(automaton, entity, sprite);
-		m_timerWizz = new Timer(3000);
-		m_timerPop = new Timer(5000);
-		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
-		setDMG(Options.HEAVEN_NEST_DMG);
-	}
 
 	public HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), null, Color.GRAY);
 		m_timerWizz = new Timer(3000);
 		m_timerPop = new Timer(5000);
+		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
+		setDMG(Options.HEAVEN_NEST_DMG);
 	}
 
 	@Override
@@ -48,9 +39,8 @@ public class HeavenNestStunt extends Stunt {
 
 	@Override
 	public void pop(IDirection direction) {
-
-		if (m_timerPop.end() && m_entity.m_level.nest_spawn_period > 500) {
-			this.m_entity.m_level.nest_spawn_period /= 2;
+		if (m_timerPop.end() && m_NestSpawnPeriod > 500) {
+			m_NestSpawnPeriod /= 2;
 			m_timerPop.start(5000);
 		}
 	}

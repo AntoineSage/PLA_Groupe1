@@ -11,12 +11,13 @@ import ricm3.interpreter.IEntityType;
 
 public class Entity {
 	public int m_HP;
-	Stunt m_heavenStunt, m_hellStunt;
 	public Stunt m_currentStunt;
 	public Level m_level;
 	public Rectangle m_bounds;
 	public IEntityType m_type;
 	public IDirection m_direction;
+
+	private Stunt m_heavenStunt, m_hellStunt;
 
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
@@ -30,7 +31,7 @@ public class Entity {
 		transform();
 		m_HP = 1;
 	}
-	
+
 	public void transform() {
 		if (getWorldType() == WorldType.HEAVEN)
 			m_currentStunt = m_heavenStunt;
@@ -57,17 +58,16 @@ public class Entity {
 	public int getMaxHP() {
 		return m_currentStunt.m_maxHP;
 	}
+
 	/*
-	public int getDMG() {
-		return (m_DMG * m_currentStunt.m_buffedDMG);
-	}
-*/
+	 * public int getDMG() { return (m_DMG * m_currentStunt.m_buffedDMG); }
+	 */
 	public void addMaxHP(int maxHP) {
 		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	public void takeDamage(int DMG) {
-		m_currentStunt.takeDamage((int) m_currentStunt.m_weaknessBuff*DMG);
+		m_currentStunt.takeDamage(DMG);
 	}
 
 	public void tryMove(IDirection d) {
@@ -136,18 +136,18 @@ public class Entity {
 		}
 		return false;
 	}
-	
+
 	public void enterInCollisionWith(List<Entity> entities) {
-		
+
 	}
 
 	// TODO to improve
 	public Entity superposedWith(IEntityType type) {
 		return m_level.m_collisionGrid.testCollisionWithType(this, type);
 	}
-	
+
 	public boolean superposedWith(IEntityType type, IDirection direction) {
 		return m_level.m_collisionGrid.wontCollide(this, direction);
 	}
-	
+
 }

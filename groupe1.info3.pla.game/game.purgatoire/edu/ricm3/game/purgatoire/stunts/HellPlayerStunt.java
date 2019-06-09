@@ -1,12 +1,15 @@
 package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
+import edu.ricm3.game.purgatoire.Animation;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -23,8 +26,18 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_buffTimer;
 
-	public HellPlayerStunt(Entity entity) {
-		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
+	public HellPlayerStunt() {
+		super(Singleton.getNewPlayerHellAut(), null, Color.RED);
+		
+		try {
+			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"),
+					AnimType.IDLE, 3);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_animation.resume();
+		
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);
 		m_maxHP = Options.HELL_PLAYER_HP_MAX;
@@ -34,8 +47,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void pop(IDirection d) {
-		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un compteur de période écoulée ?
-		m_nbrPeriod = (int) m_entity.m_level.m_model.m_totalTime/Options.TOTAL_PERIOD;
+		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un
+		// compteur de période écoulée ?
+		m_nbrPeriod = (int) m_entity.m_level.m_model.m_totalTime / Options.TOTAL_PERIOD;
 		if (m_nbrPeriod != m_lastPopPeriod) {
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
 			m_lastPopPeriod = m_nbrPeriod;
@@ -117,9 +131,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_entity.m_level.m_model.nextLevel();
 		}
 	}
-	
+
 	public String getRankName() {
 		return Options.PLAYER_RANKS_HELL[((Player) m_entity).getRank()];
 	}
-	
+
 }

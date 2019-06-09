@@ -44,11 +44,13 @@ public class CollisionGrid {
 			}
 		return false;
 	}
-	
-	public boolean isOk(IEntityType type,int x, int y, int width, int height) {
+
+	// Only test if the entity is not outside bounds
+	public boolean isOk(IEntityType type, int x, int y, int width, int height) {
 		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
 			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
-				if ( testCollisionWithType(type, x, y, width, height) instanceof Entity );
+				if (testCollisionWithType(type, x, y, width, height) instanceof Entity)
+					;
 				return true;
 			}
 		return false;
@@ -63,9 +65,6 @@ public class CollisionGrid {
 
 		for (int i = e.m_bounds.x + x; i < e.m_bounds.x + x + e.m_bounds.width; i++) {
 			for (int j = e.m_bounds.y + y; j < e.m_bounds.y + y + e.m_bounds.height; j++) {
-				if (m_grid[i][j] == null) {
-					m_grid[i][j] = new LinkedList<Entity>();
-				}
 				m_grid[i][j].add(e);
 			}
 		}
@@ -174,7 +173,7 @@ public class CollisionGrid {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
 						colliders.add(e);
-						
+
 					}
 				}
 			}
@@ -218,23 +217,24 @@ public class CollisionGrid {
 		}
 		return colliders;
 	}
-	
+
 	public Entity testCollisionWithType(IEntityType type, int x, int y, int width, int height) {
 		for (int i = x; i < x + width; i++) {
 			for (int j = y; j < y + height; j++) {
 				Iterator<Entity> iter = m_grid[i][j].iterator();
-				while(iter.hasNext()) {
+				while (iter.hasNext()) {
 					Entity eInList = iter.next();
-					if(eInList.m_type == type) return eInList;
+					if (eInList.m_type == type)
+						return eInList;
 				}
 			}
 		}
-		
+
 		return null;
 	}
 
 	public List<Entity> get(int x, int y) {
 		return m_grid[x][y];
 	}
-	
+
 }

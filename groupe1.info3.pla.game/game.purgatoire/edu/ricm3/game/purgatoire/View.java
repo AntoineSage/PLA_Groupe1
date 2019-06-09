@@ -34,21 +34,15 @@ public class View extends GameView {
 
 	Model m_model;
 	int m_yG1; // position de g1 par rapport à g
-//	private WorldSprites m_heaven;
-//	private WorldSprites m_hell;
-//	private WorldSprites m_current;
 	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
 
 	public View(Model m) {
 		m_model = m;
-//		m_heaven = new WorldSprites(Color.blue);
-//		m_hell = new WorldSprites(Color.red);
+
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
 		m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
-
-		// transform();
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
@@ -100,6 +94,7 @@ public class View extends GameView {
 		g2.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
 		paint(g1, m_model.m_currentLevel);
+		System.out.println(Options.LVL_WIDTH * BLOCK_SIZE + " , " + (Options.LVL_HEIGHT) * BLOCK_SIZE);
 		paint(g2, m_model.m_nextLevel);
 
 		Iterator<Component> iter = m_graphicUIs.iterator();
