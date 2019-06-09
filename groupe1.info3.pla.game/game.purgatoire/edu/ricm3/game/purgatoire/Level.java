@@ -174,12 +174,12 @@ public class Level {
 			lastUpdateNests = now;
 		}
 		
-			Iterator<Entity> iter = m_nest.iterator();
-			if(now - lastUpdateNest > nest_spawn_period) {
+			 iter = m_nest.iterator();
+			if(now - lastUpdateNests > nest_spawn_period) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
-			lastUpdateNest = now;
+			lastUpdateNests = now;
 		}
 	}
 

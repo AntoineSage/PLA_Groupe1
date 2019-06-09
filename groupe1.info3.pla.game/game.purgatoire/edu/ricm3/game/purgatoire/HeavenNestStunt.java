@@ -15,7 +15,7 @@ public class HeavenNestStunt extends Stunt {
 	
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		m_timerWizz = new Timer(5000);
+		m_timerWizz = new Timer(3000);
 		m_timerPop = new Timer(5000);
 		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
 		setDMG(Options.HEAVEN_NEST_DMG);
@@ -23,7 +23,7 @@ public class HeavenNestStunt extends Stunt {
 
 	HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), null, Color.GRAY);
-		m_timerWizz = new Timer(5000);
+		m_timerWizz = new Timer(3000);
 		m_timerPop = new Timer(5000);
 	}
 
@@ -34,9 +34,9 @@ public class HeavenNestStunt extends Stunt {
 			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
-			m_entity.m_level.addEntity(new Obstacle(m_entity.m_level, x, y, width, height));
+			new Obstacle(m_entity.m_level, x, y, width, height);
 			m_entity.m_level.removeEntity(m_entity);
-			m_timerWizz.start(5000);
+			m_timerWizz.start(3000);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class HeavenNestStunt extends Stunt {
 				randY = y + r.nextInt(height + 2);
 
 			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2))
-				m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2));
+				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
 			break;
 		}
 	}
