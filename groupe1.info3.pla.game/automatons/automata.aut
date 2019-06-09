@@ -16,15 +16,39 @@ Player(Init){
   | True ? Wait :(Init)
 }
 
-SoulsHeaven(Init){
+SoulsHell(Init){
 	* (Init):
-	|Closest(@,S) ? Move(S) :(Init)
-	|Closest(@,E) ? Move(E) :(Init)
-	|Closest(@,O) ? Move(O) :(Init)
-	|Closest(@,N) ? Move(N) :(Init)
+	|Closest(@,N) ? Wait :(PlayerN)
+	|Closest(@,S) ? Wait:(PlayerS)
+	|Closest(@,E) ? Wait:(PlayerE)
+	|Closest(@,O) ? Wait:(PlayerO)
+	|Closest(@,N) ? Wait:(SoulN)
+	|Closest(@,S) ? Wait:(SoulS)
+	|Closest(@,E) ? Wait:(SoulE)
+	|Closest(@,O) ? Wait:(SoulO)
+	* (PlayerN):
+	|!Cell(N,A) ? Move(N) :(Init)
+	* (PlayerS):
+	|!Cell(S,A) ? Move(S) :(Init)	
+	* (PlayerE):
+	|!Cell(E,A) ? Move(E) :(Init)
+	* (PlayerO):
+	|!Cell(O,A) ? Move(O) :(Init)
+	* (SoulN):
+	|!Cell(E,A) ? Move(E) :(Init)
+	|!Cell(O,A) ? Move(O) :(Init)
+	* (SoulS):
+	|!Cell(E,A) ? Move(E) :(Init)
+	|!Cell(O,A) ? Move(O) :(Init)	
+	* (SoulE):
+	|!Cell(N,A) ? Move(N) :(Init)
+	|!Cell(S,A) ? Move(S) :(Init)
+	* (SoulO):
+	|!Cell(N,A) ? Move(N) :(Init)
+	|!Cell(S,A) ? Move(S) :(Init)
 }
 
-SoulsHell(Init){
+SoulsHeaven(Init){
 	* (Init): True ? Move(E) :(Step1)
 	* (Step1): True ? Move(E) :(Step2)
 	* (Step2): True ? Move(E) :(Step3)
