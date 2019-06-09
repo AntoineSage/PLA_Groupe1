@@ -100,7 +100,7 @@ public class Stunt {
 		m_entity.m_level.updateEntity(m_entity, x, y);
 		m_entity.m_bounds.translate(x, y);
 		m_entity.m_level.m_model.m_totalDistance -= y;
-		Singleton.getController().updateUI();
+		Singleton.getController().updateDistanceUI();
 	}
 
 	void egg() {

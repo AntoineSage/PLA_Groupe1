@@ -146,17 +146,41 @@ public class Controller extends GameController implements ActionListener {
 	}
 
 	public void updateUI() {
+		updateTimeUI();
+		updateKarmaUI();
+		updateHPUI();
+		updateXPUI();
+		updateRankUI();
+		updateDistanceUI();
+	}
+
+	public void updateTimeUI() {
 		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.m_period) / 1000));
+		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
+	}
+
+	public void updateKarmaUI() {
 		m_karmaBar.updateHeights(m_model.getPlayer().getKarma(), m_model.getPlayer().getMaxKarma());
 		m_karmaLabel.setText("karma: " + m_model.getPlayer().getKarma());
+	}
 
+	public void updateHPUI() {
 		m_HPBar.updateHeights(m_model.getPlayer().getHP(), m_model.getPlayer().getMaxHP(),
 				m_model.getPlayer().getMaxTotalHP());
 		m_HPLabel.setText("HP: " + m_model.getPlayer().getHP() + "/" + m_model.getPlayer().getMaxHP());
-		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMaxXP());
+	}
+
+	public void updateXPUI() {
+		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMinXP(), m_model.getPlayer().getMaxXP());
 		m_XPLabel.setText("XP: " + m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
+	}
+
+	public void updateRankUI() {
 		m_rankLabel.setText("rank: " + (m_model.getPlayer().getRank() + 1) + " - " + m_model.getPlayer().getRankName());
-		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
+	}
+
+	// TODO fix distance when changing world
+	public void updateDistanceUI() {
 		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
 	}
 
@@ -164,7 +188,7 @@ public class Controller extends GameController implements ActionListener {
 	public void step(long now) {
 		m_model.step(now);
 		m_view.step(now);
-		updateUI();
+		updateUI(); // TODO remove this call to updateUI
 	}
 
 	@Override

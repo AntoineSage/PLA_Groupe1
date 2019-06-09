@@ -21,7 +21,7 @@ public class Player extends Entity {
 
 	public void addKarma(Entity e) {
 		m_karma += e.m_currentStunt.m_karmaToGive;
-		Singleton.getController().updateUI();
+		Singleton.getController().updateKarmaUI();
 	}
 
 	public void addKarma(int karma) {
@@ -30,14 +30,16 @@ public class Player extends Entity {
 			m_karma = getMaxKarma();
 		else if (m_karma < -getMaxKarma())
 			m_karma = -getMaxKarma();
-		Singleton.getController().updateUI();
+		Singleton.getController().updateKarmaUI();
 	}
 
 	public void updateRank() {
-		if (m_XP >= getMaxXP()) {
+		if (m_XP >= getMaxXP() && getRank() < Options.PLAYER_MAX_RANK) {
 			m_rank++;
+			Singleton.getController().updateRankUI();
 		} else if (m_XP < getMinXP()) {
 			m_rank--;
+			Singleton.getController().updateRankUI();
 		}
 	}
 
@@ -80,18 +82,19 @@ public class Player extends Entity {
 		return ((PlayerStunt) m_currentStunt).getRankName();
 	}
 
-	// TODO if last level is reached, don't gain more XP
 	public void addXP(double coef) {
 		m_XP += Math.abs(m_karma) * coef;
 		m_XP = Math.max(m_XP, 0);
+		if (getRank() == Options.PLAYER_MAX_RANK)
+			m_XP = Math.min(getMaxXP(), m_XP);
 		updateRank();
-		Singleton.getController().updateUI();
+		Singleton.getController().updateXPUI();
 	}
 
 	@Override
 	public void addHP(int HP) {
 		super.addHP(HP);
-		Singleton.getController().updateUI();
+		Singleton.getController().updateHPUI();
 	}
 
 	public int getMaxTotalHP() {
