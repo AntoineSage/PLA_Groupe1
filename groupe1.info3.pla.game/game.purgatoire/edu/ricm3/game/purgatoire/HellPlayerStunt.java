@@ -10,7 +10,7 @@ public class HellPlayerStunt extends Stunt {
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
 
-	int m_lastPopPeriod;
+	int m_lastPopPeriod = -1;
 	int m_nbrPeriod;
 	int m_DMGBuffRatio = Options.BUFF_DMG;
 	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
@@ -28,6 +28,7 @@ public class HellPlayerStunt extends Stunt {
 
 	@Override
 	void pop(IDirection d) {
+		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un compteur de période écoulée ?
 		m_nbrPeriod = (int) m_entity.m_level.m_model.m_totalTime/Options.TOTAL_PERIOD;
 		if (m_nbrPeriod != m_lastPopPeriod) {
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
@@ -89,6 +90,7 @@ public class HellPlayerStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
+		System.out.println(m_weaknessBuff);
 		if (m_buffTimer.m_previousNow == 0)
 			m_buffTimer.m_previousNow = now;
 		if (m_missileTimer.m_previousNow == 0) {

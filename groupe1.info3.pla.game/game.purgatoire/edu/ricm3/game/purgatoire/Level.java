@@ -67,14 +67,17 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		if (e instanceof Obstacle) {
+			if(m_obstacles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_obstacles.add(e);
 		}
 
 		if (e instanceof Soul) {
+			if(m_souls.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_souls.add(e);
 		}
 
 		if (e instanceof Nest) {
+			if(m_nest.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_nest.add(e);
 		}
 
@@ -87,6 +90,7 @@ public class Level {
 		}
 
 		if (e instanceof Missile) {
+			if(m_missiles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_missiles.add(e);
 		}
 
