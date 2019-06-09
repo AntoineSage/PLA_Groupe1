@@ -82,11 +82,11 @@ public class Options {
 	// DASH SIZE AND COOLDOWN
 	static int DASH_SIZE = 10;
 	static int DASH_CD = 5;
-	
+
 	// BUFF OPTIONS
 	static int BUFF_DURATION = 5;
-	static int BUFF_DMG = 100; //%
-	static int BUFF_WEAKNESS = 100; //%
+	static int BUFF_DMG = 100; // %
+	static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
 	static int PLAYER_HEIGHT = 3; // TODO fix ArrayIndexOutOfBoundsException when size is changed
@@ -99,6 +99,10 @@ public class Options {
 	static int SPCL_WIDTH = 5;
 
 	// TODO echo options
-	static final boolean ECHO_A = true;
+	static final boolean ECHO_PLAYER_DAMAGE_TAKEN = true;
+	static final boolean ECHO_PLAYER_HP_CHANGE = false;
+	static final boolean ECHO_PLAYER_XP_CHANGE = false;
+	static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
+	static final boolean ECHO_PLAYER_RANK_CHANGE = false;
 
 }

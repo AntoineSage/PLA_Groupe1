@@ -78,6 +78,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 					m_missiles.add(missile);
 				}
 				break;
+			default:
+				break;
 			}
 		}
 	}
