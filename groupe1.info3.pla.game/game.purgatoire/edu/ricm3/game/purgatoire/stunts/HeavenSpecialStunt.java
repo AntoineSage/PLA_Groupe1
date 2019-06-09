@@ -1,7 +1,11 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -9,14 +13,16 @@ public class HeavenSpecialStunt extends Stunt {
 
 	HeavenSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
+		m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
+		setDMG(Options.HEAVEN_SPCL_DMG);
 	}
 
-	HeavenSpecialStunt() {
+	public HeavenSpecialStunt() {
 		super(Singleton.getNewSpecialHeavenAut(), null, Color.ORANGE);
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (player != null) {
 			System.out.println("sur chat");
@@ -26,11 +32,12 @@ public class HeavenSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz cat");
 	}
-	
+
 	@Override
-	void getDamage(int DMG) {
+	public void takeDamage(int DMG) {
+		System.out.println("takeDMG cat");
 	}
 }

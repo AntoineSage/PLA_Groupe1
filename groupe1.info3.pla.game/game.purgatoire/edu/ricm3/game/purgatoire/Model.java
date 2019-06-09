@@ -22,9 +22,14 @@ import java.io.FileNotFoundException;
 
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.entities.Nest;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Soul;
+import edu.ricm3.game.purgatoire.entities.Special;
 
-public class Model extends GameModel implements Transformable {
-	WorldType m_wt;
+public class Model extends GameModel {
+	public WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 
 	Player m_player;
@@ -33,17 +38,19 @@ public class Model extends GameModel implements Transformable {
 	Nest m_nest;
 	Special m_special;
 
-	int m_period, m_totalTime, m_totalDistance;
-	// TODO lastTransform and transform() in Controller?
+	public int m_totalDistance;
+	double m_period;
+	public double m_totalTime;
 
-	long lastUpdatePlayer, lastUpdateSoul, lastSecond;
+	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
 
 	public Model() {
-		m_wt = WorldType.HEAVEN;
+		m_wt = WorldType.HELL;
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_HEIGHT,
+				Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
 		try {
 			m_player.m_currentStunt.m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.IDLE, 3);
 			m_player.m_currentStunt.m_animation.resume();
@@ -68,7 +75,7 @@ public class Model extends GameModel implements Transformable {
 	public Soul getSoul() {
 		return m_soul;
 	}
-	
+
 	public Nest getNest() {
 		return m_nest;
 	}
@@ -81,12 +88,6 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void transform() {
-		// TODO put world change in Controller?
-//		if (m_wt == WorldType.HEAVEN)
-//			if (m_player.m_karma < 0)
-//				m_wt = WorldType.HELL;
-//			else if (m_player.m_karma > 0)
-//				m_wt =WorldType.HEAVEN;
 		if (m_wt == WorldType.HEAVEN)
 			m_wt = WorldType.HELL;
 		else
@@ -97,31 +98,20 @@ public class Model extends GameModel implements Transformable {
 	}
 
 	public void step(long now) {
-		if (lastSecond == 0) {
-			lastSecond = now;
+		if (lastPeriodUpdate == 0) {
+			lastPeriodUpdate = now;
 		}
 		m_currentLevel.step(now);
 		m_nextLevel.step(now);
-		if (now - lastSecond > 1000) {
-			m_period++;
-			lastSecond = now;
-			System.out.println("karma = " + m_player.m_karma);
+		if (now - lastPeriodUpdate > 100) {
+			m_period += now - lastPeriodUpdate;
+			m_totalTime += now - lastPeriodUpdate;
+			lastPeriodUpdate = now;
 		}
-		if (m_period == Options.TOTAL_PERIOD) {
+		if (m_period >= Options.TOTAL_PERIOD) {
 			m_player.testKarma();
 			m_period = 0;
-			System.out.println("XP : " + m_player.m_XP);
-			System.out.println("test karma!");
 		}
-//		if (now - lastUpdatePlayer > 1000 / 30) {
-//			lastUpdatePlayer = now;
-//			m_player.step(now, controller);
-//		}
-//		if (now - lastUpdateSoul > 500) {
-//			lastUpdateSoul = now;
-//			m_soul.step(now);
-//			m_obstacle.step(now);
-//		}
 	}
 
 	@Override
@@ -132,7 +122,7 @@ public class Model extends GameModel implements Transformable {
 		return m_wt;
 	}
 
-	void nextLevel() {
+	public void nextLevel() {
 		m_currentLevel = m_nextLevel;
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);

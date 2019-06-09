@@ -67,9 +67,20 @@ public class IEntityType {
 			default:
 				return false;
 			}
+		case MISSILE:
+			switch (type.m_type) {
+			case PLAYER:
+			case OBSTACLE:
+			case DANGER:
+			case ADVERSARY:
+				return true;
+			default:
+				return false;
+			}
 		default:
 			return false;
 		}
+
 	}
 
 }

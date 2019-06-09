@@ -5,22 +5,33 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
+import edu.ricm3.game.purgatoire.entities.Nest;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Soul;
+import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
 
-	Model m_model;
+	public Model m_model;
 	List<Entity> m_souls;
 	List<Entity> m_obstacles;
 	List<Entity> m_nest;
 	List<Entity> m_entities;
+	List<Entity> m_missiles;
 	Entity m_special;
-	Entity m_player;
+	public Entity m_player;
 
-	CollisionGrid m_collisionGrid;
+	public CollisionGrid m_collisionGrid;
 	Color m_c;
 	private long lastUpdatePlayer;
-	private long lastUpdateOthers;
+	public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
+	private long lastUpdateSouls;
+	private long lastUpdateObstacles;
+	private long lastUpdateNests;
 
 	List<Entity> m_toRemove;
 
@@ -31,6 +42,7 @@ public class Level {
 		m_obstacles = new LinkedList<Entity>();
 		m_souls = new LinkedList<Entity>();
 		m_nest = new LinkedList<Entity>();
+		m_missiles = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_entities = new LinkedList<Entity>();
@@ -55,6 +67,7 @@ public class Level {
 		m_obstacles = new LinkedList<Entity>();
 		m_nest = new LinkedList<Entity>();
 		m_entities = new LinkedList<Entity>();
+		m_missiles = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
 		m_toRemove = new LinkedList<Entity>();
@@ -62,14 +75,20 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		if (e instanceof Obstacle) {
+			if (m_obstacles.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_obstacles.add(e);
 		}
 
 		if (e instanceof Soul) {
+			if (m_souls.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_souls.add(e);
 		}
 
 		if (e instanceof Nest) {
+			if (m_nest.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_nest.add(e);
 		}
 
@@ -79,6 +98,12 @@ public class Level {
 
 		if (e instanceof Player) {
 			m_player = e;
+		}
+
+		if (e instanceof Missile) {
+			if (m_missiles.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
+			m_missiles.add(e);
 		}
 
 		m_entities.add(e);
@@ -108,7 +133,7 @@ public class Level {
 		this(model, Color.WHITE);
 	}
 
-	WorldType getWorldType() {
+	public WorldType getWorldType() {
 		return m_model.getWorldType();
 	}
 
@@ -124,28 +149,43 @@ public class Level {
 
 	public void step(long now) {
 		removeEntities();
+		Iterator<Entity> iter;
 		if (now - lastUpdatePlayer > 1000 / 60) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
-		}
-		if (now - lastUpdateOthers > 200) {
-			Iterator<Entity> iter = m_souls.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
-			iter = m_obstacles.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
 
-			iter = m_nest.iterator();
+			iter = m_missiles.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+		}
+
+		if (now - lastUpdateSouls > 1000 / 60) {
+			iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
 			if (m_special != null)
 				m_special.step(now);
-			lastUpdateOthers = now;
+			lastUpdateSouls = now;
+		}
+		if (now - lastUpdateObstacles > 2000) {
+			iter = m_obstacles.iterator();
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+			if (m_special != null)
+				m_special.step(now);
+			lastUpdateObstacles = now;
+		}
+
+		iter = m_nest.iterator();
+		if (now - lastUpdateNests > nest_spawn_period) {
+			while (iter.hasNext()) {
+				iter.next().step(now);
+			}
+			lastUpdateNests = now;
 		}
 	}
 
@@ -167,6 +207,14 @@ public class Level {
 
 			if (e instanceof Special) {
 				m_special = null;
+			}
+
+			if (e instanceof Player) {
+				m_player = null;
+			}
+
+			if (e instanceof Missile) {
+				m_missiles.remove(e);
 			}
 
 			m_entities.remove(e);

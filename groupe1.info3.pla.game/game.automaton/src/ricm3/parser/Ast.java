@@ -76,7 +76,7 @@ public class Ast {
 	// AST as active automata (interpreter of transitions)
 
 	public Object make() {
-		return null; // TODO à définir dans la plupart des classes internes ci-dessous.
+		return null;
 	}
 
 	public static class Terminal extends Ast {

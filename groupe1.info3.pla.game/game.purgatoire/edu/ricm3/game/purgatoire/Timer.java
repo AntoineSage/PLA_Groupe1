@@ -1,10 +1,10 @@
 package edu.ricm3.game.purgatoire;
 
 public class Timer {
-	long m_previousNow;
+	public long m_previousNow;
 	long m_coolDown;
 
-	Timer(long coolDown) {
+	public Timer(long coolDown) {
 		m_coolDown = coolDown;
 	}
 
