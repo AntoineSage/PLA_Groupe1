@@ -10,7 +10,7 @@ public class HellSpecialStunt extends Stunt {
 	HellSpecialStunt(Entity entity) {
 		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
 		m_maxHP = Options.HELL_SPCL_HP_MAX;
-		m_DMG = Options.HELL_SPCL_DMG;
+		setDMG(Options.HELL_SPCL_DMG);
 	}
 
 	HellSpecialStunt() {
@@ -39,7 +39,8 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
+	void takeDamage(int DMG) {
+		System.out.println("takeDMG flaque");
 	}
 
 	@Override

@@ -14,8 +14,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
 		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
-		m_DMG = Options.HEAVEN_PLAYER_DMG;
-		m_entity = (Player) m_entity;
+		setDMG(Options.HEAVEN_PLAYER_DMG);
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y--;
@@ -64,7 +63,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				y++;
@@ -79,7 +78,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x++;
@@ -94,7 +93,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x - 1][y].iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.getDamage(m_DMG);// enlever m_entity
+						e.m_currentStunt.takeDamage(getDMG());
 					}
 				}
 				x--;
@@ -112,8 +111,10 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+	void goingOut(IDirection d) {
+		if (d == IDirection.NORTH) {
+			m_entity.m_level.m_model.nextLevel();
+		}
 	}
 
 	public String getRankName() {
@@ -127,4 +128,5 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			m_dashTimer.m_previousNow = now;
 		m_dashTimer.step(now);
 	}
+
 }

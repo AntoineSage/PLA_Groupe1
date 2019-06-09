@@ -11,7 +11,7 @@ public class HellObstacleStunt extends Stunt {
 	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
 		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
-		m_DMG = Options.HELL_OBSTACLE_DMG;
+		setDMG(Options.HELL_OBSTACLE_DMG);
 	}
 
 	HellObstacleStunt() {
@@ -39,8 +39,8 @@ public class HellObstacleStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getdamage hell obstacle");
+	void takeDamage(int DMG) {
+		System.out.println("takedamage hell obstacle");
 	}
 
 }
