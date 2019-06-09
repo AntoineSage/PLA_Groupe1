@@ -162,21 +162,34 @@ public class Controller extends GameController implements ActionListener {
 	public void updateKarmaUI() {
 		m_karmaBar.updateHeights(m_model.getPlayer().getKarma(), m_model.getPlayer().getMaxKarma());
 		m_karmaLabel.setText("karma: " + m_model.getPlayer().getKarma());
+
+		if (Options.ECHO_PLAYER_KARMA_CHANGE)
+			System.out.println("Player new karma: " + m_model.getPlayer().getKarma());
 	}
 
 	public void updateHPUI() {
 		m_HPBar.updateHeights(m_model.getPlayer().getHP(), m_model.getPlayer().getMaxHP(),
 				m_model.getPlayer().getMaxTotalHP());
 		m_HPLabel.setText("HP: " + m_model.getPlayer().getHP() + "/" + m_model.getPlayer().getMaxHP());
+
+		if (Options.ECHO_PLAYER_HP_CHANGE)
+			System.out.println("Player new HP: " + m_model.getPlayer().getHP());
 	}
 
 	public void updateXPUI() {
-		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMinXP(), m_model.getPlayer().getMaxXP());
+		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMinXP(),
+				m_model.getPlayer().getMaxXP());
 		m_XPLabel.setText("XP: " + m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
+
+		if (Options.ECHO_PLAYER_XP_CHANGE)
+			System.out.println("Player new XP: " + m_model.getPlayer().getXP());
 	}
 
 	public void updateRankUI() {
 		m_rankLabel.setText("rank: " + (m_model.getPlayer().getRank() + 1) + " - " + m_model.getPlayer().getRankName());
+
+		if (Options.ECHO_PLAYER_RANK_CHANGE)
+			System.out.println("Player new rank: " + (m_model.getPlayer().getRank() + 1));
 	}
 
 	// TODO fix distance when changing world
