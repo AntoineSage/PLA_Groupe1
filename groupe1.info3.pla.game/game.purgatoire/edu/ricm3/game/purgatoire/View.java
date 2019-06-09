@@ -86,6 +86,11 @@ public class View extends GameView {
 		g1.setColor(m_model.m_currentLevel.m_c);
 		g1.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
+		
+		System.out.println(getWidth() + " , " + getHeight());
+//		System.out.println(Options.LVL_WIDTH * BLOCK_SIZE + " , " + Options.LVL_HEIGHT * BLOCK_SIZE);
+//		System.out.println(BLOCK_SIZE * 3 );
+		
 		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2,
 				(m_yG1 - Options.LVL_HEIGHT) * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE,
 				(Options.LVL_HEIGHT) * BLOCK_SIZE);
