@@ -90,7 +90,6 @@ public class HellPlayerStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		System.out.println(m_weaknessBuff);
 		if (m_buffTimer.m_previousNow == 0)
 			m_buffTimer.m_previousNow = now;
 		if (m_missileTimer.m_previousNow == 0) {

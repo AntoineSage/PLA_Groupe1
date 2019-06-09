@@ -48,6 +48,7 @@ public class HellSoulStunt extends Stunt {
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
+			System.out.println("GIVE DAMAGE");
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
 			m_entity.takeDamage(m_entity.m_HP);
 		}

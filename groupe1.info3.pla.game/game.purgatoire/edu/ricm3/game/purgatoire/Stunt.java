@@ -199,7 +199,6 @@ public class Stunt {
 	void takeDamage(int DMG) {
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
-			
 			m_entity.die();
 		}
 	}

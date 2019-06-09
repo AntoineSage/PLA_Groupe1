@@ -53,6 +53,7 @@ public class HeavenSoulStunt extends Stunt {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			isPlayer.addKarma(m_entity);
+			System.out.println("GIVE DAMAGE");
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
 			m_entity.takeDamage(m_entity.m_HP);
 		}

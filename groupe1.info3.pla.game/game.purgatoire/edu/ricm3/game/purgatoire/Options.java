@@ -19,12 +19,12 @@ public class Options {
 
 	// PLAYER OPTIONS
 	static int HELL_PLAYER_DMG = 100;
-	static int HELL_PLAYER_HP_MAX = 1;
+	static int HELL_PLAYER_HP_MAX = 1000;
 	static int HEAVEN_PLAYER_DMG = 100;
-	static int HEAVEN_PLAYER_HP_MAX = 10;
+	static int HEAVEN_PLAYER_HP_MAX = 1000;
 
-	static int PLAYER_MAX_TOTAL_HP = 150;
-	static int PLAYER_HP = 50;
+	static int PLAYER_MAX_TOTAL_HP = 1000;
+	static int PLAYER_HP = 1000;
 	static int PLAYER_XP = 0;
 	static int PLAYER_XP_MAX = 150;
 	static int PLAYER_KARMA_MAX = 150;
@@ -38,10 +38,10 @@ public class Options {
 	static int NEST_HP = 1;
 
 	// SOUL OPTIONS
-	static int HELL_SOUL_DMG = 100;
+	static int HELL_SOUL_DMG = 10;
 	static int HELL_SOUL_HP_MAX = 1;
 	static int HELL_SOUL_KARMA_TOGIVE = 10;
-	static int HEAVEN_SOUL_DMG = 100;
+	static int HEAVEN_SOUL_DMG = 10;
 	static int HEAVEN_SOUL_HP_MAX = 1;
 	static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 

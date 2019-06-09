@@ -194,6 +194,10 @@ public class Level {
 				m_special = null;
 			}
 
+			if (e instanceof Player) {
+				m_player = null;
+			}
+
 			if (e instanceof Missile) {
 				m_missiles.remove(e);
 			}

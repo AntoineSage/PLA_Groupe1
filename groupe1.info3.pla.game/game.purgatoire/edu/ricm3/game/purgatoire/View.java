@@ -101,8 +101,6 @@ public class View extends GameView {
 		paint(g1, m_model.m_currentLevel);
 		paint(g2, m_model.m_nextLevel);
 
-		paint(g1, m_model.getPlayer());
-
 		Iterator<Component> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
 			Component graphic = iter.next();
