@@ -62,4 +62,5 @@ public class HeavenSoulStunt extends Stunt {
 			lastUpdate = now;
 		}
 	}
+	
 }

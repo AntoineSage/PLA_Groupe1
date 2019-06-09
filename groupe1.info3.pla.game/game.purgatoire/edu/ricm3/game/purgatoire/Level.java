@@ -21,6 +21,7 @@ public class Level {
 	CollisionGrid m_collisionGrid;
 	Color m_c;
 	private long lastUpdatePlayer;
+	public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
 	private long lastUpdateSouls;
 	private long lastUpdateObstacles;
 	private long lastUpdateNests;
@@ -67,17 +68,20 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		if (e instanceof Obstacle) {
-			if(m_obstacles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
+			if (m_obstacles.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_obstacles.add(e);
 		}
 
 		if (e instanceof Soul) {
-			if(m_souls.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
+			if (m_souls.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_souls.add(e);
 		}
 
 		if (e instanceof Nest) {
-			if(m_nest.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
+			if (m_nest.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_nest.add(e);
 		}
 
@@ -90,7 +94,8 @@ public class Level {
 		}
 
 		if (e instanceof Missile) {
-			if(m_missiles.contains(e)) throw new IllegalArgumentException("Cannot have to same entity in the level");
+			if (m_missiles.contains(e))
+				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_missiles.add(e);
 		}
 
@@ -142,7 +147,7 @@ public class Level {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
-			iter = m_souls.iterator();
+
 			iter = m_missiles.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
@@ -163,10 +168,13 @@ public class Level {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
+			if (m_special != null)
+				m_special.step(now);
 			lastUpdateObstacles = now;
 		}
-		if (now - lastUpdateNests > 1000) {
-			iter = m_nest.iterator();
+
+		iter = m_nest.iterator();
+		if (now - lastUpdateNests > nest_spawn_period) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
