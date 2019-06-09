@@ -45,7 +45,7 @@ public class Model extends GameModel implements Transformable {
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
 		try {
-			m_player.m_currentStunt.m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.NORTH, 3);
+			m_player.m_currentStunt.m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.IDLE, 3);
 			m_player.m_currentStunt.m_animation.resume();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

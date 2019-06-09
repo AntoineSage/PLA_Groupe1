@@ -29,7 +29,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
+import java.util.Stack;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -41,14 +42,16 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 	private long m_lastTransform;
-	Queue<KeyEvent> m_allKeyPressed;
+	List<Integer> m_allKeyPressed;
+	Stack<Integer> m_directionKey;
 	Canvas m_karmaBar, m_HPBar, m_XPBar, m_periodCircle;
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
-		m_allKeyPressed = new LinkedList<KeyEvent>();
+		m_allKeyPressed = new LinkedList<Integer>();
+		m_directionKey = new Stack<Integer>();
 	}
 
 	@Override
@@ -143,25 +146,35 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		m_allKeyPressed.add(e);
+		int code = e.getKeyCode();
+		if (isDirectionKey(code)) {
+			m_directionKey.push(code);
+		} else {
+			m_allKeyPressed.add(code);
+		}
+
 		if (e.getKeyCode() == KeyEvent.VK_A) {
 			m_model.m_player.m_karma += 50;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.m_player.m_karma -= 50;
-		}else if (e.getKeyCode() == KeyEvent.VK_H) {
-			m_model.m_player.m_currentStunt.hit(m_model.m_player.m_direction);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
+		int code = e.getKeyCode();
+		Iterator<Integer> iter = null;
+		if (isDirectionKey(code)) {
+			iter = m_directionKey.iterator();
+		} else {
+			iter = m_allKeyPressed.iterator();
+		}
+
 		while (iter.hasNext()) {
-			KeyEvent key = iter.next();
-			if (key.getKeyCode() == e.getKeyCode()) {
+			int key = iter.next();
+			if (key == code) {
 				iter.remove();
-				// m_allKeyPressed.remove(key);
 			}
 		}
 	}
@@ -194,14 +207,24 @@ public class Controller extends GameController implements ActionListener {
 	public void mouseMoved(MouseEvent e) {
 	}
 
-	public boolean isKeyPressed(int e) {
-		Iterator<KeyEvent> iter = m_allKeyPressed.iterator();
-		while (iter.hasNext()) {
-			KeyEvent key = iter.next();
-			if (key.getKeyCode() == e) {
-				return true;
+	public boolean isKeyPressed(int code) {
+		if (isDirectionKey(code)) {
+			if(m_directionKey.size() > 0) {
+				return code == m_directionKey.peek();				
+			}
+		} else {
+			Iterator<Integer> iter = m_allKeyPressed.iterator();
+			while (iter.hasNext()) {
+				int key = iter.next();
+				if (key == code) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	private static boolean isDirectionKey(int e) {
+		return e == KeyEvent.VK_Z | e == KeyEvent.VK_Q | e == KeyEvent.VK_S | e == KeyEvent.VK_D;
 	}
 }

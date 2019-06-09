@@ -40,7 +40,11 @@ public class AnimationPlayer {
 	public void step() {
 		if(m_Playing && m_stepsSinceLastUpdate > m_framesPerStep) {
 			m_stepsSinceLastUpdate = 0;
-			m_position = (m_position + 1) % m_animation.length(m_type);
+			m_position = m_position + 1;
+			if(m_position >= m_animation.length(m_type)) {
+				m_type = AnimType.IDLE;
+				m_position = 0;
+			}
 		} else {
 			m_stepsSinceLastUpdate++;
 		}
