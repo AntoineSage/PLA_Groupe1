@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.ricm3.game.GameView;
+import edu.ricm3.game.purgatoire.entities.Entity;
 
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;

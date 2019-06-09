@@ -1,8 +1,10 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.entities;
 
 import java.util.Iterator;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.stunts.Stunt;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -16,7 +18,7 @@ public class Missile extends Entity {
 		m_player = p;
 	}
 
-	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction,
+	public Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction,
 			Entity p) {
 		super(level, heaven, hell, x, y, width, height);
 		m_type = IEntityType.MISSILE;

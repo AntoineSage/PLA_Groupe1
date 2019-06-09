@@ -20,9 +20,14 @@ package edu.ricm3.game.purgatoire;
 import java.awt.Color;
 
 import edu.ricm3.game.GameModel;
+import edu.ricm3.game.purgatoire.entities.Nest;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Soul;
+import edu.ricm3.game.purgatoire.entities.Special;
 
 public class Model extends GameModel {
-	WorldType m_wt;
+	public WorldType m_wt;
 	Level m_currentLevel, m_nextLevel;
 
 	Player m_player;
@@ -31,8 +36,9 @@ public class Model extends GameModel {
 	Nest m_nest;
 	Special m_special;
 
-	int m_totalDistance;
-	double m_period, m_totalTime;
+	public int m_totalDistance;
+	double m_period;
+	public double m_totalTime;
 
 	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
 
@@ -107,7 +113,7 @@ public class Model extends GameModel {
 		return m_wt;
 	}
 
-	void nextLevel() {
+	public void nextLevel() {
 		m_currentLevel = m_nextLevel;
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);

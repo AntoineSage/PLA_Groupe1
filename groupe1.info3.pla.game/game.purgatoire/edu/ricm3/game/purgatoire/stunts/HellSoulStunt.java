@@ -1,8 +1,12 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -19,28 +23,28 @@ public class HellSoulStunt extends Stunt {
 		setDMG(Options.HELL_SOUL_DMG);
 	}
 
-	HellSoulStunt() {
+	public HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), null, Color.green);
 		setDMG(Options.HEAVEN_SOUL_DMG);
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		m_entity.die();
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz hell soul");
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		System.out.println("hit hell soul");
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		System.out.println("egg hell soul");
 	}
 

@@ -1,8 +1,14 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.util.LinkedList;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
+import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 
 public class HellPlayerStunt extends Stunt implements PlayerStunt {
@@ -17,7 +23,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_buffTimer;
 
-	HellPlayerStunt(Entity entity) {
+	public HellPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHellAut(), entity, Color.RED);
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);
@@ -27,7 +33,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un compteur de période écoulée ?
 		m_nbrPeriod = (int) m_entity.m_level.m_model.m_totalTime/Options.TOTAL_PERIOD;
 		if (m_nbrPeriod != m_lastPopPeriod) {
@@ -39,12 +45,12 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz hell");
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		if (m_missileTimer.end()) {
 			m_missileTimer.start(1000 / 2);
 			Missile missile;
@@ -85,7 +91,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		System.out.println("egg hell");
 	}
 

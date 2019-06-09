@@ -1,7 +1,11 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -13,12 +17,12 @@ public class HellSpecialStunt extends Stunt {
 		setDMG(Options.HELL_SPCL_DMG);
 	}
 
-	HellSpecialStunt() {
+	public HellSpecialStunt() {
 		super(Singleton.getNewSpecialHellAut(), null, Color.CYAN);
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (player != null) {
 			System.out.println("sur flaque");
@@ -29,7 +33,7 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz flaque");
 	}
 
@@ -39,7 +43,7 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	void takeDamage(int DMG) {
+	public void takeDamage(int DMG) {
 		System.out.println("takeDMG flaque");
 	}
 

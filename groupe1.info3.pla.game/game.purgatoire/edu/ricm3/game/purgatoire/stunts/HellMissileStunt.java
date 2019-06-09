@@ -1,7 +1,9 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 
@@ -18,22 +20,22 @@ public class HellMissileStunt extends Stunt {
 	}
 	
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		m_entity.die();
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz hell soul");
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		System.out.println("hit hell soul");
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		System.out.println("egg hell soul");
 	}
 	

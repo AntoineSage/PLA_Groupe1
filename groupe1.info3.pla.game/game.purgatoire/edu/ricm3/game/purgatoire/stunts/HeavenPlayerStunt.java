@@ -1,8 +1,14 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.util.Iterator;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -10,7 +16,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	Timer m_dashTimer;
 
-	HeavenPlayerStunt(Entity entity) {
+	public HeavenPlayerStunt(Entity entity) {
 		super(Singleton.getNewPlayerHeavenAut(), entity, Color.BLUE);
 		m_dashTimer = new Timer(m_cooldownDash);
 		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
@@ -18,7 +24,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		if (m_dashTimer.end()) {
 			dash(m_entity.m_direction);
 			System.out.println("dash");
@@ -28,7 +34,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
 		if (special != null) {
 			special.pop(null);
@@ -37,7 +43,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		int y, yMin, yMax, x, xMin, xMax;
 		switch (d) {
 		case NORTH:
@@ -45,7 +51,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			yMin = y - 2 * m_entity.m_bounds.height;
 			while (y > 1 && y > yMin) {
 				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y - 1].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y - 1).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
 						e.m_currentStunt.takeDamage(getDMG());
@@ -60,7 +66,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			yMax = y + 2 * m_entity.m_bounds.height;
 			while (y < Options.LVL_HEIGHT && y < yMax) {
 				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
 						e.m_currentStunt.takeDamage(getDMG());
@@ -75,7 +81,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			xMax = x + 2 * m_entity.m_bounds.width;
 			while (x < Options.LVL_WIDTH && x < xMax) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
 						e.m_currentStunt.takeDamage(getDMG());
@@ -90,7 +96,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			xMin = x - 2 * m_entity.m_bounds.width;
 			while (x > 1 && x > xMin) {
 				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.m_grid[x - 1][y].iterator();
+					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x - 1, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
 						e.m_currentStunt.takeDamage(getDMG());
@@ -106,7 +112,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		System.out.println("egg heaven");
 	}
 

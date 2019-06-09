@@ -1,7 +1,8 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 
+import edu.ricm3.game.purgatoire.Singleton;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 

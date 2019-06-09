@@ -2,7 +2,7 @@ package ricm3.interpreter;
 
 import java.util.List;
 
-import edu.ricm3.game.purgatoire.Entity;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import ricm3.parser.Ast.Parameter;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */

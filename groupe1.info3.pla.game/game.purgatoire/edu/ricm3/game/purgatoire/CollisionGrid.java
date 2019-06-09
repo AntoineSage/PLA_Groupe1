@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.entities.Entity;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -44,7 +45,7 @@ public class CollisionGrid {
 		return false;
 	}
 	
-	boolean isOk(IEntityType type,int x, int y, int width, int height) {
+	public boolean isOk(IEntityType type,int x, int y, int width, int height) {
 		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
 			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
 				if ( testCollisionWithType(type, x, y, width, height) instanceof Entity );
@@ -230,6 +231,10 @@ public class CollisionGrid {
 		}
 		
 		return null;
+	}
+
+	public List<Entity> get(int x, int y) {
+		return m_grid[x][y];
 	}
 	
 }

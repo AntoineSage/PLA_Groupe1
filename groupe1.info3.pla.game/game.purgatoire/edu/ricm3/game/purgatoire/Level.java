@@ -5,20 +5,27 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
+import edu.ricm3.game.purgatoire.entities.Nest;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Player;
+import edu.ricm3.game.purgatoire.entities.Soul;
+import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
 
-	Model m_model;
+	public Model m_model;
 	List<Entity> m_souls;
 	List<Entity> m_obstacles;
 	List<Entity> m_nest;
 	List<Entity> m_entities;
 	List<Entity> m_missiles;
 	Entity m_special;
-	Entity m_player;
+	public Entity m_player;
 
-	CollisionGrid m_collisionGrid;
+	public CollisionGrid m_collisionGrid;
 	Color m_c;
 	private long lastUpdatePlayer;
 	public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
@@ -126,7 +133,7 @@ public class Level {
 		this(model, Color.WHITE);
 	}
 
-	WorldType getWorldType() {
+	public WorldType getWorldType() {
 		return m_model.getWorldType();
 	}
 

@@ -1,9 +1,13 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -11,17 +15,17 @@ import ricm3.interpreter.IEntityType;
 public class Stunt {
 
 	IAutomaton m_automaton;
-	Color m_c;
+	public Color m_c;
 	BufferedImage m_sprite;
 	Entity m_entity;
 	int m_rangeDash = Options.DASH_SIZE;
 	int m_cooldownDash = Options.DASH_CD;
 	int m_durationBuff = Options.BUFF_DURATION;
-	int m_maxHP;
+	public int m_maxHP;
 	private int m_DMG;
-	int m_karmaToGive;
+	public int m_karmaToGive;
 	float m_DMGBuff = 1;
-	float m_weaknessBuff = 1;
+	public float m_weaknessBuff = 1;
 
 	Stunt(IAutomaton automaton, Color c) {
 		m_automaton = automaton;
@@ -175,15 +179,15 @@ public class Stunt {
 		m_weaknessBuff = (float) (1 + debuffWeakness / 100.0);
 	}
 
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		System.out.println("pop de base");
 	}
 
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz de base");
 	}
 
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		System.out.println("hit de base");
 	}
 
@@ -194,19 +198,19 @@ public class Stunt {
 		Singleton.getController().updateDistanceUI();
 	}
 
-	void egg() {
+	public void egg() {
 		// TODO egg de base
 		System.out.println("egg de base : NYI");
 	}
 
-	void takeDamage(int DMG) {
+	public void takeDamage(int DMG) {
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}
 	}
 
-	int getDMG() {
+	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
 

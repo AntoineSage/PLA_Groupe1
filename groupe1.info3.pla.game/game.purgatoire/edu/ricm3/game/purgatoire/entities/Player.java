@@ -1,5 +1,13 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.entities;
 
+import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.Model;
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.WorldType;
+import edu.ricm3.game.purgatoire.stunts.HeavenPlayerStunt;
+import edu.ricm3.game.purgatoire.stunts.HellPlayerStunt;
+import edu.ricm3.game.purgatoire.stunts.PlayerStunt;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -44,7 +52,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	void step(long now) {
+	public void step(long now) {
 		m_currentStunt.step(now);
 	}
 

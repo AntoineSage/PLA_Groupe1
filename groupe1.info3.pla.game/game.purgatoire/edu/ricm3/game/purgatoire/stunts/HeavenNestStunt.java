@@ -1,9 +1,15 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Soul;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -12,7 +18,7 @@ public class HeavenNestStunt extends Stunt {
 
 	Timer m_timerWizz;
 	Timer m_timerPop;
-	
+
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
 		m_timerWizz = new Timer(3000);
@@ -21,14 +27,14 @@ public class HeavenNestStunt extends Stunt {
 		setDMG(Options.HEAVEN_NEST_DMG);
 	}
 
-	HeavenNestStunt() {
+	public HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), null, Color.GRAY);
 		m_timerWizz = new Timer(3000);
 		m_timerPop = new Timer(5000);
 	}
 
 	@Override
-	void wizz(IDirection direction) {
+	public void wizz(IDirection direction) {
 		if (m_timerWizz.end()) {
 			int width = m_entity.m_bounds.width;
 			int height = m_entity.m_bounds.height;
@@ -41,7 +47,7 @@ public class HeavenNestStunt extends Stunt {
 	}
 
 	@Override
-	void pop(IDirection direction) {
+	public void pop(IDirection direction) {
 
 		if (m_timerPop.end() && m_entity.m_level.nest_spawn_period > 500) {
 			this.m_entity.m_level.nest_spawn_period /= 2;
@@ -50,7 +56,7 @@ public class HeavenNestStunt extends Stunt {
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		int x, y, width, height, randX, randY;
 		for (int i = 0; i < 10; i++) {
 			width = m_entity.m_bounds.width;
@@ -74,7 +80,7 @@ public class HeavenNestStunt extends Stunt {
 
 			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2)) {
 				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
-				break;				
+				break;
 			}
 		}
 	}

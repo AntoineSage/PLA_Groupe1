@@ -1,18 +1,22 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.entities;
 
 import java.awt.Rectangle;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.WorldType;
+import edu.ricm3.game.purgatoire.stunts.Stunt;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Entity {
-	int m_HP;
-	Stunt m_heavenStunt, m_hellStunt, m_currentStunt;
-	Level m_level;
-	Rectangle m_bounds;
-	IEntityType m_type;
-	IDirection m_direction;
+	public int m_HP;
+	Stunt m_heavenStunt, m_hellStunt;
+	public Stunt m_currentStunt;
+	public Level m_level;
+	public Rectangle m_bounds;
+	public IEntityType m_type;
+	public IDirection m_direction;
 
 	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
 		m_level = level;
@@ -34,7 +38,7 @@ public class Entity {
 			m_currentStunt = m_hellStunt;
 	}
 
-	void step(long now) {
+	public void step(long now) {
 		m_currentStunt.step(now);
 	}
 
@@ -62,7 +66,7 @@ public class Entity {
 		m_currentStunt.m_maxHP += maxHP;
 	}
 
-	void takeDamage(int DMG) {
+	public void takeDamage(int DMG) {
 		m_currentStunt.takeDamage((int) m_currentStunt.m_weaknessBuff*DMG);
 	}
 
@@ -86,7 +90,7 @@ public class Entity {
 		m_currentStunt.hit(d);
 	}
 
-	void die() {
+	public void die() {
 		m_level.removeEntity(this);
 	}
 

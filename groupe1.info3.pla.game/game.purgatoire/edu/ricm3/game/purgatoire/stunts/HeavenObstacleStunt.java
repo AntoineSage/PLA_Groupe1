@@ -1,8 +1,11 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 
@@ -14,32 +17,32 @@ public class HeavenObstacleStunt extends Stunt {
 		setDMG(Options.HEAVEN_OBSTACLE_DMG);
 	}
 
-	HeavenObstacleStunt() {
+	public HeavenObstacleStunt() {
 		super(Singleton.getNewObstacleHeavenAut(), null, Color.red);
 	}
 
 	@Override
-	void pop(IDirection d) {
+	public void pop(IDirection d) {
 		System.out.println("pop heaven");
 	}
 
 	@Override
-	void wizz(IDirection d) {
+	public void wizz(IDirection d) {
 		System.out.println("wizz heaven");
 	}
 
 	@Override
-	void hit(IDirection d) {
+	public void hit(IDirection d) {
 		System.out.println("hit heaven");
 	}
 
 	@Override
-	void egg() {
+	public void egg() {
 		System.out.println("egg heaven");
 	}
 
 	@Override
-	void takeDamage(int DMG) {
+	public void takeDamage(int DMG) {
 		System.out.println("takeDamage heaven");
 	}
 

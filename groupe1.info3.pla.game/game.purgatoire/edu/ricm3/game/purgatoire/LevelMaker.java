@@ -2,6 +2,11 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
 
+import edu.ricm3.game.purgatoire.entities.Nest;
+import edu.ricm3.game.purgatoire.entities.Obstacle;
+import edu.ricm3.game.purgatoire.entities.Soul;
+import edu.ricm3.game.purgatoire.entities.Special;
+
 public class LevelMaker {
 	public static Level makeTestLevel(Model model, Color c) {
 		Level level = new Level(model, c);

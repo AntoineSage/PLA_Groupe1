@@ -1,4 +1,4 @@
-package edu.ricm3.game.purgatoire;
+package edu.ricm3.game.purgatoire.stunts;
 
 public interface PlayerStunt {
 	
