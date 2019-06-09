@@ -26,7 +26,7 @@ public class Entity {
 		transform();
 		m_HP = 1;
 	}
-
+	
 	public void transform() {
 		// TODO chanegr après changement Options
 		if (getWorldType() == WorldType.HEAVEN)
@@ -54,13 +54,17 @@ public class Entity {
 	public int getMaxHP() {
 		return m_currentStunt.m_maxHP;
 	}
-
+	/*
+	public int getDMG() {
+		return (m_DMG * m_currentStunt.m_buffedDMG);
+	}
+*/
 	public void addMaxHP(int maxHP) {
 		m_currentStunt.m_maxHP += maxHP;
 	}
 
 	void takeDamage(int DMG) {
-		m_currentStunt.getDamage(DMG);
+		m_currentStunt.takeDamage((int) m_currentStunt.m_weaknessBuff*DMG);
 	}
 
 	public void tryMove(IDirection d) {

@@ -11,7 +11,7 @@ public class HeavenObstacleStunt extends Stunt {
 	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
 		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
-		m_DMG = Options.HEAVEN_OBSTACLE_DMG;
+		setDMG(Options.HEAVEN_OBSTACLE_DMG);
 	}
 
 	HeavenObstacleStunt() {
@@ -39,8 +39,8 @@ public class HeavenObstacleStunt extends Stunt {
 	}
 
 	@Override
-	void getDamage(int DMG) {
-		System.out.println("getDamage heaven");
+	void takeDamage(int DMG) {
+		System.out.println("takeDamage heaven");
 	}
 
 }

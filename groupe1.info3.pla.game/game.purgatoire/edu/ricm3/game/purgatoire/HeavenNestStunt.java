@@ -15,14 +15,16 @@ public class HeavenNestStunt extends Stunt {
 	
 	HeavenNestStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		super(automaton, entity, sprite);
-		m_timerWizz = new Timer(5000);
+		m_timerWizz = new Timer(3000);
+		m_timerPop = new Timer(5000);
 		m_maxHP = Options.HEAVEN_NEST_HP_MAX;
-		m_DMG = Options.HEAVEN_NEST_DMG;
+		setDMG(Options.HEAVEN_NEST_DMG);
 	}
 
 	HeavenNestStunt() {
-		super(Singleton.getNewNestHellAut(), null, Color.GRAY);
-		m_timerWizz = new Timer(5000);
+		super(Singleton.getNewNestHeavenAut(), null, Color.GRAY);
+		m_timerWizz = new Timer(3000);
+		m_timerPop = new Timer(5000);
 	}
 
 	@Override
@@ -32,18 +34,18 @@ public class HeavenNestStunt extends Stunt {
 			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
-			m_entity.m_level.addEntity(new Obstacle(m_entity.m_level, x, y, width, height));
+			new Obstacle(m_entity.m_level, x, y, width, height);
 			m_entity.m_level.removeEntity(m_entity);
-			m_timerWizz.start(5000);
+			m_timerWizz.start(3000);
 		}
 	}
 
 	@Override
 	void pop(IDirection direction) {
 
-		if (m_timerWizz.end()) {
+		if (m_timerPop.end() && m_entity.m_level.nest_spawn_period > 500) {
 			this.m_entity.m_level.nest_spawn_period /= 2;
-			System.out.println("pop Nest");
+			m_timerPop.start(5000);
 		}
 	}
 
@@ -80,6 +82,6 @@ public class HeavenNestStunt extends Stunt {
 	public void step(long now) {
 		super.step(now);
 		m_timerWizz.step(now);
-
+		m_timerPop.step(now);
 	}
 }

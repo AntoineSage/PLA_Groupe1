@@ -16,7 +16,8 @@ public class Missile extends Entity {
 		m_player = p;
 	}
 
-	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction, Entity p) {
+	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction,
+			Entity p) {
 		super(level, heaven, hell, x, y, width, height);
 		m_type = IEntityType.MISSILE;
 		m_direction = direction;
@@ -26,11 +27,10 @@ public class Missile extends Entity {
 	@Override
 	public void enterInCollisionWith(List<Entity> entities) {
 		Iterator<Entity> iter = entities.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.m_currentStunt.getDamage(m_currentStunt.m_DMG);
+			entity.m_currentStunt.takeDamage(m_currentStunt.getDMG());
 		}
 		die();
-		
 	}
 }
