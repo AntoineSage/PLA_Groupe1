@@ -11,7 +11,7 @@ public class Options {
 	static final int UI_BAR_HEIGHT = 150;
 	static final int UI_BAR_WIDTH = 30;
 
-	static final int TOTAL_PERIOD = 30000;
+	static final int TOTAL_PERIOD = 5000;
 	public static final String AUT_FILE = "automatons/automata.aut";
 
 	static final double COEF_KARMA_POS = 0.2;
