@@ -50,8 +50,7 @@ Flaque(Init){
 }
 
 Nest(Init){
-	* (Init): True ? Egg() :(Step1)
-	* (Step1): True ? Wizz() :(Init)
+	* (Init): True ? Egg() :(Init)
 }
 
 Missile(Init){

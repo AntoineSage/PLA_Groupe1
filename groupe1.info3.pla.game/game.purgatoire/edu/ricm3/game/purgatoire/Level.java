@@ -23,7 +23,7 @@ public class Level {
 	private long lastUpdatePlayer;
 	private long lastUpdateOthers;
 	private long lastUpdateNest;
-	public  long nest_spawn_period = Options.NEST_SPAWN_DELAY;
+	public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
 
 	List<Entity> m_toRemove;
 
@@ -137,9 +137,8 @@ public class Level {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
-			
-			Iterator<Entity> iter = m_souls.iterator();
-			iter = m_missiles.iterator();
+
+			Iterator<Entity> iter = m_missiles.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
@@ -154,18 +153,13 @@ public class Level {
 				iter.next().step(now);
 			}
 
-			iter = m_nest.iterator();
-			while (iter.hasNext()) {
-				iter.next().step(now);
-			}
-
 			if (m_special != null)
 				m_special.step(now);
 			lastUpdateOthers = now;
 		}
-		
-			Iterator<Entity> iter = m_nest.iterator();
-			if(now - lastUpdateNest > nest_spawn_period) {
+
+		Iterator<Entity> iter = m_nest.iterator();
+		if (now - lastUpdateNest > nest_spawn_period) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

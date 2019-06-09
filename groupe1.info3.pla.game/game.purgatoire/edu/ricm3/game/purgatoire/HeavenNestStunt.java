@@ -71,7 +71,7 @@ public class HeavenNestStunt extends Stunt {
 				randY = y + r.nextInt(height + 2);
 
 			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2))
-				m_entity.m_level.addEntity(new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2));
+				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
 			break;
 		}
 	}
