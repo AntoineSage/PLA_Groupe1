@@ -31,7 +31,7 @@ public class Model extends GameModel {
 	Nest m_nest;
 	Special m_special;
 
-	int m_totalDistance; // TODO distance
+	int m_totalDistance;
 	double m_period, m_totalTime;
 
 	long lastUpdatePlayer, lastUpdateSoul, lastPeriodUpdate;
@@ -41,7 +41,8 @@ public class Model extends GameModel {
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - 3, 3, 3);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_HEIGHT,
+				Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
 	}
 
 	WorldType getWorld() {

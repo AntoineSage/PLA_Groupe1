@@ -41,8 +41,8 @@ public class Bars {
 
 		public void updateHeights(int current, int maxCurrent, int maxTotal) {
 			m_maxTotalY = 0;
-			m_maxCurrentY = (getHeight() / maxTotal) * (maxTotal - maxCurrent);
-			m_currentY = (getHeight() / maxTotal) * (maxTotal - current);
+			m_maxCurrentY = (int) (((float) getHeight() / maxTotal) * (maxTotal - maxCurrent));
+			m_currentY = (int) (((float) getHeight() / maxTotal) * (maxTotal - current));
 
 			m_maxTotalHeight = m_maxCurrentY - m_maxTotalY;
 			m_maxCurrentHeight = m_currentY - m_maxCurrentY;
@@ -61,6 +61,7 @@ public class Bars {
 
 	}
 
+	// TODO change how XP is displayed (min and max can change)
 	static class XPBar extends JComponent {
 		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;
@@ -90,9 +91,9 @@ public class Bars {
 			g.fillRect(m_x, m_maxY, getWidth(), m_maxHeight);
 		}
 
-		public void updateHeights(int current, int max) {
+		public void updateHeights(int current, int min, int max) {
 			m_maxY = 0;
-			m_currentY = (getHeight() / max) * (max - current);
+			m_currentY = (int) (((float) getHeight() / (max - min)) * (max - current));
 
 			m_maxHeight = m_currentY - m_maxY;
 			m_currentHeight = getHeight() - m_currentY;
@@ -138,12 +139,14 @@ public class Bars {
 			g.setColor(Color.white);
 			g.fillRect(m_x, m_emptyY, getWidth(), m_emptyHeight);
 			g.fillRect(m_x, m_halfY, getWidth(), getHeight() / 2);
+			g.setColor(Color.gray);
+			g.fillRect(m_x, getHeight() / 2, getWidth(), 1);
 		}
 
 		public void updateHeights(int current, int max) {
 			if (current >= 0) {
 				setForeground(new Color(104, 180, 255));
-				m_karmaY = (getHeight() / (2 * max)) * (max - current);
+				m_karmaY = (int) (((float) getHeight() / (2 * max)) * (max - current));
 				m_halfY = getHeight() / 2;
 				m_emptyY = 0;
 				m_emptyHeight = m_karmaY;
@@ -151,11 +154,11 @@ public class Bars {
 				setForeground(new Color(255, 138, 138));
 				m_karmaY = getHeight() / 2;
 				m_halfY = 0;
-				m_emptyY = (getHeight() / (2 * max)) * (-current) + (getHeight() / 2);
+				m_emptyY = (int) (((float) getHeight() / (2 * max)) * (-current) + (getHeight() / 2));
 				m_emptyHeight = getHeight() - m_emptyY;
 			}
 
-			m_karmaHeight = getHeight() / 2 - m_emptyHeight;
+			m_karmaHeight = (getHeight() / 2) - m_emptyHeight;
 		}
 
 		@Override

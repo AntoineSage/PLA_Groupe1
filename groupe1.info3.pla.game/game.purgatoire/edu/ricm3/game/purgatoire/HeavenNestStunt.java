@@ -72,16 +72,10 @@ public class HeavenNestStunt extends Stunt {
 			else
 				randY = y + r.nextInt(height + 2);
 
-			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2))
+			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2)) {
 				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
-			break;
+				break;				
+			}
 		}
-	}
-
-	@Override
-	public void step(long now) {
-		super.step(now);
-		m_timerWizz.step(now);
-		m_timerPop.step(now);
 	}
 }

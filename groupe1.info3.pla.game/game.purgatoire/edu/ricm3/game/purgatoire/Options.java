@@ -11,7 +11,7 @@ public class Options {
 	static final int UI_BAR_HEIGHT = 150;
 	static final int UI_BAR_WIDTH = 30;
 
-	static final int TOTAL_PERIOD = 30000;
+	static final int TOTAL_PERIOD = 5000;
 	public static final String AUT_FILE = "automatons/automata.aut";
 
 	static final double COEF_KARMA_POS = 0.2;
@@ -32,6 +32,11 @@ public class Options {
 	static int PLAYER_XP = 0;
 	static int PLAYER_XP_MAX = 150;
 	static int PLAYER_KARMA_MAX = 150;
+
+	static final int[] PLAYER_RANKS = { 0, 100, 200, 300 };
+	static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
+	static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
+	static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
 
 	// NEST OPTIONS
 	static int HELL_NEST_DMG = 1;
@@ -81,18 +86,27 @@ public class Options {
 	// DASH SIZE AND COOLDOWN
 	static int DASH_SIZE = 10;
 	static int DASH_CD = 5;
-	
+
 	// BUFF OPTIONS
 	static int BUFF_DURATION = 5;
-	static int BUFF_DMG = 100; //%
-	static int BUFF_WEAKNESS = 100; //%
+	static int BUFF_DMG = 100; // %
+	static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
+	static int PLAYER_HEIGHT = 3; // TODO fix ArrayIndexOutOfBoundsException when size is changed
+	static int PLAYER_WIDTH = 3;
 	static int SOUL_HEIGHT = 2;
 	static int SOUL_WIDTH = 2;
 	static int NEST_HEIGHT = 3;
 	static int NEST_WIDTH = 3;
 	static int SPCL_HEIGHT = 5;
 	static int SPCL_WIDTH = 5;
+
+	// TODO echo options
+	static final boolean ECHO_PLAYER_DAMAGE_TAKEN = true;
+	static final boolean ECHO_PLAYER_HP_CHANGE = false;
+	static final boolean ECHO_PLAYER_XP_CHANGE = false;
+	static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
+	static final boolean ECHO_PLAYER_RANK_CHANGE = false;
 
 }

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import ricm3.interpreter.IDirection;
 
-public class HellPlayerStunt extends Stunt {
+public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
@@ -78,6 +78,8 @@ public class HellPlayerStunt extends Stunt {
 					m_missiles.add(missile);
 				}
 				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -109,4 +111,9 @@ public class HellPlayerStunt extends Stunt {
 			m_entity.m_level.m_model.nextLevel();
 		}
 	}
+	
+	public String getRankName() {
+		return Options.PLAYER_RANKS_HELL[((Player) m_entity).getRank()];
+	}
+	
 }
