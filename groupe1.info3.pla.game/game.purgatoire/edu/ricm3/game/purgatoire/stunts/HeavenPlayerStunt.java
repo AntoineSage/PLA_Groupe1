@@ -25,7 +25,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		
 		try {
 			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"),
-					AnimType.IDLE, 3);
+					AnimType.IDLE, 2);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

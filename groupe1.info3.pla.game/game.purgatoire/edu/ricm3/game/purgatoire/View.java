@@ -94,7 +94,6 @@ public class View extends GameView {
 		g2.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
 		paint(g1, m_model.m_currentLevel);
-		System.out.println(Options.LVL_WIDTH * BLOCK_SIZE + " , " + (Options.LVL_HEIGHT) * BLOCK_SIZE);
 		paint(g2, m_model.m_nextLevel);
 
 		Iterator<Component> iter = m_graphicUIs.iterator();
