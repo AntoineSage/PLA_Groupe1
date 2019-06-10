@@ -17,8 +17,15 @@ public class LevelMaker {
 		new Soul(level, 14, 10);
 		new Soul(level, 18, 10);
 
-		new Obstacle(level, 10, 30, 20, 2);
-		new Obstacle(level, 10, 32, 2, 20);
+		new Obstacle(level, 10, 30, 3, 3);
+		new Obstacle(level, 13, 30, 3, 3);
+		new Obstacle(level, 16, 30, 3, 3);
+		new Obstacle(level, 19, 30, 3, 3);
+		
+		new Obstacle(level, 10, 33, 3, 3);
+		new Obstacle(level, 10, 36, 3, 3);
+		new Obstacle(level, 10, 39, 3, 3);
+		new Obstacle(level, 10, 42, 3, 3);
 
 		new Nest(level, 30, 30);
 		new Nest(level, 30, 10);

@@ -1,24 +1,24 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-
-import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Singleton;
-import edu.ricm3.game.purgatoire.entities.Entity;
-import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 
 public class HellObstacleStunt extends Stunt {
 
-	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-		super(automaton, entity, sprite);
-		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
-		setDMG(Options.HELL_OBSTACLE_DMG);
-	}
+//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//		super(automaton, entity, sprite);
+//
+//		m_animation = new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2);
+//		m_animation.resume();
+//		
+//		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
+//		setDMG(Options.HELL_OBSTACLE_DMG);
+//	}
 
 	public HellObstacleStunt() {
-		super(Singleton.getNewObstacleHellAut(), null, Color.pink);
+		super(Singleton.getNewObstacleHellAut(),  new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2));
 	}
 
 	@Override

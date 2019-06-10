@@ -1,0 +1,5 @@
+sprite_sheet = sprites/bolt04.png
+NORTH = 1
+EAST = 1
+SOUTH = 1
+WEST = 1

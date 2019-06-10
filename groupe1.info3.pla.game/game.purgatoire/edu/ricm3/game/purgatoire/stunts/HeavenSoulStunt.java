@@ -1,13 +1,10 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-
+import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
-import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
-import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -17,15 +14,15 @@ public class HeavenSoulStunt extends Stunt {
 
 	Long lastUpdate;
 
-	HeavenSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-		super(automaton, entity, sprite);
-		m_maxHP = Options.HEAVEN_SOUL_HP_MAX;
-		setDMG(Options.HEAVEN_SOUL_DMG);
-		m_karmaToGive = Options.HEAVEN_SOUL_KARMA_TOGIVE;
-	}
+//	HeavenSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//		super(automaton, entity, sprite);
+//		m_maxHP = Options.HEAVEN_SOUL_HP_MAX;
+//		setDMG(Options.HEAVEN_SOUL_DMG);
+//		m_karmaToGive = Options.HEAVEN_SOUL_KARMA_TOGIVE;
+//	}
 
 	public HeavenSoulStunt() {
-		super(Singleton.getNewSoulHeavenAut(), null, Color.DARK_GRAY);
+		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 2));
 		lastUpdate = (long) 0;
 		setDMG(Options.HEAVEN_SOUL_DMG);
 		m_karmaToGive = Options.HEAVEN_SOUL_KARMA_TOGIVE;
@@ -63,7 +60,7 @@ public class HeavenSoulStunt extends Stunt {
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
 			pop(m_entity.m_direction);
 		}
-		if (lastUpdate - now > 500) {
+		if (lastUpdate - now > 1000/15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}
