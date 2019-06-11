@@ -134,7 +134,6 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_popTimer.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
 	}

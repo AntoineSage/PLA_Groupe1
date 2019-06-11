@@ -63,7 +63,6 @@ public class HeavenObstacleStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_popTimer.step(now);
 	}
 
 	@Override
@@ -75,4 +74,5 @@ public class HeavenObstacleStunt extends Stunt {
 	public void takeDamage(Entity e) {
 		System.out.println("takeDamage heaven obstacle");
 	}
+
 }

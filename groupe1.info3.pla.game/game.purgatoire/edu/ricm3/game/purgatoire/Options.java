@@ -19,9 +19,6 @@ public class Options {
 
 	public static final long DEFAULT_CD = 1000;
 
-	// NEST OPTIONS
-	public static final long NEST_SPAWN_DELAY = 3000;
-
 	// PLAYER OPTIONS
 	public static int HELL_PLAYER_DMG = 100;
 	public static int HELL_PLAYER_HP_MAX = 1000;
@@ -50,6 +47,13 @@ public class Options {
 	public static int HEAVEN_NEST_HP_MAX = 1;
 	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
 
+	public static final int NEST_POP_DURATION = 5000;
+	public static final int NEST_WIZZ_DURATION = 3000;
+	public static final long NEST_SPAWN_DELAY = 3000;
+	public static final long NEST_MIN_SPAWN_DELAY = 500;
+
+	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
+
 	public static int NEST_HP = 1;
 
 	// SOUL OPTIONS
@@ -59,6 +63,8 @@ public class Options {
 	public static int HEAVEN_SOUL_DMG = 10;
 	public static int HEAVEN_SOUL_HP_MAX = 1;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
+
+	public static final int SOUL_STEP_DELAY = 1000 / 15;
 
 	public static int SOUL_HP = 3;
 
@@ -112,7 +118,7 @@ public class Options {
 	public static int SPCL_WIDTH = 5;
 
 	// TODO echo options
-	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = true;
+	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = false;
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_XP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;

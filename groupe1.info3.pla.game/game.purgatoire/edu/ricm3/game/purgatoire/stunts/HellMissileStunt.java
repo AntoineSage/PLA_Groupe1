@@ -44,7 +44,7 @@ public class HellMissileStunt extends Stunt {
 
 	@Override
 	public void step(long now) {
-		m_automaton.step(m_entity);
+		super.step(now);
 	}
 
 }

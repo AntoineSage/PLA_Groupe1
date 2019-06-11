@@ -22,4 +22,9 @@ public class HeavenMissileStunt extends Stunt {
 		m_entity.die();
 	}
 
+	@Override
+	public void step(long now) {
+		super.step(now);
+	}
+
 }

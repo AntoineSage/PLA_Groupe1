@@ -72,7 +72,6 @@ public class HellObstacleStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_popTimer.step(now);
 	}
 
 }

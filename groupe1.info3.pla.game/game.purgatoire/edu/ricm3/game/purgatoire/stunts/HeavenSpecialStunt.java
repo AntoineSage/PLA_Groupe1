@@ -31,7 +31,7 @@ public class HeavenSpecialStunt extends Stunt {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (m_heavenSpecialTimer == null)
 			m_heavenSpecialTimer = new Timer(5000);
-			m_heavenSpecialTimer.start();
+		m_heavenSpecialTimer.start();
 		if (player != null) {
 			player.addKarma(m_entity);
 			System.out.println("sur chat");
@@ -57,7 +57,6 @@ public class HeavenSpecialStunt extends Stunt {
 			m_heavenSpecialTimer.step(now);
 			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
-				System.out.println("test");
 			}
 		}
 	}

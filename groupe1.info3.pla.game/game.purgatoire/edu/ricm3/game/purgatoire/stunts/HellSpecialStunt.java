@@ -68,13 +68,10 @@ public class HellSpecialStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-
 		if (m_hellSpecialTimer != null) {
 			m_hellSpecialTimer.step(now);
-
 			if (m_hellSpecialTimer.isFinished()) {
 				m_entity.die();
-				System.out.println("test");
 			}
 		}
 

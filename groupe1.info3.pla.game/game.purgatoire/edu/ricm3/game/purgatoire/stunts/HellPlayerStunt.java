@@ -125,9 +125,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_DMGBuff = 1;
 			m_weaknessBuff = 1;
 		}
-		m_popTimer.step(now);
 		m_missileTimer.step(now);
-		m_wizzTimer.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
 	}

@@ -24,4 +24,5 @@ public class Nest extends Entity {
 		m_type = IEntityType.DANGER;
 		m_HP = Options.NEST_HP;
 	}
+
 }
