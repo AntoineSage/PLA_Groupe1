@@ -49,7 +49,7 @@ public class Singleton {
 
 	private static Animation m_missileHellAnim;
 	private static Animation m_missileHeavenAnim;
-	
+
 	private Singleton(String file) {
 		Ast ast = null;
 		try {

@@ -32,6 +32,7 @@ public class Animation {
 	}
 
 	private static List<BufferedImage>[] spritesFromFile(String fileName) throws FileNotFoundException {
+		@SuppressWarnings("unchecked")
 		List<BufferedImage>[] sprites = new List[5];
 		BufferedImage[] splitImage = null;
 

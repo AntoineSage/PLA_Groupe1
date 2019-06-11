@@ -4,6 +4,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -18,8 +19,9 @@ public class HeavenSpecialStunt extends Stunt {
 //	}
 
 	public HeavenSpecialStunt() {
-		super(Singleton.getNewSpecialHeavenAut(), new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2));
-		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
+		super(Singleton.getNewSpecialHeavenAut(),
+				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_SPCL_HP_MAX,
+				Options.HEAVEN_SPCL_DMG, Options.HEAVEN_SPCL_KARMA_TOGIVE);
 	}
 
 	@Override
@@ -39,6 +41,11 @@ public class HeavenSpecialStunt extends Stunt {
 
 	@Override
 	public void takeDamage(int DMG) {
+		System.out.println("takeDMG cat");
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
 		System.out.println("takeDMG cat");
 	}
 }
