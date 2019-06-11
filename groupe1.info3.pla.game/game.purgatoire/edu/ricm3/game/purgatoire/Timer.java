@@ -38,5 +38,5 @@ public class Timer {
 	public void setDuration(long duration) {
 		m_duration = duration;
 	}
-
+	
 }

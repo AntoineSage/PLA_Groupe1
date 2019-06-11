@@ -53,6 +53,16 @@ Nest(Init){
 	* (Init): True ? Egg() :(Init)
 }
 
-Missile(Init){
+MissileHell(Init){
 	* (Init): True ? Move(F) : (Init)
+}
+
+MissileHeaven(Init){
+	* (Init): True ? Move(F) : (Step1)
+	* (Step1): True ? Move(F) : (Step2)
+	* (Step2): True ? Move(F) : (Step3)
+	* (Step3): True ? Move(F) : (Step4)
+	* (Step4): True ? Move(F) : (Step5)
+	* (Step5): True ? Move(F) : (Step6)
+	* (Step6): True ? Pop(F) : (Init)
 }

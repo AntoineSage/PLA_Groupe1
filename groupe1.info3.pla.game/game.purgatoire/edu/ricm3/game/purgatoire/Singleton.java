@@ -76,7 +76,7 @@ public class Singleton {
 		m_nestHeavenAut = automatons.get(6);
 
 		m_missileHellAut = automatons.get(7);
-		m_missileHeavenAut = automatons.get(7);
+		m_missileHeavenAut = automatons.get(8);
 
 		try {
 			m_playerHellAnim = new Animation("animations/playerHell.ani");
