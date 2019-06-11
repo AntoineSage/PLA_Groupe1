@@ -265,6 +265,10 @@ public class Stunt {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
 
+	public int getBaseDMG() {
+		return m_DMG;
+	}
+
 	void setDMG(int DMG) {
 		m_DMG = DMG;
 	}
@@ -277,7 +281,8 @@ public class Stunt {
 		Iterator<Entity> iter;
 		switch (direction) {
 		case NORTH:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y - m_entity.m_bounds.height).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x, m_entity.m_bounds.y - m_entity.m_bounds.height).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -286,7 +291,8 @@ public class Stunt {
 			}
 			break;
 		case SOUTH:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y + m_entity.m_bounds.height).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x, m_entity.m_bounds.y + m_entity.m_bounds.height).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -296,7 +302,8 @@ public class Stunt {
 			break;
 
 		case WEST:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x - m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x - m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -305,7 +312,8 @@ public class Stunt {
 			}
 			break;
 		case EAST:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)

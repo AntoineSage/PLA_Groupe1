@@ -23,21 +23,21 @@ public class Options {
 	public static final long NEST_SPAWN_DELAY = 3000;
 
 	// PLAYER OPTIONS
-	public static int HELL_PLAYER_DMG = 100;
-	public static int HELL_PLAYER_HP_MAX = 1000;
-	public static int HEAVEN_PLAYER_DMG = 100;
-	public static int HEAVEN_PLAYER_HP_MAX = 1000;
+	public static final int PLAYER_HP_START = 1000;
+	public static final int PLAYER_XP_START = 0;
+	public static final int PLAYER_KARMA_MAX = 150;
 
-	public static int PLAYER_MAX_TOTAL_HP = 1000;
-	public static int PLAYER_HP = 1000;
-	public static int PLAYER_XP = 0;
-	public static int PLAYER_XP_MAX = 150;
-	public static int PLAYER_KARMA_MAX = 150;
-
-	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300 };
+	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
-	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
-	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
+
+	// Player stats arrays
+	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
+			"Rank heaven 4" };
+	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3", "Rank hell 4" };
+	public static final int[] PLAYER_DMG_HEAVEN = { 100, 120, 150, 200 };
+	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
+	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
+	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
@@ -118,5 +118,7 @@ public class Options {
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
 	public static final boolean ECHO_PLAYER_RANK_CHANGE = false;
 	public static final boolean ECHO_WINDOW_SIZE_CHANGE = false;
+
+	public static final boolean ECHO_PLAYER_UPDATE_STATS = true;
 
 }

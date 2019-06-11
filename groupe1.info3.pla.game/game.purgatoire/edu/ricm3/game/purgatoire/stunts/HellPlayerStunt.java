@@ -26,7 +26,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	public HellPlayerStunt() {
 		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2),
-				Options.HELL_PLAYER_HP_MAX, Options.HELL_PLAYER_DMG);
+				Options.PLAYER_HP_MAX_TOTAL_HELL[0], Options.PLAYER_DMG_HELL[0]);
 
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(1000);
@@ -149,6 +149,14 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			((Player) m_entity).addKarma(+Options.PLAYER_KARMA_TIME_AMOUNT);
 			m_karmaTimer.start();
 		}
+	}
+
+	@Override
+	public void updateRankStats() {
+		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HELL[((Player) m_entity).getRank()]);
+		setDMG(Options.PLAYER_DMG_HELL[((Player) m_entity).getRank()]);
+		if (Options.ECHO_PLAYER_UPDATE_STATS)
+			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG());
 	}
 
 }

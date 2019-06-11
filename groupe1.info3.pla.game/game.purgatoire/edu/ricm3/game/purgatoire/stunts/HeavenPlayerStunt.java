@@ -19,7 +19,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
-				Options.HEAVEN_PLAYER_HP_MAX, Options.HEAVEN_PLAYER_DMG);
+				Options.PLAYER_HP_MAX_TOTAL_HEAVEN[0], Options.PLAYER_DMG_HEAVEN[0]);
 
 		m_popCooldown = Options.DASH_CD;
 		m_popTimer = new Timer(m_popCooldown);
@@ -145,6 +145,14 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 			((Player) m_entity).addKarma(-Options.PLAYER_KARMA_TIME_AMOUNT);
 			m_karmaTimer.start();
 		}
+	}
+
+	@Override
+	public void updateRankStats() {
+		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HEAVEN[((Player) m_entity).getRank()]);
+		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
+		if (Options.ECHO_PLAYER_UPDATE_STATS)
+			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG());
 	}
 
 }
