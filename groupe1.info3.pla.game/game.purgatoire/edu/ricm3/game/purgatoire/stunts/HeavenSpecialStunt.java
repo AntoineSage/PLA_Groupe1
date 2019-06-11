@@ -22,7 +22,6 @@ public class HeavenSpecialStunt extends Stunt {
 		super(Singleton.getNewSpecialHeavenAut(),
 				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_SPCL_HP_MAX,
 				Options.HEAVEN_SPCL_DMG, Options.HEAVEN_SPCL_KARMA_TOGIVE);
-
 	}
 
 	@Override

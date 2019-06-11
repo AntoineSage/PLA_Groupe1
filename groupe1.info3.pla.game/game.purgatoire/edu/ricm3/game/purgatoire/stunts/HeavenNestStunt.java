@@ -31,22 +31,22 @@ public class HeavenNestStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection direction) {
-		if (m_timerWizz.end()) {
+		if (m_timerWizz.isFinished()) {
 			int width = m_entity.m_bounds.width;
 			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
 			new Obstacle(m_entity.m_level, x, y, width, height);
 			m_entity.m_level.removeEntity(m_entity);
-			m_timerWizz.start(3000);
+			m_timerWizz.start();
 		}
 	}
 
 	@Override
 	public void pop(IDirection direction) {
-		if (m_timerPop.end() && m_NestSpawnPeriod > 500) {
+		if (m_timerPop.isFinished() && m_NestSpawnPeriod > 500) {
 			m_NestSpawnPeriod /= 2;
-			m_timerPop.start(5000);
+			m_timerPop.start();
 		}
 	}
 

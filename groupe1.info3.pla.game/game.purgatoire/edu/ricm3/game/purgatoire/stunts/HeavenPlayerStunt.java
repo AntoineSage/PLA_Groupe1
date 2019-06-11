@@ -15,22 +15,20 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
-	Timer m_dashTimer;
-
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
 				Options.HEAVEN_PLAYER_HP_MAX, Options.HEAVEN_PLAYER_DMG);
 
-		m_dashTimer = new Timer(m_cooldownDash);
-
+		m_popCooldown = Options.DASH_CD;
+		m_popTimer = new Timer(m_popCooldown);
 	}
 
 	@Override
 	public void pop(IDirection d) {
-		if (m_dashTimer.end()) {
+		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
 			System.out.println("dash");
-			m_dashTimer.start(m_cooldownDash * 1000);
+			m_popTimer.start();
 		}
 		System.out.println("pop heaven player");
 	}
@@ -132,9 +130,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_dashTimer.m_previousNow == 0)
-			m_dashTimer.m_previousNow = now;
-		m_dashTimer.step(now);
+		m_popTimer.step(now);
 	}
 
 }

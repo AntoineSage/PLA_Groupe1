@@ -17,34 +17,32 @@ import ricm3.interpreter.IEntityType;
 
 public class HellNestStunt extends Stunt {
 	long m_NestSpawnPeriod = Options.NEST_SPAWN_DELAY;
-	Timer m_timerWizz;
-	Timer m_timerPop;
 
 	public HellNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHellAnim(), AnimType.IDLE, 2),
 				Options.HELL_NEST_HP_MAX, Options.HELL_NEST_DMG, Options.HELL_NEST_KARMA_TOGIVE);
-		m_timerWizz = new Timer(3000);
-		m_timerPop = new Timer(5000);
+		m_wizzTimer = new Timer(3000);
+		m_popTimer = new Timer(5000);
 	}
 
 	@Override
 	public void wizz(IDirection direction) {
-		if (m_timerWizz.end()) {
+		if (m_wizzTimer.isFinished()) {
 			int width = m_entity.m_bounds.width;
 			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
 			new Obstacle(m_entity.m_level, x, y, width, height);
 			m_entity.m_level.removeEntity(m_entity);
-			m_timerWizz.start(3000);
+			m_wizzTimer.start();
 		}
 	}
 
 	@Override
 	public void pop(IDirection direction) {
-		if (m_timerPop.end() && m_NestSpawnPeriod > 500) {
+		if (m_popTimer.isFinished() && m_NestSpawnPeriod > 500) {
 			m_NestSpawnPeriod /= 2;
-			m_timerPop.start(5000);
+			m_popTimer.start();
 		}
 	}
 
@@ -93,8 +91,8 @@ public class HellNestStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_timerWizz.step(now);
-		m_timerPop.step(now);
+		m_wizzTimer.step(now);
+		m_popTimer.step(now);
 
 	}
 }

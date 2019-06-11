@@ -10,7 +10,6 @@ import edu.ricm3.game.purgatoire.entities.Nest;
 import ricm3.interpreter.IDirection;
 
 public class HeavenObstacleStunt extends Stunt {
-	Timer m_obstacleDashTimer;
 
 //	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 //		super(automaton, entity, sprite);
@@ -24,16 +23,16 @@ public class HeavenObstacleStunt extends Stunt {
 				new AnimationPlayer(Singleton.getObstacleHeavenAnim(), AnimType.IDLE, 2),
 				Options.HEAVEN_OBSTACLE_HP_MAX, Options.HEAVEN_OBSTACLE_DMG);
 
-		m_obstacleDashTimer = new Timer(2000);
-		m_obstacleDashTimer.m_previousNow = 1000;
+		m_popCooldown = Options.DASH_CD;
+		m_popTimer = new Timer(m_popCooldown);
 	}
 
 	@Override
 	public void pop(IDirection d) {
-		if (m_obstacleDashTimer.end()) {
+		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
 			System.out.println("dash obstacle");
-			m_obstacleDashTimer.start(m_cooldownDash * 1000);
+			m_popTimer.start();
 		}
 	}
 
@@ -45,6 +44,7 @@ public class HeavenObstacleStunt extends Stunt {
 		width = m_entity.m_bounds.width;
 		height = m_entity.m_bounds.height;
 		m_entity.m_level.removeEntity(m_entity);
+		@SuppressWarnings("unused")
 		Nest nest = new Nest(m_entity.m_level, x, y, width, height);
 
 		System.out.println("wizz heaven obstacle");
@@ -63,9 +63,7 @@ public class HeavenObstacleStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_obstacleDashTimer.m_previousNow == 0)
-			m_obstacleDashTimer.m_previousNow = now;
-		m_obstacleDashTimer.step(now);
+		m_popTimer.step(now);
 	}
 
 	@Override

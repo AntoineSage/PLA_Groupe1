@@ -17,6 +17,8 @@ public class Options {
 	public static final double COEF_KARMA_POS = 0.2;
 	public static final double COEF_KARMA_NEG = -0.3;
 
+	public static final long DEFAULT_CD = 1000;
+
 	// NEST OPTIONS
 	public static final long NEST_SPAWN_DELAY = 3000;
 
@@ -86,13 +88,13 @@ public class Options {
 
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
-	public static int DASH_CD = 5;
-	
-	//TIMER OPTIONS
+	public static int DASH_CD = 5000;
+
+	// TIMER OPTIONS
 	public static int WIZZ_TIMER = 1000;
 
 	// BUFF OPTIONS
-	public static int BUFF_DURATION = 5;
+	public static int BUFF_DURATION = 5000;
 	public static int BUFF_DMG = 100; // %
 	public static int BUFF_WEAKNESS = 100; // %
 
