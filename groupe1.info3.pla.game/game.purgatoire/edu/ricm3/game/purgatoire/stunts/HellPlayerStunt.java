@@ -16,6 +16,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
 	Timer m_buffTimer;
+	Timer m_karmaTimer;
 
 	int m_lastPopPeriod = -1;
 	int m_nbPeriod;
@@ -31,6 +32,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_missileTimer = new Timer(1000);
 		m_wizzTimer = new Timer(1000);
 		m_buffTimer = new Timer(m_durationBuff);
+		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
+		m_karmaTimer.start();
 	}
 
 	@Override
@@ -85,24 +88,24 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			Missile missile;
 			switch (d) {
 			case NORTH:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case SOUTH:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case EAST:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case WEST:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			default:
 				break;
@@ -125,6 +128,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_popTimer.step(now);
 		m_missileTimer.step(now);
 		m_wizzTimer.step(now);
+		m_karmaTimer.step(now);
+		changeKarmaOverTime();
 	}
 
 	@Override
@@ -136,6 +141,14 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	public String getRankName() {
 		return Options.PLAYER_RANKS_HELL[((Player) m_entity).getRank()];
+	}
+
+	@Override
+	public void changeKarmaOverTime() {
+		if (m_karmaTimer.isFinished()) {
+			((Player) m_entity).addKarma(+Options.PLAYER_KARMA_TIME_AMOUNT);
+			m_karmaTimer.start();
+		}
 	}
 
 }

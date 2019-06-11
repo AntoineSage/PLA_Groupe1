@@ -39,6 +39,9 @@ public class Options {
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
 	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
 
+	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
+	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
+
 	// NEST OPTIONS
 	public static int HELL_NEST_DMG = 1;
 	public static int HELL_NEST_HP_MAX = 1;

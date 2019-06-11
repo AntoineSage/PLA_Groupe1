@@ -15,12 +15,16 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
+	Timer m_karmaTimer;
+
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
 				Options.HEAVEN_PLAYER_HP_MAX, Options.HEAVEN_PLAYER_DMG);
 
 		m_popCooldown = Options.DASH_CD;
 		m_popTimer = new Timer(m_popCooldown);
+		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
+		m_karmaTimer.start();
 	}
 
 	@Override
@@ -131,6 +135,16 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void step(long now) {
 		super.step(now);
 		m_popTimer.step(now);
+		m_karmaTimer.step(now);
+		changeKarmaOverTime();
+	}
+
+	@Override
+	public void changeKarmaOverTime() {
+		if (m_karmaTimer.isFinished()) {
+			((Player) m_entity).addKarma(-Options.PLAYER_KARMA_TIME_AMOUNT);
+			m_karmaTimer.start();
+		}
 	}
 
 }
