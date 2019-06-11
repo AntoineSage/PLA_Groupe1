@@ -77,6 +77,7 @@ public class HellSpecialStunt extends Stunt {
 				System.out.println("test");
 			}
 		}
+			
 
 	}
 }

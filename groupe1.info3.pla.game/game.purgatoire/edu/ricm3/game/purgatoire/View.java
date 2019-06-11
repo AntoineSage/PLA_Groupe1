@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
@@ -161,8 +163,9 @@ public class View extends GameView {
 			paintAnimation(g, iter.next());
 		}
 
+//	    ((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f));
 		if (lvl.m_special != null)
-			paintAnimation(g, lvl.m_special);
+			paintTransparency(g, lvl.m_special);
 
 		if (lvl.m_player != null)
 			paintAnimation(g, lvl.m_player);
@@ -181,6 +184,12 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paintAnimation(g, iter.next());
 		}
+	}
+
+	public void paintTransparency(Graphics g, Entity e) {
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, e.m_transparency));
+		paintAnimation(g, e);
+
 	}
 
 	public void addGraphicUI(Component g) {

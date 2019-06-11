@@ -16,6 +16,7 @@ public class Entity {
 	public Rectangle m_bounds;
 	public IEntityType m_type;
 	public IDirection m_direction;
+	public float m_transparency;
 
 	private Stunt m_heavenStunt, m_hellStunt;
 
@@ -28,6 +29,7 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, width, height);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
+		m_transparency = 1;
 		transform();
 		m_HP = 1;
 	}
