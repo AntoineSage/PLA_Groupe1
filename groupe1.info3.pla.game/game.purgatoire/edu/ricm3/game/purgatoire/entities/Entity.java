@@ -150,4 +150,12 @@ public class Entity {
 		return m_level.m_collisionGrid.wontCollide(this, direction);
 	}
 
+	public long getTimeLeftPop() {
+		return m_currentStunt.getTimeLeftPop();
+	}
+
+	public long getTimeLeftWizz() {
+		return m_currentStunt.getTimeLeftWizz();
+	}
+
 }

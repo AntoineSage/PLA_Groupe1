@@ -14,8 +14,8 @@ public class HellMissileStunt extends Stunt {
 //	}
 
 	HellMissileStunt() {
-		super(Singleton.getNewMissileHeavenAut(), new AnimationPlayer(Singleton.getMissileHellAnim(), AnimType.IDLE, 2));
-		setDMG(Options.HELL_MISSILE_DMG);
+		super(Singleton.getNewMissileHeavenAut(), new AnimationPlayer(Singleton.getMissileHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_MISSILE_HP_MAX, Options.HELL_MISSILE_DMG);
 	}
 
 	@Override
