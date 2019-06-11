@@ -18,11 +18,11 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	Timer m_dashTimer;
 
 	public HeavenPlayerStunt() {
-		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
+				Options.HEAVEN_PLAYER_HP_MAX, Options.HEAVEN_PLAYER_DMG);
 
 		m_dashTimer = new Timer(m_cooldownDash);
-		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
-		setDMG(Options.HEAVEN_PLAYER_DMG);
+
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y - 1).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+						e.m_currentStunt.takeDamage(m_entity);
 					}
 				}
 				y--;
@@ -71,7 +71,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+						e.m_currentStunt.takeDamage(m_entity);
 					}
 				}
 				y++;
@@ -86,7 +86,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+						e.m_currentStunt.takeDamage(m_entity);
 					}
 				}
 				x++;
@@ -101,7 +101,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x - 1, y).iterator();
 					while (iter.hasNext()) {
 						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+						e.m_currentStunt.takeDamage(m_entity);
 					}
 				}
 				x--;

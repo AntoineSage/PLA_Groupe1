@@ -5,6 +5,7 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Nest;
 import ricm3.interpreter.IDirection;
 
@@ -13,14 +14,15 @@ public class HellObstacleStunt extends Stunt {
 	Timer m_obstacleDashTimer;
 
 	public HellObstacleStunt() {
-		super(Singleton.getNewObstacleHellAut(),  new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2));
-		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
-		setDMG(Options.HELL_OBSTACLE_DMG);
+		super(Singleton.getNewObstacleHellAut(), new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_OBSTACLE_HP_MAX, Options.HELL_OBSTACLE_DMG);
+
 		m_obstacleDashTimer = new Timer(2000);
 		m_obstacleDashTimer.m_previousNow = 1000;
 	}
 
-	//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+	// HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite)
+	// {
 //		super(automaton, entity, sprite);
 //
 //		m_animation = new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2);
@@ -62,6 +64,11 @@ public class HellObstacleStunt extends Stunt {
 
 	@Override
 	public void takeDamage(int DMG) {
+		System.out.println("takedamage hell obstacle");
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
 		System.out.println("takedamage hell obstacle");
 	}
 

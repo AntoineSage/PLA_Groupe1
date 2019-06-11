@@ -40,20 +40,22 @@ public class Options {
 	// NEST OPTIONS
 	public static int HELL_NEST_DMG = 1;
 	public static int HELL_NEST_HP_MAX = 1;
+	public static int HELL_NEST_KARMA_TOGIVE = -10;
 	public static int HEAVEN_NEST_DMG = 1;
 	public static int HEAVEN_NEST_HP_MAX = 1;
+	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
 
 	public static int NEST_HP = 1;
 
 	// SOUL OPTIONS
 	public static int HELL_SOUL_DMG = 10;
-	public static int HELL_SOUL_HP_MAX = 1;
-	public static int HELL_SOUL_KARMA_TOGIVE = 10;
+	public static int HELL_SOUL_HP_MAX = 3;
+	public static int HELL_SOUL_KARMA_TOGIVE = -10;
 	public static int HEAVEN_SOUL_DMG = 10;
 	public static int HEAVEN_SOUL_HP_MAX = 1;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
-	public static int SOUL_HP = 1;
+	public static int SOUL_HP = 3;
 
 	// SPCL OPTIONS
 	public static int HELL_SPCL_DMG = 1;

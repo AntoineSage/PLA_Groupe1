@@ -53,6 +53,22 @@ public class Stunt {
 		m_entity = entity;
 		m_sprite = sprite;
 	}
+	
+	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG) {
+		m_automaton = automaton;
+		m_animation = animation;
+		m_maxHP = maxHP;
+		m_DMG = DMG;
+	}
+	
+	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG, int karmaToGive) {
+		m_automaton = automaton;
+		m_animation = animation;
+		m_maxHP = maxHP;
+		m_DMG = DMG;
+		m_karmaToGive = karmaToGive;
+		
+	}
 
 	public void tryMove(IDirection d) {
 		switch (d) {
@@ -215,6 +231,13 @@ public class Stunt {
 
 	public void takeDamage(int DMG) {
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+	}
+	
+	public void takeDamage(Entity e) {
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
 		}

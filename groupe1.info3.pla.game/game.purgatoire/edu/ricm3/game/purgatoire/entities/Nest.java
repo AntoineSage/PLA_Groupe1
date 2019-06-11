@@ -22,6 +22,6 @@ public class Nest extends Entity {
 	public Nest(Level level, int x, int y) {
 		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
 		m_type = IEntityType.DANGER;
-		m_HP = Options.NEST_HP;
+		m_HP = Options.NEST_HP;	
 	}
 }

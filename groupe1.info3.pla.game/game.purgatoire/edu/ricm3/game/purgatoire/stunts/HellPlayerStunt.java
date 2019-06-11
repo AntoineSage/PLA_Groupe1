@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire.stunts;
 
 import java.util.LinkedList;
+import java.util.Spliterator.OfPrimitive;
 
 import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
@@ -25,13 +26,12 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	public HellPlayerStunt() {
 
-		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_PLAYER_HP_MAX, Options.HELL_PLAYER_DMG);
 
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);
 		m_wizzTimer = new Timer(0);
-		m_maxHP = Options.HELL_PLAYER_HP_MAX;
-		setDMG(Options.HELL_PLAYER_DMG);
 		m_buffTimer = new Timer(m_durationBuff * 1000);
 	}
 
