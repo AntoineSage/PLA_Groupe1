@@ -164,7 +164,6 @@ public class View extends GameView {
 			paintAnimation(g, iter.next());
 		}
 
-//	    ((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f));
 		if (lvl.m_special != null)
 			paintTransparency(g, lvl.m_special);
 
@@ -190,6 +189,7 @@ public class View extends GameView {
 	public void paintTransparency(Graphics g, Entity e) {
 		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, e.m_transparency));
 		paintAnimation(g, e);
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 
 	}
 

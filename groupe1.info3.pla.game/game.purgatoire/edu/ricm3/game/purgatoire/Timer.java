@@ -39,7 +39,7 @@ public class Timer {
 		m_duration = duration;
 	}
 
-	public double getRemainingTimePercentage() {
+	public float getRemainingTimePercentage() {
 		return (float) m_current / m_duration;
 	}
 

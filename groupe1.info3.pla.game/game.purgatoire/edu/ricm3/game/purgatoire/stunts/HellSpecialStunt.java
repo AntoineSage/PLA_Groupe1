@@ -71,13 +71,12 @@ public class HellSpecialStunt extends Stunt {
 
 		if (m_hellSpecialTimer != null) {
 			m_hellSpecialTimer.step(now);
-
+			m_entity.m_transparency = m_hellSpecialTimer.getRemainingTimePercentage();
 			if (m_hellSpecialTimer.isFinished()) {
 				m_entity.die();
 				System.out.println("test");
 			}
 		}
-			
 
 	}
 }

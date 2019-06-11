@@ -55,6 +55,7 @@ public class HeavenSpecialStunt extends Stunt {
 		super.step(now);
 		if (m_heavenSpecialTimer != null) {
 			m_heavenSpecialTimer.step(now);
+			m_entity.m_transparency = m_heavenSpecialTimer.getRemainingTimePercentage();
 			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
 				System.out.println("test");
