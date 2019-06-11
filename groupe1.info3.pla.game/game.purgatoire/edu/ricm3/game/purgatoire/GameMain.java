@@ -19,6 +19,8 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -45,6 +47,15 @@ public class GameMain {
 			comboBox.addItem(aut);			
 			comboBox2.addItem(aut);			
 		}
+		comboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				System.out.println(e.getItem().toString());
+			}
+			
+			
+		});
 		frame.getContentPane().setLayout(list);
 		frame.add(comboBox);
 		frame.add(comboBox2);
