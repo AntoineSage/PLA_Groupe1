@@ -114,5 +114,6 @@ public class Options {
 	public static final boolean ECHO_PLAYER_XP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
 	public static final boolean ECHO_PLAYER_RANK_CHANGE = false;
+	public static final boolean ECHO_WINDOW_SIZE_CHANGE = false;
 
 }
