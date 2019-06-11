@@ -2,6 +2,7 @@ package edu.ricm3.game.purgatoire.stunts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.AnimationPlayer;
@@ -58,7 +59,8 @@ public class Stunt {
 		switch (d) {
 		case NORTH:
 			m_entity.m_direction = IDirection.NORTH;
-			if(m_animation!= null)m_animation.changeTo(AnimType.NORTH);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.NORTH);
 			if (m_entity.m_bounds.y <= 0) {
 				goingOut(d);
 			} else {
@@ -69,7 +71,8 @@ public class Stunt {
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.SOUTH;
-			if(m_animation!= null)m_animation.changeTo(AnimType.SOUTH);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.SOUTH);
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(0, 1);
@@ -80,7 +83,8 @@ public class Stunt {
 			break;
 		case EAST:
 			m_entity.m_direction = IDirection.EAST;
-			if(m_animation!= null)m_animation.changeTo(AnimType.EAST);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.EAST);
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(1, 0);
@@ -91,7 +95,8 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
-			if(m_animation!= null)m_animation.changeTo(AnimType.WEST);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.WEST);
 			if (m_entity.m_bounds.x > 0) {
 				if (nobodyCollideWithEntity()) {
 					move(-1, 0);
@@ -233,7 +238,49 @@ public class Stunt {
 	}
 
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
-		return m_entity.superposedWith(type) != null;
+		Iterator<Entity> iter;
+		switch (direction) {
+		case NORTH:
+			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y - m_entity.m_bounds.height).iterator();
+			while (iter.hasNext()) {
+				Entity e = iter.next();
+				if (e.m_type == type)
+					return true;
+				return false;
+			}
+			break;
+		case SOUTH:
+			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y + m_entity.m_bounds.height).iterator();
+			while (iter.hasNext()) {
+				Entity e = iter.next();
+				if (e.m_type == type)
+					return true;
+				return false;
+			}
+			break;
+
+		case WEST:
+			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x - m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			while (iter.hasNext()) {
+				Entity e = iter.next();
+				if (e.m_type == type)
+					return true;
+				return false;
+			}
+			break;
+		case EAST:
+			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			while (iter.hasNext()) {
+				Entity e = iter.next();
+				if (e.m_type == type)
+					return true;
+				return false;
+			}
+			break;
+		default:
+			throw new IllegalStateException();
+		}
+		return false;
 	}
 
 	public boolean nobodyCollideWithEntity() {
