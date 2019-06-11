@@ -22,14 +22,16 @@ public class CollisionGrid {
 		}
 	}
 
-	void addEntity(Entity entity) {
+	Entity addEntity(Entity entity) {
 		if (isOk(entity) == true) {
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
 				for (int j = entity.m_bounds.y; j < entity.m_bounds.y + entity.m_bounds.height; j++) {
 					m_grid[i][j].add(entity);
 				}
 			}
+			return entity;
 		}
+		return null;
 	}
 
 	boolean isOk(Entity entity) {

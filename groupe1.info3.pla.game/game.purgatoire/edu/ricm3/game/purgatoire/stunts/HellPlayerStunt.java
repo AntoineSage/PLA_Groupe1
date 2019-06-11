@@ -51,57 +51,29 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_wizzTimer.start();
 			Missile missile;
 			// North Line
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 2, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 3, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
-			m_missiles.add(missile);
+			for (int x = 0; x <= 3; x++) {
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+				m_missiles.add(missile);
+			}
 			// South Line
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 1, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 2, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
-			m_missiles.add(missile);
+			for (int x = -1; x <= 2; x++) {
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+				m_missiles.add(missile);
+			}
 			// East Line
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 3, m_entity.m_bounds.y, 1, 1, IDirection.EAST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 1, 1, 1, IDirection.EAST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 2, 1, 1, IDirection.EAST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
-			m_missiles.add(missile);
+			for (int y = 0; y <= 3; y++) {
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, 1, 1, IDirection.EAST, m_entity);
+				m_missiles.add(missile);
+			}
 			// West Line
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x - 1, m_entity.m_bounds.y - 1, 1, 1, IDirection.WEST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x - 1, m_entity.m_bounds.y, 1, 1, IDirection.WEST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, IDirection.WEST, m_entity);
-			m_missiles.add(missile);
-			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 2, 1, 1, IDirection.WEST, m_entity);
-			m_missiles.add(missile);
+			for (int y = -1; y <= 2; y++) {
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
+				m_missiles.add(missile);
+			}
 		}
 
 	}
@@ -113,33 +85,24 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			Missile missile;
 			switch (d) {
 			case NORTH:
-				if (m_entity.m_bounds.y > 0) {
 					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 							m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
 					m_missiles.add(missile);
-				}
 				break;
 			case SOUTH:
-				if (m_entity.m_bounds.y != Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 							m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
 					m_missiles.add(missile);
-				}
 				break;
 			case EAST:
-				if (m_entity.m_bounds.x != Options.LVL_WIDTH - m_entity.m_bounds.width) {
-
 					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 							m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
 					m_missiles.add(missile);
-				}
 				break;
 			case WEST:
-				if (m_entity.m_bounds.x != 0) {
 					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 							m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
 					m_missiles.add(missile);
-				}
 				break;
 			default:
 				break;
