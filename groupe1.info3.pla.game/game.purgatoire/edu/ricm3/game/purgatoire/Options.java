@@ -17,6 +17,8 @@ public class Options {
 	public static final double COEF_KARMA_POS = 0.2;
 	public static final double COEF_KARMA_NEG = -0.3;
 
+	public static final long DEFAULT_CD = 1000;
+
 	// NEST OPTIONS
 	public static final long NEST_SPAWN_DELAY = 3000;
 

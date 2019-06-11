@@ -54,8 +54,8 @@ public class Stunt {
 	public Stunt(IAutomaton automaton, AnimationPlayer animation) {
 		m_automaton = automaton;
 		m_animation = animation;
-		m_popTimer = new Timer(0);
-		m_wizzTimer = new Timer(0);
+		m_popTimer = new Timer(Options.DEFAULT_CD);
+		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
 
 //	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
