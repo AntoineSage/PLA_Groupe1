@@ -191,4 +191,9 @@ public class Level {
 	public WorldType getWorldType() {
 		return m_model.getWorldType();
 	}
+	
+	public void levelCreator() {
+		
+	}
+	
 }
