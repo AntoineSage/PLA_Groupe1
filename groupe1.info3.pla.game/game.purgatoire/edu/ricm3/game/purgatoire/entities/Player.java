@@ -105,7 +105,15 @@ public class Player extends Entity {
 	public int getMaxTotalHP() {
 		return m_maxTotalHP;
 	}
-
+	
+	public void setMaxTotalHP(int max) {
+		m_maxTotalHP = max;
+	}
+	
+	public void setHP(int HP) {
+		m_HP = HP;
+	}
+	
 	public void testKarma() {
 		if (m_karma >= 0 && m_model.getWorldType() == WorldType.HEAVEN
 				|| m_karma <= 0 && m_model.getWorldType() == WorldType.HELL) {
