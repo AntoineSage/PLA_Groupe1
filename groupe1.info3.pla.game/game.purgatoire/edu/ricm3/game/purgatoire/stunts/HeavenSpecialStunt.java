@@ -4,7 +4,6 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
-import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -32,7 +31,7 @@ public class HeavenSpecialStunt extends Stunt {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (m_heavenSpecialTimer == null)
 			m_heavenSpecialTimer = new Timer(5000);
-		m_heavenSpecialTimer.m_previousNow = 0;
+			m_heavenSpecialTimer.start();
 		if (player != null) {
 			player.addKarma(m_entity);
 			System.out.println("sur chat");
@@ -56,7 +55,7 @@ public class HeavenSpecialStunt extends Stunt {
 		super.step(now);
 		if (m_heavenSpecialTimer != null) {
 			m_heavenSpecialTimer.step(now);
-			if (m_heavenSpecialTimer.end()) {
+			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
 				System.out.println("test");
 			}

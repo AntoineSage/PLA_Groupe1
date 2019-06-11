@@ -34,7 +34,7 @@ public class HellSpecialStunt extends Stunt {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (m_hellSpecialTimer == null) {
 			m_hellSpecialTimer = new Timer(2000);
-			m_hellSpecialTimer.m_previousNow = 0;
+			m_hellSpecialTimer.start();
 		}
 		if (player != null) {
 			System.out.println("sur flaque");
@@ -70,11 +70,9 @@ public class HellSpecialStunt extends Stunt {
 		super.step(now);
 
 		if (m_hellSpecialTimer != null) {
-			if (m_hellSpecialTimer.m_previousNow == 0)
-				m_hellSpecialTimer.m_previousNow = now;
 			m_hellSpecialTimer.step(now);
 
-			if (m_hellSpecialTimer.end()) {
+			if (m_hellSpecialTimer.isFinished()) {
 				m_entity.die();
 				System.out.println("test");
 			}
