@@ -4,11 +4,14 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class HellSpecialStunt extends Stunt {
+
+	Timer m_hellSpecialTimer;
 
 //	HellSpecialStunt(Entity entity) {
 //		super(Singleton.getNewSpecialHellAut(), entity, Color.CYAN);
@@ -25,10 +28,15 @@ public class HellSpecialStunt extends Stunt {
 	@Override
 	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
+		if (m_hellSpecialTimer == null) {
+			m_hellSpecialTimer = new Timer(2000);
+			m_hellSpecialTimer.m_previousNow = 0;
+		}
 		if (player != null) {
 			System.out.println("sur flaque");
 			player.addKarma(m_entity);
 			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
+
 		}
 		System.out.println("pop flaque");
 	}
@@ -46,5 +54,22 @@ public class HellSpecialStunt extends Stunt {
 	@Override
 	public boolean isEntityAt(IEntityType type, IDirection direction) {
 		return m_entity.superposedWith(type) != null;
+	}
+
+	@Override
+	public void step(long now) {
+		super.step(now);
+
+		if (m_hellSpecialTimer != null) {
+			if (m_hellSpecialTimer.m_previousNow == 0)
+				m_hellSpecialTimer.m_previousNow = now;
+			m_hellSpecialTimer.step(now);
+
+			if (m_hellSpecialTimer.end()) {
+				m_entity.die();
+				System.out.println("test");
+			}
+		}
+
 	}
 }
