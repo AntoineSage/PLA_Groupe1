@@ -58,7 +58,8 @@ public class View extends GameView {
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
-				System.out.printf("%d %d\n", getWidth(), getHeight());
+				if (Options.ECHO_WINDOW_SIZE_CHANGE)
+					System.out.printf("%d %d\n", getWidth(), getHeight());
 				Options.WIN_HEIGHT = getHeight();
 
 				int tmp = getWidth();
