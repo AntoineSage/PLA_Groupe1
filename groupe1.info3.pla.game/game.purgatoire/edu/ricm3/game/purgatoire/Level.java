@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -190,5 +191,33 @@ public class Level {
 
 	public WorldType getWorldType() {
 		return m_model.getWorldType();
+	}
+
+	void levelGenerator(String level) {
+		if (level.length() != Options.LVL_HEIGHT * Options.LVL_WIDTH / 2)
+			throw new IllegalArgumentException("Wrong lvl length in your file");
+		// 1st quarter (NW)
+		for (int i = 0; i < Options.LVL_HEIGHT / 2; i++) {
+			for (int j = 0; j < Options.LVL_WIDTH / 2; j++) {
+				if()
+				entityInterpret(level.charAt(i * j), i, j);
+			}
+		}
+
+	}
+
+	public void entityInterpret(char c, int x, int y) {
+		switch (c) {
+		case 'O':
+			new Obstacle(this, x, y, Options.OBSTACLE_WIDTH, Options.OBSTACLE_HEIGHT);
+		case 'S':
+			new Soul(this, x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+		case 'N':
+			new Nest(this, x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
+		case '*':
+			new Special(this, x, y, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+		case '_':
+		}
+		throw new IllegalArgumentException("Wrong letter in the level file");
 	}
 }

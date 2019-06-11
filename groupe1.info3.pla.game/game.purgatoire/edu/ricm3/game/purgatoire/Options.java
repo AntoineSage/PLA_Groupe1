@@ -100,6 +100,8 @@ public class Options {
 	public static int NEST_WIDTH = 3;
 	public static int SPCL_HEIGHT = 5;
 	public static int SPCL_WIDTH = 5;
+	public static int OBSTACLE_HEIGHT = 3;
+	public static int OBSTACLE_WIDTH = 3;
 
 	// TODO echo options
 	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = true;

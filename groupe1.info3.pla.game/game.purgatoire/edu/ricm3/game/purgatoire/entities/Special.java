@@ -24,4 +24,10 @@ public class Special extends Entity {
 		m_type = IEntityType.TEAM;
 		m_HP = Options.SPCL_HP;
 	}
+
+	public Special(Level level) {
+		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), 0, 0, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+		m_type = IEntityType.TEAM;
+		m_HP = Options.SPCL_HP;
+	}
 }
