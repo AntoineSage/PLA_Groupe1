@@ -12,7 +12,8 @@ public class HeavenMissileStunt extends Stunt {
 //	}
 
 	HeavenMissileStunt() {
-		super(Singleton.getNewMissileHeavenAut(), new AnimationPlayer(Singleton.getMissileHeavenAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewMissileHeavenAut(),
+				new AnimationPlayer(Singleton.getMissileHeavenAnim(), AnimType.IDLE, 2));
 	}
 
 	void goingOut(IDirection d) {

@@ -55,7 +55,7 @@ public class HellSoulStunt extends Stunt {
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
 			m_entity.pop(m_entity.m_direction);
 		}
-		if (now - lastUpdate > 1000/15) {
+		if (now - lastUpdate > 1000 / 15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}

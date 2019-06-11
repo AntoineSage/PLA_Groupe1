@@ -60,7 +60,7 @@ public class HeavenSoulStunt extends Stunt {
 			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
 			pop(m_entity.m_direction);
 		}
-		if (lastUpdate - now > 1000/15) {
+		if (lastUpdate - now > 1000 / 15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}

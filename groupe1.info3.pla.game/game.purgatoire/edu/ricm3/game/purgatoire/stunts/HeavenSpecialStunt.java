@@ -18,7 +18,8 @@ public class HeavenSpecialStunt extends Stunt {
 //	}
 
 	public HeavenSpecialStunt() {
-		super(Singleton.getNewSpecialHeavenAut(), new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewSpecialHeavenAut(),
+				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2));
 		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
 	}
 
