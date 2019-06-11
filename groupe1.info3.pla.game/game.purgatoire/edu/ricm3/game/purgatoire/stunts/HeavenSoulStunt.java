@@ -40,7 +40,8 @@ public class HeavenSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		System.out.println("pop heaven soul");
+		if (Options.ECHO_POP_SOUL)
+			System.out.println("Soul heaven pop (kamikaze)");
 	}
 
 	@Override

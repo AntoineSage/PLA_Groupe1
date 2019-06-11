@@ -21,6 +21,8 @@ public class HellMissileStunt extends Stunt {
 	@Override
 	public void pop(IDirection d) {
 		m_entity.die();
+		if (Options.ECHO_POP_MISSILE)
+			System.out.println("Missile pop (die)");
 	}
 
 	@Override

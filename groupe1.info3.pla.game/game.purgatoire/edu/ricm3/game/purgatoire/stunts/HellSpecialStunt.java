@@ -42,7 +42,8 @@ public class HellSpecialStunt extends Stunt {
 			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
 
 		}
-		System.out.println("pop flaque");
+		if (Options.ECHO_POP_SPECIAL)
+			System.out.println("Flaque pop (give karma & HP)");
 	}
 
 	@Override

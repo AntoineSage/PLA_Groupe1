@@ -216,6 +216,8 @@ public class Stunt {
 		for (int i = 0; i < m_rangeDash; i++) {
 			tryMove(d);
 		}
+		if (Options.ECHO_DASH)
+			System.out.println("Dash");
 	}
 
 	void buff(int buffDMG, int debuffWeakness) {

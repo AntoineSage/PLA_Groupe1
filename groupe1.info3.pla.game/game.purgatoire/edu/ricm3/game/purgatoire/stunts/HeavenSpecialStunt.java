@@ -37,7 +37,8 @@ public class HeavenSpecialStunt extends Stunt {
 			System.out.println("sur chat");
 
 		}
-		System.out.println("pop cat");
+		if (Options.ECHO_POP_SPECIAL)
+			System.out.println("Chat pop (give karma)");
 	}
 
 	@Override

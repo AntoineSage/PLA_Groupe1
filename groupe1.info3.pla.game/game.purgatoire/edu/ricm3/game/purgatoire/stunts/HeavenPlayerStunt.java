@@ -31,10 +31,10 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void pop(IDirection d) {
 		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
-			System.out.println("dash");
 			m_popTimer.start();
 		}
-		System.out.println("pop heaven player");
+		if (Options.ECHO_POP_PLAYER)
+			System.out.println("Player pop heaven");
 	}
 
 	@Override
@@ -43,7 +43,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		if (special != null) {
 			special.pop(null);
 		}
-		System.out.println("wizz heaven player");
+		if (Options.ECHO_WIZZ_PLAYER)
+			System.out.println("Player wizz heaven");
 	}
 
 	@Override

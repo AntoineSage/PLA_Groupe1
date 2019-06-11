@@ -136,7 +136,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > Options.NEST_SPAWN_DELAY) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

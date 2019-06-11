@@ -17,7 +17,7 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenNestStunt extends Stunt {
 
-	long m_nestSpawnPeriod = Options.NEST_SPAWN_DELAY;
+	long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
 
 	public HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHeavenAnim(), AnimType.IDLE, 2),
@@ -43,10 +43,12 @@ public class HeavenNestStunt extends Stunt {
 	@Override
 	public void pop(IDirection direction) {
 		m_nestSpawnPeriod *= Options.NEST_COEF_CHANGE_SPAWN_DELAY;
+		if (Options.ECHO_POP_NEST)
+			System.out.println("Nest spawn period: " + m_nestSpawnPeriod);
 	}
 
 	private void changeSpawnPeriod() {
-		if (m_popTimer.isFinished() && m_nestSpawnPeriod > Options.NEST_MIN_SPAWN_DELAY) {
+		if (m_popTimer.isFinished() && m_nestSpawnPeriod > Options.NEST_MIN_SPAWN_PERIOD) {
 			pop(IDirection.FRONT);
 			m_popTimer.start();
 		}

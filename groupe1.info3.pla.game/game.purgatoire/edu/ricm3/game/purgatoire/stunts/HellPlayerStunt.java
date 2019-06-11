@@ -38,14 +38,15 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void pop(IDirection d) {
-		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un
-		// compteur de période écoulée ?
+		// TODO Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir
+		// un compteur de période écoulée ?
 		m_nbPeriod = (int) m_entity.m_level.m_model.m_totalTime / Options.TOTAL_PERIOD;
-		if (m_nbPeriod != m_lastPopPeriod && m_popTimer.isFinished()) {
+		if (m_nbPeriod != m_lastPopPeriod) {
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
 			m_lastPopPeriod = m_nbPeriod;
 		}
-		System.out.println("pop hell");
+		if (Options.ECHO_POP_PLAYER)
+			System.out.println("Player pop hell");
 	}
 
 	@Override
@@ -77,8 +78,11 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
 				m_missiles.add(missile);
 			}
+			if (Options.ECHO_CIRCLE_ATTACK)
+				System.out.println("Player circle attack");
 		}
-
+		if (Options.ECHO_WIZZ_PLAYER)
+			System.out.println("Player wizz hell");
 	}
 
 	@Override

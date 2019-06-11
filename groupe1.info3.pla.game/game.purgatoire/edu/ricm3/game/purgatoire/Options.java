@@ -49,8 +49,8 @@ public class Options {
 
 	public static final int NEST_POP_DURATION = 5000;
 	public static final int NEST_WIZZ_DURATION = 3000;
-	public static final long NEST_SPAWN_DELAY = 3000;
-	public static final long NEST_MIN_SPAWN_DELAY = 500;
+	public static final long NEST_SPAWN_PERIOD = 3000;
+	public static final long NEST_MIN_SPAWN_PERIOD = 500;
 
 	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
 
@@ -117,12 +117,29 @@ public class Options {
 	public static int SPCL_HEIGHT = 5;
 	public static int SPCL_WIDTH = 5;
 
-	// TODO echo options
+	// Echo options
 	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = false;
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_XP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
 	public static final boolean ECHO_PLAYER_RANK_CHANGE = false;
+	
 	public static final boolean ECHO_WINDOW_SIZE_CHANGE = false;
+	
+	public static final boolean ECHO_POP_NEST = false;
+	public static final boolean ECHO_WIZZ_NEST = false; // TODO to use
+	public static final boolean ECHO_POP_OBSTACLE = false;
+	public static final boolean ECHO_WIZZ_OBSTACLE = false; // TODO to use
+	public static final boolean ECHO_POP_PLAYER = false;
+	public static final boolean ECHO_WIZZ_PLAYER = false;
+	public static final boolean ECHO_POP_MISSILE = false;
+	public static final boolean ECHO_WIZZ_MISSILE = false; // TODO to use
+	public static final boolean ECHO_POP_SPECIAL = false;
+	public static final boolean ECHO_WIZZ_SPECIAL = false;
+	public static final boolean ECHO_POP_SOUL = false;
+	public static final boolean ECHO_WIZZ_SOUL = false;
+	
+	public static final boolean ECHO_DASH = false;
+	public static final boolean ECHO_CIRCLE_ATTACK = false;
 
 }
