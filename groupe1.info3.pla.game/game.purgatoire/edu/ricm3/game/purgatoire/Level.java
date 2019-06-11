@@ -1,7 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -193,31 +192,57 @@ public class Level {
 		return m_model.getWorldType();
 	}
 
-	void levelGenerator(String level) {
-		if (level.length() != Options.LVL_HEIGHT * Options.LVL_WIDTH / 2)
-			throw new IllegalArgumentException("Wrong lvl length in your file");
-		// 1st quarter (NW)
+	/*
+	 * position: 1 = NW, 2 = NE, 3 = SW, 4 = SE
+	 * 
+	 */
+	void levelGenerator(List<String> level, int position) {
+		int x_offset = 0;
+		int y_offset = 0;
+		for (int k = 0; k < Options.LVL_HEIGHT / 2; k++) {
+			if (level.get(k).length() != Options.LVL_WIDTH / 2 || level.size() != Options.LVL_HEIGHT / 2)
+				throw new IllegalArgumentException("Wrong lvl length in your file");
+		}
+		switch (position) {
+		case 1:
+			break;
+		case 2:
+			x_offset = Options.LVL_WIDTH / 2;
+			break;
+		case 3:
+			y_offset = Options.LVL_HEIGHT / 2;
+			break;
+		case 4:
+			x_offset = Options.LVL_WIDTH / 2;
+			y_offset = Options.LVL_HEIGHT / 2;
+			break;
+		}
 		for (int i = 0; i < Options.LVL_HEIGHT / 2; i++) {
 			for (int j = 0; j < Options.LVL_WIDTH / 2; j++) {
-				if()
-				entityInterpret(level.charAt(i * j), i, j);
+				if (m_collisionGrid.get(j + x_offset, i + y_offset).isEmpty())
+					entityInterpret(level.get(i).charAt(j), x_offset + j, y_offset + i);
 			}
 		}
-
 	}
 
 	public void entityInterpret(char c, int x, int y) {
 		switch (c) {
 		case 'O':
 			new Obstacle(this, x, y, Options.OBSTACLE_WIDTH, Options.OBSTACLE_HEIGHT);
+			break;
 		case 'S':
 			new Soul(this, x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+			break;
 		case 'N':
 			new Nest(this, x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
+			break;
 		case '*':
 			new Special(this, x, y, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+			break;
 		case '_':
+			break;
+		default:
+			throw new IllegalArgumentException("Wrong letter in the level file");
 		}
-		throw new IllegalArgumentException("Wrong letter in the level file");
 	}
 }
