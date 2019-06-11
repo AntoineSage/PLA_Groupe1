@@ -196,23 +196,26 @@ public class Level {
 	 * position: 1 = NW, 2 = NE, 3 = SW, 4 = SE
 	 * 
 	 */
+
 	void levelGenerator(List<String> level, int position) {
 		int x_offset = 0;
 		int y_offset = 0;
+		if(level.size() != Options.LVL_HEIGHT / 2)
+			throw new IllegalArgumentException("Wrong lvl Height in your file");
 		for (int k = 0; k < Options.LVL_HEIGHT / 2; k++) {
-			if (level.get(k).length() != Options.LVL_WIDTH / 2 || level.size() != Options.LVL_HEIGHT / 2)
-				throw new IllegalArgumentException("Wrong lvl length in your file");
+			if (level.get(k).length() != Options.LVL_WIDTH / 2)
+				throw new IllegalArgumentException("Wrong lvl Width in your file");
 		}
 		switch (position) {
-		case 1:
+		case 0:
 			break;
-		case 2:
+		case 1:
 			x_offset = Options.LVL_WIDTH / 2;
 			break;
-		case 3:
+		case 2:
 			y_offset = Options.LVL_HEIGHT / 2;
 			break;
-		case 4:
+		case 3:
 			x_offset = Options.LVL_WIDTH / 2;
 			y_offset = Options.LVL_HEIGHT / 2;
 			break;
