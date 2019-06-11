@@ -49,8 +49,7 @@ public class CollisionGrid {
 	public boolean isOk(IEntityType type, int x, int y, int width, int height) {
 		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
 			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
-				if (testCollisionWithType(type, x, y, width, height) instanceof Entity)
-					;
+				if (testCollisionWithType(type, x, y, width, height) == false)
 				return true;
 			}
 		return false;
@@ -218,19 +217,19 @@ public class CollisionGrid {
 		return colliders;
 	}
 
-	public Entity testCollisionWithType(IEntityType type, int x, int y, int width, int height) {
+	public boolean testCollisionWithType(IEntityType type, int x, int y, int width, int height) {
 		for (int i = x; i < x + width; i++) {
 			for (int j = y; j < y + height; j++) {
 				Iterator<Entity> iter = m_grid[i][j].iterator();
 				while (iter.hasNext()) {
 					Entity eInList = iter.next();
 					if (eInList.m_type == type)
-						return eInList;
+						return true;
 				}
 			}
 		}
 
-		return null;
+		return false;
 	}
 
 	public List<Entity> get(int x, int y) {
