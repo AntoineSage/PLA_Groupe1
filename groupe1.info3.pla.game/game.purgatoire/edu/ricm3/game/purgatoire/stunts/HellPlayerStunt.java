@@ -18,28 +18,28 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
+	Timer m_wizzTimer;
+	Timer m_buffTimer;
 
 	int m_lastPopPeriod = -1;
 	int m_nbrPeriod;
 	int m_DMGBuffRatio = Options.BUFF_DMG;
 	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
 
-	Timer m_buffTimer;
-
 	public HellPlayerStunt() {
 		super(Singleton.getNewPlayerHellAut(), null, Color.RED);
-		
+
 		try {
-			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"),
-					AnimType.IDLE, 3);
+			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.IDLE, 3);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		m_animation.resume();
-		
+
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);
+		m_wizzTimer = new Timer(0);
 		m_maxHP = Options.HELL_PLAYER_HP_MAX;
 		setDMG(Options.HELL_PLAYER_DMG);
 		m_buffTimer = new Timer(m_durationBuff * 1000);
@@ -60,7 +60,63 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void wizz(IDirection d) {
-		System.out.println("wizz hell");
+		if (m_wizzTimer.end()) {
+			m_wizzTimer.start(1000);
+			Missile missile;
+			// North Line
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 2, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 3, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+			m_missiles.add(missile);
+			// South Line
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 1, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 2, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+			m_missiles.add(missile);
+			// East Line
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 3, m_entity.m_bounds.y, 1, 1, IDirection.EAST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 1, 1, 1, IDirection.EAST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 2, 1, 1, IDirection.EAST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x + 3, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+			m_missiles.add(missile);
+			// West Line
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x - 1, m_entity.m_bounds.y - 1, 1, 1, IDirection.WEST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x - 1, m_entity.m_bounds.y, 1, 1, IDirection.WEST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, IDirection.WEST, m_entity);
+			m_missiles.add(missile);
+			missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+					m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 2, 1, 1, IDirection.WEST, m_entity);
+			m_missiles.add(missile);
+		}
+
 	}
 
 	@Override
@@ -117,12 +173,16 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		if (m_missileTimer.m_previousNow == 0) {
 			m_missileTimer.m_previousNow = now;
 		}
+		if (m_wizzTimer.m_previousNow == 0) {
+			m_wizzTimer.m_previousNow = now;
+		}
 		if (m_buffTimer.end()) {
 			m_DMGBuff = 1;
 			m_weaknessBuff = 1;
 		}
 		m_buffTimer.step(now);
 		m_missileTimer.step(now);
+		m_wizzTimer.step(now);
 	}
 
 	@Override

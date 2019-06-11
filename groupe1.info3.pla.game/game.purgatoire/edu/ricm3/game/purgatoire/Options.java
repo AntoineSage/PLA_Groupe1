@@ -85,6 +85,9 @@ public class Options {
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
 	public static int DASH_CD = 5;
+	
+	//TIMER OPTIONS
+	public static int WIZZ_TIMER = 1000;
 
 	// BUFF OPTIONS
 	public static int BUFF_DURATION = 5;
