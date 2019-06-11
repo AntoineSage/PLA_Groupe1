@@ -32,6 +32,8 @@ public class Singleton {
 
 	private static Controller m_controller;
 
+	private static List<IAutomaton> m_automatons;
+	
 	private static Animation m_playerHellAnim;
 	private static Animation m_playerHeavenAnim;
 
@@ -58,25 +60,25 @@ public class Singleton {
 			e.printStackTrace();
 		}
 
-		List<IAutomaton> automatons = ((AI_Definitions) ast).make();
+		m_automatons = ((AI_Definitions) ast).make();
 
-		m_playerHellAut = automatons.get(0);
-		m_playerHeavenAut = automatons.get(0);
+		m_playerHellAut = m_automatons.get(0);
+		m_playerHeavenAut = m_automatons.get(0);
 
-		m_soulHellAut = automatons.get(1);
-		m_soulHeavenAut = automatons.get(2);
+		m_soulHellAut = m_automatons.get(1);
+		m_soulHeavenAut = m_automatons.get(2);
 
-		m_obstacleHellAut = automatons.get(3);
-		m_obstacleHeavenAut = automatons.get(3);
+		m_obstacleHellAut = m_automatons.get(3);
+		m_obstacleHeavenAut = m_automatons.get(3);
 
-		m_specialHellAut = automatons.get(5);
-		m_specialHeavenAut = automatons.get(4);
+		m_specialHellAut = m_automatons.get(5);
+		m_specialHeavenAut = m_automatons.get(4);
 
-		m_nestHellAut = automatons.get(6);
-		m_nestHeavenAut = automatons.get(6);
+		m_nestHellAut = m_automatons.get(6);
+		m_nestHeavenAut = m_automatons.get(6);
 
-		m_missileHellAut = automatons.get(7);
-		m_missileHeavenAut = automatons.get(7);
+		m_missileHellAut = m_automatons.get(7);
+		m_missileHeavenAut = m_automatons.get(7);
 
 		try {
 			m_playerHellAnim = new Animation("animations/playerHell.ani");
@@ -118,6 +120,10 @@ public class Singleton {
 			throw new IllegalAccessException("controller can only be set one time");
 		}
 
+	}
+
+	public static List<IAutomaton> getAutomatons() {
+		return m_automatons;
 	}
 
 	public static IAutomaton getNewPlayerHellAut() {

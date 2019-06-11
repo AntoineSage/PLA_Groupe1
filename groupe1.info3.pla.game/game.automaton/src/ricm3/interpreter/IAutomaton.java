@@ -2,18 +2,19 @@ package ricm3.interpreter;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.ricm3.game.purgatoire.Controller;
 import edu.ricm3.game.purgatoire.entities.Entity;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
+	String name;
 	IState current ;
 	List<IBehaviour> behaviours ;
 	
-	public IAutomaton(IState initial, List<IBehaviour> behaviours){
+	public IAutomaton(IState initial, List<IBehaviour> behaviours, String name){
 		this.current = initial ;
 		this.behaviours = behaviours ;
+		this.name = name;
 	}
 	
 	public boolean step(Entity e) {
@@ -33,6 +34,13 @@ public class IAutomaton {
 	}
 
 	public IAutomaton copy() {
-		return new IAutomaton(current.copy(), behaviours);
+		return new IAutomaton(current.copy(), behaviours, name);
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

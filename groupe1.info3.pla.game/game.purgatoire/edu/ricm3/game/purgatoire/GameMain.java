@@ -20,7 +20,12 @@ package edu.ricm3.game.purgatoire;
 
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+
 import edu.ricm3.game.GameUI;
+import ricm3.interpreter.IAutomaton;
 
 public class GameMain {
 
@@ -32,6 +37,21 @@ public class GameMain {
 		Controller controller = new Controller(model, view);
 		Singleton.setController(controller);
 
+		final JFrame frame = new JFrame();
+		BoxLayout list = new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS);
+		JComboBox comboBox = new JComboBox<IAutomaton>();
+		JComboBox comboBox2 = new JComboBox<IAutomaton>();
+		for (IAutomaton aut : Singleton.getAutomatons()) {
+			comboBox.addItem(aut);			
+			comboBox2.addItem(aut);			
+		}
+		frame.getContentPane().setLayout(list);
+		frame.add(comboBox);
+		frame.add(comboBox2);
+		
+		frame.pack();
+		frame.setVisible(true);
+		
 		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		new GameUI(model, view, controller, d);
 
