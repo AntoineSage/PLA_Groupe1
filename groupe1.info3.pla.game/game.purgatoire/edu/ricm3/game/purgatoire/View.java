@@ -20,11 +20,17 @@ package edu.ricm3.game.purgatoire;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameView;
 import edu.ricm3.game.purgatoire.entities.Entity;
@@ -37,7 +43,11 @@ public class View extends GameView {
 	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
-
+	
+	private static BufferedImage m_heavenBackground;
+	private static BufferedImage m_hellBackground;
+	private static BufferedImage m_currentBackground;
+	
 	public View(Model m) {
 		m_model = m;
 
@@ -57,6 +67,22 @@ public class View extends GameView {
 			}
 		});
 		m_graphicUIs = new LinkedList<Component>();
+		
+		File imageFile = new File("sprites/hellBG.png");
+		try {
+			m_hellBackground = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}	
+		
+		imageFile = new File("sprites/hellBG.png");
+		try {
+			m_heavenBackground = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	public void step(long now) {
@@ -68,14 +94,16 @@ public class View extends GameView {
 		else {
 			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2);
 		}
+		
+		transform();
 	}
 
-//	public void transform() {
-//		if (m_model.getWorld() == WorldType.HEAVEN)
-//			m_current = m_heaven;
-//		else
-//			m_current = m_hell;
-//	}
+	public void transform() {
+		if (m_model.getWorldType() == WorldType.HEAVEN)
+			m_currentBackground = m_heavenBackground;
+		else
+			m_currentBackground = m_hellBackground;
+	}
 
 	@Override
 	protected void _paint(Graphics g) {
@@ -123,30 +151,35 @@ public class View extends GameView {
 	}
 
 	private void paint(Graphics g, Level lvl) {
+		Rectangle bounds = g.getClipBounds();
+		g.drawImage(m_currentBackground, 0, 0, bounds.width, bounds.height, null);
+		g.setColor(Color.white);
+		g.drawLine(0, 0, bounds.width, 0);
+		
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
 		while (iter.hasNext()) {
-			paint(g, iter.next());
+			paintAnimation(g, iter.next());
 		}
 
 		if (lvl.m_special != null)
-			paint(g, lvl.m_special);
+			paintAnimation(g, lvl.m_special);
 
 		if (lvl.m_player != null)
 			paintAnimation(g, lvl.m_player);
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
-			paint(g, iter.next());
+			paintAnimation(g, iter.next());
 		}
 
 		iter = lvl.m_nest.iterator();
 		while (iter.hasNext()) {
-			paint(g, iter.next());
+			paintAnimation(g, iter.next());
 		}
 
 		iter = lvl.m_missiles.iterator();
 		while (iter.hasNext()) {
-			paint(g, iter.next());
+			paintAnimation(g, iter.next());
 		}
 	}
 

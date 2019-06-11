@@ -18,10 +18,8 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
 
 import edu.ricm3.game.GameModel;
-import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Player;
 
 public class Model extends GameModel {

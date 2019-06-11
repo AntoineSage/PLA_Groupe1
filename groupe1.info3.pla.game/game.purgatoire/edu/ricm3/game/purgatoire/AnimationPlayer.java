@@ -12,25 +12,27 @@ public class AnimationPlayer {
 	private int m_framesPerStep;
 
 	private int m_stepsSinceLastUpdate;
-	private boolean m_Playing;
+	private boolean m_playing;
 
 	public AnimationPlayer(Animation animation, AnimType type, int framesPerStep) {
 		m_animation = animation;
 		m_type = type;
 		m_framesPerStep = framesPerStep;
+		m_playing = true;
+		
 	}
 
 	public void pause() {
-		m_Playing = false;
+		m_playing = false;
 		m_position = 0;
 	}
 
 	public void resume() {
-		m_Playing = true;
+		m_playing = true;
 	}
 
 	public void changeTo(AnimType type) {
-		m_Playing = true;
+		m_playing = true;
 		if (m_type.getValue() != type.getValue()) {
 			m_type = type;
 			m_position = 0;
@@ -38,12 +40,12 @@ public class AnimationPlayer {
 	}
 
 	public void step() {
-		if (m_Playing && m_stepsSinceLastUpdate > m_framesPerStep) {
+		if (m_playing && m_stepsSinceLastUpdate > m_framesPerStep) {
 			m_stepsSinceLastUpdate = 0;
 			m_position = m_position + 1;
 			if (m_position >= m_animation.length(m_type)) {
-				m_type = AnimType.IDLE;
 				m_position = 0;
+				m_playing = false;
 			}
 		} else {
 			m_stepsSinceLastUpdate++;
