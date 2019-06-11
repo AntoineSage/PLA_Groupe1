@@ -18,11 +18,23 @@ Player(Init){
 
 SoulsHell(Init){
 	* (Init):
-	|Closest(@,S) ? Move(S) :(Init)
+	| Closest(@,N) & Closest(@,E) ? Move(N) :(PlayerE)
+	| Closest(@,N) & Closest(@,O) ? Move(N) :(PlayerO)
+	| Closest(@,N) ? Move(N) :(Init)
+	| Closest(@,S) & Closest(@,E) ? Move(S) :(PlayerE)
+	| Closest(@,S) & Closest(@,O) ? Move(S) :(PlayerO)
+	| Closest(@,S) ? Move(S) :(Init)
+	| Closest(@,E) ? Move(E) :(Init)
+	| Closest(@,O) ? Move(O) :(Init)
+	* (PlayerE):
 	|Closest(@,E) ? Move(E) :(Init)
+	|True ? Wait :(Init)
+	* (PlayerO):
 	|Closest(@,O) ? Move(O) :(Init)
-	|Closest(@,N) ? Move(N) :(Init)
+	|True ? Wait :(Init)
+	
 }
+
 
 SoulsHeaven(Init){
 	* (Init): True ? Move(E) :(Step1)
