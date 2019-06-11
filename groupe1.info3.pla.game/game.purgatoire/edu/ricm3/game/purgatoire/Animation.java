@@ -14,7 +14,7 @@ public class Animation {
 	private List<BufferedImage> m_sprites[];
 
 	public enum AnimType {
-		NORTH(0), SOUTH(1), EAST(2), IDLE(3);
+		NORTH(0), SOUTH(1), EAST(2), WEST(3), IDLE(4);
 
 		private final int value;
 
@@ -32,7 +32,7 @@ public class Animation {
 	}
 
 	private static List<BufferedImage>[] spritesFromFile(String fileName) throws FileNotFoundException {
-		List<BufferedImage>[] sprites = new List[4];
+		List<BufferedImage>[] sprites = new List[5];
 		BufferedImage[] splitImage = null;
 
 		File file = new File(fileName);
@@ -67,12 +67,19 @@ public class Animation {
 			switch (type) {
 			case "NORTH":
 				sprites[AnimType.NORTH.getValue()] = tmp;
+				break;
 			case "SOUTH":
 				sprites[AnimType.SOUTH.getValue()] = tmp;
+				break;
 			case "EAST":
 				sprites[AnimType.EAST.getValue()] = tmp;
+				break;
+			case "WEST":
+				sprites[AnimType.WEST.getValue()] = tmp;
+				break;
 			case "IDLE":
 				sprites[AnimType.IDLE.getValue()] = tmp;
+				break;
 			}
 
 		}

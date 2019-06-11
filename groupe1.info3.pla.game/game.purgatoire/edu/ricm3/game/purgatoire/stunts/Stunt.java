@@ -43,6 +43,11 @@ public class Stunt {
 		m_c = c;
 	}
 
+	Stunt(IAutomaton automaton, AnimationPlayer animation) {
+		m_automaton = automaton;
+		m_animation = animation;
+	}
+
 	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 		m_automaton = automaton;
 		m_entity = entity;
@@ -64,6 +69,7 @@ public class Stunt {
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.SOUTH;
+			if(m_animation!= null)m_animation.changeTo(AnimType.SOUTH);
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(0, 1);
@@ -74,6 +80,7 @@ public class Stunt {
 			break;
 		case EAST:
 			m_entity.m_direction = IDirection.EAST;
+			if(m_animation!= null)m_animation.changeTo(AnimType.EAST);
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(1, 0);
@@ -84,6 +91,7 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
+			if(m_animation!= null)m_animation.changeTo(AnimType.WEST);
 			if (m_entity.m_bounds.x > 0) {
 				if (nobodyCollideWithEntity()) {
 					move(-1, 0);

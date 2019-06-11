@@ -1,0 +1,6 @@
+sprite_sheet = sprites/brick_gray2.png
+NORTH = 1
+EAST = 1
+SOUTH = 1
+WEST = 1
+IDLE = 1

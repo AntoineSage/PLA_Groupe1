@@ -1,15 +1,12 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
-import edu.ricm3.game.purgatoire.Animation;
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -27,15 +24,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
 
 	public HellPlayerStunt() {
-		super(Singleton.getNewPlayerHellAut(), null, Color.RED);
 
-		try {
-			m_animation = new AnimationPlayer(new Animation("animations/proto.ani"), AnimType.IDLE, 3);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		m_animation.resume();
+		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2));
 
 		m_missiles = new LinkedList<Missile>();
 		m_missileTimer = new Timer(0);

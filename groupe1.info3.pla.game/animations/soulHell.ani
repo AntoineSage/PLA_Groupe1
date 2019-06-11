@@ -1,0 +1,6 @@
+sprite_sheet = sprites/rpgsprites1/ninja_f.png
+NORTH = 2;3;1
+EAST = 5;6;4
+SOUTH = 8;9;7
+WEST = 11;12;10
+IDLE = 2

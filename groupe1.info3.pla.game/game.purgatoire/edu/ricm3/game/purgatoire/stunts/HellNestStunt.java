@@ -1,8 +1,9 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
 import java.util.Random;
 
+import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
@@ -17,7 +18,7 @@ public class HellNestStunt extends Stunt {
 	Timer m_timerPop;
 
 	public HellNestStunt() {
-		super(Singleton.getNewNestHellAut(), null, Color.GRAY);
+		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHellAnim(), AnimType.IDLE, 2));
 		m_timerWizz = new Timer(3000);
 		m_timerPop = new Timer(5000);
 	}

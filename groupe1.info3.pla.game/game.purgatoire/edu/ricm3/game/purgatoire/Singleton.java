@@ -1,11 +1,12 @@
 package edu.ricm3.game.purgatoire;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import ricm3.interpreter.IAutomaton;
 import ricm3.parser.Ast;
-import ricm3.parser.AutomataParser;
 import ricm3.parser.Ast.AI_Definitions;
+import ricm3.parser.AutomataParser;
 
 public class Singleton {
 
@@ -31,6 +32,24 @@ public class Singleton {
 
 	private static Controller m_controller;
 
+	private static Animation m_playerHellAnim;
+	private static Animation m_playerHeavenAnim;
+
+	private static Animation m_soulHellAnim;
+	private static Animation m_soulHeavenAnim;
+
+	private static Animation m_obstacleHellAnim;
+	private static Animation m_obstacleHeavenAnim;
+
+	private static Animation m_specialHellAnim;
+	private static Animation m_specialHeavenAnim;
+
+	private static Animation m_nestHellAnim;
+	private static Animation m_nestHeavenAnim;
+
+	private static Animation m_missileHellAnim;
+	private static Animation m_missileHeavenAnim;
+	
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -58,6 +77,29 @@ public class Singleton {
 
 		m_missileHellAut = automatons.get(7);
 		m_missileHeavenAut = automatons.get(7);
+
+		try {
+			m_playerHellAnim = new Animation("animations/playerHell.ani");
+			m_playerHeavenAnim = new Animation("animations/playerHeaven.ani");
+
+			m_soulHellAnim = new Animation("animations/soulHell.ani");
+			m_soulHeavenAnim = new Animation("animations/soulHeaven.ani");
+
+			m_obstacleHellAnim = new Animation("animations/obstacleHell.ani");
+			m_obstacleHeavenAnim = new Animation("animations/obstacleHeaven.ani");
+
+			m_specialHellAnim = new Animation("animations/specialHell.ani");
+			m_specialHeavenAnim = new Animation("animations/specialHeaven.ani");
+
+			m_nestHellAnim = new Animation("animations/nestHell.ani");
+			m_nestHeavenAnim = new Animation("animations/nestHeaven.ani");
+
+			m_missileHellAnim = new Animation("animations/missileHell.ani");
+			m_missileHeavenAnim = new Animation("animations/missileHeaven.ani");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 
 	}
 
@@ -125,5 +167,53 @@ public class Singleton {
 	public static IAutomaton getNewMissileHeavenAut() {
 		return m_missileHeavenAut.copy();
 
+	}
+
+	public static Animation getPlayerHellAnim() {
+		return m_playerHellAnim;
+	}
+
+	public static Animation getPlayerHeavenAnim() {
+		return m_playerHeavenAnim;
+	}
+
+	public static Animation getSoulHellAnim() {
+		return m_soulHellAnim;
+	}
+
+	public static Animation getSoulHeavenAnim() {
+		return m_soulHeavenAnim;
+	}
+
+	public static Animation getObstacleHellAnim() {
+		return m_obstacleHellAnim;
+	}
+
+	public static Animation getObstacleHeavenAnim() {
+		return m_obstacleHeavenAnim;
+	}
+
+	public static Animation getSpecialHellAnim() {
+		return m_specialHellAnim;
+	}
+
+	public static Animation getSpecialHeavenAnim() {
+		return m_specialHeavenAnim;
+	}
+
+	public static Animation getNestHellAnim() {
+		return m_nestHellAnim;
+	}
+
+	public static Animation getNestHeavenAnim() {
+		return m_nestHeavenAnim;
+	}
+
+	public static Animation getMissileHellAnim() {
+		return m_missileHellAnim;
+	}
+
+	public static Animation getMissileHeavenAnim() {
+		return m_missileHeavenAnim;
 	}
 }

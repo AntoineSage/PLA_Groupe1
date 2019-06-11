@@ -1,29 +1,25 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-
+import edu.ricm3.game.purgatoire.Animation.AnimType;
+import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Nest;
-import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 
 public class HeavenObstacleStunt extends Stunt {
-
 	Timer m_obstacleDashTimer;
 	
-	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-		super(automaton, entity, sprite);
-		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
-		setDMG(Options.HEAVEN_OBSTACLE_DMG);
-		m_obstacleDashTimer = new Timer(10000);
-	}
+//	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//		super(automaton, entity, sprite);
+//		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
+//		setDMG(Options.HEAVEN_OBSTACLE_DMG);
+//		m_obstacleDashTimer = new Timer(10000);
+//	}
 
 	public HeavenObstacleStunt() {
-		super(Singleton.getNewObstacleHeavenAut(), Color.red);
+		super(Singleton.getNewObstacleHeavenAut(), new AnimationPlayer(Singleton.getObstacleHeavenAnim(), AnimType.IDLE, 2));
 		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
 		setDMG(Options.HEAVEN_OBSTACLE_DMG);
 		m_obstacleDashTimer = new Timer(2000);
