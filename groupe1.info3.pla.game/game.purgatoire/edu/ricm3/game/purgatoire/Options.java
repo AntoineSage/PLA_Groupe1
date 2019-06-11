@@ -34,6 +34,7 @@ public class Options {
 	public static int PLAYER_XP_MAX = 150;
 	public static int PLAYER_KARMA_MAX = 150;
 
+	public static long HELL_PLAYER_WIZZ_TIMER = 1000;
 	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300 };
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
@@ -49,7 +50,8 @@ public class Options {
 	public static int HEAVEN_NEST_DMG = 1;
 	public static int HEAVEN_NEST_HP_MAX = 1;
 	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
-
+	public static long NEST_TIMER_WIZZ = 3000;
+	public static long NEST_TIMER_POP =5000;
 	public static int NEST_HP = 1;
 
 	// SOUL OPTIONS
@@ -70,7 +72,8 @@ public class Options {
 	public static int HEAVEN_SPCL_DMG = 1;
 	public static int HEAVEN_SPCL_HP_MAX = 1;
 	public static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
-
+	public static long HEAVEN_SPECIAL_TIMER = 5000;
+	public static long HELL_SPECIAL_TIMER = 2000;
 	public static int SPCL_HP = 1;
 
 	// OBSTACLE OPTIONS
@@ -86,7 +89,7 @@ public class Options {
 	public static int HELL_MISSILE_HP_MAX = 1;
 	public static int HEAVEN_MISSILE_DMG = 1;
 	public static int HEAVEN_MISSILE_HP_MAX = 1;
-
+	public static long MISSILE_TIMER = 1000;
 	public static int MISSILE_HP = 1;
 
 	// DASH SIZE AND COOLDOWN

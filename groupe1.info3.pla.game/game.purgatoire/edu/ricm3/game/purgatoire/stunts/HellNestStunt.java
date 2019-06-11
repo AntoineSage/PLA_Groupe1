@@ -21,8 +21,8 @@ public class HellNestStunt extends Stunt {
 	public HellNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHellAnim(), AnimType.IDLE, 2),
 				Options.HELL_NEST_HP_MAX, Options.HELL_NEST_DMG, Options.HELL_NEST_KARMA_TOGIVE);
-		m_wizzTimer = new Timer(3000);
-		m_popTimer = new Timer(5000);
+		m_wizzTimer = new Timer(Options.NEST_TIMER_WIZZ);
+		m_popTimer = new Timer(Options.NEST_TIMER_POP);
 	}
 
 	@Override

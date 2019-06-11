@@ -29,8 +29,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				Options.HELL_PLAYER_HP_MAX, Options.HELL_PLAYER_DMG);
 
 		m_missiles = new LinkedList<Missile>();
-		m_missileTimer = new Timer(1000);
-		m_wizzTimer = new Timer(1000);
+		m_missileTimer = new Timer(Options.MISSILE_TIMER);
+		m_wizzTimer = new Timer(Options.HELL_PLAYER_WIZZ_TIMER);
 		m_buffTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
