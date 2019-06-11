@@ -4,6 +4,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -22,8 +23,8 @@ public class HeavenSpecialStunt extends Stunt {
 
 	public HeavenSpecialStunt() {
 		super(Singleton.getNewSpecialHeavenAut(),
-				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2));
-		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
+				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_SPCL_HP_MAX,
+				Options.HEAVEN_SPCL_DMG, Options.HEAVEN_SPCL_KARMA_TOGIVE);
 	}
 
 	@Override
@@ -54,8 +55,6 @@ public class HeavenSpecialStunt extends Stunt {
 	public void step(long now) {
 		super.step(now);
 		if (m_heavenSpecialTimer != null) {
-			if (m_heavenSpecialTimer.m_previousNow == 0)
-				m_heavenSpecialTimer.m_previousNow = now;
 			m_heavenSpecialTimer.step(now);
 			if (m_heavenSpecialTimer.end()) {
 				m_entity.die();

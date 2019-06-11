@@ -50,6 +50,7 @@ public class Controller extends GameController implements ActionListener {
 	KarmaBar m_karmaBar;
 
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
+	Label m_cooldownLabel, m_cooldownWizzLabel;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -80,17 +81,21 @@ public class Controller extends GameController implements ActionListener {
 
 		JPanel karmaBar = new JPanel();
 		karmaBar.setLayout(new GridBagLayout());
+		JPanel cooldown = new JPanel();
+		cooldown.setLayout(new GridBagLayout());
 
-		m_periodLabel = new Label();
-		m_periodLabel.setAlignment(Label.CENTER);
+		m_periodLabel = new Label("", Label.CENTER);
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
-		m_karmaLabel = new Label();
-		m_karmaLabel.setAlignment(Label.CENTER);
+		m_karmaLabel = new Label("", Label.CENTER);
+		m_cooldownLabel = new Label("", Label.CENTER);
+		m_cooldownWizzLabel = new Label("", Label.CENTER);
 
 		westInside.add(m_periodLabel);
 		karmaBar.add(m_karmaBar);
 		westInside.add(karmaBar);
 		westInside.add(m_karmaLabel);
+		cooldown.add(m_cooldownLabel);
+		westInside.add(cooldown);
 
 		west.add(westInside);
 //		west.add(Box.createHorizontalGlue());
@@ -117,17 +122,12 @@ public class Controller extends GameController implements ActionListener {
 		XPBarContainer.setLayout(new GridBagLayout());
 
 		m_HPBar = new HPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
-		m_HPLabel = new Label();
-		m_HPLabel.setAlignment(Label.CENTER);
+		m_HPLabel = new Label("", Label.CENTER);
 		m_XPBar = new XPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
-		m_XPLabel = new Label();
-		m_XPLabel.setAlignment(Label.CENTER);
-		m_rankLabel = new Label();
-		m_rankLabel.setAlignment(Label.CENTER);
-		m_totalTimeLabel = new Label();
-		m_totalTimeLabel.setAlignment(Label.CENTER);
-		m_totalDistanceLabel = new Label();
-		m_totalDistanceLabel.setAlignment(Label.CENTER);
+		m_XPLabel = new Label("", Label.CENTER);
+		m_rankLabel = new Label("", Label.CENTER);
+		m_totalTimeLabel = new Label("", Label.CENTER);
+		m_totalDistanceLabel = new Label("", Label.CENTER);
 
 		HPBarContainer.add(m_HPBar);
 		HP.add(HPBarContainer);
@@ -157,6 +157,7 @@ public class Controller extends GameController implements ActionListener {
 		updateXPUI();
 		updateRankUI();
 		updateDistanceUI();
+		updateCooldownUI();
 	}
 
 	public void updateTimeUI() {
@@ -200,6 +201,14 @@ public class Controller extends GameController implements ActionListener {
 	// TODO fix distance when changing world
 	public void updateDistanceUI() {
 		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
+	}
+
+	public void updateCooldownUI() {
+		if (m_model.getWorldType() == WorldType.HEAVEN)
+			m_cooldownLabel.setText(String.format("pop: %.1f%ns", (float) m_model.getPlayer().getTimeLeftPop() / 1000));
+		else
+			m_cooldownLabel
+					.setText(String.format("wizz: %.1f%ns", (float) m_model.getPlayer().getTimeLeftWizz() / 1000));
 	}
 
 	@Override

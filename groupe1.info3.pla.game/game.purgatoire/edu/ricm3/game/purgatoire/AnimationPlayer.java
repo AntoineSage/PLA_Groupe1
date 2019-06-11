@@ -19,7 +19,7 @@ public class AnimationPlayer {
 		m_type = type;
 		m_framesPerStep = framesPerStep;
 		m_playing = true;
-		
+
 	}
 
 	public void pause() {

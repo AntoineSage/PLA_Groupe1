@@ -7,6 +7,7 @@ import java.util.List;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
@@ -24,41 +25,70 @@ public class Stunt {
 	Entity m_entity;
 
 	int m_rangeDash = Options.DASH_SIZE;
-	int m_cooldownDash = Options.DASH_CD;
-	int m_durationBuff = Options.BUFF_DURATION;
+
+	Timer m_popTimer;
+	int m_popCooldown;
+	int m_popDuration; // not used
+
+	Timer m_wizzTimer; // not used
+	int m_wizzCooldown; // not used
+	int m_wizzDuration;
+
 	public int m_maxHP;
 	private int m_DMG;
 	public int m_karmaToGive;
 	float m_DMGBuff = 1;
 	public float m_weaknessBuff = 1;
 
-	Stunt(IAutomaton automaton, Color c) {
-		m_automaton = automaton;
-		m_c = c;
-	}
+//	Stunt(IAutomaton automaton, Color c) {
+//		m_automaton = automaton;
+//		m_c = c;
+//	}
+//
+//	Stunt(IAutomaton automaton, Entity entity, Color c) {
+//		m_automaton = automaton;
+//		m_entity = entity;
+//		m_c = c;
+//	}
+//
+//	public Stunt(IAutomaton automaton, AnimationPlayer animation) {
+//		m_automaton = automaton;
+//		m_animation = animation;
+//		m_popTimer = new Timer(Options.DEFAULT_CD);
+//		m_wizzTimer = new Timer(Options.DEFAULT_CD);
+//	}
 
-	Stunt(IAutomaton automaton, Entity entity, Color c) {
-		m_automaton = automaton;
-		m_entity = entity;
-		m_c = c;
-	}
-
-	Stunt(IAutomaton automaton, AnimationPlayer animation) {
+	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG) {
 		m_automaton = automaton;
 		m_animation = animation;
+		m_maxHP = maxHP;
+		m_DMG = DMG;
+		m_popTimer = new Timer(Options.DEFAULT_CD);
+		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
 
-	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG, int karmaToGive) {
 		m_automaton = automaton;
-		m_entity = entity;
-		m_sprite = sprite;
+		m_animation = animation;
+		m_maxHP = maxHP;
+		m_DMG = DMG;
+		m_karmaToGive = karmaToGive;
+		m_popTimer = new Timer(Options.DEFAULT_CD);
+		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
+
+//	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//		m_automaton = automaton;
+//		m_entity = entity;
+//		m_sprite = sprite;
+//	}
 
 	public void tryMove(IDirection d) {
 		switch (d) {
 		case NORTH:
 			m_entity.m_direction = IDirection.NORTH;
-			if(m_animation!= null)m_animation.changeTo(AnimType.NORTH);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.NORTH);
 			if (m_entity.m_bounds.y <= 0) {
 				goingOut(d);
 			} else {
@@ -69,7 +99,8 @@ public class Stunt {
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.SOUTH;
-			if(m_animation!= null)m_animation.changeTo(AnimType.SOUTH);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.SOUTH);
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(0, 1);
@@ -80,7 +111,8 @@ public class Stunt {
 			break;
 		case EAST:
 			m_entity.m_direction = IDirection.EAST;
-			if(m_animation!= null)m_animation.changeTo(AnimType.EAST);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.EAST);
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(1, 0);
@@ -91,7 +123,8 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
-			if(m_animation!= null)m_animation.changeTo(AnimType.WEST);
+			if (m_animation != null)
+				m_animation.changeTo(AnimType.WEST);
 			if (m_entity.m_bounds.x > 0) {
 				if (nobodyCollideWithEntity()) {
 					move(-1, 0);
@@ -220,6 +253,13 @@ public class Stunt {
 		}
 	}
 
+	public void takeDamage(Entity e) {
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+	}
+
 	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
@@ -254,4 +294,13 @@ public class Stunt {
 	public void step(long now) {
 		m_automaton.step(m_entity);
 	}
+
+	public long getTimeLeftPop() {
+		return m_popTimer.getCurrent();
+	}
+
+	public long getTimeLeftWizz() {
+		return m_wizzTimer.getCurrent();
+	}
+
 }

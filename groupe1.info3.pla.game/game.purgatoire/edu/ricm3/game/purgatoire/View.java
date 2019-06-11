@@ -43,11 +43,11 @@ public class View extends GameView {
 	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
-	
+
 	private static BufferedImage m_heavenBackground;
 	private static BufferedImage m_hellBackground;
 	private static BufferedImage m_currentBackground;
-	
+
 	public View(Model m) {
 		m_model = m;
 
@@ -67,15 +67,15 @@ public class View extends GameView {
 			}
 		});
 		m_graphicUIs = new LinkedList<Component>();
-		
+
 		File imageFile = new File("sprites/hellBG.png");
 		try {
 			m_hellBackground = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
-		}	
-		
+		}
+
 		imageFile = new File("sprites/hellBG.png");
 		try {
 			m_heavenBackground = ImageIO.read(imageFile);
@@ -94,7 +94,7 @@ public class View extends GameView {
 		else {
 			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2);
 		}
-		
+
 		transform();
 	}
 
@@ -134,28 +134,28 @@ public class View extends GameView {
 		g2.dispose();
 	}
 
-	private void paint(Graphics g, Entity e) {
-		g.setColor(e.m_currentStunt.m_c);
-		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
-				e.m_bounds.height * BLOCK_SIZE);
-	}
-
-	private void paintGrid(Graphics g) {
-		g.setColor(Color.BLACK);
-		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
-			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
-		}
-		for (int i = 0; i < Options.LVL_WIDTH; i++) {
-			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
-		}
-	}
+//	private void paint(Graphics g, Entity e) {
+//		g.setColor(e.m_currentStunt.m_c);
+//		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
+//				e.m_bounds.height * BLOCK_SIZE);
+//	}
+//
+//	private void paintGrid(Graphics g) {
+//		g.setColor(Color.BLACK);
+//		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
+//			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
+//		}
+//		for (int i = 0; i < Options.LVL_WIDTH; i++) {
+//			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
+//		}
+//	}
 
 	private void paint(Graphics g, Level lvl) {
 		Rectangle bounds = g.getClipBounds();
 		g.drawImage(m_currentBackground, 0, 0, bounds.width, bounds.height, null);
 		g.setColor(Color.white);
 		g.drawLine(0, 0, bounds.width, 0);
-		
+
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
 		while (iter.hasNext()) {
 			paintAnimation(g, iter.next());

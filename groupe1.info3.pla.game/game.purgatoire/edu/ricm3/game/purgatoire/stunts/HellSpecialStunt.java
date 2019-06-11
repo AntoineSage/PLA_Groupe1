@@ -4,6 +4,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -20,9 +21,12 @@ public class HellSpecialStunt extends Stunt {
 //		m_karmaToGive = Options.HELL_SPCL_KARMA_TOGIVE;
 //	}
 
+	int m_hpToGive;
+
 	public HellSpecialStunt() {
-		super(Singleton.getNewSpecialHellAut(), new AnimationPlayer(Singleton.getSpecialHellAnim(), AnimType.IDLE, 2));
-		m_karmaToGive = Options.HELL_SPCL_KARMA_TOGIVE;
+		super(Singleton.getNewSpecialHellAut(), new AnimationPlayer(Singleton.getSpecialHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_SPCL_HP_MAX, Options.HELL_SPCL_DMG, Options.HELL_SPCL_KARMA_TOGIVE);
+		m_hpToGive = Options.HELL_SPCL_HP_TOGIVE;
 	}
 
 	@Override
@@ -48,6 +52,11 @@ public class HellSpecialStunt extends Stunt {
 
 	@Override
 	public void takeDamage(int DMG) {
+		System.out.println("takeDMG flaque");
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
 		System.out.println("takeDMG flaque");
 	}
 

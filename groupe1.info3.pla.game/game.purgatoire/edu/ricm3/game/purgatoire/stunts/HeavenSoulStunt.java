@@ -4,6 +4,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -22,15 +23,23 @@ public class HeavenSoulStunt extends Stunt {
 //	}
 
 	public HeavenSoulStunt() {
-		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 2),
+				Options.HEAVEN_SOUL_HP_MAX, Options.HEAVEN_SOUL_DMG, Options.HEAVEN_SOUL_KARMA_TOGIVE);
 		lastUpdate = (long) 0;
-		setDMG(Options.HEAVEN_SOUL_DMG);
-		m_karmaToGive = Options.HEAVEN_SOUL_KARMA_TOGIVE;
+	}
+
+	public void pop(Player p) {
+		p.addKarma(m_entity);
+		p.takeDamage(m_entity.m_currentStunt.getDMG());
+		m_entity.die();
 	}
 
 	@Override
 	public void pop(IDirection d) {
-		m_entity.die();
+		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
+		if (isPlayer != null) {
+			pop(isPlayer);
+		}
 		System.out.println("pop heaven soul");
 	}
 
@@ -50,17 +59,28 @@ public class HeavenSoulStunt extends Stunt {
 	}
 
 	@Override
+	public void takeDamage(Entity e) {
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+		if (e instanceof Player) {
+			isPlayer = (Player) e;
+			isPlayer.addKarma(m_entity);
+		}
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+	}
+
+	@Override
 	public void step(long now) {
 //		if (lastUpdate == null)
 //			lastUpdate = now;
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
-			isPlayer.addKarma(m_entity);
-			System.out.println("GIVE DAMAGE");
-			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
-			pop(m_entity.m_direction);
+			pop(isPlayer);
 		}
-		if (lastUpdate - now > 1000/15) {
+
+		// TODO value in Options
+		if (lastUpdate - now > 1000 / 15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}
