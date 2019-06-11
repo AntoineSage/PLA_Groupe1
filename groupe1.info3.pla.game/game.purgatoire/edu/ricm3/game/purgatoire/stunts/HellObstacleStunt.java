@@ -10,17 +10,16 @@ import ricm3.interpreter.IDirection;
 
 public class HellObstacleStunt extends Stunt {
 
-	Timer m_obstacleDashTimer;
-
 	public HellObstacleStunt() {
-		super(Singleton.getNewObstacleHellAut(),  new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewObstacleHellAut(),
+				new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2));
 		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
 		setDMG(Options.HELL_OBSTACLE_DMG);
-		m_obstacleDashTimer = new Timer(2000);
-		m_obstacleDashTimer.m_previousNow = 1000;
+		m_popCooldown = Options.DASH_CD;
+		m_popTimer = new Timer(m_popCooldown);
 	}
 
-	//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 //		super(automaton, entity, sprite);
 //
 //		m_animation = new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2);
@@ -32,10 +31,10 @@ public class HellObstacleStunt extends Stunt {
 
 	@Override
 	public void pop(IDirection d) {
-		if (m_obstacleDashTimer.end()) {
+		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
 			System.out.println("dash obstacle");
-			m_obstacleDashTimer.start(m_cooldownDash * 1000);
+			m_popTimer.start();
 		}
 	}
 
@@ -68,9 +67,7 @@ public class HellObstacleStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_obstacleDashTimer.m_previousNow == 0)
-			m_obstacleDashTimer.m_previousNow = now;
-		m_obstacleDashTimer.step(now);
+		m_popTimer.step(now);
 	}
 
 }

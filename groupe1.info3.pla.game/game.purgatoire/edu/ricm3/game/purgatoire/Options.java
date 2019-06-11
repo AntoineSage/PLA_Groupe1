@@ -84,10 +84,10 @@ public class Options {
 
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
-	public static int DASH_CD = 5;
+	public static int DASH_CD = 5000;
 
 	// BUFF OPTIONS
-	public static int BUFF_DURATION = 5;
+	public static int BUFF_DURATION = 5000;
 	public static int BUFF_DMG = 100; // %
 	public static int BUFF_WEAKNESS = 100; // %
 
