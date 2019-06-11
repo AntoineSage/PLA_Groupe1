@@ -25,6 +25,7 @@ public class Options {
 	// PLAYER OPTIONS
 	public static int HELL_PLAYER_DMG = 100;
 	public static int HELL_PLAYER_HP_MAX = 1000;
+	public static int HELL_DIVIDAND_HP_MAX_TOLOSE = 50;
 	public static int HEAVEN_PLAYER_DMG = 100;
 	public static int HEAVEN_PLAYER_HP_MAX = 1000;
 

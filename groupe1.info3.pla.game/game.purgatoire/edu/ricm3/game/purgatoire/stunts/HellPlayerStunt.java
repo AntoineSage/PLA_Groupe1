@@ -7,6 +7,7 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -117,6 +118,27 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void egg() {
 		System.out.println("egg hell");
 	}
+	
+	@Override
+	public void takeDamage(int DMG) {
+		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+		((Player) m_entity).addMaxHP(-m_entity.getMaxHP()/Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		System.out.println("HPMAX !!!:" + m_entity.getMaxHP());
+	}
+	
+	@Override
+	public void takeDamage(Entity e) {
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+		((Player) m_entity).addMaxHP(-m_entity.getMaxHP()/Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		System.out.println("HPMAX :" + m_entity.getMaxHP());
+	}
+
 
 	@Override
 	public void step(long now) {
