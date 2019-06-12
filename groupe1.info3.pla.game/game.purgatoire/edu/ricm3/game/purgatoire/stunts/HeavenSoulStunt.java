@@ -80,7 +80,7 @@ public class HeavenSoulStunt extends Stunt {
 		}
 
 		// TODO value in Options
-		if (now - lastUpdate > 1000/15) {
+		if (now - lastUpdate > 1000 / 15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}
