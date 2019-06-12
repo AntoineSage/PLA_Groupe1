@@ -231,9 +231,9 @@ public class Controller extends GameController implements ActionListener {
 			m_allKeyPressed.add(code);
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_A) {
+		if (e.getKeyCode() == KeyEvent.VK_1 && Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addKarma(+50);
-		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+		} else if (e.getKeyCode() == KeyEvent.VK_2 && Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addKarma(-50);
 		}
 	}

@@ -29,8 +29,8 @@ Player1(Init){
   | Key(h) ? Hit(S) :(Init)
   | Key(g) ? Hit(O) :(Init)
   | Key(j) ? Hit(E) :(Init)
-  | Key(t) ? Pop() :(Init)
-  | Key(u) ? Wizz() :(Init)
+  | Key(a) ? Pop() :(Init)
+  | Key(e) ? Wizz() :(Init)
   | True ? Wait :(Init)
 }
 
@@ -81,9 +81,7 @@ SoulsHeaven(Init){
 }
 
 Obstacle(Init){
-	* (Init):
-	| Key(m) ? Pop() : (Init)
-	| Key(n) ? Wizz() : (Init)
+* (Init):
 }
 
 Cat(Init){

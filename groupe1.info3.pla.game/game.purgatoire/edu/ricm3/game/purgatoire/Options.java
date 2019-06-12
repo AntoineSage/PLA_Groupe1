@@ -33,6 +33,7 @@ public class Options {
 	public static long HELL_PLAYER_WIZZ_TIMER = 1000;
 	public static final int PLAYER_KARMA_MAX = 150;
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
+	public static boolean CHEAT_MODE = false;
 
 	// Player stats arrays
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
@@ -129,19 +130,15 @@ public class Options {
 	public static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
-	public static int PLAYER_HEIGHT = 3; // TODO fix ArrayIndexOutOfBoundsException when size is changed
-	public static int PLAYER_WIDTH = 3;
-	public static int SOUL_HEIGHT = 2;
-	public static int SOUL_WIDTH = 2;
-	public static int NEST_HEIGHT = 3;
-	public static int NEST_WIDTH = 3;
-	public static int SPCL_HEIGHT = 5;
-	public static int SPCL_WIDTH = 5;
-	public static int OBSTACLE_HEIGHT = 3;
-	public static int OBSTACLE_WIDTH = 3;
-	
-	//LVL OPTIONS
-	public static int LVL_QUARTER_MAX_NBR = 4; //nbr of paterns 
+	public static int PLAYER_SIZE = 3; // TODO fix ArrayIndexOutOfBoundsException when size is changed
+	public static int SOUL_SIZE = 2;
+	public static int NEST_SIZE = 3;
+	public static int SPCL_SIZE = 5;
+	public static int OBSTACLE_SIZE = 3;
+	public static int MISSILE_SIZE = 1;
+
+	// LVL OPTIONS
+	public static int LVL_QUARTER_MAX_NBR = 4; // nbr of paterns
 
 	// Echo options
 	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = false;

@@ -210,7 +210,7 @@ public class Level {
 	void levelGenerator(List<String> level, int position) {
 		int x_offset = 0;
 		int y_offset = 0;
-		if(level.size() != Options.LVL_HEIGHT / 2)
+		if (level.size() != Options.LVL_HEIGHT / 2)
 			throw new IllegalArgumentException("Wrong lvl Height in your file");
 		for (int k = 0; k < Options.LVL_HEIGHT / 2; k++) {
 			if (level.get(k).length() != Options.LVL_WIDTH / 2)
@@ -241,16 +241,16 @@ public class Level {
 	public void entityInterpret(char c, int x, int y) {
 		switch (c) {
 		case 'O':
-			new Obstacle(this, x, y, Options.OBSTACLE_WIDTH, Options.OBSTACLE_HEIGHT);
+			new Obstacle(this, x, y, Options.OBSTACLE_SIZE);
 			break;
 		case 'S':
-			new Soul(this, x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+			new Soul(this, x, y, Options.SOUL_SIZE);
 			break;
 		case 'N':
-			new Nest(this, x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
+			new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '*':
-			new Special(this, x, y, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+			new Special(this, x, y, Options.SPCL_SIZE);
 			break;
 		case '_':
 			break;

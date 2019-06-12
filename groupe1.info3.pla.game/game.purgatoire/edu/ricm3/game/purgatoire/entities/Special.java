@@ -26,8 +26,8 @@ public class Special extends Entity {
 	}
 
 	public Special(Level level) {
-		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), 0, 0, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), 0, 0, Options.SPCL_SIZE);
 		m_type = IEntityType.TEAM;
-		m_HP = Options.SPCL_HP;
+		m_HP = m_currentStunt.getMaxHP();
 	}
 }
