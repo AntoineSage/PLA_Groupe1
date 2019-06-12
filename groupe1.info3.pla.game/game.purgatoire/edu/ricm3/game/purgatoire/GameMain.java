@@ -42,6 +42,7 @@ import ricm3.interpreter.IAutomaton;
 
 public class GameMain {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IllegalAccessException {
 		String[] lines = { "Players", "Souls", "Obstacles", "Nests", "Missiles", "Specials" };
 
@@ -178,7 +179,7 @@ public class GameMain {
 			for (Animation ani : Singleton.getAnimations()) {
 				comboAni.addItem(ani);
 				if (ani.toString().equals(configWords[7]))
-					comboAni.setSelectedItem(ani);				
+					comboAni.setSelectedItem(ani);
 			}
 			frame.add(comboAni, gbc);
 			comboAniHeaven2[i] = comboAni;

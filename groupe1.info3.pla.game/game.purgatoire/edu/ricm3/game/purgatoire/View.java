@@ -168,7 +168,7 @@ public class View extends GameView {
 			Entity e = iter.next();
 			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
 			 if(viewportBounds.intersects(bound)) {
-				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+				paintSpriteWithHPBar(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
 			 }
 		}
 		
@@ -184,6 +184,15 @@ public class View extends GameView {
 
 	private void paintSprite(Graphics g, BufferedImage sprite, Rectangle bound) {
 		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
+	}
+	
+	private void paintSpriteWithHPBar(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {
+		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
+		g.setColor(Color.BLACK);
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE/2, bound.width, BLOCK_SIZE/3);
+		g.setColor(Color.RED);
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE/2, (int)((float)bound.width * ((float)e.m_HP/(float)e.m_currentStunt.getMaxHP())), BLOCK_SIZE/3);
+		
 	}
 
 	private Rectangle getRect(Entity m_player, int x, int y) {

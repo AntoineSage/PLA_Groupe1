@@ -18,11 +18,10 @@ public class Player extends Entity {
 	private Model m_model;
 
 	public Player(Model model, Level level, int x, int y) {
-		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
+		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_SIZE);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_XP = Options.PLAYER_XP_START;
-		m_HP = Options.PLAYER_HP_START;
+		m_XP = 0;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
 	}
@@ -49,7 +48,22 @@ public class Player extends Entity {
 			m_rank--;
 			Singleton.getController().updateRankUI();
 		}
+
+		int delta = getMaxTotalHP();
 		((PlayerStunt) m_currentStunt).updateRankStats();
+		delta = getMaxTotalHP() - delta;
+		if (delta >= 0) {
+			setMaxHP(m_currentStunt.getMaxHP() + delta);
+			addHP(delta);
+		} else {
+			setMaxHP(Math.min(m_currentStunt.getMaxHP(), getMaxTotalHP()));
+			setHP(Math.min(getHP(), m_currentStunt.getMaxHP()));
+		}
+
+		if (Options.ECHO_PLAYER_UPDATE_STATS)
+			System.out.println(
+					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.getMaxHP()
+							+ " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG() + " baseDMG");
 	}
 
 	public void nextLevel(Level newLevel) {
