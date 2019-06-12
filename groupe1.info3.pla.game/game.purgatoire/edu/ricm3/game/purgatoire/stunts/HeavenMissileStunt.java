@@ -8,10 +8,6 @@ import ricm3.interpreter.IDirection;
 
 public class HeavenMissileStunt extends Stunt {
 
-//	HeavenMissileStunt(IAutomaton automaton, Color c) {
-//		super(automaton, c);
-//	}
-
 	HeavenMissileStunt() {
 		super(Singleton.getNewMissileHeavenAut(),
 				new AnimationPlayer(Singleton.getMissileHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_MISSILE_HP_MAX,
@@ -21,13 +17,15 @@ public class HeavenMissileStunt extends Stunt {
 	@Override
 	public void pop(IDirection d) {
 		m_entity.die();
+		if (Options.ECHO_POP_MISSILE)
+			System.out.println("Pop heaven (die) missile");
 	}
-	
+
 	@Override
 	public void wizz(IDirection d) {
 		switch (m_entity.m_direction) {
 		case NORTH:
-			m_entity.m_direction =  IDirection.SOUTH;
+			m_entity.m_direction = IDirection.SOUTH;
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.NORTH;
@@ -38,8 +36,11 @@ public class HeavenMissileStunt extends Stunt {
 		case EAST:
 			m_entity.m_direction = IDirection.WEST;
 			break;
-		
+		default:
+			break;
 		}
+		if (Options.ECHO_WIZZ_MISSILE)
+			System.out.println("Wizz heaven (turn) missile");
 	}
 
 	void goingOut(IDirection d) {

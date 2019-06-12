@@ -7,7 +7,9 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 
 public class Bars {
+
 	static class HPBar extends JComponent {
+
 		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;
 		private int m_x, m_y;
@@ -61,8 +63,8 @@ public class Bars {
 
 	}
 
-	// TODO change how XP is displayed (min and max can change)
 	static class XPBar extends JComponent {
+
 		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;
 		private int m_x, m_y;
@@ -112,6 +114,7 @@ public class Bars {
 	}
 
 	static class KarmaBar extends JComponent {
+
 		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;
 		private int m_x, m_y;

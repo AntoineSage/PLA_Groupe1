@@ -5,20 +5,14 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class HeavenSpecialStunt extends Stunt {
 
-	Timer m_heavenSpecialTimer;
-
-//	HeavenSpecialStunt(Entity entity) {
-//		super(Singleton.getNewSpecialHeavenAut(), entity, Color.ORANGE);
-//		m_maxHP = Options.HEAVEN_SPCL_HP_MAX;
-//		setDMG(Options.HEAVEN_SPCL_DMG);
-//		m_karmaToGive = Options.HEAVEN_SPCL_KARMA_TOGIVE;
-//	}
+	private Timer m_heavenSpecialTimer;
 
 	public HeavenSpecialStunt() {
 		super(Singleton.getNewSpecialHeavenAut(),
@@ -34,7 +28,8 @@ public class HeavenSpecialStunt extends Stunt {
 			m_heavenSpecialTimer.start();
 		}
 		if (player != null) {
-			System.out.println("sur chat");
+			if (Options.ECHO_PLAYER_ON_SPCL)
+				System.out.println("Player sur chat");
 			player.addKarma(m_entity);
 		}
 		if (Options.ECHO_POP_SPECIAL)
@@ -44,12 +39,16 @@ public class HeavenSpecialStunt extends Stunt {
 	@Override
 	public void wizz(IDirection d) {
 		m_entity.m_transparency = m_heavenSpecialTimer.getRemainingTimePercentage();
-		System.out.println("wizz cat");
+		if (Options.ECHO_WIZZ_SPECIAL)
+			System.out.println("Wizz heaven (transparency) cat");
 	}
 
 	@Override
 	public void takeDamage(int DMG) {
-		System.out.println("takeDMG cat");
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
 	}
 
 	@Override
@@ -59,9 +58,9 @@ public class HeavenSpecialStunt extends Stunt {
 			m_heavenSpecialTimer.step(now);
 			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
-			}
-			else
+			} else
 				this.wizz(null);
 		}
 	}
+
 }

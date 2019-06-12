@@ -17,7 +17,7 @@ import ricm3.interpreter.IEntityType;
 
 public class HellNestStunt extends Stunt {
 
-	long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
+	private long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
 
 	public HellNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHellAnim(), AnimType.IDLE, 2),
@@ -37,13 +37,15 @@ public class HellNestStunt extends Stunt {
 			m_entity.m_level.removeEntity(m_entity);
 			m_wizzTimer.start();
 		}
+		if (Options.ECHO_WIZZ_NEST)
+			System.out.println("Wizz hell (obstacle) nest");
 	}
 
 	@Override
 	public void pop(IDirection direction) {
 		m_nestSpawnPeriod *= Options.NEST_COEF_CHANGE_SPAWN_DELAY;
 		if (Options.ECHO_POP_NEST)
-			System.out.println("Nest spawn period: " + m_nestSpawnPeriod);
+			System.out.println("Pop hell nest (spawn period: " + m_nestSpawnPeriod + ")");
 	}
 
 	private void changeSpawnPeriod() {

@@ -12,22 +12,12 @@ import ricm3.interpreter.IEntityType;
 
 public class HellSoulStunt extends Stunt {
 
-	long lastUpdate;
-
-	Player isPlayer;
-
-
-//	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		super(automaton, entity, sprite);
-//		m_maxHP = Options.HELL_SOUL_HP_MAX;
-//		setDMG(Options.HELL_SOUL_DMG);
-//		m_karmaToGive = Options.HELL_SOUL_KARMA_TOGIVE;
-//	}
+	private long lastUpdate;
+	private Player isPlayer;
 
 	public HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 2),
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
-
 	}
 
 	public void pop(Player p) {
@@ -42,20 +32,21 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		System.out.println("pop heaven soul");
+		if (Options.ECHO_POP_SOUL)
+			System.out.println("Pop heaven (kamikaze) soul");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
 		if (m_entity.m_transparency == 1.0) {
 			m_entity.m_transparency = (float) 0.1F;
-
 		}
 
 		else if (m_entity.m_transparency == 0.1F) {
 			m_entity.m_transparency = (float) 1;
 		}
-		System.out.println("wizz hell soul");
+		if (Options.ECHO_WIZZ_SOUL)
+			System.out.println("Wizz hell (transparency) soul");
 	}
 
 	@Override
@@ -65,14 +56,11 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		System.out.println("Take DAMAGE" + m_entity.m_HP);
-		System.out.println("DAMAGE " + e.m_currentStunt.getDMG());
-		System.out.println("BUFF" + -(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
-			System.out.println("Soul is dying");
+			if (Options.ECHO_DIE)
+				System.out.println("Soul dies");
 			if (e instanceof Missile) {
-				System.out.println("");
 				isPlayer = (Player) ((Missile) e).getOwner();
 				isPlayer.addKarma(m_entity);
 			}
@@ -87,17 +75,14 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void step(long now) {
-
-//		if (soulWizzTimer != null) {
-//			soulWizzTimer.step(now);
-//		}
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
 		if (now - lastUpdate > 1000 / 15) {
-			m_automaton.step(m_entity);
+			super.step(now);
 			lastUpdate = now;
 		}
 	}
+
 }
