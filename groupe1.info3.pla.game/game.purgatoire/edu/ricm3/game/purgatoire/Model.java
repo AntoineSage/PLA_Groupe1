@@ -44,28 +44,20 @@ public class Model extends GameModel {
 	}
 
 	public void transform() {
-		double p;
 		if (m_wt == WorldType.HEAVEN) {
 			m_wt = WorldType.HELL;
-			p = 1;
 			m_player.setHP(m_player.getMaxHP() / 2);
-//			m_player.copyMaxHPHeavenToHell();
 		} else {
 			m_wt = WorldType.HEAVEN;
-			p = m_player.getHPPercent();
+			double p = m_player.getHPPercent();
 			m_player.setMaxHP(m_player.getMaxTotalHP());
-//			m_player.copyMaxHPHellToHeaven();
+			m_player.setHPPercent(p);
 		}
 		m_currentLevel.transform();
 		m_nextLevel.transform();
-		m_player.setHPPercent(p);
 	}
 
 	public void step(long now) {
-//		if (lastPeriodUpdate == 0) {
-//			lastPeriodUpdate = now;
-//		}
-
 		m_nextLevel.step(now);
 		m_currentLevel.step(now);
 

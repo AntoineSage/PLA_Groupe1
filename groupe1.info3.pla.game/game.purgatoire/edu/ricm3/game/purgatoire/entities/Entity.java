@@ -80,14 +80,6 @@ public class Entity {
 		m_currentStunt.m_maxHP = maxHP;
 	}
 
-	public void copyMaxHPHeavenToHell() {
-		m_hellStunt.m_maxHP = m_heavenStunt.m_maxHP;
-	}
-
-	public void copyMaxHPHellToHeaven() {
-		m_heavenStunt.m_maxHP = m_hellStunt.m_maxHP;
-	}
-
 	public void takeDamage(int DMG) {
 		m_currentStunt.takeDamage(DMG);
 	}
