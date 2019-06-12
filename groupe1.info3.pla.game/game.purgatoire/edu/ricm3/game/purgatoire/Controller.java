@@ -276,6 +276,7 @@ public class Controller extends GameController implements ActionListener {
 	}
 
 	public boolean isKeyPressed(int code) {
+		
 		if (isDirectionKey(code)) {
 			if (m_directionKey.size() > 0) {
 				return code == m_directionKey.peek();
