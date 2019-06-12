@@ -5,7 +5,7 @@ public class Options {
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
 	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 45;
+	public static final int LVL_WIDTH = 46;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
@@ -20,8 +20,14 @@ public class Options {
 	public static final long DEFAULT_CD = 1000;
 
 	// PLAYER OPTIONS
+	public static final int PLAYER_HP_START = 1000;
+	public static final int PLAYER_XP_START = 0;
+	public static final int PLAYER_KARMA_MAX = 150;
+
+	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
 	public static int HELL_PLAYER_DMG = 100;
 	public static int HELL_PLAYER_HP_MAX = 1000;
+	public static int HELL_DIVIDAND_HP_MAX_TOLOSE = 50;
 	public static int HEAVEN_PLAYER_DMG = 100;
 	public static int HEAVEN_PLAYER_HP_MAX = 1000;
 
@@ -29,12 +35,18 @@ public class Options {
 	public static int PLAYER_HP = 1000;
 	public static int PLAYER_XP = 0;
 	public static int PLAYER_XP_MAX = 150;
-	public static int PLAYER_KARMA_MAX = 150;
 
-	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300 };
+	public static long HELL_PLAYER_WIZZ_TIMER = 1000;
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
-	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
-	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
+
+	// Player stats arrays
+	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
+			"Rank heaven 4" };
+	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3", "Rank hell 4" };
+	public static final int[] PLAYER_DMG_HEAVEN = { 100, 120, 150, 200 };
+	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
+	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
+	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
@@ -76,7 +88,8 @@ public class Options {
 	public static int HEAVEN_SPCL_DMG = 1;
 	public static int HEAVEN_SPCL_HP_MAX = 1;
 	public static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
-
+	public static long HEAVEN_SPECIAL_TIMER = 5000;
+	public static long HELL_SPECIAL_TIMER = 2000;
 	public static int SPCL_HP = 1;
 
 	// OBSTACLE OPTIONS
@@ -92,19 +105,21 @@ public class Options {
 	public static int HELL_MISSILE_HP_MAX = 1;
 	public static int HEAVEN_MISSILE_DMG = 1;
 	public static int HEAVEN_MISSILE_HP_MAX = 1;
-
+	public static long MISSILE_TIMER = 1000;
 	public static int MISSILE_HP = 1;
 
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
 	public static int DASH_CD = 5000;
+	public static int HEAVEN_HIT_CD = 1000;
 
 	// TIMER OPTIONS
 	public static int WIZZ_TIMER = 1000;
+	public static int HEAVEN_HIT_TIMER = 100*2;
 
 	// BUFF OPTIONS
 	public static int BUFF_DURATION = 5000;
-	public static int BUFF_DMG = 100; // %
+	public static int BUFF_DMG = 1000; // %
 	public static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
@@ -141,5 +156,7 @@ public class Options {
 	
 	public static final boolean ECHO_DASH = false;
 	public static final boolean ECHO_CIRCLE_ATTACK = false;
+
+	public static final boolean ECHO_PLAYER_UPDATE_STATS = true;
 
 }

@@ -267,6 +267,10 @@ public class Stunt {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
 
+	public int getBaseDMG() {
+		return m_DMG;
+	}
+
 	void setDMG(int DMG) {
 		m_DMG = DMG;
 	}

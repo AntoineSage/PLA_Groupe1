@@ -44,10 +44,13 @@ public class Model extends GameModel {
 	}
 
 	public void transform() {
-		if (m_wt == WorldType.HEAVEN)
+		if (m_wt == WorldType.HEAVEN) {
 			m_wt = WorldType.HELL;
-		else
+			m_player.setHP(Options.HEAVEN_PLAYER_HP_MAX/2);//50% vie max
+			}else {
 			m_wt = WorldType.HEAVEN;
+			m_player.setMaxTotalHP(Options.HEAVEN_PLAYER_HP_MAX);
+		}
 		m_currentLevel.transform();
 		m_nextLevel.transform();
 	}

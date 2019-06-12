@@ -23,9 +23,15 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.Timer;
+
+import ricm3.interpreter.IAutomaton;
 
 public class GameUI {
 
@@ -37,6 +43,9 @@ public class GameUI {
 	static GameUI game;
 
 	JFrame m_frame;
+
+	JPopupMenu m_menu;
+
 	GameView m_view;
 	Timer m_timer;
 	GameModel m_model;
@@ -64,6 +73,24 @@ public class GameUI {
 		// to drive the overall clock of the simulation.
 		createWindow(d);
 		createTimer();
+
+//		m_menu = new JPopupMenu("test");
+//		JComboBox cut = new JComboBox<String>();  
+//		cut.addItem("TEST");
+//        JMenuItem copy = new JMenuItem("Copy");  
+//        JMenuItem paste = new JMenuItem("Paste");  
+//        m_menu.add(cut); m_menu.add(copy); m_menu.add(paste);      
+//		
+//		m_frame.add(m_menu);
+//		 m_menu.show(m_frame, 0, 0);
+
+
+//		button.addActionListener(new java.awt.event.ActionListener() {
+//			@Override
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				String name = JOptionPane.showInputDialog(parent, "What is your name?", null);
+//			}
+//		});
 	}
 
 	public GameModel getModel() {

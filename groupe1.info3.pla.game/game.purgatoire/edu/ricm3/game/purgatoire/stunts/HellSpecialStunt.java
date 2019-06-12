@@ -33,7 +33,7 @@ public class HellSpecialStunt extends Stunt {
 	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (m_hellSpecialTimer == null) {
-			m_hellSpecialTimer = new Timer(2000);
+			m_hellSpecialTimer = new Timer(Options.HELL_SPECIAL_TIMER);
 			m_hellSpecialTimer.start();
 		}
 		if (player != null) {

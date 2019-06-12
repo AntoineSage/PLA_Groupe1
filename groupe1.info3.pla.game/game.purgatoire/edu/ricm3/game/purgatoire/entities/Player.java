@@ -21,10 +21,10 @@ public class Player extends Entity {
 		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_XP = Options.PLAYER_XP;
-		m_HP = Options.PLAYER_HP;
-		m_maxTotalHP = Options.PLAYER_MAX_TOTAL_HP;
+		m_XP = Options.PLAYER_XP_START;
+		m_HP = Options.PLAYER_HP_START;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
+		((PlayerStunt) m_currentStunt).updateRankStats();
 	}
 
 	public void addKarma(Entity e) {
@@ -49,6 +49,7 @@ public class Player extends Entity {
 			m_rank--;
 			Singleton.getController().updateRankUI();
 		}
+		((PlayerStunt) m_currentStunt).updateRankStats();
 	}
 
 	public void nextLevel(Level newLevel) {
@@ -104,6 +105,14 @@ public class Player extends Entity {
 
 	public int getMaxTotalHP() {
 		return m_maxTotalHP;
+	}
+
+	public void setMaxTotalHP(int newMax) {
+		m_maxTotalHP = newMax;
+	}
+
+	public void setHP(int HP) {
+		m_HP = HP;
 	}
 
 	public void testKarma() {

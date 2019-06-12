@@ -57,12 +57,8 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		System.out.println("Take DAMAGE" + m_entity.m_HP);
-		System.out.println("DAMAGE " + e.m_currentStunt.getDMG());
-		System.out.println("BUFF" + -(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
-			System.out.println("Soul is dying");
 			if (e instanceof Missile) {
 				System.out.println("");
 				isPlayer = (Player) ((Missile) e).getOwner();
