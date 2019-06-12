@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 public class Animation {
 	private List<BufferedImage> m_sprites[];
+	private String m_name;
 
 	public enum AnimType {
 		NORTH(0), SOUTH(1), EAST(2), WEST(3), IDLE(4);
@@ -27,15 +28,30 @@ public class Animation {
 		}
 	}
 
-	public Animation(String fileName) throws FileNotFoundException {
-		m_sprites = spritesFromFile(fileName);
+	public Animation(String fileName) {
+		m_name = fileName;
+		try {
+			m_sprites = spritesFromFile(new File(fileName));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
+	
+	public Animation(File file) {
+		m_name = file.getName();
+		try {
+			m_sprites = spritesFromFile(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
-	private static List<BufferedImage>[] spritesFromFile(String fileName) throws FileNotFoundException {
+	private static List<BufferedImage>[] spritesFromFile(File file) throws FileNotFoundException {
 		List<BufferedImage>[] sprites = new List[5];
 		BufferedImage[] splitImage = null;
 
-		File file = new File(fileName);
 		Scanner sc = new Scanner(file);
 
 		// Opening and splitting the .png file using the first line of the file
@@ -112,4 +128,11 @@ public class Animation {
 	public BufferedImage get(AnimType type, int position) {
 		return m_sprites[type.getValue()].get(position);
 	}
+
+	@Override
+	public String toString() {
+		return m_name;
+	}
+	
+	
 }

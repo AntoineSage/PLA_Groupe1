@@ -1,5 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -12,46 +13,25 @@ public class Singleton {
 
 	private static Singleton m_singleton = new Singleton(Options.AUT_FILE);
 
-	private static IAutomaton m_playerHellAut;
-	private static IAutomaton m_playerHeavenAut;
+	public static final String[] m_existingEntitiesTypes = { "Players", "Souls", "Obstacles", "Nests", "Missiles",
+			"Specials" };
 
-	private static IAutomaton m_soulHellAut;
-	private static IAutomaton m_soulHeavenAut;
+	private static IAutomaton[] m_HellAut;
+	private static IAutomaton[] m_HeavenAut;
+	private static Animation[] m_HellAnim;
+	private static Animation[] m_HeavenAnim;
 
-	private static IAutomaton m_obstacleHellAut;
-	private static IAutomaton m_obstacleHeavenAut;
+	private static int[] m_Firsts;
 
-	private static IAutomaton m_specialHellAut;
-	private static IAutomaton m_specialHeavenAut;
-
-	private static IAutomaton m_nestHellAut;
-	private static IAutomaton m_nestHeavenAut;
-
-	private static IAutomaton m_missileHellAut;
-	private static IAutomaton m_missileHeavenAut;
+	private static IAutomaton[] m_HellAutFirst;
+	private static IAutomaton[] m_HeavenAutFirst;
+	private static Animation[] m_HellAnimFirst;
+	private static Animation[] m_HeavenAnimFirst;
 
 	private static Controller m_controller;
-
 	private static List<IAutomaton> m_automatons;
-	
-	private static Animation m_playerHellAnim;
-	private static Animation m_playerHeavenAnim;
+	private static Animation[] m_animations;
 
-	private static Animation m_soulHellAnim;
-	private static Animation m_soulHeavenAnim;
-
-	private static Animation m_obstacleHellAnim;
-	private static Animation m_obstacleHeavenAnim;
-
-	private static Animation m_specialHellAnim;
-	private static Animation m_specialHeavenAnim;
-
-	private static Animation m_nestHellAnim;
-	private static Animation m_nestHeavenAnim;
-
-	private static Animation m_missileHellAnim;
-	private static Animation m_missileHeavenAnim;
-	
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -61,53 +41,17 @@ public class Singleton {
 		}
 
 		m_automatons = ((AI_Definitions) ast).make();
-
-		m_playerHellAut = m_automatons.get(0);
-		m_playerHeavenAut = m_automatons.get(0);
-
-		m_soulHellAut = m_automatons.get(1);
-		m_soulHeavenAut = m_automatons.get(2);
-
-		m_obstacleHellAut = m_automatons.get(3);
-		m_obstacleHeavenAut = m_automatons.get(3);
-
-		m_specialHellAut = m_automatons.get(5);
-		m_specialHeavenAut = m_automatons.get(4);
-
-		m_nestHellAut = m_automatons.get(6);
-		m_nestHeavenAut = m_automatons.get(6);
-
-		m_missileHellAut = m_automatons.get(7);
-		m_missileHeavenAut = m_automatons.get(7);
-
-		try {
-			m_playerHellAnim = new Animation("animations/playerHell.ani");
-			m_playerHeavenAnim = new Animation("animations/playerHeaven.ani");
-
-			m_soulHellAnim = new Animation("animations/soulHell.ani");
-			m_soulHeavenAnim = new Animation("animations/soulHeaven.ani");
-
-			m_obstacleHellAnim = new Animation("animations/obstacleHell.ani");
-			m_obstacleHeavenAnim = new Animation("animations/obstacleHeaven.ani");
-
-			m_specialHellAnim = new Animation("animations/specialHell.ani");
-			m_specialHeavenAnim = new Animation("animations/specialHeaven.ani");
-
-			m_nestHellAnim = new Animation("animations/nestHell.ani");
-			m_nestHeavenAnim = new Animation("animations/nestHeaven.ani");
-
-			m_missileHellAnim = new Animation("animations/missileHell.ani");
-			m_missileHeavenAnim = new Animation("animations/missileHeaven.ani");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(0);
+		File folder = new File("animations/");
+		File animationsFiles[] = folder.listFiles();
+		m_animations = new Animation[animationsFiles.length];
+		for (int i = 0; i < animationsFiles.length; i++) {
+			m_animations[i] = new Animation(animationsFiles[i]);
 		}
-
 	}
 
-	public Singleton getSingleton() {
-		return m_singleton;
-	}
+//	public Singleton getSingleton() {
+//		return m_singleton;
+//	}
 
 	public static Controller getController() {
 		return m_controller;
@@ -122,104 +66,232 @@ public class Singleton {
 
 	}
 
+	public static void set(IAutomaton[] HellAut, IAutomaton[] HeavenAut, Animation[] HellAnim, Animation[] HeavenAnim,
+			int[] Firsts, IAutomaton[] HellAutFirst, IAutomaton[] HeavenAutFirst, Animation[] HellAnimFirst,
+			Animation[] HeavenAnimFirst) {
+		if (m_HellAut == null)
+			m_HellAut = HellAut;
+		if (m_HeavenAut == null)
+			m_HeavenAut = HeavenAut;
+		if (m_HellAnim == null)
+			m_HellAnim = HellAnim;
+		if (m_HeavenAnim == null)
+			m_HeavenAnim = HeavenAnim;
+		if (m_Firsts == null)
+			m_Firsts = Firsts;
+		if (m_HellAutFirst == null)
+			m_HellAutFirst = HellAutFirst;
+		if (m_HeavenAutFirst == null)
+			m_HeavenAutFirst = HeavenAutFirst;
+		if (m_HellAnimFirst == null)
+			m_HellAnimFirst = HellAnimFirst;
+		if (m_HeavenAnimFirst == null)
+			m_HeavenAnimFirst = HeavenAnimFirst;
+	}
+
 	public static List<IAutomaton> getAutomatons() {
 		return m_automatons;
 	}
 
 	public static IAutomaton getNewPlayerHellAut() {
-		return m_playerHellAut.copy();
+		if (m_Firsts[0] >= 0) {
+			return m_HellAutFirst[0].copy();
+		} else {
+			return m_HellAut[0].copy();
+		}
 	}
 
 	public static IAutomaton getNewPlayerHeavenAut() {
-		return m_playerHeavenAut.copy();
-	}
-
-	public static IAutomaton getNewObstacleHellAut() {
-		return m_obstacleHellAut.copy();
-	}
-
-	public static IAutomaton getNewObstacleHeavenAut() {
-		return m_obstacleHeavenAut.copy();
-	}
-
-	public static IAutomaton getNewSoulHellAut() {
-		return m_soulHellAut.copy();
-	}
-
-	public static IAutomaton getNewSoulHeavenAut() {
-		return m_soulHeavenAut.copy();
-	}
-
-	public static IAutomaton getNewSpecialHellAut() {
-		return m_specialHellAut.copy();
-	}
-
-	public static IAutomaton getNewSpecialHeavenAut() {
-		return m_specialHeavenAut.copy();
-	}
-
-	public static IAutomaton getNewNestHellAut() {
-		return m_nestHellAut.copy();
-	}
-
-	public static IAutomaton getNewNestHeavenAut() {
-		return m_nestHeavenAut.copy();
-	}
-
-	public static IAutomaton getNewMissileHellAut() {
-		return m_missileHellAut.copy();
-	}
-
-	public static IAutomaton getNewMissileHeavenAut() {
-		return m_missileHeavenAut.copy();
-
+		m_Firsts[0]--;
+		if (m_Firsts[0] >= 0) {
+			return m_HeavenAutFirst[0].copy();
+		} else {
+			return m_HeavenAut[0].copy();
+		}
 	}
 
 	public static Animation getPlayerHellAnim() {
-		return m_playerHellAnim;
+		if (m_Firsts[0] >= 0) {
+			return m_HellAnimFirst[0];
+		} else {
+			return m_HellAnim[0];
+		}
 	}
 
 	public static Animation getPlayerHeavenAnim() {
-		return m_playerHeavenAnim;
+		if (m_Firsts[0] >= 0) {
+			return m_HeavenAnimFirst[0];
+		} else {
+			return m_HeavenAnim[0];
+		}
+	}
+
+	public static IAutomaton getNewSoulHellAut() {
+		if (m_Firsts[1] >= 0) {
+			return m_HellAutFirst[1].copy();
+		} else {
+			return m_HellAut[1].copy();
+		}
+	}
+
+	public static IAutomaton getNewSoulHeavenAut() {
+		m_Firsts[1]--;
+		if (m_Firsts[1] >= 0) {
+			return m_HeavenAutFirst[1].copy();
+		} else {
+			return m_HeavenAut[1].copy();
+		}
 	}
 
 	public static Animation getSoulHellAnim() {
-		return m_soulHellAnim;
+		if (m_Firsts[1] >= 0) {
+			return m_HellAnimFirst[1];
+		} else {
+			return m_HellAnim[1];
+		}
 	}
 
 	public static Animation getSoulHeavenAnim() {
-		return m_soulHeavenAnim;
+		if (m_Firsts[1] >= 0) {
+			return m_HeavenAnimFirst[1];
+		} else {
+			return m_HeavenAnim[1];
+		}
+	}
+
+	public static IAutomaton getNewObstacleHellAut() {
+		if (m_Firsts[2] >= 0) {
+			return m_HellAutFirst[2].copy();
+		} else {
+			return m_HellAut[2].copy();
+		}
+	}
+
+	public static IAutomaton getNewObstacleHeavenAut() {
+		m_Firsts[2]--;
+		if (m_Firsts[2] >= 0) {
+			return m_HeavenAutFirst[2].copy();
+		} else {
+			return m_HeavenAut[2].copy();
+		}
 	}
 
 	public static Animation getObstacleHellAnim() {
-		return m_obstacleHellAnim;
+		if (m_Firsts[2] >= 0) {
+			return m_HellAnimFirst[2];
+		} else {
+			return m_HellAnim[2];
+		}
 	}
 
 	public static Animation getObstacleHeavenAnim() {
-		return m_obstacleHeavenAnim;
+		if (m_Firsts[2] >= 0) {
+			return m_HeavenAnimFirst[2];
+		} else {
+			return m_HeavenAnim[2];
+		}
 	}
 
-	public static Animation getSpecialHellAnim() {
-		return m_specialHellAnim;
+	public static IAutomaton getNewNestHeavenAut() {
+		if (m_Firsts[3] >= 0) {
+			return m_HellAutFirst[3].copy();
+		} else {
+			return m_HellAut[3].copy();
+		}
 	}
 
-	public static Animation getSpecialHeavenAnim() {
-		return m_specialHeavenAnim;
+	public static IAutomaton getNewNestHellAut() {
+		m_Firsts[3]--;
+		if (m_Firsts[3] >= 0) {
+			return m_HeavenAutFirst[3].copy();
+		} else {
+			return m_HeavenAut[3].copy();
+		}
 	}
 
 	public static Animation getNestHellAnim() {
-		return m_nestHellAnim;
+		if (m_Firsts[3] >= 0) {
+			return m_HellAnimFirst[3];
+		} else {
+			return m_HellAnim[3];
+		}
 	}
 
 	public static Animation getNestHeavenAnim() {
-		return m_nestHeavenAnim;
+		if (m_Firsts[3] >= 0) {
+			return m_HeavenAnimFirst[3];
+		} else {
+			return m_HeavenAnim[3];
+		}
+	}
+
+	public static IAutomaton getNewMissileHellAut() {
+		if (m_Firsts[4] >= 0) {
+			return m_HellAutFirst[4].copy();
+		} else {
+			return m_HellAut[4].copy();
+		}
+	}
+
+	public static IAutomaton getNewMissileHeavenAut() {
+		m_Firsts[4]--;
+		if (m_Firsts[4] >= 0) {
+			return m_HeavenAutFirst[4].copy();
+		} else {
+			return m_HeavenAut[4].copy();
+		}
 	}
 
 	public static Animation getMissileHellAnim() {
-		return m_missileHellAnim;
+		if (m_Firsts[4] >= 0) {
+			return m_HellAnimFirst[4];
+		} else {
+			return m_HellAnim[4];
+		}
 	}
 
 	public static Animation getMissileHeavenAnim() {
-		return m_missileHeavenAnim;
+		if (m_Firsts[4] >= 0) {
+			return m_HeavenAnimFirst[4];
+		} else {
+			return m_HeavenAnim[4];
+		}
+	}
+
+	public static IAutomaton getNewSpecialHellAut() {
+		if (m_Firsts[5] >= 0) {
+			return m_HellAutFirst[5].copy();
+		} else {
+			return m_HellAut[5].copy();
+		}
+	}
+
+	public static IAutomaton getNewSpecialHeavenAut() {
+		m_Firsts[5]--;
+		if (m_Firsts[5] >= 0) {
+			return m_HeavenAutFirst[5].copy();
+		} else {
+			return m_HeavenAut[5].copy();
+		}
+	}
+
+	public static Animation getSpecialHellAnim() {
+		if (m_Firsts[5] >= 0) {
+			return m_HellAnimFirst[5];
+		} else {
+			return m_HellAnim[5];
+		}
+	}
+
+	public static Animation getSpecialHeavenAnim() {
+		if (m_Firsts[5] >= 0) {
+			return m_HeavenAnimFirst[5];
+		} else {
+			return m_HeavenAnim[5];
+		}
+	}
+
+	public static Animation[] getAnimations() {
+		return m_animations;
 	}
 }
