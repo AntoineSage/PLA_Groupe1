@@ -4,4 +4,8 @@ public interface PlayerStunt {
 
 	public String getRankName();
 
+	public void changeKarmaOverTime();
+
+	public void updateRankStats();
+
 }

@@ -19,13 +19,13 @@ public class Entity {
 
 	private Stunt m_heavenStunt, m_hellStunt;
 
-	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
+	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int size) {
 		m_level = level;
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
 		m_hellStunt.setAttachedEntity(this);
-		m_bounds = new Rectangle(x, y, width, height);
+		m_bounds = new Rectangle(x, y, size, size);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
 		transform();
@@ -33,10 +33,11 @@ public class Entity {
 	}
 
 	public void transform() {
-		if (getWorldType() == WorldType.HEAVEN)
+		if (getWorldType() == WorldType.HEAVEN) {
 			m_currentStunt = m_heavenStunt;
-		else
+		} else {
 			m_currentStunt = m_hellStunt;
+		}
 	}
 
 	public void step(long now) {
@@ -51,8 +52,17 @@ public class Entity {
 		return m_HP;
 	}
 
+	public double getHPPercent() {
+		return (double) m_HP / m_currentStunt.m_maxHP;
+	}
+
+	public void setHPPercent(double p) {
+		m_HP = (int) (m_currentStunt.m_maxHP * p);
+	}
+
 	public void addHP(int HP) {
 		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
+		m_HP = Math.max(m_HP, 0);
 	}
 
 	public int getMaxHP() {
@@ -64,6 +74,10 @@ public class Entity {
 	 */
 	public void addMaxHP(int maxHP) {
 		m_currentStunt.m_maxHP += maxHP;
+	}
+
+	public void setMaxHP(int maxHP) {
+		m_currentStunt.m_maxHP = maxHP;
 	}
 
 	public void takeDamage(int DMG) {
@@ -148,6 +162,14 @@ public class Entity {
 
 	public boolean superposedWith(IEntityType type, IDirection direction) {
 		return m_level.m_collisionGrid.wontCollide(this, direction);
+	}
+
+	public long getTimeLeftPop() {
+		return m_currentStunt.getTimeLeftPop();
+	}
+
+	public long getTimeLeftWizz() {
+		return m_currentStunt.getTimeLeftWizz();
 	}
 
 }
