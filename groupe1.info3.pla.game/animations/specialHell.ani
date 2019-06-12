@@ -1,6 +1,6 @@
-sprite_sheet = sprites/dngn_blood_fountain2.png
-NORTH = 1
-EAST = 1
-SOUTH = 1
-WEST = 1
-IDLE = 1
+sprite_sheet = sprites/fountain.png
+NORTH = 1;2
+EAST = 1;2
+SOUTH = 1;2
+WEST = 1;2
+IDLE = 1;2

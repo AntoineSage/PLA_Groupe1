@@ -23,7 +23,7 @@ public class HeavenSoulStunt extends Stunt {
 //	}
 
 	public HeavenSoulStunt() {
-		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 2),
+		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 4),
 				Options.HEAVEN_SOUL_HP_MAX, Options.HEAVEN_SOUL_DMG, Options.HEAVEN_SOUL_KARMA_TOGIVE);
 		lastUpdate = (long) 0;
 	}
