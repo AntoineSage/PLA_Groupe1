@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
@@ -51,6 +53,7 @@ public class View extends GameView {
 	private static BufferedImage m_currentBackground2;
 
 	Color grey;
+
 	public View(Model m) {
 		grey = new Color(238, 238, 238);
 		m_model = m;
@@ -67,8 +70,8 @@ public class View extends GameView {
 				int tmp = getWidth();
 				Options.WIN_WIDTH = tmp == 0 ? Options.WIN_WIDTH : tmp;
 
-				float borderSize = (float) (65.0f * (float)getWidth() / 765.0f);
-				BLOCK_SIZE = (int) (((float)getWidth() - 2.0f*borderSize) / ((float) Options.LVL_WIDTH));
+				float borderSize = (float) (65.0f * (float) getWidth() / 765.0f);
+				BLOCK_SIZE = (int) (((float) getWidth() - 2.0f * borderSize) / ((float) Options.LVL_WIDTH));
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 			}
 		});
@@ -97,19 +100,20 @@ public class View extends GameView {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		
-		m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE ;
+
+		m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE;
 	}
 
 	public void step(long now) {
 		// if the camera is blocked
 		if (Options.LVL_HEIGHT - m_model.m_player.m_bounds.y <= (NB_BLOCKS_WIN / 2)) {
-			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE ;
+			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE;
 			System.out.println("A");
 		}
 		// the camera follows the player
 		else {
-			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2 - 2) * BLOCK_SIZE;
+			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2 - 2)
+					* BLOCK_SIZE;
 			System.out.println("B");
 		}
 
@@ -132,7 +136,7 @@ public class View extends GameView {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		paintLevel(g, m_model.m_currentLevel, 0);
-		 paintLevel(g, m_model.m_nextLevel, 1);
+		paintLevel(g, m_model.m_nextLevel, 1);
 
 		Iterator<Component> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
@@ -143,14 +147,15 @@ public class View extends GameView {
 
 	private void paintLevel(Graphics g, Level lvl, int i) {
 		int viewPortWidth = getWidth();
-		float borderSize = (float) (65.0f * (float)getWidth() / 765.0f);
+		float borderSize = (float) (65.0f * (float) getWidth() / 765.0f);
 
 		int lvlHeight = Options.LVL_HEIGHT * BLOCK_SIZE;
 		int lvlWidth = (int) (((float) (Options.LVL_WIDTH * BLOCK_SIZE)) / (1.0f - (2.0f * 65.0f) / 765.0f));
 		int lvlY = m_yG1 - lvlHeight * i;
 		int lvlX = (getWidth() - lvlWidth) / 2;
-		
-		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight, null);
+
+		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight,
+				null);
 
 		g.setColor(Color.white);
 		g.drawLine(lvlX, lvlY, lvlX + lvlWidth, lvlY);
@@ -159,79 +164,87 @@ public class View extends GameView {
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
 		while (iter.hasNext()) {
 			Entity e = iter.next();
-			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 e.m_currentStunt.m_animation.step();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
 				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
-			 }
-		}
-		
-		if(lvl.m_player != null) {
-			Rectangle bound = getRect(lvl.m_player, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 lvl.m_player.m_currentStunt.m_animation.step();
-				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
-			 }
-		}		
-		
-		if(lvl.m_special != null) {
-			Rectangle bound = getRect(lvl.m_special, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 lvl.m_special.m_currentStunt.m_animation.step();
-				 paintSpriteWithHPBar(g, lvl.m_special.m_currentStunt.m_animation.getSprite(), bound, lvl.m_special);
-			 }
+			}
 		}
 
-	  iter = lvl.m_souls.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 e.m_currentStunt.m_animation.step();
-				paintSpriteWithHPBar(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
-			 }
+		if (lvl.m_player != null) {
+			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				lvl.m_player.m_currentStunt.m_animation.step();
+				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
+			}
 		}
-		
-		iter = lvl.m_missiles.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 e.m_currentStunt.m_animation.step();
-				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
-			 }
-		}		
-		iter = lvl.m_nest.iterator();
-		while (iter.hasNext()) {
-			Entity e = iter.next();
-			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 e.m_currentStunt.m_animation.step();
-				 paintSpriteWithHPBar(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
-			 }
-		}		
+
+		if (lvl.m_special != null) {
+			Rectangle bound = getRect(lvl.m_special, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				lvl.m_special.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBarTransparency(g, lvl.m_special.m_currentStunt.m_animation.getSprite(), bound,
+						lvl.m_special);
+			}
+		}
+
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
 			Entity e = iter.next();
-			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
-			 if(viewportBounds.intersects(bound)) {
-				 e.m_currentStunt.m_animation.step();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBarTransparency(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
+			}
+		}
+
+		iter = lvl.m_missiles.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
 				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
-			 }
+			}
+		}
+		iter = lvl.m_nest.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBar(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
+			}
+		}
+		iter = lvl.m_souls.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			}
 		}
 	}
 
 	private void paintSprite(Graphics g, BufferedImage sprite, Rectangle bound) {
 		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
 	}
-	
+
 	private void paintSpriteWithHPBar(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {
 		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
 		g.setColor(Color.BLACK);
-		g.fillRect(bound.x, bound.y - BLOCK_SIZE/2, bound.width, BLOCK_SIZE/3);
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2, bound.width, BLOCK_SIZE / 3);
 		g.setColor(Color.RED);
-		g.fillRect(bound.x, bound.y - BLOCK_SIZE/2, (int)((float)bound.width * ((float)e.m_HP/(float)e.m_currentStunt.getMaxHP())), BLOCK_SIZE/3);
-		
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2,
+				(int) ((float) bound.width * ((float) e.m_HP / (float) e.m_currentStunt.getMaxHP())), BLOCK_SIZE / 3);
+	}
+
+	private void paintSpriteWithHPBarTransparency(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, e.m_transparency));
+		paintSpriteWithHPBar(g, sprite, bound, e);
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+
 	}
 
 	private Rectangle getRect(Entity m_player, int x, int y) {

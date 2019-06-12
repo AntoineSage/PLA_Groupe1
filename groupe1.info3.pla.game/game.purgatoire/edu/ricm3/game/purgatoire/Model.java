@@ -18,6 +18,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.entities.Player;
@@ -27,6 +28,7 @@ public class Model extends GameModel {
 	private WorldType m_wt;
 	Player m_player;
 	Level m_currentLevel, m_nextLevel;
+	LevelMaker m_currentLevelMaker, m_nextLevelMaker;
 
 	public int m_totalDistance;
 	double m_period;
@@ -34,10 +36,12 @@ public class Model extends GameModel {
 
 	long lastPeriodUpdate;
 
-	public Model() {
+	public Model(){
 		m_wt = WorldType.HEAVEN;
-		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
-		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
+		m_currentLevelMaker = new LevelMaker();
+		m_nextLevelMaker = new LevelMaker();
+		m_currentLevel = m_currentLevelMaker.loadLevel(this, Color.yellow);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.pink);
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
@@ -114,9 +118,11 @@ public class Model extends GameModel {
 		return m_player;
 	}
 
-	public void nextLevel() {
+	public void nextLevel(){
 		m_currentLevel = m_nextLevel;
-		m_nextLevel = LevelMaker.makeTestLevel(this, Color.GREEN);
+		m_currentLevelMaker = m_nextLevelMaker;
+		m_nextLevelMaker = new LevelMaker();
+		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);
 	}
 
@@ -130,6 +136,31 @@ public class Model extends GameModel {
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void respawn() {
+		Options.HELL_NEST_DMG = Options.HELL_NEST_DMG_BASE;
+		Options.HELL_NEST_HP_MAX = Options.HELL_NEST_HP_MAX_BASE;
+		Options.HEAVEN_NEST_DMG = Options.HEAVEN_NEST_DMG_BASE;
+		Options.HEAVEN_NEST_HP_MAX = Options.HEAVEN_NEST_HP_MAX_BASE;
+		Options.HELL_SOUL_DMG = Options.HELL_SOUL_DMG_BASE;
+		Options.HELL_SOUL_HP_MAX = Options.HELL_SOUL_HP_MAX_BASE;
+		Options.HEAVEN_SOUL_DMG = Options.HEAVEN_SOUL_DMG_BASE;
+		Options.HEAVEN_SOUL_HP_MAX = Options.HEAVEN_SOUL_HP_MAX_BASE;
+		Options.HELL_OBSTACLE_DMG = Options.HELL_OBSTACLE_DMG_BASE;
+		Options.HELL_OBSTACLE_HP_MAX = Options.HELL_OBSTACLE_HP_MAX_BASE;
+		Options.HEAVEN_OBSTACLE_DMG = Options.HEAVEN_OBSTACLE_DMG_BASE;
+		Options.HEAVEN_OBSTACLE_HP_MAX = Options.HEAVEN_OBSTACLE_HP_MAX_BASE;
+		m_totalDistance = 0;
+		m_period = 0;
+		m_totalTime = 0;
+		m_wt = WorldType.HEAVEN;
+		m_currentLevelMaker = new LevelMaker();
+		m_nextLevelMaker = new LevelMaker();
+		m_currentLevel = m_currentLevelMaker.loadLevel(this, Color.yellow);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.pink);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 
 	}
 }

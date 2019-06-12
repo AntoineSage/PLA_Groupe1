@@ -234,7 +234,20 @@ public class Stunt {
 	}
 
 	public void hit(IDirection d) {
-		System.out.println("hit de base");
+		switch (d) {
+		case NORTH:
+			m_entity.m_direction = IDirection.NORTH;
+			break;
+		case SOUTH:
+			m_entity.m_direction = IDirection.SOUTH;
+			break;
+		case EAST:
+			m_entity.m_direction = IDirection.EAST;
+			break;
+		case WEST:
+			m_entity.m_direction = IDirection.WEST;
+			break;
+		}
 	}
 
 	private void move(int x, int y) {
@@ -356,6 +369,20 @@ public class Stunt {
 		m_automaton.step(m_entity);
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
+		switch (m_entity.m_direction) {
+		case NORTH:
+			m_animation.changeTo(AnimType.NORTH);
+			break;
+		case SOUTH:
+			m_animation.changeTo(AnimType.SOUTH);
+			break;
+		case EAST:
+			m_animation.changeTo(AnimType.EAST);
+			break;
+		case WEST:
+			m_animation.changeTo(AnimType.WEST);
+			break;
+		}
 	}
 
 	public long getTimeLeftPop() {

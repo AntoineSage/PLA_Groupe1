@@ -62,6 +62,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+		
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
