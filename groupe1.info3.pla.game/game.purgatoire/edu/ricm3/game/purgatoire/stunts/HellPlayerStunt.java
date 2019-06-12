@@ -29,7 +29,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				Options.PLAYER_HP_MAX_TOTAL_HELL[0], Options.PLAYER_DMG_HELL[0]);
 
 		m_missiles = new LinkedList<Missile>();
-		m_missileTimer = new Timer(Options.MISSILE_TIMER);
+		m_missileTimer = new Timer(Options.HIT_TIMER_HELL[0]);
 		m_wizzTimer = new Timer(Options.HELL_PLAYER_WIZZ_TIMER);
 		m_popTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
@@ -58,25 +58,29 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			// North Line
 			for (int x = 0; x <= 3; x++) {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+						m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE, IDirection.NORTH,
+						m_entity);
 				m_missiles.add(missile);
 			}
 			// South Line
 			for (int x = -1; x <= 2; x++) {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+						m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, Options.MISSILE_SIZE, IDirection.SOUTH,
+						m_entity);
 				m_missiles.add(missile);
 			}
 			// East Line
 			for (int y = 0; y <= 3; y++) {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, 1, 1, IDirection.EAST, m_entity);
+						m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.EAST,
+						m_entity);
 				m_missiles.add(missile);
 			}
 			// West Line
 			for (int y = -1; y <= 2; y++) {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
+						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.WEST,
+						m_entity);
 				m_missiles.add(missile);
 			}
 			if (Options.ECHO_CIRCLE_ATTACK)
@@ -96,22 +100,24 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			switch (d) {
 			case NORTH:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE, d, m_entity);
 				m_missiles.add(missile);
 				break;
 			case SOUTH:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, Options.MISSILE_SIZE,
+						d, m_entity);
 				m_missiles.add(missile);
 				break;
 			case EAST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, Options.MISSILE_SIZE, d,
+						m_entity);
 				m_missiles.add(missile);
 				break;
 			case WEST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, Options.MISSILE_SIZE, d, m_entity);
 				m_missiles.add(missile);
 				break;
 			default:
@@ -132,7 +138,6 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_entity.die();
 		}
 		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
-		System.out.println("HPMAX !!!:" + m_entity.getMaxHP());
 	}
 
 	@Override
@@ -142,7 +147,6 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_entity.die();
 		}
 		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
-		System.out.println("HPMAX :" + m_entity.getMaxHP());
 	}
 
 	@Override
@@ -180,8 +184,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void updateRankStats() {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HELL[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HELL[((Player) m_entity).getRank()]);
-		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG());
+		m_missileTimer.setDuration(Options.HIT_TIMER_HELL[((Player) m_entity).getRank()]);
+		if (Options.ECHO_HIT_TIMER_CHANGE)
+			System.out.println("Missile timer: " + m_missileTimer.getDuration());
 	}
 
 }

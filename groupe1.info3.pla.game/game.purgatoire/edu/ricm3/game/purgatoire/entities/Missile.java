@@ -12,15 +12,14 @@ public class Missile extends Entity {
 
 	Entity m_owner;
 
-	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, Entity p) {
-		super(level, heaven, hell, x, y, width, height);
+	Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int size, Entity p) {
+		super(level, heaven, hell, x, y, size);
 		m_type = IEntityType.MISSILE;
 		m_owner = p;
 	}
 
-	public Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height, IDirection direction,
-			Entity p) {
-		super(level, heaven, hell, x, y, width, height);
+	public Missile(Level level, Stunt heaven, Stunt hell, int x, int y, int size, IDirection direction, Entity p) {
+		super(level, heaven, hell, x, y, size);
 		m_type = IEntityType.MISSILE;
 		m_direction = direction;
 		m_owner = p;
@@ -31,7 +30,7 @@ public class Missile extends Entity {
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.m_currentStunt.takeDamage((Entity) this);
+			entity.m_currentStunt.takeDamage(m_owner );
 		}
 		die();
 	}

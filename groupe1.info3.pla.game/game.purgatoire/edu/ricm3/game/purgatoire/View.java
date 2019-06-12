@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
@@ -112,13 +114,13 @@ public class View extends GameView {
 	public void transform() {
 		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-			m_currentBackground2 = m_heavenBackground2;		
-		}
-		else {
+			m_currentBackground2 = m_heavenBackground2;
+		} else {
 			m_currentBackground = m_hellBackground;
-			m_currentBackground2 = m_hellBackground;			
+			m_currentBackground2 = m_hellBackground;
 		}
 	}
+
 	@Override
 	protected void _paint(Graphics g) {
 		g.setColor(Color.gray);
@@ -177,14 +179,15 @@ public class View extends GameView {
 		}
 
 		if (lvl.m_special != null)
-			paintAnimation(g, lvl.m_special);
+			paintTransparency(g, lvl.m_special);
 
 		if (lvl.m_player != null)
 			paintAnimation(g, lvl.m_player);
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
+			Entity e = iter.next();
+			paintTransparency(g, e);
 		}
 
 		iter = lvl.m_nest.iterator();
@@ -196,6 +199,13 @@ public class View extends GameView {
 		while (iter.hasNext()) {
 			paintAnimation(g, iter.next());
 		}
+	}
+
+	public void paintTransparency(Graphics g, Entity e) {
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, e.m_transparency));
+		paintAnimation(g, e);
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+
 	}
 
 	public void addGraphicUI(Component g) {

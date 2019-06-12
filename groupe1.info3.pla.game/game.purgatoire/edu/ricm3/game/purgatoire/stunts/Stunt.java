@@ -385,4 +385,8 @@ public class Stunt {
 		return m_wizzTimer.getCurrent();
 	}
 
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+
 }

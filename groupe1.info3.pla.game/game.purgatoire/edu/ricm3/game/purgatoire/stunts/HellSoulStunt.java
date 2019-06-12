@@ -16,6 +16,7 @@ public class HellSoulStunt extends Stunt {
 
 	Player isPlayer;
 
+
 //	HellSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 //		super(automaton, entity, sprite);
 //		m_maxHP = Options.HELL_SOUL_HP_MAX;
@@ -41,12 +42,19 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		if (Options.ECHO_POP_SOUL)
-			System.out.println("Soul hell pop (kamikaze)");
+		System.out.println("pop heaven soul");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
+		if (m_entity.m_transparency == 1.0) {
+			m_entity.m_transparency = (float) 0.1F;
+
+		}
+
+		else if (m_entity.m_transparency == 0.1F) {
+			m_entity.m_transparency = (float) 1;
+		}
 		System.out.println("wizz hell soul");
 	}
 
@@ -57,8 +65,12 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
+		System.out.println("Take DAMAGE" + m_entity.m_HP);
+		System.out.println("DAMAGE " + e.m_currentStunt.getDMG());
+		System.out.println("BUFF" + -(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
+			System.out.println("Soul is dying");
 			if (e instanceof Missile) {
 				System.out.println("");
 				isPlayer = (Player) ((Missile) e).getOwner();
@@ -75,14 +87,17 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void step(long now) {
+
+//		if (soulWizzTimer != null) {
+//			soulWizzTimer.step(now);
+//		}
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
-			super.step(now);
+		if (now - lastUpdate > 1000 / 15) {
+			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}
 	}
-
 }

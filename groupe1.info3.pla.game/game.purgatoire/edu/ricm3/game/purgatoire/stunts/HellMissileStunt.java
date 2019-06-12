@@ -27,7 +27,21 @@ public class HellMissileStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
-		System.out.println("wizz hell soul");
+		switch (m_entity.m_direction) {
+		case NORTH:
+			m_entity.m_direction =  IDirection.SOUTH;
+			break;
+		case SOUTH:
+			m_entity.m_direction = IDirection.NORTH;
+			break;
+		case WEST:
+			m_entity.m_direction = IDirection.EAST;
+			break;
+		case EAST:
+			m_entity.m_direction = IDirection.WEST;
+			break;
+		
+		}
 	}
 
 	@Override

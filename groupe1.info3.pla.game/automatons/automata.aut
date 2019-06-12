@@ -18,6 +18,7 @@ Player(Init){
 
 SoulsHell(Init){
 	* (Init):
+	|Key(v) ? Wizz() : (Init)
 	| Closest(@,N) & Closest(@,E) ? Move(N) :(PlayerE)
 	| Closest(@,N) & Closest(@,O) ? Move(N) :(PlayerO)
 	| Closest(@,N) ? Move(N) :(Init)
@@ -32,12 +33,15 @@ SoulsHell(Init){
 	* (PlayerO):
 	|Closest(@,O) ? Move(O) :(Init)
 	|True ? Wait :(Init)
+
 	
 }
 
 
 SoulsHeaven(Init){
-	* (Init): True ? Move(E) :(Step1)
+	* (Init): 
+		|Key(v) ? Wizz() : (Init)
+		|True ? Move(E) :(Step1)
 	* (Step1): True ? Move(E) :(Step2)
 	* (Step2): True ? Move(E) :(Step3)
 	* (Step3): True ? Move(O) :(Step4)
@@ -66,11 +70,16 @@ Nest(Init){
 }
 
 MissileHell(Init){
-	* (Init): True ? Move(F) : (Init)
+	* (Init):
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Init)
+	
 }
 
 MissileHeaven(Init){
-	* (Init): True ? Move(F) : (Step1)
+	* (Init): 
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Step1)
 	* (Step1): True ? Move(F) : (Step2)
 	* (Step2): True ? Move(F) : (Step3)
 	* (Step3): True ? Move(F) : (Step4)
