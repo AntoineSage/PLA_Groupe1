@@ -31,10 +31,9 @@ public class HeavenNestStunt extends Stunt {
 	public void wizz(IDirection direction) {
 		if (m_wizzTimer.isFinished()) {
 			int width = m_entity.m_bounds.width;
-			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
-			new Obstacle(m_entity.m_level, x, y, width, height);
+			new Obstacle(m_entity.m_level, x, y, width);
 			m_entity.m_level.removeEntity(m_entity);
 			m_wizzTimer.start();
 		}
@@ -75,22 +74,13 @@ public class HeavenNestStunt extends Stunt {
 			x = (2 * m_entity.m_bounds.x + (width)) / 2;
 			y = (2 * m_entity.m_bounds.y + (height)) / 2;
 			Random r = new Random();
-			double tmpX = Math.random();
-			double tmpY = Math.random();
 
-			if (tmpX >= 0.5)
-				randX = x - r.nextInt(width + 2);
+			randX = x + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
+			randY = y + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
 
-			else
-				randX = x + r.nextInt(width + 2);
-
-			if (tmpY >= 0.5)
-				randY = y - r.nextInt(height + 2);
-			else
-				randY = y + r.nextInt(height + 2);
-
-			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2)) {
-				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
+			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
+					randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
+				new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE);
 				break;
 			}
 		}

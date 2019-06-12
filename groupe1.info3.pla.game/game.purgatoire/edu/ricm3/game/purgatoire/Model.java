@@ -39,27 +39,24 @@ public class Model extends GameModel {
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2,
-				Options.LVL_HEIGHT - Options.PLAYER_HEIGHT);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
 
 	public void transform() {
 		if (m_wt == WorldType.HEAVEN) {
 			m_wt = WorldType.HELL;
-			m_player.setHP(Options.HEAVEN_PLAYER_HP_MAX/2);//50% vie max
-			}else {
+			m_player.setHP(m_player.getMaxHP() / 2);
+		} else {
 			m_wt = WorldType.HEAVEN;
-			m_player.setMaxTotalHP(Options.HEAVEN_PLAYER_HP_MAX);
+			double p = m_player.getHPPercent();
+			m_player.setMaxHP(m_player.getMaxTotalHP());
+			m_player.setHPPercent(p);
 		}
 		m_currentLevel.transform();
 		m_nextLevel.transform();
 	}
 
 	public void step(long now) {
-//		if (lastPeriodUpdate == 0) {
-//			lastPeriodUpdate = now;
-//		}
-
 		m_nextLevel.step(now);
 		m_currentLevel.step(now);
 

@@ -1,7 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +18,7 @@ import ricm3.interpreter.IDirection;
 public class Level {
 	private static int id = 0;
 	int m_id;
-	
+
 	Color m_c;
 
 	public Model m_model;
