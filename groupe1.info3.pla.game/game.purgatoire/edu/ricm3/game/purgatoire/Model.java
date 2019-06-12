@@ -35,7 +35,8 @@ public class Model extends GameModel {
 	long lastPeriodUpdate;
 
 	public Model() {
-		m_wt = WorldType.HEAVEN;
+		m_wt = WorldType.HELL;
+		Options.MUSIC_HELL.start();
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
@@ -46,13 +47,18 @@ public class Model extends GameModel {
 	public void transform() {
 		if (m_wt == WorldType.HEAVEN) {
 			m_wt = WorldType.HELL;
-			m_player.setHP(Options.HEAVEN_PLAYER_HP_MAX/2);//50% vie max
-			}else {
+			m_player.setHP(Options.HEAVEN_PLAYER_HP_MAX / 2);// 50% vie max
+			Options.MUSIC_HEAVEN.stop();
+			Options.MUSIC_HELL.start();
+		} else {
 			m_wt = WorldType.HEAVEN;
 			m_player.setMaxTotalHP(Options.HEAVEN_PLAYER_HP_MAX);
+			Options.MUSIC_HELL.stop();
+			Options.MUSIC_HEAVEN.start();
 		}
 		m_currentLevel.transform();
 		m_nextLevel.transform();
+
 	}
 
 	public void step(long now) {

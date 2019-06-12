@@ -96,21 +96,29 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.NORTH);
 				break;
 			case SOUTH:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.SOUTH);
 				break;
 			case EAST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.EAST);
 				break;
 			case WEST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.WEST);
 				break;
 			default:
 				break;
@@ -125,6 +133,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
+		Options.MUSIC_HURT.start();
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
@@ -135,6 +144,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(Entity e) {
+		Options.MUSIC_HURT.start();
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();

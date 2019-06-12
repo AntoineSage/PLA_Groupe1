@@ -18,6 +18,8 @@
 
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Button;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Label;
@@ -25,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,6 +55,9 @@ public class Controller extends GameController implements ActionListener {
 	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 	Label m_cooldownLabel, m_cooldownWizzLabel;
 
+	Music m_player;
+	Button m_music;
+
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
@@ -78,6 +84,7 @@ public class Controller extends GameController implements ActionListener {
 
 		JPanel westInside = new JPanel();
 		westInside.setLayout(new BoxLayout(westInside, BoxLayout.Y_AXIS));
+		westInside.setMinimumSize(new Dimension(200, 50));
 
 		JPanel karmaBar = new JPanel();
 		karmaBar.setLayout(new GridBagLayout());
@@ -148,6 +155,7 @@ public class Controller extends GameController implements ActionListener {
 		m_game.addWest(west);
 		m_game.addEast(east);
 		updateUI();
+		
 	}
 
 	public void updateUI() {

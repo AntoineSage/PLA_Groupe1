@@ -34,6 +34,7 @@ public class Level {
 
 	List<Entity> m_entities;
 	List<Entity> m_toRemove;
+	Music m_music;
 
 	public CollisionGrid m_collisionGrid;
 
@@ -194,6 +195,7 @@ public class Level {
 	}
 
 	void transform() {
+		
 		Iterator<Entity> iter = m_entities.iterator();
 		while (iter.hasNext())
 			iter.next().transform();
