@@ -27,7 +27,7 @@ public class Options {
 	public static final int PLAYER_KARMA_MAX = 150;
 
 	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
-	public static int HELL_PLAYER_DMG = 100;
+	public static int HELL_PLAYER_DMG = 1;
 	public static int HELL_PLAYER_HP_MAX = 1000;
 	public static int HELL_DIVIDAND_HP_MAX_TOLOSE = 50;
 	public static int HEAVEN_PLAYER_DMG = 100;
