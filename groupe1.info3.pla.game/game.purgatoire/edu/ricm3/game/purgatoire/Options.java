@@ -5,7 +5,7 @@ public class Options {
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
 	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 45;
+	public static final int LVL_WIDTH = 46;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
@@ -96,13 +96,15 @@ public class Options {
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
 	public static int DASH_CD = 5000;
+	public static int HEAVEN_HIT_CD = 1000;
 
 	// TIMER OPTIONS
 	public static int WIZZ_TIMER = 1000;
+	public static int HEAVEN_HIT_TIMER = 100*2;
 
 	// BUFF OPTIONS
 	public static int BUFF_DURATION = 5000;
-	public static int BUFF_DMG = 100; // %
+	public static int BUFF_DMG = 1000; // %
 	public static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
