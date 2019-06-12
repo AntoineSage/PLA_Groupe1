@@ -50,7 +50,9 @@ public class View extends GameView {
 	private static BufferedImage m_currentBackground;
 	private static BufferedImage m_currentBackground2;
 
+	Color grey;
 	public View(Model m) {
+		grey = new Color(238, 238, 238);
 		m_model = m;
 
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
@@ -103,10 +105,12 @@ public class View extends GameView {
 		// if the camera is blocked
 		if (Options.LVL_HEIGHT - m_model.m_player.m_bounds.y <= (NB_BLOCKS_WIN / 2)) {
 			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE ;
+			System.out.println("A");
 		}
 		// the camera follows the player
 		else {
-			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2) * BLOCK_SIZE;
+			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2 - 2) * BLOCK_SIZE;
+			System.out.println("B");
 		}
 
 		transform();
@@ -124,7 +128,7 @@ public class View extends GameView {
 
 	@Override
 	protected void _paint(Graphics g) {
-		g.setColor(Color.gray);
+		g.setColor(grey);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		paintLevel(g, m_model.m_currentLevel, 0);
@@ -166,7 +170,6 @@ public class View extends GameView {
 			 if(viewportBounds.intersects(bound)) {
 				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
 			 }
-//			paintAnimation(g, iter.next());
 		}
 		
 		iter = lvl.m_missiles.iterator();
