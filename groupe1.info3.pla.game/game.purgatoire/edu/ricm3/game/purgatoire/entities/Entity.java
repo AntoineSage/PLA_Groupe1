@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.Level;
-import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
 import ricm3.interpreter.IDirection;
@@ -30,7 +29,7 @@ public class Entity {
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
 		transform();
-		m_HP = 1;
+		m_HP = this.m_currentStunt.getMaxHP();
 	}
 
 	public void transform() {
@@ -54,18 +53,18 @@ public class Entity {
 	}
 
 	public void addHP(int HP) {
-		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
+		m_HP = Math.min(m_currentStunt.getMaxHP(), m_HP + HP);
 	}
 
 	public int getMaxHP() {
-		return m_currentStunt.m_maxHP;
+		return m_currentStunt.getMaxHP();
 	}
 
 	/*
 	 * public int getDMG() { return (m_DMG * m_currentStunt.m_buffedDMG); }
 	 */
 	public void addMaxHP(int maxHP) {
-		m_currentStunt.m_maxHP += maxHP;
+		m_currentStunt.setMaxHP(m_currentStunt.getMaxHP() + maxHP);
 	}
 
 	public void takeDamage(int DMG) {

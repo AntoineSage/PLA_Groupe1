@@ -11,7 +11,7 @@ public class Options {
 	public static final int UI_BAR_HEIGHT = 150;
 	public static final int UI_BAR_WIDTH = 30;
 
-	public static final int TOTAL_PERIOD = 5000;
+	public static final int TOTAL_PERIOD = 30000;
 	public static final String AUT_FILE = "automatons/automata.aut";
 
 	public static final double COEF_KARMA_POS = 0.2;
@@ -32,7 +32,7 @@ public class Options {
 	public static int HEAVEN_PLAYER_HP_MAX = 1000;
 
 	public static int PLAYER_MAX_TOTAL_HP = 1000;
-	public static int PLAYER_HP = 1000;
+	//public static int PLAYER_HP = 1000;
 	public static int PLAYER_XP = 0;
 	public static int PLAYER_XP_MAX = 150;
 
@@ -66,19 +66,19 @@ public class Options {
 
 	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
 
-	public static int NEST_HP = 1;
+	//public static int NEST_HP = 1;
 
 	// SOUL OPTIONS
 	public static int HELL_SOUL_DMG = 10;
 	public static int HELL_SOUL_HP_MAX = 3;
 	public static int HELL_SOUL_KARMA_TOGIVE = -10;
 	public static int HEAVEN_SOUL_DMG = 10;
-	public static int HEAVEN_SOUL_HP_MAX = 1;
+	public static int HEAVEN_SOUL_HP_MAX = 3;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
 	public static final int SOUL_STEP_DELAY = 1000 / 15;
 
-	public static int SOUL_HP = 3;
+	//public static int SOUL_HP = 3;
 
 	// SPCL OPTIONS
 	public static int HELL_SPCL_DMG = 1;
@@ -90,7 +90,7 @@ public class Options {
 	public static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
 	public static long HEAVEN_SPECIAL_TIMER = 5000;
 	public static long HELL_SPECIAL_TIMER = 2000;
-	public static int SPCL_HP = 1;
+	//public static int SPCL_HP = 1;
 
 	// OBSTACLE OPTIONS
 	public static int HELL_OBSTACLE_DMG = 0;
@@ -98,15 +98,15 @@ public class Options {
 	public static int HEAVEN_OBSTACLE_DMG = 0;
 	public static int HEAVEN_OBSTACLE_HP_MAX = 1;
 
-	public static int OBSTACLE_HP = 1;
+	//public static int OBSTACLE_HP = 1;
 
 	// MISSILE OPTIONS
 	public static int HELL_MISSILE_DMG = 1;
 	public static int HELL_MISSILE_HP_MAX = 1;
 	public static int HEAVEN_MISSILE_DMG = 1;
 	public static int HEAVEN_MISSILE_HP_MAX = 1;
-	public static long MISSILE_TIMER = 1000;
-	public static int MISSILE_HP = 1;
+	public static long MISSILE_TIMER = 100;
+	//public static int MISSILE_HP = 1;
 
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;

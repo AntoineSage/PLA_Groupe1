@@ -22,7 +22,6 @@ public class Player extends Entity {
 		m_model = model;
 		m_type = IEntityType.PLAYER;
 		m_XP = Options.PLAYER_XP_START;
-		m_HP = Options.PLAYER_HP_START;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
 	}

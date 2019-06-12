@@ -35,7 +35,7 @@ public class Stunt {
 	int m_wizzCooldown; // not used
 	int m_wizzDuration;
 
-	public int m_maxHP;
+	private int m_maxHP;
 	private int m_DMG;
 	public int m_karmaToGive;
 	float m_DMGBuff = 1;
@@ -265,6 +265,14 @@ public class Stunt {
 
 	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
+	}
+	
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+	
+	public void setMaxHP(int maxHP) {
+		m_maxHP = maxHP;
 	}
 
 	public int getBaseDMG() {
