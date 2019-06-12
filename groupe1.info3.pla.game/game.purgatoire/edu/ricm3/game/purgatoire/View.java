@@ -172,7 +172,9 @@ public class View extends GameView {
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
+			Entity e = iter.next();
+			System.out.println("SOUUL" + e.m_transparency);
+			paintTransparency(g, e);
 		}
 
 		iter = lvl.m_nest.iterator();

@@ -46,6 +46,17 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
+		if(m_entity.m_transparency == 1.0) {
+			m_entity.m_transparency = (float)0;
+			System.out.println("TANS"+ m_entity.m_transparency);
+			
+		}
+		
+		else if(m_entity.m_transparency == 0.0) {
+			m_entity.m_transparency = (float)1;
+			System.out.println("TANS"+ m_entity.m_transparency);
+		}
+			
 		System.out.println("wizz hell soul");
 	}
 

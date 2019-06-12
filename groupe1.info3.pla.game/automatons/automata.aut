@@ -26,12 +26,14 @@ SoulsHell(Init){
 	| Closest(@,S) ? Move(S) :(Init)
 	| Closest(@,E) ? Move(E) :(Init)
 	| Closest(@,O) ? Move(O) :(Init)
+	|Key(v) ? Wizz() : (Init)
 	* (PlayerE):
 	|Closest(@,E) ? Move(E) :(Init)
 	|True ? Wait :(Init)
 	* (PlayerO):
 	|Closest(@,O) ? Move(O) :(Init)
 	|True ? Wait :(Init)
+
 	
 }
 

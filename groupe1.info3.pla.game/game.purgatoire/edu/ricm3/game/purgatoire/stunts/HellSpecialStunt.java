@@ -40,13 +40,14 @@ public class HellSpecialStunt extends Stunt {
 			System.out.println("sur flaque");
 			player.addKarma(m_entity);
 			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
-
+			this.wizz(d);
 		}
 		System.out.println("pop flaque");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
+		m_entity.m_transparency = m_hellSpecialTimer.getRemainingTimePercentage();
 		System.out.println("wizz flaque");
 	}
 
@@ -71,7 +72,6 @@ public class HellSpecialStunt extends Stunt {
 
 		if (m_hellSpecialTimer != null) {
 			m_hellSpecialTimer.step(now);
-			m_entity.m_transparency = m_hellSpecialTimer.getRemainingTimePercentage();
 			if (m_hellSpecialTimer.isFinished()) {
 				m_entity.die();
 				System.out.println("test");
