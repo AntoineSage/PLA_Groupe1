@@ -4,6 +4,8 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
@@ -22,14 +24,24 @@ public class HellSoulStunt extends Stunt {
 //	}
 
 	public HellSoulStunt() {
-		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 2));
-		setDMG(Options.HEAVEN_SOUL_DMG);
-		m_karmaToGive = Options.HELL_SOUL_KARMA_TOGIVE;
+		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+
+	}
+
+	public void pop(Player p) {
+		p.addKarma(m_entity);
+		p.takeDamage(m_entity.m_currentStunt.getDMG());
+		m_entity.die();
 	}
 
 	@Override
 	public void pop(IDirection d) {
-		m_entity.die();
+		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
+		if (isPlayer != null) {
+			pop(isPlayer);
+		}
+		System.out.println("pop heaven soul");
 	}
 
 	@Override
@@ -43,6 +55,23 @@ public class HellSoulStunt extends Stunt {
 	}
 
 	@Override
+	public void takeDamage(Entity e) {
+		System.out.println("Take DAMAGE" + m_entity.m_HP);
+		System.out.println("DAMAGE " + e.m_currentStunt.getDMG());
+		System.out.println("BUFF" + -(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+		if (m_entity.m_HP <= 0) {
+			System.out.println("Soul is dying");
+			if (e instanceof Missile) {
+				System.out.println("");
+				isPlayer = (Player) ((Missile) e).getOwner();
+				isPlayer.addKarma(m_entity);
+			}
+			m_entity.die();
+		}
+	}
+
+	@Override
 	public void egg() {
 		System.out.println("egg hell soul");
 	}
@@ -51,11 +80,9 @@ public class HellSoulStunt extends Stunt {
 	public void step(long now) {
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
-			System.out.println("GIVE DAMAGE");
-			isPlayer.takeDamage(m_entity.m_currentStunt.getDMG());
-			m_entity.pop(m_entity.m_direction);
+			pop(isPlayer);
 		}
-		if (now - lastUpdate > 1000/15) {
+		if (now - lastUpdate > 1000 / 15) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}

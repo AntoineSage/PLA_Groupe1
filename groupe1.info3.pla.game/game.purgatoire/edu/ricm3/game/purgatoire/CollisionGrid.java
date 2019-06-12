@@ -22,14 +22,16 @@ public class CollisionGrid {
 		}
 	}
 
-	void addEntity(Entity entity) {
+	Entity addEntity(Entity entity) {
 		if (isOk(entity) == true) {
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
 				for (int j = entity.m_bounds.y; j < entity.m_bounds.y + entity.m_bounds.height; j++) {
 					m_grid[i][j].add(entity);
 				}
 			}
+			return entity;
 		}
+		return null;
 	}
 
 	boolean isOk(Entity entity) {
@@ -49,8 +51,7 @@ public class CollisionGrid {
 	public boolean isOk(IEntityType type, int x, int y, int width, int height) {
 		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
 			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
-				if (testCollisionWithType(type, x, y, width, height) instanceof Entity)
-					;
+				if (testCollisionWithType(type, x, y, width, height) == false)
 				return true;
 			}
 		return false;
@@ -218,19 +219,19 @@ public class CollisionGrid {
 		return colliders;
 	}
 
-	public Entity testCollisionWithType(IEntityType type, int x, int y, int width, int height) {
+	public boolean testCollisionWithType(IEntityType type, int x, int y, int width, int height) {
 		for (int i = x; i < x + width; i++) {
 			for (int j = y; j < y + height; j++) {
 				Iterator<Entity> iter = m_grid[i][j].iterator();
 				while (iter.hasNext()) {
 					Entity eInList = iter.next();
 					if (eInList.m_type == type)
-						return eInList;
+						return true;
 				}
 			}
 		}
 
-		return null;
+		return false;
 	}
 
 	public List<Entity> get(int x, int y) {

@@ -1,7 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import ricm3.interpreter.IAutomaton;

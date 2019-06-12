@@ -48,7 +48,7 @@ public class Animation {
 		}
 	}
 
-	private static List<BufferedImage>[] spritesFromFile(File file) throws FileNotFoundException {
+	private static List<BufferedImage>[] spritesFromFile(File file) throws FileNotFoundException  {
 		List<BufferedImage>[] sprites = new List[5];
 		BufferedImage[] splitImage = null;
 

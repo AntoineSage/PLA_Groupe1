@@ -57,6 +57,9 @@ public class Level {
 	}
 
 	public void addEntity(Entity e) {
+		if (m_collisionGrid.addEntity(e) == null) return;
+		m_entities.add(e);
+		
 		if (e instanceof Obstacle) {
 			if (m_obstacles.contains(e))
 				throw new IllegalArgumentException("Cannot have to same entity in the level");
@@ -88,9 +91,6 @@ public class Level {
 				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_missiles.add(e);
 		}
-
-		m_entities.add(e);
-		m_collisionGrid.addEntity(e);
 	}
 
 	public void removeEntity(Entity e) {
@@ -191,4 +191,9 @@ public class Level {
 	public WorldType getWorldType() {
 		return m_model.getWorldType();
 	}
+	
+	public void levelCreator() {
+		
+	}
+	
 }
