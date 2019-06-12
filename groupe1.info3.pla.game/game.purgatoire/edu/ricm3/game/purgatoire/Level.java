@@ -147,7 +147,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
