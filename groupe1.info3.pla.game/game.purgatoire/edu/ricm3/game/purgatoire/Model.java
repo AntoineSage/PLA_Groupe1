@@ -28,7 +28,7 @@ public class Model extends GameModel {
 	private WorldType m_wt;
 	Player m_player;
 	Level m_currentLevel, m_nextLevel;
-	LevelMaker m_levelMaker;
+	LevelMaker m_currentLevelMaker, m_nextLevelMaker;
 
 	public int m_totalDistance;
 	double m_period;
@@ -38,9 +38,10 @@ public class Model extends GameModel {
 
 	public Model(){
 		m_wt = WorldType.HEAVEN;
-		m_levelMaker = new LevelMaker();
-		m_currentLevel = m_levelMaker.loadLevel(this, Color.yellow);
-		m_nextLevel = m_levelMaker.loadLevel(this, Color.pink);
+		m_currentLevelMaker = new LevelMaker();
+		m_nextLevelMaker = new LevelMaker();
+		m_currentLevel = m_currentLevelMaker.loadLevel(this, Color.yellow);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.pink);
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2,
 				Options.LVL_HEIGHT - Options.PLAYER_HEIGHT);
@@ -84,7 +85,9 @@ public class Model extends GameModel {
 
 	public void nextLevel(){
 		m_currentLevel = m_nextLevel;
-		m_nextLevel = m_levelMaker.loadLevel(this, Color.GREEN);
+		m_currentLevelMaker = m_nextLevelMaker;
+		m_nextLevelMaker = new LevelMaker();
+		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.GREEN);
 		m_player.nextLevel(m_currentLevel);
 	}
 
