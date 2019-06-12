@@ -113,8 +113,6 @@ public class Player extends Entity {
 	@Override
 	public void addHP(int HP) {
 		super.addHP(HP);
-		if (Options.ECHO_PLAYER_DAMAGE_TAKEN)
-			System.out.println("Player damage taken: " + HP);
 		Singleton.getController().updateHPUI();
 	}
 

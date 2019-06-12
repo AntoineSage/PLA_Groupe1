@@ -35,6 +35,10 @@ public class Timer {
 		return m_current;
 	}
 
+	public long getDuration() {
+		return m_duration;
+	}
+	
 	public void setDuration(long duration) {
 		m_duration = duration;
 	}
