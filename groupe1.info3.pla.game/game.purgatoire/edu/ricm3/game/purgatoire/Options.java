@@ -4,8 +4,8 @@ public class Options {
 
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
-	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 46;
+	public static final int LVL_HEIGHT = 90;
+	public static final int LVL_WIDTH = 54;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;

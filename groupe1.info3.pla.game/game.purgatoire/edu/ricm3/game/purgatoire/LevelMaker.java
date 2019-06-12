@@ -13,7 +13,7 @@ public class LevelMaker {
 		Level level = new Level(model, c);
 		for (int i = 0; i < 4; i++) {
 			try {
-			level.levelGenerator(levelFromFile("level.paterns/casual/Patern1.txt", level), i);
+			level.levelGenerator(levelFromFile("level.paterns/casual/Patern4.txt", level), i);
 			}
 			catch(FileNotFoundException e) {
 				e.printStackTrace();
