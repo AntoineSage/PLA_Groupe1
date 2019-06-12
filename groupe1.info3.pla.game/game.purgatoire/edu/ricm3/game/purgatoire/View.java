@@ -65,7 +65,8 @@ public class View extends GameView {
 				int tmp = getWidth();
 				Options.WIN_WIDTH = tmp == 0 ? Options.WIN_WIDTH : tmp;
 
-				BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
+				float borderSize = (float) (65.0f * (float)getWidth() / 765.0f);
+				BLOCK_SIZE = (int) (((float)getWidth() - 2.0f*borderSize) / ((float) Options.LVL_WIDTH));
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 			}
 		});
@@ -94,16 +95,18 @@ public class View extends GameView {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE ;
 	}
 
 	public void step(long now) {
 		// if the camera is blocked
 		if (Options.LVL_HEIGHT - m_model.m_player.m_bounds.y <= (NB_BLOCKS_WIN / 2)) {
-			m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
+			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE ;
 		}
 		// the camera follows the player
 		else {
-			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2);
+			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2) * BLOCK_SIZE;
 		}
 
 		transform();
@@ -112,57 +115,78 @@ public class View extends GameView {
 	public void transform() {
 		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-			m_currentBackground2 = m_heavenBackground2;		
-		}
-		else {
+			m_currentBackground2 = m_heavenBackground2;
+		} else {
 			m_currentBackground = m_hellBackground;
-			m_currentBackground2 = m_hellBackground;			
+			m_currentBackground2 = m_hellBackground;
 		}
 	}
+
 	@Override
 	protected void _paint(Graphics g) {
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics g1 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2, m_yG1 * BLOCK_SIZE,
-				Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT) * BLOCK_SIZE);
-		g1.setColor(m_model.m_currentLevel.m_c);
-		g1.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
-		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2,
-				(m_yG1 - Options.LVL_HEIGHT) * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE,
-				(Options.LVL_HEIGHT) * BLOCK_SIZE);
-
-		g2.setColor(m_model.m_nextLevel.m_c);
-		g2.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
-
-		paint(g1, m_model.m_currentLevel);
-		paint(g2, m_model.m_nextLevel);
+		paintLevel(g, m_model.m_currentLevel, 0);
+		 paintLevel(g, m_model.m_nextLevel, 1);
 
 		Iterator<Component> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
 			Component graphic = iter.next();
 			graphic.repaint();
-//			graphic.revalidate();
 		}
-		g1.dispose();
-		g2.dispose();
 	}
 
-//	private void paint(Graphics g, Entity e) {
-//		g.setColor(e.m_currentStunt.m_c);
-//		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
-//				e.m_bounds.height * BLOCK_SIZE);
-//	}
-//
-//	private void paintGrid(Graphics g) {
-//		g.setColor(Color.BLACK);
-//		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
-//			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
-//		}
-//		for (int i = 0; i < Options.LVL_WIDTH; i++) {
-//			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
-//		}
-//	}
+	private void paintLevel(Graphics g, Level lvl, int i) {
+		int viewPortWidth = getWidth();
+		float borderSize = (float) (65.0f * (float)getWidth() / 765.0f);
+
+		int lvlHeight = Options.LVL_HEIGHT * BLOCK_SIZE;
+		int lvlWidth = (int) (((float) (Options.LVL_WIDTH * BLOCK_SIZE)) / (1.0f - (2.0f * 65.0f) / 765.0f));
+		int lvlY = m_yG1 - lvlHeight * i;
+		int lvlX = (getWidth() - lvlWidth) / 2;
+		
+		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight, null);
+
+		g.setColor(Color.white);
+		g.drawLine(lvlX, lvlY, lvlX + lvlWidth, lvlY);
+
+		Rectangle viewportBounds = new Rectangle(0, 0, getWidth(), getHeight());
+		if(lvl.m_player != null) {
+			Rectangle bound = getRect(lvl.m_player, lvlX + (int)borderSize, lvlY);
+			 if(viewportBounds.intersects(bound)) {
+				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
+			 }
+		}
+
+		Iterator<Entity>  iter = lvl.m_souls.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
+			 if(viewportBounds.intersects(bound)) {
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			 }
+//			paintAnimation(g, iter.next());
+		}
+		
+		iter = lvl.m_missiles.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int)borderSize, lvlY);
+			 if(viewportBounds.intersects(bound)) {
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			 }
+		}
+	}
+
+	private void paintSprite(Graphics g, BufferedImage sprite, Rectangle bound) {
+		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
+	}
+
+	private Rectangle getRect(Entity m_player, int x, int y) {
+		return new Rectangle(m_player.m_bounds.x * BLOCK_SIZE + x, m_player.m_bounds.y * BLOCK_SIZE + y,
+				m_player.m_bounds.width * BLOCK_SIZE, m_player.m_bounds.height * BLOCK_SIZE);
+	}
 
 	private void paint(Graphics g, Level lvl) {
 		Rectangle bounds = g.getClipBounds();
