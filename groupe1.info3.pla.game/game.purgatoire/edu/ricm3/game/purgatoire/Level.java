@@ -115,7 +115,7 @@ public class Level {
 	public void step(long now) {
 		removeEntities();
 		Iterator<Entity> iter;
-		if (now - lastUpdatePlayer > 1000 / 60) {
+		if (now - lastUpdatePlayer > 1000 / 30) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
@@ -126,7 +126,7 @@ public class Level {
 			}
 		}
 
-		if (now - lastUpdateSouls > 1000 / 60) {
+		if (now - lastUpdateSouls > 1000 / 30) {
 			iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);

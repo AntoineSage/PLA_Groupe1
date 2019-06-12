@@ -8,7 +8,9 @@ import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.HeavenPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.HellPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.PlayerStunt;
+import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IEntityType;
+import ricm3.parser.Ast.Automaton;
 
 public class Player extends Entity {
 	private int m_maxTotalHP;

@@ -1,19 +1,19 @@
 Player(Init){
   * (Init):
-  | Key(z) ? Move(N) :(Step1)
-  | Key(s) ? Move(S) :(Step1)
-  | Key(q) ? Move(O) :(Step1)
-  | Key(d) ? Move(E) :(Step1)
-  | True ? Wait :(Step1)
+  | Key(z) ? Move(N) :(Init)
+  | Key(s) ? Move(S) :(Init)
+  | Key(q) ? Move(O) :(Init)
+  | Key(d) ? Move(E) :(Init)
+ }
   
-  * (Step1): 
+ PlayerAction(Init){
+  * (Init): 
   | Key(FU) ? Hit(N) :(Init)
   | Key(FD) ? Hit(S) :(Init)
   | Key(FL) ? Hit(O) :(Init)
   | Key(FR) ? Hit(E) :(Init)
   | Key(p) ? Pop() :(Init)
   | Key(w) ? Wizz() :(Init)
-  | True ? Wait :(Init)
 }
 
 SoulsHell(Init){

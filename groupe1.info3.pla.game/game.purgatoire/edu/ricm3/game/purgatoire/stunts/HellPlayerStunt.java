@@ -10,7 +10,9 @@ import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
+import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
+import ricm3.parser.Ast.Automaton;
 
 public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
@@ -23,6 +25,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	int m_DMGBuffRatio = Options.BUFF_DMG;
 	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
 	int m_durationBuff = Options.BUFF_DURATION;
+	
+	IAutomaton m_automatonMove;
 
 	public HellPlayerStunt() {
 		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2),
@@ -34,6 +38,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_popTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
+		m_automatonMove = Singleton.getNewPlayerHellMoveAut();
 	}
 
 	@Override
@@ -157,6 +162,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_missileTimer.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
+		m_automatonMove.step(m_entity);
 	}
 
 	@Override
