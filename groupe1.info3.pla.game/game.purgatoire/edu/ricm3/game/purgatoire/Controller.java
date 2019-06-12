@@ -235,7 +235,8 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().addKarma(+50);
 		} else if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.getPlayer().addKarma(-50);
-		}
+		} else if (e.getKeyCode() == KeyEvent.VK_R)
+			m_model.respawn();
 	}
 
 	@Override

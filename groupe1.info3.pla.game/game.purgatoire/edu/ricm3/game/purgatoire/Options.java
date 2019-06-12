@@ -49,11 +49,15 @@ public class Options {
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
 
 	// NEST OPTIONS
-	public static int HELL_NEST_DMG = 2;
-	public static int HELL_NEST_HP_MAX = 1;
+	public static final int HELL_NEST_DMG_BASE = 2;
+	public static int HELL_NEST_DMG = HELL_NEST_DMG_BASE;
+	public static final int HELL_NEST_HP_MAX_BASE = 1;
+	public static int HELL_NEST_HP_MAX = HELL_NEST_HP_MAX_BASE;
 	public static int HELL_NEST_KARMA_TOGIVE = -10;
-	public static int HEAVEN_NEST_DMG = 2;
-	public static int HEAVEN_NEST_HP_MAX = 1;
+	public static final int HEAVEN_NEST_DMG_BASE = 2;
+	public static int HEAVEN_NEST_DMG = HEAVEN_NEST_DMG_BASE;
+	public static final int HEAVEN_NEST_HP_MAX_BASE = 1;
+	public static int HEAVEN_NEST_HP_MAX = HEAVEN_NEST_HP_MAX_BASE;
 	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
 
 	public static final int NEST_POP_DURATION = 5000;
@@ -71,11 +75,15 @@ public class Options {
 	public static final int NEST_EGG_RANGE = 2 * Options.NEST_SIZE + 4; // = 10
 
 	// SOUL OPTIONS
-	public static int HELL_SOUL_DMG = 10;
-	public static int HELL_SOUL_HP_MAX = 3;
+	public static final int HELL_SOUL_DMG_BASE = 10;
+	public static int HELL_SOUL_DMG = HELL_SOUL_DMG_BASE;
+	public static final int HELL_SOUL_HP_MAX_BASE = 3;
+	public static int HELL_SOUL_HP_MAX = HELL_SOUL_HP_MAX_BASE;
 	public static int HELL_SOUL_KARMA_TOGIVE = -10;
-	public static int HEAVEN_SOUL_DMG = 10;
-	public static int HEAVEN_SOUL_HP_MAX = 1;
+	public static final int HEAVEN_SOUL_DMG_BASE = 10;
+	public static int HEAVEN_SOUL_DMG = HEAVEN_SOUL_DMG_BASE;
+	public static final int HEAVEN_SOUL_HP_MAX_BASE = 1;
+	public static int HEAVEN_SOUL_HP_MAX = HEAVEN_SOUL_HP_MAX_BASE;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
 	public static final double HELL_SOUL_DMG_COEF = 1.5;
@@ -97,10 +105,14 @@ public class Options {
 	public static long HELL_SPECIAL_TIMER = 2000;
 
 	// OBSTACLE OPTIONS
-	public static int HELL_OBSTACLE_DMG = 0;
-	public static int HELL_OBSTACLE_HP_MAX = 1;
-	public static int HEAVEN_OBSTACLE_DMG = 0;
-	public static int HEAVEN_OBSTACLE_HP_MAX = 1;
+	public static final int HELL_OBSTACLE_DMG_BASE = 0;
+	public static int HELL_OBSTACLE_DMG = HELL_OBSTACLE_DMG_BASE;
+	public static final int HELL_OBSTACLE_HP_MAX_BASE = 1;
+	public static int HELL_OBSTACLE_HP_MAX = HELL_OBSTACLE_HP_MAX_BASE;
+	public static final int HEAVEN_OBSTACLE_DMG_BASE = 0;
+	public static int HEAVEN_OBSTACLE_DMG = HEAVEN_OBSTACLE_DMG_BASE;
+	public static final int HEAVEN_OBSTACLE_HP_MAX_BASE = 1;
+	public static int HEAVEN_OBSTACLE_HP_MAX = HEAVEN_OBSTACLE_HP_MAX_BASE;
 
 	public static final double HELL_OBSTACLE_DMG_COEF = 1.5;
 	public static final double HELL_OBSTACLE_HP_MAX_COEF = 1.5;

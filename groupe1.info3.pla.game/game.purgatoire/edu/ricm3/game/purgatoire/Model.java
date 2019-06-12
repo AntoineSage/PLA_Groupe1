@@ -132,4 +132,27 @@ public class Model extends GameModel {
 		// TODO Auto-generated method stub
 
 	}
+
+	public void respawn() {
+		Options.HELL_NEST_DMG = Options.HELL_NEST_DMG_BASE;
+		Options.HELL_NEST_HP_MAX = Options.HELL_NEST_HP_MAX_BASE;
+		Options.HEAVEN_NEST_DMG = Options.HEAVEN_NEST_DMG_BASE;
+		Options.HEAVEN_NEST_HP_MAX = Options.HEAVEN_NEST_HP_MAX_BASE;
+		Options.HELL_SOUL_DMG = Options.HELL_SOUL_DMG_BASE;
+		Options.HELL_SOUL_HP_MAX = Options.HELL_SOUL_HP_MAX_BASE;
+		Options.HEAVEN_SOUL_DMG = Options.HEAVEN_SOUL_DMG_BASE;
+		Options.HEAVEN_SOUL_HP_MAX = Options.HEAVEN_SOUL_HP_MAX_BASE;
+		Options.HELL_OBSTACLE_DMG = Options.HELL_OBSTACLE_DMG_BASE;
+		Options.HELL_OBSTACLE_HP_MAX = Options.HELL_OBSTACLE_HP_MAX_BASE;
+		Options.HEAVEN_OBSTACLE_DMG = Options.HEAVEN_OBSTACLE_DMG_BASE;
+		Options.HEAVEN_OBSTACLE_HP_MAX = Options.HEAVEN_OBSTACLE_HP_MAX_BASE;
+		m_totalDistance = 0;
+		m_period = 0;
+		m_totalTime = 0;
+		m_wt = WorldType.HEAVEN;
+		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
+
+	}
 }
