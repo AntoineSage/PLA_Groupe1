@@ -22,7 +22,6 @@ public class Player extends Entity {
 		m_model = model;
 		m_type = IEntityType.PLAYER;
 		m_XP = 0;
-		m_HP = m_currentStunt.getMaxHP();
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
 	}
@@ -54,16 +53,16 @@ public class Player extends Entity {
 		((PlayerStunt) m_currentStunt).updateRankStats();
 		delta = getMaxTotalHP() - delta;
 		if (delta >= 0) {
-			m_currentStunt.m_maxHP += delta;
+			setMaxHP(m_currentStunt.getMaxHP() + delta);
 			addHP(delta);
 		} else {
-			m_currentStunt.m_maxHP = Math.min(m_currentStunt.m_maxHP, getMaxTotalHP());
-			setHP(Math.min(getHP(), m_currentStunt.m_maxHP));
+			setMaxHP(Math.min(m_currentStunt.getMaxHP(), getMaxTotalHP()));
+			setHP(Math.min(getHP(), m_currentStunt.getMaxHP()));
 		}
 
 		if (Options.ECHO_PLAYER_UPDATE_STATS)
 			System.out.println(
-					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.m_maxHP
+					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.getMaxHP()
 							+ " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG() + " baseDMG");
 	}
 

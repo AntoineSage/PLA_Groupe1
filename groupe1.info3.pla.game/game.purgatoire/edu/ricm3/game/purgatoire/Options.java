@@ -4,14 +4,14 @@ public class Options {
 
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
-	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 46;
+	public static final int LVL_HEIGHT = 90;
+	public static final int LVL_WIDTH = 54;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
 	public static final int UI_BAR_WIDTH = 30;
 
-	public static final int TOTAL_PERIOD = 5000;
+	public static final int TOTAL_PERIOD = 6000;
 	public static final String AUT_FILE = "automatons/automata.aut";
 
 	public static final double COEF_KARMA_POS = 0.2;
@@ -20,19 +20,26 @@ public class Options {
 	public static final long DEFAULT_CD = 1000;
 
 	public static final int NB_PERIOD_DIFFICULTY = 2;
+	
+	
 
 	// PLAYER OPTIONS
 
 	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
-	public static int HELL_PLAYER_DMG = 100;
+	public static int HELL_PLAYER_DMG = 1;
 	public static int HELL_PLAYER_HP_MAX = 1000;
 	public static int HELL_DIVIDAND_HP_MAX_TOLOSE = 50;
 	public static int HEAVEN_PLAYER_DMG = 100;
 	public static int HEAVEN_PLAYER_HP_MAX = 1000;
 
+	public static int PLAYER_MAX_TOTAL_HP = 1000;
+	//public static int PLAYER_HP = 1000;
+	public static int PLAYER_XP = 0;
+	public static int PLAYER_XP_MAX = 150;
 	public static long HELL_PLAYER_WIZZ_TIMER = 1000;
 	public static final int PLAYER_KARMA_MAX = 150;
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
+	public static boolean CHEAT_MODE = true;
 
 	// Player stats arrays
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
@@ -42,18 +49,22 @@ public class Options {
 	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-	public static long[] HIT_TIMER_HELL = { 1000, 900, 800, 700 };
+	public static long[] HIT_TIMER_HELL = { 500, 400, 300, 100 };
 //	public static long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
 
 	// NEST OPTIONS
-	public static int HELL_NEST_DMG = 2;
-	public static int HELL_NEST_HP_MAX = 1;
+	public static final int HELL_NEST_DMG_BASE = 2;
+	public static int HELL_NEST_DMG = HELL_NEST_DMG_BASE;
+	public static final int HELL_NEST_HP_MAX_BASE = 1;
+	public static int HELL_NEST_HP_MAX = HELL_NEST_HP_MAX_BASE;
 	public static int HELL_NEST_KARMA_TOGIVE = -10;
-	public static int HEAVEN_NEST_DMG = 2;
-	public static int HEAVEN_NEST_HP_MAX = 1;
+	public static final int HEAVEN_NEST_DMG_BASE = 2;
+	public static int HEAVEN_NEST_DMG = HEAVEN_NEST_DMG_BASE;
+	public static final int HEAVEN_NEST_HP_MAX_BASE = 1;
+	public static int HEAVEN_NEST_HP_MAX = HEAVEN_NEST_HP_MAX_BASE;
 	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
 
 	public static final int NEST_POP_DURATION = 5000;
@@ -62,7 +73,6 @@ public class Options {
 	public static final long NEST_MIN_SPAWN_PERIOD = 500;
 
 	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
-
 	public static final double HELL_NEST_DMG_COEF = 1.5;
 	public static final double HELL_NEST_HP_MAX_COEF = 1.5;
 	public static final double HEAVEN_NEST_DMG_COEF = 1.5;
@@ -70,12 +80,17 @@ public class Options {
 
 	public static final int NEST_EGG_RANGE = 2 * Options.NEST_SIZE + 4; // = 10
 
+
 	// SOUL OPTIONS
-	public static int HELL_SOUL_DMG = 10;
-	public static int HELL_SOUL_HP_MAX = 3;
+	public static final int HELL_SOUL_DMG_BASE = 10;
+	public static int HELL_SOUL_DMG = HELL_SOUL_DMG_BASE;
+	public static final int HELL_SOUL_HP_MAX_BASE = 3;
+	public static int HELL_SOUL_HP_MAX = HELL_SOUL_HP_MAX_BASE;
 	public static int HELL_SOUL_KARMA_TOGIVE = -10;
-	public static int HEAVEN_SOUL_DMG = 10;
-	public static int HEAVEN_SOUL_HP_MAX = 1;
+	public static final int HEAVEN_SOUL_DMG_BASE = 10;
+	public static int HEAVEN_SOUL_DMG = HEAVEN_SOUL_DMG_BASE;
+	public static final int HEAVEN_SOUL_HP_MAX_BASE = 3;
+	public static int HEAVEN_SOUL_HP_MAX = HEAVEN_SOUL_HP_MAX_BASE;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
 
 	public static final double HELL_SOUL_DMG_COEF = 1.5;
@@ -85,22 +100,27 @@ public class Options {
 
 	public static final int SOUL_STEP_DELAY = 1000 / 15;
 
+
 	// SPCL OPTIONS
 	public static int HELL_SPCL_DMG = 1;
-	public static int HELL_SPCL_HP_MAX = 1;
+	public static int HELL_SPCL_HP_MAX = 100;
 	public static int HELL_SPCL_HP_TOGIVE = 5;
 	public static int HELL_SPCL_KARMA_TOGIVE = 10;
 	public static int HEAVEN_SPCL_DMG = 1;
-	public static int HEAVEN_SPCL_HP_MAX = 1;
+	public static int HEAVEN_SPCL_HP_MAX = 100;
 	public static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
 	public static long HEAVEN_SPECIAL_TIMER = 5000;
 	public static long HELL_SPECIAL_TIMER = 2000;
 
 	// OBSTACLE OPTIONS
-	public static int HELL_OBSTACLE_DMG = 0;
-	public static int HELL_OBSTACLE_HP_MAX = 1;
-	public static int HEAVEN_OBSTACLE_DMG = 0;
-	public static int HEAVEN_OBSTACLE_HP_MAX = 1;
+	public static final int HELL_OBSTACLE_DMG_BASE = 0;
+	public static int HELL_OBSTACLE_DMG = HELL_OBSTACLE_DMG_BASE;
+	public static final int HELL_OBSTACLE_HP_MAX_BASE = 1;
+	public static int HELL_OBSTACLE_HP_MAX = HELL_OBSTACLE_HP_MAX_BASE;
+	public static final int HEAVEN_OBSTACLE_DMG_BASE = 0;
+	public static int HEAVEN_OBSTACLE_DMG = HEAVEN_OBSTACLE_DMG_BASE;
+	public static final int HEAVEN_OBSTACLE_HP_MAX_BASE = 1;
+	public static int HEAVEN_OBSTACLE_HP_MAX = HEAVEN_OBSTACLE_HP_MAX_BASE;
 
 	public static final double HELL_OBSTACLE_DMG_COEF = 1.5;
 	public static final double HELL_OBSTACLE_HP_MAX_COEF = 1.5;
@@ -112,7 +132,9 @@ public class Options {
 	public static int HELL_MISSILE_HP_MAX = 1;
 	public static int HEAVEN_MISSILE_DMG = 1;
 	public static int HEAVEN_MISSILE_HP_MAX = 1;
-	public static long MISSILE_TIMER = 1000;
+	
+	public static long MISSILE_TIMER = 100;
+
 
 	// DASH SIZE AND COOLDOWN
 	public static int DASH_SIZE = 10;
@@ -133,8 +155,11 @@ public class Options {
 	public static int SOUL_SIZE = 2;
 	public static int NEST_SIZE = 3;
 	public static int SPCL_SIZE = 5;
-	public static int MISSILE_SIZE = 1;
 	public static int OBSTACLE_SIZE = 3;
+	public static int MISSILE_SIZE = 1;
+
+	// LVL OPTIONS
+	public static int LVL_QUARTER_MAX_NBR = 6; // nbr of paterns
 
 	// Echo options
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;

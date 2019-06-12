@@ -11,12 +11,10 @@ public class Obstacle extends Entity {
 	Obstacle(Level level, Stunt heaven, Stunt hell, int x, int y, int size) {
 		super(level, heaven, hell, x, y, size);
 		m_type = IEntityType.OBSTACLE;
-		m_HP = m_currentStunt.getMaxHP();
 	}
 
 	public Obstacle(Level level, int x, int y, int size) {
 		super(level, new HeavenObstacleStunt(), new HellObstacleStunt(), x, y, size);
 		m_type = IEntityType.OBSTACLE;
-		m_HP = m_currentStunt.getMaxHP();
 	}
 }

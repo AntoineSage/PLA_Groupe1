@@ -1,0 +1,7 @@
+Part of the graphic tiles used in this program is the public 
+domain roguelike tileset "RLTiles" 
+(bolt04.png, brick_gray2.png, dngn_altar_kikubaaqudgha.png, dngn_blood_fountain2.png, dngn_blue_fountain.png).
+
+You can find the original tileset at:
+http://rltiles.sf.net
+http://opengameart.org/content/dungeon-crawl-32x32-tiles, the crawl-tiles page

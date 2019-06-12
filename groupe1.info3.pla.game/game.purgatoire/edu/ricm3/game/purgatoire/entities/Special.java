@@ -16,11 +16,15 @@ public class Special extends Entity {
 	public Special(Level level, int x, int y, int size) {
 		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), x, y, size);
 		m_type = IEntityType.TEAM;
-		m_HP = m_currentStunt.getMaxHP();
 	}
 
 	public Special(Level level, int x, int y) {
 		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), x, y, Options.SPCL_SIZE);
+		m_type = IEntityType.TEAM;
+	}
+
+	public Special(Level level) {
+		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), 0, 0, Options.SPCL_SIZE);
 		m_type = IEntityType.TEAM;
 		m_HP = m_currentStunt.getMaxHP();
 	}

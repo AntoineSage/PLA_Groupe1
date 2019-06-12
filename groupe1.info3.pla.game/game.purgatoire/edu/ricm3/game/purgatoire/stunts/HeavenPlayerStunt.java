@@ -10,6 +10,7 @@ import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
+import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -20,6 +21,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	Timer m_hitCoolDown;
 	boolean m_isFiring;
 	Timer m_karmaTimer;
+	
+	IAutomaton m_automatonMove;
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
@@ -34,6 +37,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
+		m_automatonMove = Singleton.getNewPlayerHeavenMoveAut();
 	}
 
 	@Override
@@ -58,6 +62,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+		
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
@@ -131,6 +137,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
+		m_automatonMove.step(m_entity);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ public class Entity {
 	public Rectangle m_bounds;
 	public IEntityType m_type;
 	public IDirection m_direction;
+	public float m_transparency;
 
 	private Stunt m_heavenStunt, m_hellStunt;
 
@@ -29,8 +30,9 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, size, size);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
+		m_transparency = 1;
 		transform();
-		m_HP = 1;
+		m_HP = this.m_currentStunt.getMaxHP();
 	}
 
 	public void transform() {
@@ -54,33 +56,33 @@ public class Entity {
 	}
 
 	public double getHPPercent() {
-		return (double) m_HP / m_currentStunt.m_maxHP;
+		return (double) m_HP / m_currentStunt.getMaxHP();
 	}
 
 	public void setHPPercent(double p) {
-		m_HP = (int) (m_currentStunt.m_maxHP * p);
+		m_HP = (int) (m_currentStunt.getMaxHP() * p);
 	}
 
 	public void addHP(int HP) {
-		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
+		m_HP = Math.min(m_currentStunt.getMaxHP(), m_HP + HP);
 		m_HP = Math.max(m_HP, 0);
 		if (Options.ECHO_HP_CHANGE)
 			System.out.println("Entity HP change: " + HP + " HP, " + getMaxHP() + " maxHP");
 	}
 
 	public int getMaxHP() {
-		return m_currentStunt.m_maxHP;
+		return m_currentStunt.getMaxHP();
 	}
 
 	/*
 	 * public int getDMG() { return (m_DMG * m_currentStunt.m_buffedDMG); }
 	 */
 	public void addMaxHP(int maxHP) {
-		m_currentStunt.m_maxHP += maxHP;
+		m_currentStunt.setMaxHP(m_currentStunt.getMaxHP() + maxHP);
 	}
 
 	public void setMaxHP(int maxHP) {
-		m_currentStunt.m_maxHP = maxHP;
+		m_currentStunt.setMaxHP(maxHP);
 	}
 
 	public void takeDamage(int DMG) {

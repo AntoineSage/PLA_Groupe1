@@ -3,3 +3,4 @@ NORTH = 1
 EAST = 1
 SOUTH = 1
 WEST = 1
+IDLE = 1

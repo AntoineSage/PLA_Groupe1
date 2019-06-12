@@ -29,13 +29,13 @@ public class HeavenSpecialStunt extends Stunt {
 	@Override
 	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
-		if (m_heavenSpecialTimer == null)
+		if (m_heavenSpecialTimer == null) {
 			m_heavenSpecialTimer = new Timer(5000);
-		m_heavenSpecialTimer.start();
+			m_heavenSpecialTimer.start();
+		}
 		if (player != null) {
-			player.addKarma(m_entity);
 			System.out.println("sur chat");
-
+			player.addKarma(m_entity);
 		}
 		if (Options.ECHO_POP_SPECIAL)
 			System.out.println("Chat pop (give karma)");
@@ -43,6 +43,7 @@ public class HeavenSpecialStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
+		m_entity.m_transparency = m_heavenSpecialTimer.getRemainingTimePercentage();
 		System.out.println("wizz cat");
 	}
 
@@ -59,6 +60,8 @@ public class HeavenSpecialStunt extends Stunt {
 			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
 			}
+			else
+				this.wizz(null);
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class Stunt {
 	int m_wizzCooldown; // not used
 	int m_wizzDuration;
 
-	public int m_maxHP;
+	private int m_maxHP;
 	private int m_DMG;
 	public int m_karmaToGive;
 	float m_DMGBuff = 1;
@@ -234,7 +234,20 @@ public class Stunt {
 	}
 
 	public void hit(IDirection d) {
-		System.out.println("hit de base");
+		switch (d) {
+		case NORTH:
+			m_entity.m_direction = IDirection.NORTH;
+			break;
+		case SOUTH:
+			m_entity.m_direction = IDirection.SOUTH;
+			break;
+		case EAST:
+			m_entity.m_direction = IDirection.EAST;
+			break;
+		case WEST:
+			m_entity.m_direction = IDirection.WEST;
+			break;
+		}
 	}
 
 	private void move(int x, int y) {
@@ -265,6 +278,14 @@ public class Stunt {
 
 	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
+	}
+	
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+	
+	public void setMaxHP(int maxHP) {
+		m_maxHP = maxHP;
 	}
 
 	public int getBaseDMG() {
@@ -348,6 +369,20 @@ public class Stunt {
 		m_automaton.step(m_entity);
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
+		switch (m_entity.m_direction) {
+		case NORTH:
+			m_animation.changeTo(AnimType.NORTH);
+			break;
+		case SOUTH:
+			m_animation.changeTo(AnimType.SOUTH);
+			break;
+		case EAST:
+			m_animation.changeTo(AnimType.EAST);
+			break;
+		case WEST:
+			m_animation.changeTo(AnimType.WEST);
+			break;
+		}
 	}
 
 	public long getTimeLeftPop() {
@@ -356,10 +391,6 @@ public class Stunt {
 
 	public long getTimeLeftWizz() {
 		return m_wizzTimer.getCurrent();
-	}
-
-	public int getMaxHP() {
-		return m_maxHP;
 	}
 
 }

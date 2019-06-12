@@ -16,13 +16,11 @@ public class Soul extends Entity {
 	public Soul(Level level, int x, int y, int size) {
 		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, size);
 		m_type = IEntityType.ADVERSARY;
-		m_HP = m_currentStunt.getMaxHP();
 	}
 
 	public Soul(Level level, int x, int y) {
 		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, Options.SOUL_SIZE);
 		m_type = IEntityType.ADVERSARY;
-		m_HP = m_currentStunt.getMaxHP();
 	}
 
 }
