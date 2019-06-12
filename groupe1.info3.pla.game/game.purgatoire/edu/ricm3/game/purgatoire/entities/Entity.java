@@ -52,6 +52,14 @@ public class Entity {
 		return m_HP;
 	}
 
+	public double getHPPercent() {
+		return (double) m_HP / m_currentStunt.m_maxHP;
+	}
+
+	public void setHPPercent(double p) {
+		m_HP = (int) (m_currentStunt.m_maxHP * p);
+	}
+
 	public void addHP(int HP) {
 		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
 		m_HP = Math.max(m_HP, 0);
