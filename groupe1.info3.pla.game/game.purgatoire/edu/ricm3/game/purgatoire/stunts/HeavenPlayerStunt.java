@@ -1,13 +1,13 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 
 import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.entities.Entity;
+import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
@@ -15,24 +15,35 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
-	Timer m_dashTimer;
+	LinkedList<Missile> m_missiles;
+	Timer m_hitTimer;
+	Timer m_hitCoolDown;
+	boolean m_isFiring;
+	Timer m_karmaTimer;
 
 	public HeavenPlayerStunt() {
-		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2));
+		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
+				Options.PLAYER_HP_MAX_TOTAL_HEAVEN[0], Options.PLAYER_DMG_HEAVEN[0]);
 
-		m_dashTimer = new Timer(m_cooldownDash);
-		m_maxHP = Options.HEAVEN_PLAYER_HP_MAX;
-		setDMG(Options.HEAVEN_PLAYER_DMG);
+		m_popCooldown = Options.DASH_CD;
+		m_popTimer = new Timer(m_popCooldown);
+		m_missiles = new LinkedList<Missile>();
+		m_hitTimer = new Timer(Options.HEAVEN_HIT_TIMER);
+		m_hitCoolDown = new Timer(Options.HEAVEN_HIT_CD);
+		m_isFiring = false;
+
+		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
+		m_karmaTimer.start();
 	}
 
 	@Override
 	public void pop(IDirection d) {
-		if (m_dashTimer.end()) {
+		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
-			System.out.println("dash");
-			m_dashTimer.start(m_cooldownDash * 1000);
+			m_popTimer.start();
 		}
-		System.out.println("pop heaven player");
+		if (Options.ECHO_POP_PLAYER)
+			System.out.println("Player pop heaven");
 	}
 
 	@Override
@@ -41,75 +52,59 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		if (special != null) {
 			special.pop(null);
 		}
-		System.out.println("wizz heaven player");
+		if (Options.ECHO_WIZZ_PLAYER)
+			System.out.println("Player wizz heaven");
 	}
 
 	@Override
 	public void hit(IDirection d) {
-		int y, yMin, yMax, x, xMin, xMax;
-		switch (d) {
-		case NORTH:
-			y = m_entity.m_bounds.y;
-			yMin = y - 2 * m_entity.m_bounds.height;
-			while (y > 1 && y > yMin) {
-				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y - 1).iterator();
-					while (iter.hasNext()) {
-						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
-					}
-				}
-				y--;
+		if (m_hitCoolDown.isFinished()) {
+			if (m_isFiring == false) {
+				m_hitTimer.start();
+				m_isFiring = true;
 			}
-			m_entity.m_direction = IDirection.NORTH;
-			break;
-		case SOUTH:
-			y = m_entity.m_bounds.y + 3;
-			yMax = y + 2 * m_entity.m_bounds.height;
-			while (y < Options.LVL_HEIGHT && y < yMax) {
-				for (x = m_entity.m_bounds.x; x < m_entity.m_bounds.x + m_entity.m_bounds.width; x++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
-					while (iter.hasNext()) {
-						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+			if (!m_hitTimer.isFinished()) {
+				Missile missile;
+				switch (d) {
+				case NORTH:
+					for (int x = 0; x <= 2; x++) {
+						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE,
+								IDirection.NORTH, m_entity);
+						m_missiles.add(missile);
 					}
-				}
-				y++;
-			}
-			m_entity.m_direction = IDirection.SOUTH;
-			break;
-		case EAST:
-			x = m_entity.m_bounds.x + m_entity.m_bounds.width;
-			xMax = x + 2 * m_entity.m_bounds.width;
-			while (x < Options.LVL_WIDTH && x < xMax) {
-				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x, y).iterator();
-					while (iter.hasNext()) {
-						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+					break;
+				case SOUTH:
+					for (int x = 0; x <= 2; x++) {
+						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, Options.MISSILE_SIZE,
+								IDirection.SOUTH, m_entity);
+						m_missiles.add(missile);
 					}
-				}
-				x++;
-			}
-			m_entity.m_direction = IDirection.EAST;
-			break;
-		case WEST:
-			x = m_entity.m_bounds.x;
-			xMin = x - 2 * m_entity.m_bounds.width;
-			while (x > 1 && x > xMin) {
-				for (y = m_entity.m_bounds.y; y < m_entity.m_bounds.y + m_entity.m_bounds.height; y++) {
-					Iterator<Entity> iter = m_entity.m_level.m_collisionGrid.get(x - 1, y).iterator();
-					while (iter.hasNext()) {
-						Entity e = iter.next();
-						e.m_currentStunt.takeDamage(getDMG());
+					break;
+				case EAST:
+					for (int y = 0; y <= 2; y++) {
+						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.EAST,
+								m_entity);
+						m_missiles.add(missile);
 					}
+					break;
+				case WEST:
+					for (int y = 0; y <= 2; y++) {
+						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.WEST,
+								m_entity);
+						m_missiles.add(missile);
+					}
+					break;
+				default:
+					break;
 				}
-				x--;
+			} else {
+				m_hitCoolDown.start();
+				m_isFiring = false;
 			}
-			m_entity.m_direction = IDirection.WEST;
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -132,9 +127,25 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_dashTimer.m_previousNow == 0)
-			m_dashTimer.m_previousNow = now;
-		m_dashTimer.step(now);
+		m_hitTimer.step(now);
+		m_hitCoolDown.step(now);
+		m_karmaTimer.step(now);
+		changeKarmaOverTime();
+	}
+
+	@Override
+	public void changeKarmaOverTime() {
+		if (m_karmaTimer.isFinished()) {
+			((Player) m_entity).addKarma(-Options.PLAYER_KARMA_TIME_AMOUNT);
+			m_karmaTimer.start();
+		}
+	}
+
+	@Override
+	public void updateRankStats() {
+		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HEAVEN[((Player) m_entity).getRank()]);
+		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
+//		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
 
 }

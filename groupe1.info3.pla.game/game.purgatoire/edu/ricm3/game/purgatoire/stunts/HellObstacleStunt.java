@@ -5,22 +5,21 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Nest;
 import ricm3.interpreter.IDirection;
 
 public class HellObstacleStunt extends Stunt {
 
-	Timer m_obstacleDashTimer;
-
 	public HellObstacleStunt() {
-		super(Singleton.getNewObstacleHellAut(),  new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2));
-		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
-		setDMG(Options.HELL_OBSTACLE_DMG);
-		m_obstacleDashTimer = new Timer(2000);
-		m_obstacleDashTimer.m_previousNow = 1000;
+		super(Singleton.getNewObstacleHellAut(), new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2),
+				Options.HELL_OBSTACLE_HP_MAX, Options.HELL_OBSTACLE_DMG);
+
+		m_popCooldown = Options.DASH_CD;
+		m_popTimer = new Timer(m_popCooldown);
 	}
 
-	//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
+//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
 //		super(automaton, entity, sprite);
 //
 //		m_animation = new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2);
@@ -32,22 +31,22 @@ public class HellObstacleStunt extends Stunt {
 
 	@Override
 	public void pop(IDirection d) {
-		if (m_obstacleDashTimer.end()) {
+		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
-			System.out.println("dash obstacle");
-			m_obstacleDashTimer.start(m_cooldownDash * 1000);
+			m_popTimer.start();
 		}
+		if (Options.ECHO_POP_OBSTACLE)
+			System.out.println("Pop (dash) obstacle");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
-		int x, y, width, height;
+		int x, y, width;
 		x = m_entity.m_bounds.x;
 		y = m_entity.m_bounds.y;
 		width = m_entity.m_bounds.width;
-		height = m_entity.m_bounds.height;
 		m_entity.m_level.removeEntity(m_entity);
-		new Nest(m_entity.m_level, x, y, width, height);
+		new Nest(m_entity.m_level, x, y, width);
 	}
 
 	@Override
@@ -66,11 +65,13 @@ public class HellObstacleStunt extends Stunt {
 	}
 
 	@Override
+	public void takeDamage(Entity e) {
+		System.out.println("takedamage hell obstacle");
+	}
+
+	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_obstacleDashTimer.m_previousNow == 0)
-			m_obstacleDashTimer.m_previousNow = now;
-		m_obstacleDashTimer.step(now);
 	}
 
 }

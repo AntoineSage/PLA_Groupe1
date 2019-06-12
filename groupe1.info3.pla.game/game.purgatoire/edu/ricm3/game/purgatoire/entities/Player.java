@@ -18,13 +18,13 @@ public class Player extends Entity {
 	private Model m_model;
 
 	public Player(Model model, Level level, int x, int y) {
-		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_WIDTH, Options.PLAYER_HEIGHT);
+		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_SIZE);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
-		m_XP = Options.PLAYER_XP;
-		m_HP = Options.PLAYER_HP;
-		m_maxTotalHP = Options.PLAYER_MAX_TOTAL_HP;
+		m_XP = 0;
+		m_HP = m_currentStunt.getMaxHP();
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
+		((PlayerStunt) m_currentStunt).updateRankStats();
 	}
 
 	public void addKarma(Entity e) {
@@ -49,6 +49,22 @@ public class Player extends Entity {
 			m_rank--;
 			Singleton.getController().updateRankUI();
 		}
+
+		int delta = getMaxTotalHP();
+		((PlayerStunt) m_currentStunt).updateRankStats();
+		delta = getMaxTotalHP() - delta;
+		if (delta >= 0) {
+			m_currentStunt.m_maxHP += delta;
+			addHP(delta);
+		} else {
+			m_currentStunt.m_maxHP = Math.min(m_currentStunt.m_maxHP, getMaxTotalHP());
+			setHP(Math.min(getHP(), m_currentStunt.m_maxHP));
+		}
+
+		if (Options.ECHO_PLAYER_UPDATE_STATS)
+			System.out.println(
+					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.m_maxHP
+							+ " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG() + " baseDMG");
 	}
 
 	public void nextLevel(Level newLevel) {
@@ -104,6 +120,14 @@ public class Player extends Entity {
 
 	public int getMaxTotalHP() {
 		return m_maxTotalHP;
+	}
+
+	public void setMaxTotalHP(int newMax) {
+		m_maxTotalHP = newMax;
+	}
+
+	public void setHP(int HP) {
+		m_HP = HP;
 	}
 
 	public void testKarma() {
