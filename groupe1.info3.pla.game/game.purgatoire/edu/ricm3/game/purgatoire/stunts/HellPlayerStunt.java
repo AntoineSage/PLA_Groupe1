@@ -7,6 +7,7 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -15,7 +16,6 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
-	Timer m_buffTimer;
 	Timer m_karmaTimer;
 
 	int m_lastPopPeriod = -1;
@@ -29,9 +29,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				Options.PLAYER_HP_MAX_TOTAL_HELL[0], Options.PLAYER_DMG_HELL[0]);
 
 		m_missiles = new LinkedList<Missile>();
-		m_missileTimer = new Timer(1000);
-		m_wizzTimer = new Timer(1000);
-		m_buffTimer = new Timer(m_durationBuff);
+		m_missileTimer = new Timer(Options.MISSILE_TIMER);
+		m_wizzTimer = new Timer(Options.HELL_PLAYER_WIZZ_TIMER);
+		m_popTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
 	}
@@ -41,11 +41,11 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un
 		// compteur de période écoulée ?
 		m_nbPeriod = (int) m_entity.m_level.m_model.m_totalTime / Options.TOTAL_PERIOD;
-		if (m_nbPeriod != m_lastPopPeriod && m_popTimer.isFinished()) {
+		if (m_nbPeriod != m_lastPopPeriod) {
+			m_popTimer.start();
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
 			m_lastPopPeriod = m_nbPeriod;
 		}
-		System.out.println("pop hell");
 	}
 
 	@Override
@@ -117,11 +117,32 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void egg() {
 		System.out.println("egg hell");
 	}
+	
+	@Override
+	public void takeDamage(int DMG) {
+		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+		((Player) m_entity).addMaxHP(-m_entity.getMaxHP()/Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		System.out.println("HPMAX !!!:" + m_entity.getMaxHP());
+	}
+	
+	@Override
+	public void takeDamage(Entity e) {
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
+		}
+		((Player) m_entity).addMaxHP(-m_entity.getMaxHP()/Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		System.out.println("HPMAX :" + m_entity.getMaxHP());
+	}
+
 
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_buffTimer.isFinished()) {
+		if (m_popTimer.isFinished()) {
 			m_DMGBuff = 1;
 			m_weaknessBuff = 1;
 		}

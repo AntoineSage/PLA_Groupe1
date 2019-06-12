@@ -24,8 +24,8 @@ public class HeavenNestStunt extends Stunt {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHeavenAnim(), AnimType.IDLE, 2),
 				Options.HEAVEN_NEST_HP_MAX, Options.HEAVEN_NEST_DMG, Options.HEAVEN_NEST_KARMA_TOGIVE);
 
-		m_timerWizz = new Timer(3000);
-		m_timerPop = new Timer(5000);
+		m_timerWizz = new Timer(Options.NEST_TIMER_WIZZ);
+		m_timerPop = new Timer(Options.NEST_TIMER_POP);
 
 	}
 
