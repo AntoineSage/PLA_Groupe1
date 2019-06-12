@@ -130,7 +130,6 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_entity.die();
 		}
 		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
-		System.out.println("HPMAX !!!:" + m_entity.getMaxHP());
 	}
 
 	@Override
@@ -140,7 +139,6 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			m_entity.die();
 		}
 		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
-		System.out.println("HPMAX :" + m_entity.getMaxHP());
 	}
 
 	@Override
@@ -179,7 +177,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HELL[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HELL[((Player) m_entity).getRank()]);
 		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG());
+			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG() + " baseDMG");
 	}
 
 }

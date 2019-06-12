@@ -19,6 +19,8 @@ public class Options {
 
 	public static final long DEFAULT_CD = 1000;
 
+	public static final int NB_PERIOD_DIFFICULTY = 2;
+
 	// PLAYER OPTIONS
 	public static final int PLAYER_HP_START = 1000;
 	public static final int PLAYER_XP_START = 0;
@@ -52,10 +54,10 @@ public class Options {
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
 
 	// NEST OPTIONS
-	public static int HELL_NEST_DMG = 1;
+	public static int HELL_NEST_DMG = 2;
 	public static int HELL_NEST_HP_MAX = 1;
 	public static int HELL_NEST_KARMA_TOGIVE = -10;
-	public static int HEAVEN_NEST_DMG = 1;
+	public static int HEAVEN_NEST_DMG = 2;
 	public static int HEAVEN_NEST_HP_MAX = 1;
 	public static int HEAVEN_NEST_KARMA_TOGIVE = -10;
 
@@ -66,6 +68,12 @@ public class Options {
 
 	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
 
+	public static final double HELL_NEST_DMG_COEF = 1.5;
+	public static final double HELL_NEST_HP_MAX_COEF = 1.5;
+	public static final double HEAVEN_NEST_DMG_COEF = 1.5;
+	public static final double HEAVEN_NEST_HP_MAX_COEF = 1.5;
+	// TODO coef for karma to give?
+
 	public static int NEST_HP = 1;
 
 	// SOUL OPTIONS
@@ -75,6 +83,11 @@ public class Options {
 	public static int HEAVEN_SOUL_DMG = 10;
 	public static int HEAVEN_SOUL_HP_MAX = 1;
 	public static int HEAVEN_SOUL_KARMA_TOGIVE = -10;
+
+	public static final double HELL_SOUL_DMG_COEF = 1.5;
+	public static final double HELL_SOUL_HP_MAX_COEF = 1.5;
+	public static final double HEAVEN_SOUL_DMG_COEF = 1.5;
+	public static final double HEAVEN_SOUL_HP_MAX_COEF = 1.5;
 
 	public static final int SOUL_STEP_DELAY = 1000 / 15;
 
@@ -97,6 +110,11 @@ public class Options {
 	public static int HELL_OBSTACLE_HP_MAX = 1;
 	public static int HEAVEN_OBSTACLE_DMG = 0;
 	public static int HEAVEN_OBSTACLE_HP_MAX = 1;
+
+	public static final double HELL_OBSTACLE_DMG_COEF = 1.5;
+	public static final double HELL_OBSTACLE_HP_MAX_COEF = 1.5;
+	public static final double HEAVEN_OBSTACLE_DMG_COEF = 1.5;
+	public static final double HEAVEN_OBSTACLE_HP_MAX_COEF = 1.5;
 
 	public static int OBSTACLE_HP = 1;
 
@@ -156,7 +174,8 @@ public class Options {
 	
 	public static final boolean ECHO_DASH = false;
 	public static final boolean ECHO_CIRCLE_ATTACK = false;
-
+	
+	public static final boolean ECHO_RAISE_DIFFICULTY = true;
 	public static final boolean ECHO_PLAYER_UPDATE_STATS = true;
 
 }

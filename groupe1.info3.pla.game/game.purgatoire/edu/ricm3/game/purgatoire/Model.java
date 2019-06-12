@@ -69,8 +69,43 @@ public class Model extends GameModel {
 			lastPeriodUpdate = now;
 		}
 		if (m_period >= Options.TOTAL_PERIOD) {
+			if ((int) (m_totalTime / Options.TOTAL_PERIOD) % Options.NB_PERIOD_DIFFICULTY == 0) {
+				raiseDifficulty();
+			}
+			// raiseDifficulty();
+			// m_currentLevel.updateDifficulty();
+			// m_nextLevel.updateDifficulty();
 			m_player.testKarma();
 			m_period = 0;
+		}
+	}
+
+	private void raiseDifficulty() {
+		Options.HELL_NEST_DMG *= Options.HELL_NEST_DMG_COEF;
+		Options.HELL_NEST_HP_MAX *= Options.HELL_NEST_HP_MAX_COEF;
+		Options.HEAVEN_NEST_DMG *= Options.HEAVEN_NEST_DMG_COEF;
+		Options.HEAVEN_NEST_HP_MAX *= Options.HEAVEN_NEST_HP_MAX_COEF;
+
+		Options.HELL_SOUL_DMG *= Options.HELL_SOUL_DMG_COEF;
+		Options.HELL_SOUL_HP_MAX *= Options.HELL_SOUL_HP_MAX_COEF;
+		Options.HEAVEN_SOUL_DMG *= Options.HEAVEN_SOUL_DMG_COEF;
+		Options.HEAVEN_SOUL_HP_MAX *= Options.HEAVEN_SOUL_HP_MAX_COEF;
+
+		Options.HELL_OBSTACLE_DMG *= Options.HELL_OBSTACLE_DMG_COEF;
+		Options.HELL_OBSTACLE_HP_MAX *= Options.HELL_OBSTACLE_HP_MAX_COEF;
+		Options.HEAVEN_OBSTACLE_DMG *= Options.HEAVEN_OBSTACLE_DMG_COEF;
+		Options.HEAVEN_OBSTACLE_HP_MAX *= Options.HEAVEN_OBSTACLE_HP_MAX_COEF;
+
+		if (Options.ECHO_RAISE_DIFFICULTY) {
+			System.out.println(
+					"Nest upgraded: " + Options.HELL_NEST_DMG + " hellDMG, " + Options.HELL_NEST_HP_MAX + " hellHPmax, "
+							+ Options.HEAVEN_NEST_DMG + " heavenDMG, " + Options.HEAVEN_NEST_HP_MAX + " heavenHPmax");
+			System.out.println(
+					"Soul upgraded: " + Options.HELL_SOUL_DMG + " hellDMG, " + Options.HELL_SOUL_HP_MAX + " hellHPmax, "
+							+ Options.HEAVEN_SOUL_DMG + " heavenDMG, " + Options.HEAVEN_SOUL_HP_MAX + " heavenHPmax");
+			System.out.println("Obst upgraded: " + Options.HELL_OBSTACLE_DMG + " hellDMG, "
+					+ Options.HELL_OBSTACLE_HP_MAX + " hellHPmax, " + Options.HEAVEN_OBSTACLE_DMG + " heavenDMG, "
+					+ Options.HEAVEN_OBSTACLE_HP_MAX + " heavenHPmax");
 		}
 	}
 
