@@ -9,20 +9,20 @@ import ricm3.interpreter.IEntityType;
 
 public class Nest extends Entity {
 
-	Nest(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
-		super(level, heaven, hell, x, y, width, height);
+	Nest(Level level, Stunt heaven, Stunt hell, int x, int y, int size) {
+		super(level, heaven, hell, x, y, size);
 	}
 
-	public Nest(Level level, int x, int y, int width, int height) {
-		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, width, height);
+	public Nest(Level level, int x, int y, int size) {
+		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, size);
 		m_type = IEntityType.DANGER;
-		m_HP = Options.NEST_HP;
+		m_HP = m_currentStunt.getMaxHP();
 	}
 
 	public Nest(Level level, int x, int y) {
-		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
+		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, Options.NEST_SIZE);
 		m_type = IEntityType.DANGER;
-		m_HP = Options.NEST_HP;
+		m_HP = m_currentStunt.getMaxHP();
 	}
 
 }

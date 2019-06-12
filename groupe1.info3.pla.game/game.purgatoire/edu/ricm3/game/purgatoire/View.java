@@ -114,13 +114,13 @@ public class View extends GameView {
 	public void transform() {
 		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-			m_currentBackground2 = m_heavenBackground2;		
-		}
-		else {
+			m_currentBackground2 = m_heavenBackground2;
+		} else {
 			m_currentBackground = m_hellBackground;
-			m_currentBackground2 = m_hellBackground;			
+			m_currentBackground2 = m_hellBackground;
 		}
 	}
+
 	@Override
 	protected void _paint(Graphics g) {
 		g.setColor(Color.gray);

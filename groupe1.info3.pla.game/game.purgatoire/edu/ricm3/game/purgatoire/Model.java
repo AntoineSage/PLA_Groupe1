@@ -39,27 +39,24 @@ public class Model extends GameModel {
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2,
-				Options.LVL_HEIGHT - Options.PLAYER_HEIGHT);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
 
 	public void transform() {
 		if (m_wt == WorldType.HEAVEN) {
 			m_wt = WorldType.HELL;
-			m_player.setHP(Options.HEAVEN_PLAYER_HP_MAX/2);//50% vie max
-			}else {
+			m_player.setHP(m_player.getMaxHP() / 2);
+		} else {
 			m_wt = WorldType.HEAVEN;
-			m_player.setMaxTotalHP(Options.HEAVEN_PLAYER_HP_MAX);
+			double p = m_player.getHPPercent();
+			m_player.setMaxHP(m_player.getMaxTotalHP());
+			m_player.setHPPercent(p);
 		}
 		m_currentLevel.transform();
 		m_nextLevel.transform();
 	}
 
 	public void step(long now) {
-//		if (lastPeriodUpdate == 0) {
-//			lastPeriodUpdate = now;
-//		}
-
 		m_nextLevel.step(now);
 		m_currentLevel.step(now);
 
@@ -133,6 +130,29 @@ public class Model extends GameModel {
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void respawn() {
+		Options.HELL_NEST_DMG = Options.HELL_NEST_DMG_BASE;
+		Options.HELL_NEST_HP_MAX = Options.HELL_NEST_HP_MAX_BASE;
+		Options.HEAVEN_NEST_DMG = Options.HEAVEN_NEST_DMG_BASE;
+		Options.HEAVEN_NEST_HP_MAX = Options.HEAVEN_NEST_HP_MAX_BASE;
+		Options.HELL_SOUL_DMG = Options.HELL_SOUL_DMG_BASE;
+		Options.HELL_SOUL_HP_MAX = Options.HELL_SOUL_HP_MAX_BASE;
+		Options.HEAVEN_SOUL_DMG = Options.HEAVEN_SOUL_DMG_BASE;
+		Options.HEAVEN_SOUL_HP_MAX = Options.HEAVEN_SOUL_HP_MAX_BASE;
+		Options.HELL_OBSTACLE_DMG = Options.HELL_OBSTACLE_DMG_BASE;
+		Options.HELL_OBSTACLE_HP_MAX = Options.HELL_OBSTACLE_HP_MAX_BASE;
+		Options.HEAVEN_OBSTACLE_DMG = Options.HEAVEN_OBSTACLE_DMG_BASE;
+		Options.HEAVEN_OBSTACLE_HP_MAX = Options.HEAVEN_OBSTACLE_HP_MAX_BASE;
+		m_totalDistance = 0;
+		m_period = 0;
+		m_totalTime = 0;
+		m_wt = WorldType.HEAVEN;
+		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
+		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 
 	}
 }

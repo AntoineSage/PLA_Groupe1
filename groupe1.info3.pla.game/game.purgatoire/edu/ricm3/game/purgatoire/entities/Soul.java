@@ -9,20 +9,20 @@ import ricm3.interpreter.IEntityType;
 
 public class Soul extends Entity {
 
-	Soul(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
-		super(level, heaven, hell, x, y, width, height);
+	Soul(Level level, Stunt heaven, Stunt hell, int x, int y, int size) {
+		super(level, heaven, hell, x, y, size);
 	}
 
-	public Soul(Level level, int x, int y, int width, int height) {
-		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, width, height);
+	public Soul(Level level, int x, int y, int size) {
+		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, size);
 		m_type = IEntityType.ADVERSARY;
-		m_HP = Options.SOUL_HP;
+		m_HP = m_currentStunt.getMaxHP();
 	}
 
 	public Soul(Level level, int x, int y) {
-		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, Options.SOUL_SIZE);
 		m_type = IEntityType.ADVERSARY;
-		m_HP = Options.SOUL_HP;
+		m_HP = m_currentStunt.getMaxHP();
 	}
 
 }

@@ -41,13 +41,12 @@ public class HellObstacleStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
-		int x, y, width, height;
+		int x, y, width;
 		x = m_entity.m_bounds.x;
 		y = m_entity.m_bounds.y;
 		width = m_entity.m_bounds.width;
-		height = m_entity.m_bounds.height;
 		m_entity.m_level.removeEntity(m_entity);
-		new Nest(m_entity.m_level, x, y, width, height);
+		new Nest(m_entity.m_level, x, y, width);
 	}
 
 	@Override

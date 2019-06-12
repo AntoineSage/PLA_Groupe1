@@ -200,7 +200,7 @@ public class Controller extends GameController implements ActionListener {
 
 	// TODO fix distance when changing world
 	public void updateDistanceUI() {
-		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
+		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_SIZE + "m");
 	}
 
 	public void updateCooldownUI() {
@@ -235,7 +235,8 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().addKarma(+50);
 		} else if (e.getKeyCode() == KeyEvent.VK_E) {
 			m_model.getPlayer().addKarma(-50);
-		}
+		} else if (e.getKeyCode() == KeyEvent.VK_R)
+			m_model.respawn();
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import ricm3.parser.AutomataParser;
 
 public class Singleton {
 
+	@SuppressWarnings("unused")
 	private static Singleton m_singleton = new Singleton(Options.AUT_FILE);
 
 	public static final String[] m_existingEntitiesTypes = { "Players", "Souls", "Obstacles", "Nests", "Missiles",
