@@ -1,7 +1,6 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +18,7 @@ import ricm3.interpreter.IDirection;
 public class Level {
 	private static int id = 0;
 	int m_id;
-	
+
 	Color m_c;
 
 	public Model m_model;
@@ -116,7 +115,7 @@ public class Level {
 	public void step(long now) {
 		removeEntities();
 		Iterator<Entity> iter;
-		if (now - lastUpdatePlayer > 1000 / 60) {
+		if (now - lastUpdatePlayer > 1000 / 30) {
 			lastUpdatePlayer = now;
 			if (m_player != null)
 				m_player.step(now);
@@ -127,7 +126,7 @@ public class Level {
 			}
 		}
 
-		if (now - lastUpdateSouls > 1000 / 60) {
+		if (now - lastUpdateSouls > 1000 / 30) {
 			iter = m_souls.iterator();
 			while (iter.hasNext()) {
 				iter.next().step(now);
@@ -147,7 +146,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

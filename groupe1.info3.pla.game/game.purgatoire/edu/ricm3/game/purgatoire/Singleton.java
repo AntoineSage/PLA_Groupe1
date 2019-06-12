@@ -10,6 +10,7 @@ import ricm3.parser.AutomataParser;
 
 public class Singleton {
 
+	@SuppressWarnings("unused")
 	private static Singleton m_singleton = new Singleton(Options.AUT_FILE);
 
 	public static final String[] m_existingEntitiesTypes = { "Players", "Souls", "Obstacles", "Nests", "Missiles",
@@ -30,7 +31,10 @@ public class Singleton {
 	private static Controller m_controller;
 	private static List<IAutomaton> m_automatons;
 	private static Animation[] m_animations;
-
+	
+	private static IAutomaton m_playerHeavenMoveAut;
+	private static IAutomaton  m_playerHellMoveAut;
+	
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -46,6 +50,8 @@ public class Singleton {
 		for (int i = 0; i < animationsFiles.length; i++) {
 			m_animations[i] = new Animation(animationsFiles[i]);
 		}
+		m_playerHeavenMoveAut = m_automatons.get(0);
+		m_playerHellMoveAut = m_automatons.get(0);
 	}
 
 //	public Singleton getSingleton() {
@@ -92,6 +98,15 @@ public class Singleton {
 		return m_automatons;
 	}
 
+	public static IAutomaton getNewPlayerHeavenMoveAut() {
+		return m_playerHeavenMoveAut.copy();
+	}
+	
+	public static IAutomaton getNewPlayerHellMoveAut() {
+		return m_playerHellMoveAut.copy();
+	}
+
+	
 	public static IAutomaton getNewPlayerHellAut() {
 		if (m_Firsts[0] >= 0) {
 			return m_HellAutFirst[0].copy();
