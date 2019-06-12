@@ -15,7 +15,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	LinkedList<Missile> m_missiles;
 	Timer m_missileTimer;
-	Timer m_buffTimer;
+	Timer m_karmaTimer;
 
 	int m_lastPopPeriod = -1;
 	int m_nbPeriod;
@@ -28,9 +28,11 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				Options.HELL_PLAYER_HP_MAX, Options.HELL_PLAYER_DMG);
 
 		m_missiles = new LinkedList<Missile>();
-		m_missileTimer = new Timer(1000);
+		m_missileTimer = new Timer(500);
 		m_wizzTimer = new Timer(1000);
-		m_buffTimer = new Timer(m_durationBuff);
+		m_popTimer = new Timer(m_durationBuff);
+		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
+		m_karmaTimer.start();
 	}
 
 	@Override
@@ -38,11 +40,11 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		// Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir un
 		// compteur de période écoulée ?
 		m_nbPeriod = (int) m_entity.m_level.m_model.m_totalTime / Options.TOTAL_PERIOD;
-		if (m_nbPeriod != m_lastPopPeriod && m_popTimer.isFinished()) {
+		if (m_nbPeriod != m_lastPopPeriod) {
+			m_popTimer.start();
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
 			m_lastPopPeriod = m_nbPeriod;
 		}
-		System.out.println("pop hell");
 	}
 
 	@Override
@@ -85,24 +87,24 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 			Missile missile;
 			switch (d) {
 			case NORTH:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case SOUTH:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case EAST:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			case WEST:
-					missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-							m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
-					m_missiles.add(missile);
+				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
+						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, 1, 1, d, m_entity);
+				m_missiles.add(missile);
 				break;
 			default:
 				break;
@@ -118,13 +120,15 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		if (m_buffTimer.isFinished()) {
+		if (m_popTimer.isFinished()) {
 			m_DMGBuff = 1;
 			m_weaknessBuff = 1;
 		}
 		m_popTimer.step(now);
 		m_missileTimer.step(now);
 		m_wizzTimer.step(now);
+		m_karmaTimer.step(now);
+		changeKarmaOverTime();
 	}
 
 	@Override
@@ -136,6 +140,14 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	public String getRankName() {
 		return Options.PLAYER_RANKS_HELL[((Player) m_entity).getRank()];
+	}
+
+	@Override
+	public void changeKarmaOverTime() {
+		if (m_karmaTimer.isFinished()) {
+			((Player) m_entity).addKarma(+Options.PLAYER_KARMA_TIME_AMOUNT);
+			m_karmaTimer.start();
+		}
 	}
 
 }

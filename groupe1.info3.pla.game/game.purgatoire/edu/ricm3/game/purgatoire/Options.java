@@ -5,7 +5,7 @@ public class Options {
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
 	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 45;
+	public static final int LVL_WIDTH = 46;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
@@ -38,6 +38,9 @@ public class Options {
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3" };
 	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3" };
+
+	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
+	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
 
 	// NEST OPTIONS
 	public static int HELL_NEST_DMG = 1;
@@ -97,7 +100,7 @@ public class Options {
 
 	// BUFF OPTIONS
 	public static int BUFF_DURATION = 5000;
-	public static int BUFF_DMG = 100; // %
+	public static int BUFF_DMG = 1000; // %
 	public static int BUFF_WEAKNESS = 100; // %
 
 	// ENTITIES SIZE
@@ -116,5 +119,6 @@ public class Options {
 	public static final boolean ECHO_PLAYER_XP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
 	public static final boolean ECHO_PLAYER_RANK_CHANGE = false;
+	public static final boolean ECHO_WINDOW_SIZE_CHANGE = false;
 
 }

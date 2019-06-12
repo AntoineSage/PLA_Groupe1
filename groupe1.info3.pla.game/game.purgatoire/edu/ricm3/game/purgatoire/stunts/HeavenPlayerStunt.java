@@ -19,6 +19,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	Timer m_hitTimer;
 	Timer m_hitCoolDown;
 	boolean m_isFiring;
+	Timer m_karmaTimer;
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
@@ -31,6 +32,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_hitCoolDown = new Timer(Options.HEAVEN_HIT_CD);
 		m_isFiring = false;
 
+		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
+		m_karmaTimer.start();
 	}
 
 	@Override
@@ -120,6 +123,16 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_popTimer.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
+		m_karmaTimer.step(now);
+		changeKarmaOverTime();
+	}
+
+	@Override
+	public void changeKarmaOverTime() {
+		if (m_karmaTimer.isFinished()) {
+			((Player) m_entity).addKarma(-Options.PLAYER_KARMA_TIME_AMOUNT);
+			m_karmaTimer.start();
+		}
 	}
 
 }

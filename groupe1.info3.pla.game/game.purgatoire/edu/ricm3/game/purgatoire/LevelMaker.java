@@ -19,7 +19,7 @@ public class LevelMaker {
 
 		new Obstacle(level, 10, 30, 3, 3);
 		new Obstacle(level, 13, 30, 3, 3);
-		new Obstacle(level, 16, 30, 3, 3);
+//		new Obstacle(level, 16, 30, 3, 3);
 		new Obstacle(level, 19, 30, 3, 3);
 
 		new Obstacle(level, 10, 33, 3, 3);
