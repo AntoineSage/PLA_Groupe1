@@ -1,9 +1,7 @@
 package ricm3.interpreter;
 
-import java.awt.event.KeyEvent;
 import java.util.List;
 
-import edu.ricm3.game.purgatoire.Controller;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import ricm3.parser.Ast.Parameter;

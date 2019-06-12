@@ -43,11 +43,13 @@ public class View extends GameView {
 	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
 	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
-	
+
 	private static BufferedImage m_heavenBackground;
+	private static BufferedImage m_heavenBackground2;
 	private static BufferedImage m_hellBackground;
 	private static BufferedImage m_currentBackground;
-	
+	private static BufferedImage m_currentBackground2;
+
 	public View(Model m) {
 		m_model = m;
 
@@ -56,7 +58,8 @@ public class View extends GameView {
 
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent ce) {
-				System.out.printf("%d %d\n", getWidth(), getHeight());
+				if (Options.ECHO_WINDOW_SIZE_CHANGE)
+					System.out.printf("%d %d\n", getWidth(), getHeight());
 				Options.WIN_HEIGHT = getHeight();
 
 				int tmp = getWidth();
@@ -67,18 +70,26 @@ public class View extends GameView {
 			}
 		});
 		m_graphicUIs = new LinkedList<Component>();
-		
+
 		File imageFile = new File("sprites/hellBG.png");
 		try {
 			m_hellBackground = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
-		}	
-		
-		imageFile = new File("sprites/hellBG.png");
+		}
+
+		imageFile = new File("sprites/heavenBG1.png");
 		try {
 			m_heavenBackground = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+
+		imageFile = new File("sprites/heavenBG2.png");
+		try {
+			m_heavenBackground2 = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -94,15 +105,18 @@ public class View extends GameView {
 		else {
 			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2);
 		}
-		
+
 		transform();
 	}
 
 	public void transform() {
-		if (m_model.getWorldType() == WorldType.HEAVEN)
+		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-		else
+			m_currentBackground2 = m_heavenBackground2;
+		} else {
 			m_currentBackground = m_hellBackground;
+			m_currentBackground2 = m_hellBackground;
+		}
 	}
 
 	@Override
@@ -134,28 +148,29 @@ public class View extends GameView {
 		g2.dispose();
 	}
 
-	private void paint(Graphics g, Entity e) {
-		g.setColor(e.m_currentStunt.m_c);
-		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
-				e.m_bounds.height * BLOCK_SIZE);
-	}
-
-	private void paintGrid(Graphics g) {
-		g.setColor(Color.BLACK);
-		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
-			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
-		}
-		for (int i = 0; i < Options.LVL_WIDTH; i++) {
-			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
-		}
-	}
+//	private void paint(Graphics g, Entity e) {
+//		g.setColor(e.m_currentStunt.m_c);
+//		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
+//				e.m_bounds.height * BLOCK_SIZE);
+//	}
+//
+//	private void paintGrid(Graphics g) {
+//		g.setColor(Color.BLACK);
+//		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
+//			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
+//		}
+//		for (int i = 0; i < Options.LVL_WIDTH; i++) {
+//			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
+//		}
+//	}
 
 	private void paint(Graphics g, Level lvl) {
 		Rectangle bounds = g.getClipBounds();
-		g.drawImage(m_currentBackground, 0, 0, bounds.width, bounds.height, null);
+		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, 0, 0, bounds.width, bounds.height,
+				null);
 		g.setColor(Color.white);
 		g.drawLine(0, 0, bounds.width, 0);
-		
+
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
 		while (iter.hasNext()) {
 			paintAnimation(g, iter.next());

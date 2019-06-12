@@ -1,6 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,9 @@ import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
+	private static int id = 0;
+	int m_id;
+
 	Color m_c;
 
 	public Model m_model;
@@ -38,7 +42,11 @@ public class Level {
 	private long lastUpdateObstacles;
 	private long lastUpdateNests;
 
+	public BufferedImage m_background;
+
 	Level(Model model, Color c) {
+		m_id = id;
+		id++;
 		m_c = c;
 		m_model = model;
 
@@ -50,6 +58,7 @@ public class Level {
 		m_toRemove = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
+
 	}
 
 	Level(Model model) {
@@ -57,6 +66,10 @@ public class Level {
 	}
 
 	public void addEntity(Entity e) {
+		if (m_collisionGrid.addEntity(e) == null)
+			return;
+		m_entities.add(e);
+
 		if (e instanceof Obstacle) {
 			if (m_obstacles.contains(e))
 				throw new IllegalArgumentException("Cannot have to same entity in the level");
@@ -88,9 +101,6 @@ public class Level {
 				throw new IllegalArgumentException("Cannot have to same entity in the level");
 			m_missiles.add(e);
 		}
-
-		m_entities.add(e);
-		m_collisionGrid.addEntity(e);
 	}
 
 	public void removeEntity(Entity e) {
@@ -136,7 +146,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > Options.NEST_SPAWN_DELAY) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
@@ -192,60 +202,46 @@ public class Level {
 		return m_model.getWorldType();
 	}
 
-	/*
-	 * position: 1 = NW, 2 = NE, 3 = SW, 4 = SE
-	 * 
-	 */
-
-	void levelGenerator(List<String> level, int position) {
-		int x_offset = 0;
-		int y_offset = 0;
-		if(level.size() != Options.LVL_HEIGHT / 2)
-			throw new IllegalArgumentException("Wrong lvl Height in your file");
-		for (int k = 0; k < Options.LVL_HEIGHT / 2; k++) {
-			if (level.get(k).length() != Options.LVL_WIDTH / 2)
-				throw new IllegalArgumentException("Wrong lvl Width in your file");
-		}
-		switch (position) {
-		case 0:
-			break;
-		case 1:
-			x_offset = Options.LVL_WIDTH / 2;
-			break;
-		case 2:
-			y_offset = Options.LVL_HEIGHT / 2;
-			break;
-		case 3:
-			x_offset = Options.LVL_WIDTH / 2;
-			y_offset = Options.LVL_HEIGHT / 2;
-			break;
-		}
-		for (int i = 0; i < Options.LVL_HEIGHT / 2; i++) {
-			for (int j = 0; j < Options.LVL_WIDTH / 2; j++) {
-				if (m_collisionGrid.get(j + x_offset, i + y_offset).isEmpty())
-					entityInterpret(level.get(i).charAt(j), x_offset + j, y_offset + i);
-			}
-		}
-	}
-
-	public void entityInterpret(char c, int x, int y) {
+	public void entityInterpret(char c, int x, int y, QuarterType type) {
 		switch (c) {
 		case 'O':
-			new Obstacle(this, x, y, Options.OBSTACLE_WIDTH, Options.OBSTACLE_HEIGHT);
+			new Obstacle(this, x, y, Options.OBSTACLE_SIZE);
 			break;
 		case 'S':
-			new Soul(this, x, y, Options.SOUL_WIDTH, Options.SOUL_HEIGHT);
+			new Soul(this, x, y, Options.SOUL_SIZE);
 			break;
 		case 'N':
-			new Nest(this, x, y, Options.NEST_WIDTH, Options.NEST_HEIGHT);
+			new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '*':
-			new Special(this, x, y, Options.SPCL_WIDTH, Options.SPCL_HEIGHT);
+			new Special(this, x, y, Options.SPCL_SIZE);
+			break;
+		case '/':
+			if (type == QuarterType.NEST)
+				new Nest(this, x, y, Options.NEST_SIZE);
+			if (type == QuarterType.SPECIAL)
+				new Special(this, x, y, Options.SPCL_SIZE);
 			break;
 		case '_':
 			break;
 		default:
 			throw new IllegalArgumentException("Wrong letter in the level file");
+		}
+	}
+
+	void quarterLevelPlacement(QuarterLevel quarterLevel) {
+		if (quarterLevel.levelQuarter.size() != Options.LVL_HEIGHT / 2)
+			throw new IllegalArgumentException("Wrong lvl Height in your file");
+		for (int k = 0; k < Options.LVL_HEIGHT / 2; k++) {
+			if (quarterLevel.levelQuarter.get(k).length() != Options.LVL_WIDTH / 2)
+				throw new IllegalArgumentException("Wrong lvl Width in your file");
+		}
+		for (int i = 0; i < Options.LVL_HEIGHT / 2; i++) {
+			for (int j = 0; j < Options.LVL_WIDTH / 2; j++) {
+				if (m_collisionGrid.get(j + quarterLevel.x_offset, i + quarterLevel.y_offset).isEmpty())
+					entityInterpret(quarterLevel.levelQuarter.get(i).charAt(j), quarterLevel.x_offset + j,
+							quarterLevel.y_offset + i, quarterLevel.m_quarterType);
+			}
 		}
 	}
 }
