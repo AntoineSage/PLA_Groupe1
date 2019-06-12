@@ -47,7 +47,8 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		System.out.println("pop heaven soul");
+		if (Options.ECHO_POP_SOUL)
+			System.out.println("Soul hell pop (kamikaze)");
 	}
 
 	@Override
@@ -79,12 +80,8 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		System.out.println("Take DAMAGE" + m_entity.m_HP);
-		System.out.println("DAMAGE " + e.m_currentStunt.getDMG());
-		System.out.println("BUFF" + -(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
-			System.out.println("Soul is dying");
 			if (e instanceof Missile) {
 				System.out.println("");
 				isPlayer = (Player) ((Missile) e).getOwner();
@@ -109,9 +106,10 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		if (now - lastUpdate > 1000 / 15) {
-			m_automaton.step(m_entity);
+		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
+			super.step(now);
 			lastUpdate = now;
 		}
 	}
+
 }

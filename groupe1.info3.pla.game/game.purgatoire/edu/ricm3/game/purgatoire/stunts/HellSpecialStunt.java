@@ -33,7 +33,7 @@ public class HellSpecialStunt extends Stunt {
 	public void pop(IDirection d) {
 		Player player = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (m_hellSpecialTimer == null) {
-			m_hellSpecialTimer = new Timer(2000);
+			m_hellSpecialTimer = new Timer(Options.HELL_SPECIAL_TIMER);
 			m_hellSpecialTimer.start();
 		}
 		if (player != null) {
@@ -42,7 +42,8 @@ public class HellSpecialStunt extends Stunt {
 			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
 			this.wizz(d);
 		}
-		System.out.println("pop flaque");
+		if (Options.ECHO_POP_SPECIAL)
+			System.out.println("Flaque pop (give karma & HP)");
 	}
 
 	@Override
@@ -69,12 +70,10 @@ public class HellSpecialStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-
 		if (m_hellSpecialTimer != null) {
 			m_hellSpecialTimer.step(now);
 			if (m_hellSpecialTimer.isFinished()) {
 				m_entity.die();
-				System.out.println("test");
 			}
 		}
 

@@ -1,6 +1,8 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +17,9 @@ import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
+	private static int id = 0;
+	int m_id;
+	
 	Color m_c;
 
 	public Model m_model;
@@ -38,7 +43,11 @@ public class Level {
 	private long lastUpdateObstacles;
 	private long lastUpdateNests;
 
+	public BufferedImage m_background;
+
 	Level(Model model, Color c) {
+		m_id = id;
+		id++;
 		m_c = c;
 		m_model = model;
 
@@ -50,6 +59,7 @@ public class Level {
 		m_toRemove = new LinkedList<Entity>();
 
 		m_collisionGrid = new CollisionGrid();
+
 	}
 
 	Level(Model model) {
@@ -57,9 +67,10 @@ public class Level {
 	}
 
 	public void addEntity(Entity e) {
-		if (m_collisionGrid.addEntity(e) == null) return;
+		if (m_collisionGrid.addEntity(e) == null)
+			return;
 		m_entities.add(e);
-		
+
 		if (e instanceof Obstacle) {
 			if (m_obstacles.contains(e))
 				throw new IllegalArgumentException("Cannot have to same entity in the level");
@@ -136,7 +147,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > Options.NEST_SPAWN_DELAY) {
+		if (now - lastUpdateNests > Options.NEST_SPAWN_PERIOD && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
@@ -191,9 +202,9 @@ public class Level {
 	public WorldType getWorldType() {
 		return m_model.getWorldType();
 	}
-	
+
 	public void levelCreator() {
-		
+
 	}
-	
+
 }

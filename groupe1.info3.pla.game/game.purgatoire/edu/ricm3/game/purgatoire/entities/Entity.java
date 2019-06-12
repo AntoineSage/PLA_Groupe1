@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
 import ricm3.interpreter.IDirection;
@@ -35,10 +36,11 @@ public class Entity {
 	}
 
 	public void transform() {
-		if (getWorldType() == WorldType.HEAVEN)
+		if (getWorldType() == WorldType.HEAVEN) {
 			m_currentStunt = m_heavenStunt;
-		else
+		} else {
 			m_currentStunt = m_hellStunt;
+		}
 	}
 
 	public void step(long now) {

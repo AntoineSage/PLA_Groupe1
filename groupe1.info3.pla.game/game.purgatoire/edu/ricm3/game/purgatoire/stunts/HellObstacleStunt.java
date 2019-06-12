@@ -33,9 +33,10 @@ public class HellObstacleStunt extends Stunt {
 	public void pop(IDirection d) {
 		if (m_popTimer.isFinished()) {
 			dash(m_entity.m_direction);
-			System.out.println("dash obstacle");
 			m_popTimer.start();
 		}
+		if (Options.ECHO_POP_OBSTACLE)
+			System.out.println("Pop (dash) obstacle");
 	}
 
 	@Override
@@ -72,7 +73,6 @@ public class HellObstacleStunt extends Stunt {
 	@Override
 	public void step(long now) {
 		super.step(now);
-		m_popTimer.step(now);
 	}
 
 }

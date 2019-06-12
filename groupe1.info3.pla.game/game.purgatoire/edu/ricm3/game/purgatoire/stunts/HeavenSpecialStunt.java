@@ -37,7 +37,8 @@ public class HeavenSpecialStunt extends Stunt {
 			System.out.println("sur chat");
 			player.addKarma(m_entity);
 		}
-		System.out.println("pop cat");
+		if (Options.ECHO_POP_SPECIAL)
+			System.out.println("Chat pop (give karma)");
 	}
 
 	@Override
@@ -58,7 +59,6 @@ public class HeavenSpecialStunt extends Stunt {
 			m_heavenSpecialTimer.step(now);
 			if (m_heavenSpecialTimer.isFinished()) {
 				m_entity.die();
-				System.out.println("test");
 			}
 			else
 				this.wizz(null);

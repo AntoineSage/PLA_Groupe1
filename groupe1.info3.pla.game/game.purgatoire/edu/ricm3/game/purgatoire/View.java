@@ -47,8 +47,10 @@ public class View extends GameView {
 	private List<Component> m_graphicUIs;
 
 	private static BufferedImage m_heavenBackground;
+	private static BufferedImage m_heavenBackground2;
 	private static BufferedImage m_hellBackground;
 	private static BufferedImage m_currentBackground;
+	private static BufferedImage m_currentBackground2;
 
 	public View(Model m) {
 		m_model = m;
@@ -79,9 +81,17 @@ public class View extends GameView {
 			System.exit(-1);
 		}
 
-		imageFile = new File("sprites/hellBG.png");
+		imageFile = new File("sprites/heavenBG1.png");
 		try {
 			m_heavenBackground = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+
+		imageFile = new File("sprites/heavenBG2.png");
+		try {
+			m_heavenBackground2 = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -102,12 +112,15 @@ public class View extends GameView {
 	}
 
 	public void transform() {
-		if (m_model.getWorldType() == WorldType.HEAVEN)
+		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-		else
+			m_currentBackground2 = m_heavenBackground2;		
+		}
+		else {
 			m_currentBackground = m_hellBackground;
+			m_currentBackground2 = m_hellBackground;			
+		}
 	}
-
 	@Override
 	protected void _paint(Graphics g) {
 		g.setColor(Color.gray);
@@ -155,7 +168,8 @@ public class View extends GameView {
 
 	private void paint(Graphics g, Level lvl) {
 		Rectangle bounds = g.getClipBounds();
-		g.drawImage(m_currentBackground, 0, 0, bounds.width, bounds.height, null);
+		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, 0, 0, bounds.width, bounds.height,
+				null);
 		g.setColor(Color.white);
 		g.drawLine(0, 0, bounds.width, 0);
 

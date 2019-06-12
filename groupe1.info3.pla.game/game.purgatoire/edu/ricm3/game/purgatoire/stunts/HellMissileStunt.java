@@ -14,13 +14,15 @@ public class HellMissileStunt extends Stunt {
 //	}
 
 	HellMissileStunt() {
-		super(Singleton.getNewMissileHeavenAut(), new AnimationPlayer(Singleton.getMissileHellAnim(), AnimType.IDLE, 2),
+		super(Singleton.getNewMissileHellAut(), new AnimationPlayer(Singleton.getMissileHellAnim(), AnimType.IDLE, 2),
 				Options.HELL_MISSILE_HP_MAX, Options.HELL_MISSILE_DMG);
 	}
 
 	@Override
 	public void pop(IDirection d) {
 		m_entity.die();
+		if (Options.ECHO_POP_MISSILE)
+			System.out.println("Missile pop (die)");
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class HellMissileStunt extends Stunt {
 
 	@Override
 	public void step(long now) {
-		m_automaton.step(m_entity);
+		super.step(now);
 	}
 
 }

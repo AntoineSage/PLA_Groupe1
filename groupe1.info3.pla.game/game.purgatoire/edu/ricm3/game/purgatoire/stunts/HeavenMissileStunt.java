@@ -17,9 +17,20 @@ public class HeavenMissileStunt extends Stunt {
 				new AnimationPlayer(Singleton.getMissileHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_MISSILE_HP_MAX,
 				Options.HEAVEN_MISSILE_DMG);
 	}
+	
+
+	@Override
+	public void pop(IDirection d) {
+		m_entity.die();
+	}
 
 	void goingOut(IDirection d) {
 		m_entity.die();
+	}
+
+	@Override
+	public void step(long now) {
+		super.step(now);
 	}
 
 }

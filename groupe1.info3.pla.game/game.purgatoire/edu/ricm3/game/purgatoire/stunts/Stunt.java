@@ -216,6 +216,8 @@ public class Stunt {
 		for (int i = 0; i < m_rangeDash; i++) {
 			tryMove(d);
 		}
+		if (Options.ECHO_DASH)
+			System.out.println("Dash");
 	}
 
 	void buff(int buffDMG, int debuffWeakness) {
@@ -265,6 +267,10 @@ public class Stunt {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
 
+	public int getBaseDMG() {
+		return m_DMG;
+	}
+
 	void setDMG(int DMG) {
 		m_DMG = DMG;
 	}
@@ -277,7 +283,8 @@ public class Stunt {
 		Iterator<Entity> iter;
 		switch (direction) {
 		case NORTH:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y - m_entity.m_bounds.height).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x, m_entity.m_bounds.y - m_entity.m_bounds.height).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -286,7 +293,8 @@ public class Stunt {
 			}
 			break;
 		case SOUTH:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x, m_entity.m_bounds.y + m_entity.m_bounds.height).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x, m_entity.m_bounds.y + m_entity.m_bounds.height).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -296,7 +304,8 @@ public class Stunt {
 			break;
 
 		case WEST:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x - m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x - m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -305,7 +314,8 @@ public class Stunt {
 			}
 			break;
 		case EAST:
-			iter = m_entity.m_level.m_collisionGrid.get(m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
+			iter = m_entity.m_level.m_collisionGrid
+					.get(m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y).iterator();
 			while (iter.hasNext()) {
 				Entity e = iter.next();
 				if (e.m_type == type)
@@ -336,6 +346,8 @@ public class Stunt {
 
 	public void step(long now) {
 		m_automaton.step(m_entity);
+		m_wizzTimer.step(now);
+		m_popTimer.step(now);
 	}
 
 	public long getTimeLeftPop() {

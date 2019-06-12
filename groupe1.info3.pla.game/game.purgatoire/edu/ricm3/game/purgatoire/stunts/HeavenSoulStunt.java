@@ -40,7 +40,8 @@ public class HeavenSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		System.out.println("pop heaven soul");
+		if (Options.ECHO_POP_SOUL)
+			System.out.println("Soul heaven pop (kamikaze)");
 	}
 
 	@Override
@@ -82,16 +83,12 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	public void step(long now) {
-//		if (lastUpdate == null)
-//			lastUpdate = now;
 		isPlayer = (Player) m_entity.superposedWith(IEntityType.PLAYER);
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-
-		// TODO value in Options
-		if (now - lastUpdate > 1000/15) {
-			m_automaton.step(m_entity);
+		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
+			super.step(now);
 			lastUpdate = now;
 		}
 	}
