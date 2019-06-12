@@ -171,20 +171,20 @@ public class View extends GameView {
 			}
 		}
 
-		if (lvl.m_player != null) {
-			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
-			if (viewportBounds.intersects(bound)) {
-				lvl.m_player.m_currentStunt.m_animation.step();
-				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
-			}
-		}
-
 		if (lvl.m_special != null) {
 			Rectangle bound = getRect(lvl.m_special, lvlX + (int) borderSize, lvlY);
 			if (viewportBounds.intersects(bound)) {
 				lvl.m_special.m_currentStunt.m_animation.step();
 				paintSpriteWithHPBarTransparency(g, lvl.m_special.m_currentStunt.m_animation.getSprite(), bound,
 						lvl.m_special);
+			}
+		}
+		
+		if (lvl.m_player != null) {
+			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				lvl.m_player.m_currentStunt.m_animation.step();
+				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
 			}
 		}
 

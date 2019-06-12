@@ -159,7 +159,7 @@ public class Options {
 	public static int MISSILE_SIZE = 1;
 
 	// LVL OPTIONS
-	public static int LVL_QUARTER_MAX_NBR = 6; // nbr of paterns
+	public static int LVL_QUARTER_MAX_NBR = 7; // nbr of paterns
 
 	// Echo options
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
