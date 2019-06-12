@@ -95,15 +95,15 @@ public class Options {
 
 	// SPCL OPTIONS
 	public static int HELL_SPCL_DMG = 1;
-	public static int HELL_SPCL_HP_MAX = 1;
+	public static int HELL_SPCL_HP_MAX = 100;
 	public static int HELL_SPCL_HP_TOGIVE = 5;
 	public static int HELL_SPCL_KARMA_TOGIVE = 10;
 	public static int HEAVEN_SPCL_DMG = 1;
-	public static int HEAVEN_SPCL_HP_MAX = 1;
+	public static int HEAVEN_SPCL_HP_MAX = 100;
 	public static int HEAVEN_SPCL_KARMA_TOGIVE = 10;
 	public static long HEAVEN_SPECIAL_TIMER = 5000;
 	public static long HELL_SPECIAL_TIMER = 2000;
-	public static int SPCL_HP = 1;
+	public static int SPCL_HP = 100;
 
 	// OBSTACLE OPTIONS
 	public static int HELL_OBSTACLE_DMG = 0;
