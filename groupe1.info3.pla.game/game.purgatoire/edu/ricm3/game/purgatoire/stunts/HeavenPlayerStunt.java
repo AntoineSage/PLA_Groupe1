@@ -58,6 +58,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+		
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
@@ -72,8 +74,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE,
 								IDirection.NORTH, m_entity);
 						m_missiles.add(missile);
+						break;
 					}
-					break;
 				case SOUTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),

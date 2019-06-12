@@ -35,11 +35,15 @@ public class Timer {
 		return m_current;
 	}
 
+	public long getDuration() {
+		return m_duration;
+	}
+	
 	public void setDuration(long duration) {
 		m_duration = duration;
 	}
 
-	public double getRemainingTimePercentage() {
+	public float getRemainingTimePercentage() {
 		return (float) m_current / m_duration;
 	}
 }

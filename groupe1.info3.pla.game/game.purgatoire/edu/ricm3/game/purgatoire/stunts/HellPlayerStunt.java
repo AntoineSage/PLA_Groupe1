@@ -29,7 +29,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				Options.PLAYER_HP_MAX_TOTAL_HELL[0], Options.PLAYER_DMG_HELL[0]);
 
 		m_missiles = new LinkedList<Missile>();
-		m_missileTimer = new Timer(Options.MISSILE_TIMER);
+		m_missileTimer = new Timer(Options.HIT_TIMER_HELL[0]);
 		m_wizzTimer = new Timer(Options.HELL_PLAYER_WIZZ_TIMER);
 		m_popTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
@@ -92,6 +92,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+		
 		if (m_missileTimer.isFinished()) {
 			m_missileTimer.start();
 			Missile missile;
@@ -182,7 +184,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void updateRankStats() {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HELL[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HELL[((Player) m_entity).getRank()]);
-//		m_missileTimer.setDuration(Options.HIT_TIMER_HELL[((Player) m_entity).getRank()]);
+		m_missileTimer.setDuration(Options.HIT_TIMER_HELL[((Player) m_entity).getRank()]);
+		if (Options.ECHO_HIT_TIMER_CHANGE)
+			System.out.println("Missile timer: " + m_missileTimer.getDuration());
 	}
 
 }

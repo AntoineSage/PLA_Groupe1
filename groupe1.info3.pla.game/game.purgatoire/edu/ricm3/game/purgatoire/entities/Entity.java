@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
 import ricm3.interpreter.IDirection;
@@ -16,6 +17,7 @@ public class Entity {
 	public Rectangle m_bounds;
 	public IEntityType m_type;
 	public IDirection m_direction;
+	public float m_transparency;
 
 	private Stunt m_heavenStunt, m_hellStunt;
 
@@ -28,6 +30,7 @@ public class Entity {
 		m_bounds = new Rectangle(x, y, size, size);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
+		m_transparency = 1;
 		transform();
 		m_HP = 1;
 	}
@@ -63,6 +66,8 @@ public class Entity {
 	public void addHP(int HP) {
 		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
 		m_HP = Math.max(m_HP, 0);
+		if (Options.ECHO_HP_CHANGE)
+			System.out.println("Entity HP change: " + HP + " HP, " + getMaxHP() + " maxHP");
 	}
 
 	public int getMaxHP() {
