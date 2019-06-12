@@ -4,8 +4,8 @@ public class Options {
 
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;
-	public static final int LVL_HEIGHT = 84;
-	public static final int LVL_WIDTH = 46;
+	public static final int LVL_HEIGHT = 90;
+	public static final int LVL_WIDTH = 54;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
@@ -102,6 +102,9 @@ public class Options {
 	public static int SPCL_WIDTH = 5;
 	public static int OBSTACLE_HEIGHT = 3;
 	public static int OBSTACLE_WIDTH = 3;
+	
+	//LVL OPTIONS
+	public static int LVL_QUARTER_MAX_NBR = 4; //nbr of paterns 
 
 	// TODO echo options
 	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = true;
