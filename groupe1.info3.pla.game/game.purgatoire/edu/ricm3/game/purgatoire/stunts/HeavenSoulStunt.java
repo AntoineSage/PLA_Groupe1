@@ -49,13 +49,11 @@ public class HeavenSoulStunt extends Stunt {
 
 		if (m_entity.m_transparency == 1.0) {
 			m_entity.m_transparency = (float) 0.1F;
-			System.out.println("TANS" + m_entity.m_transparency);
 
 		}
 
 		else if (m_entity.m_transparency == 0.1F) {
 			m_entity.m_transparency = (float) 1;
-			System.out.println("TANS" + m_entity.m_transparency);
 		}
 		System.out.println("wizz heaven soul");
 	}

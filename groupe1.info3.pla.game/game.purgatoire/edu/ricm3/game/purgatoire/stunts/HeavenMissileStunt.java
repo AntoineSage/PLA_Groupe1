@@ -26,7 +26,21 @@ public class HeavenMissileStunt extends Stunt {
 	
 	@Override
 	public void wizz(IDirection d) {
+		switch (m_entity.m_direction) {
+		case NORTH:
+			m_entity.m_direction =  IDirection.SOUTH;
+			break;
+		case SOUTH:
+			m_entity.m_direction = IDirection.NORTH;
+			break;
+		case WEST:
+			m_entity.m_direction = IDirection.EAST;
+			break;
+		case EAST:
+			m_entity.m_direction = IDirection.WEST;
+			break;
 		
+		}
 	}
 
 	void goingOut(IDirection d) {

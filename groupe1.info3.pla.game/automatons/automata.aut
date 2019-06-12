@@ -70,11 +70,16 @@ Nest(Init){
 }
 
 MissileHell(Init){
-	* (Init):True ? Move(F) : (Init)
+	* (Init):
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Init)
+	
 }
 
 MissileHeaven(Init){
-	* (Init): True ? Move(F) : (Step1)
+	* (Init): 
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Step1)
 	* (Step1): True ? Move(F) : (Step2)
 	* (Step2): True ? Move(F) : (Step3)
 	* (Step3): True ? Move(F) : (Step4)
