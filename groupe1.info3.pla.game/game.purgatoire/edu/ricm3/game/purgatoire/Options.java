@@ -42,7 +42,7 @@ public class Options {
 	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-//	public static long[] HIT_TIMER_HELL = { 1000, 900, 800, 700 };
+	public static long[] HIT_TIMER_HELL = { 1000, 900, 800, 700 };
 //	public static long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
@@ -137,11 +137,11 @@ public class Options {
 	public static int OBSTACLE_SIZE = 3;
 
 	// Echo options
-	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = false;
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_XP_CHANGE = false;
 	public static final boolean ECHO_PLAYER_KARMA_CHANGE = false;
 	public static final boolean ECHO_PLAYER_RANK_CHANGE = false;
+	public static final boolean ECHO_HP_CHANGE = false;
 
 	public static final boolean ECHO_WINDOW_SIZE_CHANGE = false;
 
@@ -160,6 +160,7 @@ public class Options {
 
 	public static final boolean ECHO_DASH = false;
 	public static final boolean ECHO_CIRCLE_ATTACK = false;
+	public static final boolean ECHO_HIT_TIMER_CHANGE = false;
 
 	public static final boolean ECHO_RAISE_DIFFICULTY = false;
 	public static final boolean ECHO_PLAYER_UPDATE_STATS = false;
