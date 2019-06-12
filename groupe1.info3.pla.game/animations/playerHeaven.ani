@@ -2,5 +2,5 @@ sprite_sheet = sprites/angel.png
 NORTH = 2;3;4;1
 EAST = 6;7;8;5
 SOUTH = 10;11;12;9
-WEST = 6;7;8;5
+WEST = 14;15;16;13
 IDLE = 2
