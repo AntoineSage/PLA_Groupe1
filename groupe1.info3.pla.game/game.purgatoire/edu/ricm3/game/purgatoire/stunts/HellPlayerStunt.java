@@ -180,13 +180,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void updateRankStats() {
-		double p = m_entity.getHPPercent();
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HELL[((Player) m_entity).getRank()]);
-		m_entity.setHPPercent(p);
 		setDMG(Options.PLAYER_DMG_HELL[((Player) m_entity).getRank()]);
-		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG()
-					+ " baseDMG");
+//		m_missileTimer.setDuration(Options.HIT_TIMER_HELL[((Player) m_entity).getRank()]);
 	}
 
 }

@@ -145,9 +145,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void updateRankStats() {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HEAVEN[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
-		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG()
-					+ " baseDMG");
+//		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
 
 }

@@ -49,9 +49,22 @@ public class Player extends Entity {
 			m_rank--;
 			Singleton.getController().updateRankUI();
 		}
-		double p = getHPPercent();
+
+		int delta = getMaxTotalHP();
 		((PlayerStunt) m_currentStunt).updateRankStats();
-		setHPPercent(p);
+		delta = getMaxTotalHP() - delta;
+		if (delta >= 0) {
+			m_currentStunt.m_maxHP += delta;
+			addHP(delta);
+		} else {
+			m_currentStunt.m_maxHP = Math.min(m_currentStunt.m_maxHP, getMaxTotalHP());
+			setHP(Math.min(getHP(), m_currentStunt.m_maxHP));
+		}
+
+		if (Options.ECHO_PLAYER_UPDATE_STATS)
+			System.out.println(
+					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.m_maxHP
+							+ " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG() + " baseDMG");
 	}
 
 	public void nextLevel(Level newLevel) {

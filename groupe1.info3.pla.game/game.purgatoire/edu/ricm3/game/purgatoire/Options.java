@@ -42,6 +42,8 @@ public class Options {
 	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
+//	public static long[] HIT_TIMER_HELL = { 1000, 900, 800, 700 };
+//	public static long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 5;
 	public static final int PLAYER_KARMA_TIME_DURATION = 1000;
@@ -159,7 +161,7 @@ public class Options {
 	public static final boolean ECHO_DASH = false;
 	public static final boolean ECHO_CIRCLE_ATTACK = false;
 
-	public static final boolean ECHO_RAISE_DIFFICULTY = true;
-	public static final boolean ECHO_PLAYER_UPDATE_STATS = true;
+	public static final boolean ECHO_RAISE_DIFFICULTY = false;
+	public static final boolean ECHO_PLAYER_UPDATE_STATS = false;
 
 }
