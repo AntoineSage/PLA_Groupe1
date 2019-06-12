@@ -46,15 +46,16 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
-		if(m_entity.m_transparency == 1.0) {
-			m_entity.m_transparency = (float)0;
-			System.out.println("TANS"+ m_entity.m_transparency);
-			
+
+		if (m_entity.m_transparency == 1.0) {
+			m_entity.m_transparency = (float) 0.1F;
+			System.out.println("TANS" + m_entity.m_transparency);
+
 		}
-		
-		else if(m_entity.m_transparency == 0.0) {
-			m_entity.m_transparency = (float)1;
-			System.out.println("TANS"+ m_entity.m_transparency);
+
+		else if (m_entity.m_transparency == 0.1F) {
+			m_entity.m_transparency = (float) 1;
+			System.out.println("TANS" + m_entity.m_transparency);
 		}
 		System.out.println("wizz heaven soul");
 	}

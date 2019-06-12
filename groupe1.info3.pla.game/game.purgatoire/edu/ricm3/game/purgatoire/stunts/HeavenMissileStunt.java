@@ -23,6 +23,11 @@ public class HeavenMissileStunt extends Stunt {
 	public void pop(IDirection d) {
 		m_entity.die();
 	}
+	
+	@Override
+	public void wizz(IDirection d) {
+		
+	}
 
 	void goingOut(IDirection d) {
 		m_entity.die();
