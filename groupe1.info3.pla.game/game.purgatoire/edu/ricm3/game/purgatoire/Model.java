@@ -39,8 +39,7 @@ public class Model extends GameModel {
 		m_currentLevel = LevelMaker.makeTestLevel(this, Color.yellow);
 		m_nextLevel = LevelMaker.makeTestLevel(this, Color.pink);
 
-		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2,
-				Options.LVL_HEIGHT - Options.PLAYER_HEIGHT);
+		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
 
 	public void transform() {

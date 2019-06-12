@@ -69,28 +69,32 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 				case NORTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE,
+								IDirection.NORTH, m_entity);
 						m_missiles.add(missile);
 					}
 					break;
 				case SOUTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, Options.MISSILE_SIZE,
+								IDirection.SOUTH, m_entity);
 						m_missiles.add(missile);
 					}
 					break;
 				case EAST:
 					for (int y = 0; y <= 2; y++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, 1, 1, IDirection.EAST, m_entity);
+								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.EAST,
+								m_entity);
 						m_missiles.add(missile);
 					}
 					break;
 				case WEST:
 					for (int y = 0; y <= 2; y++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
+								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.WEST,
+								m_entity);
 						m_missiles.add(missile);
 					}
 					break;
@@ -142,7 +146,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HEAVEN[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
 		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG() + " baseDMG");
+			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG()
+					+ " baseDMG");
 	}
 
 }
