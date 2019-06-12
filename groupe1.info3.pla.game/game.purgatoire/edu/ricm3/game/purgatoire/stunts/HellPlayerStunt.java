@@ -88,24 +88,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
-		switch (d) {
-		case NORTH:
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.NORTH);
-			break;
-		case SOUTH:
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.SOUTH);
-			break;
-		case EAST:
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.EAST);
-			break;
-		case WEST:
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.WEST);
-			break;
-		}
+		super.hit(d);
+		
 		if (m_missileTimer.isFinished()) {
 			m_missileTimer.start();
 			Missile missile;

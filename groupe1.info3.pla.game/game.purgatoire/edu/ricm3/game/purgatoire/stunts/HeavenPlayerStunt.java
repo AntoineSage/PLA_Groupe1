@@ -58,6 +58,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+		
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
@@ -71,18 +73,14 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
 						m_missiles.add(missile);
+						break;
 					}
-					if (m_animation != null)
-						m_animation.changeTo(AnimType.NORTH);
-					break;
 				case SOUTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
 						m_missiles.add(missile);
 					}
-					if (m_animation != null)
-						m_animation.changeTo(AnimType.SOUTH);
 					break;
 				case EAST:
 					for (int y = 0; y <= 2; y++) {
@@ -90,8 +88,6 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, 1, 1, IDirection.EAST, m_entity);
 						m_missiles.add(missile);
 					}
-					if (m_animation != null)
-						m_animation.changeTo(AnimType.EAST);
 					break;
 				case WEST:
 					for (int y = 0; y <= 2; y++) {
@@ -99,8 +95,6 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
 						m_missiles.add(missile);
 					}
-					if (m_animation != null)
-						m_animation.changeTo(AnimType.WEST);
 					break;
 				}
 			} else {
