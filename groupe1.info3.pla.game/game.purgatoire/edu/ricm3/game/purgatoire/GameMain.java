@@ -294,6 +294,7 @@ public class GameMain {
 		frame.add(save, gbc);
 
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -367,15 +368,15 @@ public class GameMain {
 		public BufferedImage current;
 
 		public ImagePanel() {
-	       try {                
-		          image1 = ImageIO.read(new File("sprites/tmp.png"));
-		          image2 = ImageIO.read(new File("sprites/tmp2.png"));
-	       current = image1;
-	       } catch (IOException ex) {
-	    	   ex.printStackTrace();
-	    	   System.exit(-5);
-	       }
-	    }
+			try {
+				image1 = ImageIO.read(new File("sprites/tmp.png"));
+				image2 = ImageIO.read(new File("sprites/tmp2.png"));
+				current = image1;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-5);
+			}
+		}
 
 		@Override
 		protected void paintComponent(Graphics g) {

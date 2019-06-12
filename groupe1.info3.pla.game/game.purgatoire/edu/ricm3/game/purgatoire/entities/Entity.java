@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.Model;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
@@ -175,6 +176,10 @@ public class Entity {
 
 	public long getTimeLeftWizz() {
 		return m_currentStunt.getTimeLeftWizz();
+	}
+
+	public Model getModel() {
+		return m_level.m_model;
 	}
 
 }
