@@ -144,10 +144,12 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void step(long now) {
+		IDirection save = m_entity.m_direction;
 		m_entity.m_direction = IDirection.NONE;
 		if (m_automatonMove != null) {
 			m_automatonMove.step(m_entity);
 		}
+		if(m_entity.m_direction == IDirection.NONE) m_entity.m_direction = save; 
 		super.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
