@@ -60,8 +60,8 @@ public class HellSoulStunt extends Stunt {
 		if (m_entity.m_HP <= 0) {
 			if (Options.ECHO_DIE)
 				System.out.println("Soul dies");
-			if (e instanceof Missile) {
-				isPlayer = (Player) ((Missile) e).getOwner();
+			if (e instanceof Player) {
+				isPlayer = (Player) e;
 				isPlayer.addKarma(m_entity);
 			}
 			m_entity.die();
