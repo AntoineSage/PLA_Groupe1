@@ -36,7 +36,7 @@ public class Bars {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.fillRect(m_x, m_currentY, getWidth(), m_currentHeight);
-			g.setColor(Color.white);
+			g.setColor(Options.SECONDARY_FOREGROUND);
 			g.fillRect(m_x, m_maxCurrentY, getWidth(), m_maxCurrentHeight);
 			g.setColor(Color.gray);
 			g.fillRect(m_x, m_maxTotalY, getWidth(), m_maxTotalHeight);
@@ -91,7 +91,7 @@ public class Bars {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.fillRect(m_x, m_currentY, getWidth(), m_currentHeight);
-			g.setColor(Color.white);
+			g.setColor(Options.SECONDARY_FOREGROUND);
 			g.fillRect(m_x, m_maxY, getWidth(), m_maxHeight);
 		}
 
@@ -141,7 +141,7 @@ public class Bars {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.fillRect(m_x, m_karmaY, getWidth(), m_karmaHeight);
-			g.setColor(Color.white);
+			g.setColor(Options.SECONDARY_FOREGROUND);
 			g.fillRect(m_x, m_emptyY, getWidth(), m_emptyHeight);
 			g.fillRect(m_x, m_halfY, getWidth(), getHeight() / 2);
 			g.setColor(Color.gray);
@@ -150,13 +150,13 @@ public class Bars {
 
 		public void updateHeights(int current, int max) {
 			if (current >= 0) {
-				setForeground(new Color(104, 180, 255));
+				setForeground(Options.KARMA_POS_FOREGROUND);
 				m_karmaY = (int) (((float) getHeight() / (2 * max)) * (max - current));
 				m_halfY = getHeight() / 2;
 				m_emptyY = 0;
 				m_emptyHeight = m_karmaY;
 			} else {
-				setForeground(new Color(255, 138, 138));
+				setForeground(Options.KARMA_NEG_FOREGROUND);
 				m_karmaY = getHeight() / 2;
 				m_halfY = 0;
 				m_emptyY = (int) (((float) getHeight() / (2 * max)) * (-current) + (getHeight() / 2));
@@ -196,7 +196,7 @@ public class Bars {
 			m_view.addGraphicUI(this);
 			m_startAngle = 90;
 			m_currentAngle = 90;
-			setForeground(new Color(255, 230, 50));
+			setForeground(Options.CIRCLE_FOREGROUND);
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
@@ -206,7 +206,7 @@ public class Bars {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.setColor(Color.white);
+			g.setColor(Options.SECONDARY_FOREGROUND);
 			g.fillArc(m_x, m_y, m_width, m_height, 0, 360);
 			g.setColor(getForeground());
 			g.fillArc(m_x, m_y, m_width, m_height, (int) m_startAngle, (int) m_currentAngle);

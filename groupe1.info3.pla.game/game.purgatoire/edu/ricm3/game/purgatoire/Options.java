@@ -1,5 +1,7 @@
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
+
 public class Options {
 
 	public static final int WIN_MIN_WIDTH = 600;
@@ -9,11 +11,20 @@ public class Options {
 	public static final int LVL_HEIGHT = 90;
 	public static final int LVL_WIDTH = 54;
 
+	public static final Color PRIMARY_BACKGROUND = new Color(60, 60, 60);
+	public static final Color PRIMARY_FOREGROUND = new Color(200, 200, 200);
+	public static final Color SECONDARY_FOREGROUND = new Color(220, 220, 220);
+	public static final Color CIRCLE_FOREGROUND = new Color(230, 180, 0);
+	public static final Color KARMA_POS_FOREGROUND = new Color(80, 80, 220);
+	public static final Color KARMA_NEG_FOREGROUND = new Color(220, 70, 120);
+
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
 	public static final int UI_BAR_WIDTH = 35;
 	public static final int UI_CIRCLE_SIZE = 70;
 	public static final int UI_MARGIN = 30;
+
+	public static final boolean FPS_DISPLAYED = false;
 
 	public static final int TOTAL_PERIOD = 6000;
 	public static final String AUT_FILE = "automatons/automata.aut";

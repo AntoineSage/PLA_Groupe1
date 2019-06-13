@@ -95,6 +95,15 @@ public class Controller extends GameController implements ActionListener {
 		m_totalTimeLabel = new Label("", Label.CENTER);
 		m_totalDistanceLabel = new Label("", Label.CENTER);
 
+		west.setBackground(Options.PRIMARY_BACKGROUND);
+		westInside.setBackground(Options.PRIMARY_BACKGROUND);
+		karma.setBackground(Options.PRIMARY_BACKGROUND);
+		timeCircle.setBackground(Options.PRIMARY_BACKGROUND);
+		m_periodLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_karmaLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_totalTimeLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_totalDistanceLabel.setForeground(Options.PRIMARY_FOREGROUND);
+
 		westInside.add(m_periodLabel);
 		timeCircle.add(m_timeCircle);
 		westInside.add(timeCircle);
@@ -129,8 +138,10 @@ public class Controller extends GameController implements ActionListener {
 		JPanel XPBar = new JPanel();
 		XPBar.setLayout(new BoxLayout(XPBar, BoxLayout.X_AXIS));
 
+		Label HPTitle = new Label("HP", Label.CENTER);
 		m_HPBar = new HPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
 		m_HPLabel = new Label("", Label.CENTER);
+		Label XPTitle = new Label("XP", Label.CENTER);
 		m_XPBar = new XPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
 		m_XPLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
@@ -138,11 +149,27 @@ public class Controller extends GameController implements ActionListener {
 		m_DMGLabel = new Label("", Label.CENTER);
 		m_weaknessLabel = new Label("", Label.CENTER);
 
-		HP.add(new Label("HP", Label.CENTER));
+		east.setBackground(Options.PRIMARY_BACKGROUND);
+		eastInside.setBackground(Options.PRIMARY_BACKGROUND);
+		bars.setBackground(Options.PRIMARY_BACKGROUND);
+		HP.setBackground(Options.PRIMARY_BACKGROUND);
+		XP.setBackground(Options.PRIMARY_BACKGROUND);
+		HPBar.setBackground(Options.PRIMARY_BACKGROUND);
+		XPBar.setBackground(Options.PRIMARY_BACKGROUND);
+		HPTitle.setForeground(Options.PRIMARY_FOREGROUND);
+		XPTitle.setForeground(Options.PRIMARY_FOREGROUND);
+		m_HPLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_XPLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_cooldownLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_rankLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_DMGLabel.setForeground(Options.PRIMARY_FOREGROUND);
+		m_weaknessLabel.setForeground(Options.PRIMARY_FOREGROUND);
+
+		HP.add(HPTitle);
 		HPBar.add(m_HPBar);
 		HP.add(HPBar);
 		HP.add(m_HPLabel);
-		XP.add(new Label("XP", Label.CENTER));
+		XP.add(XPTitle);
 		XPBar.add(m_XPBar);
 		XP.add(XPBar);
 		XP.add(m_XPLabel);

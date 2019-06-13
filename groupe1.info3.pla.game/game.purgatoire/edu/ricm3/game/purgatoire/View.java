@@ -59,7 +59,7 @@ public class View extends GameView {
 	private Color grey;
 
 	public View(Model m) {
-		grey = new Color(238, 238, 238);
+		grey = Options.PRIMARY_BACKGROUND;
 		m_model = m;
 
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
