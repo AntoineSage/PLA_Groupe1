@@ -333,10 +333,23 @@ public class Stunt {
 
 	public boolean isInRange(IEntityType targetType) {
 		Iterator<Entity> iter;
-		for (int i = m_entity.m_bounds.x - m_entity.m_bounds.width - 5; i < m_entity.m_bounds.x
-				+ m_entity.m_bounds.width + 5; i++) {
-			for (int j = m_entity.m_bounds.y - m_entity.m_bounds.height - 5; j < m_entity.m_bounds.y
-					+ m_entity.m_bounds.height + 5; j++) {
+		int range = 9;
+		int x_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
+		int x_rangeMin = m_entity.m_bounds.x - range;
+		int y_rangeMax = m_entity.m_bounds.y + m_entity.m_bounds.width + range;
+		int y_rangeMin = m_entity.m_bounds.y - range;
+
+		if (x_rangeMin < 0)
+			x_rangeMin = 0;
+		if (x_rangeMax >= Options.LVL_WIDTH)
+			x_rangeMax = Options.LVL_WIDTH;
+		if (y_rangeMin < 0)
+			y_rangeMin = 0;
+		if (y_rangeMax >= Options.LVL_HEIGHT)
+			y_rangeMax = Options.LVL_HEIGHT;
+
+		for (int i = x_rangeMin; i < x_rangeMax; i++) {
+			for (int j = y_rangeMin; j < y_rangeMax; j++) {
 				iter = m_entity.m_level.m_collisionGrid.get(i, j).iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
