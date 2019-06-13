@@ -17,6 +17,8 @@ setenv.sh
 
 # Package Files #
 *.jar
+!jmf-2.1.1e.jar
+!mediaplayer-2.1.1e.jar
 *.war
 *.nar
 *.ear
