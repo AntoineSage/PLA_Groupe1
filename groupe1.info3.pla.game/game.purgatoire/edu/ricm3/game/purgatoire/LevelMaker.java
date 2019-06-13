@@ -22,7 +22,8 @@ public class LevelMaker {
 	}
 
 	public Level loadLevel(Model model) {
-		Random r = new Random();
+		Random r = model.getRandomGenerator();
+		// Random r = new Random();
 		Level level = new Level(model);
 		int randomSpecial = r.nextInt(4);
 		quarterNonUsed.remove(randomSpecial);
