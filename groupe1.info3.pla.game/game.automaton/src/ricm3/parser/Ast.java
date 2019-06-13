@@ -21,6 +21,7 @@ import ricm3.interpreter.ICondition.IAnd;
 import ricm3.interpreter.ICondition.IBinaryOp;
 import ricm3.interpreter.ICondition.ICell;
 import ricm3.interpreter.ICondition.IClosest;
+import ricm3.interpreter.ICondition.IGotPower;
 import ricm3.interpreter.ICondition.IKey;
 import ricm3.interpreter.ICondition.IMyDir;
 import ricm3.interpreter.ICondition.INot;
@@ -429,7 +430,7 @@ public class Ast {
 			case "MyDir" : return new IMyDir(parameters);
 			case "Cell" : return new ICell(parameters);
 			case "Closest" : return new IClosest(parameters);
-//			case "GotPower" : return new GotPower();
+			case "GotPower" : return new IGotPower(parameters); //isInrange
 //			case "GotStuff" : return new GotStuff();
 			}
 			throw new IllegalStateException();

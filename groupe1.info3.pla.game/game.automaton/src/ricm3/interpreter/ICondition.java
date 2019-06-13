@@ -94,6 +94,21 @@ abstract public class ICondition {
 		}
 	}
 
+	public static class IGotPower extends ICondition {
+		IEntityType m_type;
+		
+		public IGotPower(List<Parameter> parameters) {
+			if (parameters.size() != 1)
+				throw new IllegalStateException(
+						"IClosest should always been created with a IDirection and IEntityType parameter");
+			m_type = (IEntityType) parameters.get(0).make();
+		}
+		
+		boolean eval(Entity e) {
+			return e.isInRange(m_type);
+		}
+	}
+	
 //	public class Cell extends ICondition {
 //		IDirection direction;
 //		Kind kind;
@@ -116,14 +131,6 @@ abstract public class ICondition {
 //		}
 //	}
 //
-//	public class GotPower extends Condition {
-//		GotPower() {
-//		}
-//
-//		boolean eval(Entity e) {
-//			return (e.power > 0);
-//		}
-//	}
 
 	abstract public static class IUnaryOp extends ICondition {
 		protected ICondition m_condition;

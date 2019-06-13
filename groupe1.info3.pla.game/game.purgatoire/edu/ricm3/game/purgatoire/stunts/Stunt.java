@@ -330,6 +330,36 @@ public class Stunt {
 		return false;
 	}
 
+	public boolean isInRange(IEntityType targetType) {
+		Iterator<Entity> iter;
+		int range = 9;
+		int x_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
+		int x_rangeMin = m_entity.m_bounds.x - range;
+		int y_rangeMax = m_entity.m_bounds.y + m_entity.m_bounds.width + range;
+		int y_rangeMin = m_entity.m_bounds.y - range;
+
+		if (x_rangeMin < 0)
+			x_rangeMin = 0;
+		if (x_rangeMax >= Options.LVL_WIDTH)
+			x_rangeMax = Options.LVL_WIDTH;
+		if (y_rangeMin < 0)
+			y_rangeMin = 0;
+		if (y_rangeMax >= Options.LVL_HEIGHT)
+			y_rangeMax = Options.LVL_HEIGHT;
+
+		for (int i = x_rangeMin; i < x_rangeMax; i++) {
+			for (int j = y_rangeMin; j < y_rangeMax; j++) {
+				iter = m_entity.m_level.m_collisionGrid.get(i, j).iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (e.m_type == targetType)
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean nobodyCollideWithEntity() {
 		if (m_entity instanceof Missile) {
 		}

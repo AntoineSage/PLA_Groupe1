@@ -105,6 +105,7 @@ public class Options {
 	public static final int HEAVEN_SPCL_HP_MAX = 50;
 	public static final int HEAVEN_SPCL_KARMA_TOGIVE = 2;
 	public static final long HEAVEN_SPECIAL_TIMER = 5000;
+
 	public static final long HELL_SPECIAL_TIMER = 2000;
 
 	// OBSTACLE OPTIONS
@@ -153,7 +154,7 @@ public class Options {
 	public static final int MISSILE_SIZE = 1;
 
 	// LVL OPTIONS
-	public static int LVL_QUARTER_MAX_NBR = 8; // nbr of paterns
+	public static int LVL_QUARTER_MAX_NBR = 7; // nbr of paterns
 	public static int LVL_3_NEST_PROBABILITY = 10;
 	public static int LVL_2_NEST_PROBABILITY = 40;
 	public static double LVL_3_NEST_PROBABILITY_COEF = 1.1;
