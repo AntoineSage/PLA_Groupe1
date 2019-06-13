@@ -155,15 +155,17 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void step(long now) {
+		m_entity.m_direction = IDirection.NONE;
+		m_automatonMove.step(m_entity);
 		super.step(now);
 		if (m_popTimer.isFinished()) {
 			setDMGBuff(1);
 			m_weaknessBuff = 1;
+			Singleton.getController().updateBuffsUI();
 		}
 		m_missileTimer.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
-		m_automatonMove.step(m_entity);
 	}
 
 	@Override

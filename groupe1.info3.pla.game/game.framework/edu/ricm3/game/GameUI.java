@@ -52,7 +52,7 @@ public class GameUI {
 	long m_elapsed;
 	long m_lastRepaint;
 	long m_lastTick;
-	int m_nTicks;
+	public int m_nTicks;
 
 	public GameUI(GameModel m, GameView v, GameController c, Dimension d) {
 		m_model = m;
@@ -118,7 +118,8 @@ public class GameUI {
 
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
-		m_frame.setTitle("Sample Game");
+		m_frame.setTitle("Purgatory");
+		m_frame.setMinimumSize(new Dimension(800, 500));
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);
