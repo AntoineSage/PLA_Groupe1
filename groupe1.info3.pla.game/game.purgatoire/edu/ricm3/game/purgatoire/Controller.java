@@ -377,4 +377,9 @@ public class Controller extends GameController implements ActionListener {
 	private static boolean isDirectionKey(int e) {
 		return e == KeyEvent.VK_Z | e == KeyEvent.VK_Q | e == KeyEvent.VK_S | e == KeyEvent.VK_D;
 	}
+
+	public void clear() {
+		m_allKeyPressed = new LinkedList<Integer>();
+		m_directionKey = new Stack<Integer>();
+	}
 }

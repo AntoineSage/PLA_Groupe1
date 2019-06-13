@@ -170,6 +170,7 @@ public class Model extends GameModel {
 		m_totalTime = 0;
 		m_wt = m_initialWt;
 		Singleton.clearCount();
+		Singleton.getController().clear();
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
 		m_currentLevel = m_currentLevelMaker.loadLevel(this);
