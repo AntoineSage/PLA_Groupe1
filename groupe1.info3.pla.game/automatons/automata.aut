@@ -136,11 +136,29 @@ VerticalSoul(Init){
 	|True ? Move(N) :(Step3)
 	* (Step3): 
 	|GotPower(@) ? Wait : (StartFollowing)
-	|True ? Move(S) :(Step4)
-	* (Step4):
+	|True ? Move(N) :(Step4)
+	* (Step4): 
 	|GotPower(@) ? Wait : (StartFollowing)
-	|True ? Move(S) :(Step5)
+	|True ? Move(N) :(Step5)
 	* (Step5): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step6)
+	* (Step6): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step7)
+	* (Step7): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step8)
+	* (Step8): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step9)
+	* (Step9): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step10)
+	* (Step10):
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step11)
+	* (Step11): 
 	|GotPower(@) ? Wait : (StartFollowing)
 	|True ? Move(S) :(Init)
 	
@@ -175,11 +193,29 @@ HorizontalSoul(Init){
 	|True ? Move(E) :(Step3)
 	* (Step3): 
 	|GotPower(@) ? Wait : (StartFollowing)
-	|True ? Move(O) :(Step4)
-	* (Step4):
+	|True ? Move(E) :(Step4)
+	* (Step4): 
 	|GotPower(@) ? Wait : (StartFollowing)
-	|True ? Move(O) :(Step5)
+	|True ? Move(E) :(Step5)
 	* (Step5): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step6)
+	* (Step6): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step7)
+	* (Step7): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step8)
+	* (Step8): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step9)
+	* (Step9): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step10)
+	* (Step10):
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step11)
+	* (Step11): 
 	|GotPower(@) ? Wait : (StartFollowing)
 	|True ? Move(O) :(Init)
 	
