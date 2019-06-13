@@ -118,6 +118,7 @@ public class GameUI {
 
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
+		m_frame.setMinimumSize(new Dimension(800, 500));
 		m_frame.setTitle("Sample Game");
 		m_frame.setLayout(new BorderLayout());
 
