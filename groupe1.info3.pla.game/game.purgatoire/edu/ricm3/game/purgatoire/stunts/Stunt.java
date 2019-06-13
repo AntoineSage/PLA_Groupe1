@@ -347,7 +347,9 @@ public class Stunt {
 	}
 
 	public void step(long now) {
-		m_automaton.step(m_entity);
+		if(m_automaton != null) {
+			m_automaton.step(m_entity);
+		}
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
 		switch (m_entity.m_direction) {

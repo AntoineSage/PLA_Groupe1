@@ -38,7 +38,9 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
-		m_automatonMove = Singleton.getNewPlayerHeavenMoveAut();
+		if (m_automaton.toString().equals("PlayerAction")) {
+			m_automatonMove = Singleton.getNewPlayerHeavenMoveAut();
+		}
 	}
 
 	@Override
@@ -143,20 +145,22 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		m_entity.m_direction = IDirection.NONE;
-		m_automatonMove.step(m_entity);
+		if (m_automatonMove != null) {
+			m_automatonMove.step(m_entity);
+		}
 		super.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
 	}
-	
+
 	@Override
 	public void takeDamage(int DMG) {
 		super.takeDamage(DMG);
 		(new Sound("sprites/hurt.wav")).start();
 	}
-	
+
 	@Override
 	public void takeDamage(Entity e) {
 		super.takeDamage(e);

@@ -35,7 +35,7 @@ public class Model extends GameModel {
 
 	public Model() {
 
-		m_wt = WorldType.HELL;
+		m_wt = WorldType.HEAVEN;
 		Singleton.getBackgroundMusic().start();
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
