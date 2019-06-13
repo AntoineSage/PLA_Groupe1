@@ -58,6 +58,7 @@ public class GameMain {
 
 	@SuppressWarnings("unchecked")
 	static void menu() {
+
 		final JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -243,6 +244,7 @@ public class GameMain {
 				Singleton.set(HellAut, HeavenAut, HellAnim, HeavenAnim, Firsts, HellAutFirst, HeavenAutFirst,
 						HellAnimFirst, HeavenAnimFirst);
 
+				(new Sound("sprites/button_sound.wav")).start();
 				play(frame);
 			}
 		});

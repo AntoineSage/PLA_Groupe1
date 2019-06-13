@@ -26,12 +26,11 @@ public class LevelMaker {
 		Level level = new Level(model);
 		int randomSpecial = r.nextInt(4);
 		quarterNonUsed.remove(randomSpecial);
-		int randomNest1 = r.nextInt(100);
-		int randomNest2 = r.nextInt(100);
+		int randomNest = r.nextInt(100);
 
-		if (randomNest1 < 5) { // Options....
+		if (randomNest < Options.LVL_3_NEST_PROBABILITY) {
 			quarterNest = quarterNonUsed;
-		} else if (randomNest2 < 10) {// Options.
+		} else if (randomNest < Options.LVL_3_NEST_PROBABILITY + Options.LVL_2_NEST_PROBABILITY) {
 			int randomNonUsedQuarter1 = randomizer(quarterNonUsed.size(), r);
 			quarterNest.add(randomNonUsedQuarter1);
 			quarterNonUsed.remove(randomNonUsedQuarter1);
@@ -41,11 +40,17 @@ public class LevelMaker {
 		} else {
 			int randomNonUsedQuarter = randomizer(quarterNonUsed.size(), r);
 			quarterNest.add(randomizer(randomNonUsedQuarter, r));
+			quarterNonUsed.remove(randomNonUsedQuarter);
 		}
 
 		for (int i = 0; i < 4; i++) {
 			paternListTcheck();
-			currentQuarterLevel = new QuarterLevel(i, paternList, level);
+			if (i == randomSpecial)
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.SPECIAL);
+			else if (quarterNest.contains(i))
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NEST);
+			else
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NOTHING);
 			paternList.remove(currentQuarterLevel.getIndex());
 			level.quarterLevelPlacement(currentQuarterLevel);
 		}

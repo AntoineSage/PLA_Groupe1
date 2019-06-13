@@ -28,6 +28,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
@@ -82,6 +83,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
@@ -128,10 +130,10 @@ public class Bars {
 			m_view.addGraphicUI(this);
 			m_emptyY = y;
 			m_karmaY = y;
-			setForeground(Color.green);
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
@@ -174,6 +176,43 @@ public class Bars {
 			return m_y;
 		}
 
+	}
+
+	static class TimeCircle extends JComponent {
+
+		private static final long serialVersionUID = -4828379213574397971L;
+		private View m_view;
+		private int m_x, m_y;
+		private int m_width, m_height;
+		private double m_startAngle;
+		private double m_currentAngle;
+
+		public TimeCircle(View v, int x, int y, int w, int h) {
+			m_view = v;
+			m_x = x;
+			m_y = y;
+			m_width = w;
+			m_height = h;
+			m_view.addGraphicUI(this);
+			m_startAngle = 90;
+			m_currentAngle = 90;
+			setForeground(Color.yellow);
+			setLocation(x, y);
+			setMinimumSize(new Dimension(w, h));
+			setPreferredSize(new Dimension(w, h));
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.fillArc(m_x, m_y, m_width, m_height, (int) m_startAngle, (int) m_currentAngle);
+		}
+
+		public void updateArcs(double period) {
+			if (period <= Options.TOTAL_PERIOD)
+				m_currentAngle = 360 - (period * 360 / Options.TOTAL_PERIOD);
+
+		}
 	}
 
 }

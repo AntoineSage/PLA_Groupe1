@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -133,6 +134,21 @@ public class Animation {
 	@Override
 	public String toString() {
 		return m_name;
+	}
+
+	public boolean equals(AnimType type1, AnimType type2) {
+		if(type1.getValue() == type2.getValue()) return true;
+		int length = m_sprites[type1.getValue()].size();
+		if (length != m_sprites[type2.getValue()].size())
+			return false;
+
+		Iterator<BufferedImage> iter1 = m_sprites[type1.getValue()].iterator();
+		Iterator<BufferedImage> iter2 = m_sprites[type2.getValue()].iterator();
+		while(iter1.hasNext()) {
+			if(iter1.next() != iter2.next()) return false;
+		}
+
+		return true;
 	}
 
 }

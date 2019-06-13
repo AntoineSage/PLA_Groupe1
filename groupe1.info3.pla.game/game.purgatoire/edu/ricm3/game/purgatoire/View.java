@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.Graphics2D;
 
+
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameView;
@@ -46,6 +47,10 @@ public class View extends GameView {
 	private int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
 
+	long m_last;
+	int m_npaints;
+	int m_fps;
+	
 	private static BufferedImage m_heavenBackground;
 	private static BufferedImage m_heavenBackground2;
 	private static BufferedImage m_hellBackground;
@@ -131,9 +136,22 @@ public class View extends GameView {
 			m_currentBackground2 = m_hellBackground;
 		}
 	}
+	
+	  private void computeFPS() {
+		    long now = System.currentTimeMillis();
+		    if (now - m_last > 1000L) {
+		      m_fps = m_npaints;
+		      m_last = now;
+		      m_npaints = 0;
+		    }
+		    m_game.setFPS(m_fps, null);
+		    // m_game.setFPS(m_fps, "npaints=" + m_npaints);
+		    m_npaints++;
+		  }
 
 	@Override
 	protected void _paint(Graphics g) {
+		computeFPS();
 		g.setColor(grey);
 		g.fillRect(0, 0, getWidth(), getHeight());
 

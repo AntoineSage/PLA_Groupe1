@@ -16,7 +16,7 @@ public class HellSoulStunt extends Stunt {
 	private Player isPlayer;
 
 	public HellSoulStunt() {
-		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 4),
+		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
@@ -79,8 +79,8 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		if (now - lastUpdate > 1000 / 15) {
-			super.step(now);
+		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
+			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}
 	}

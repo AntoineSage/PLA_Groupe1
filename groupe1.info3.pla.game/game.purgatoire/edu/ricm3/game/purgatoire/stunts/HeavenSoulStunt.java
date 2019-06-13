@@ -15,7 +15,7 @@ public class HeavenSoulStunt extends Stunt {
 	private Long lastUpdate;
 
 	public HeavenSoulStunt() {
-		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 4),
+		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 16),
 				Options.HEAVEN_SOUL_HP_MAX, Options.HEAVEN_SOUL_DMG, Options.HEAVEN_SOUL_KARMA_TOGIVE);
 		lastUpdate = (long) 0;
 	}

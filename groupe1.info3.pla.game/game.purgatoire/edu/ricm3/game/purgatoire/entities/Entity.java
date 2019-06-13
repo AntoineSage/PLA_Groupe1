@@ -182,4 +182,8 @@ public class Entity {
 		return m_level.m_model;
 	}
 
+	public float getWeakness() {
+		return m_currentStunt.getWeakness();
+	}
+
 }
