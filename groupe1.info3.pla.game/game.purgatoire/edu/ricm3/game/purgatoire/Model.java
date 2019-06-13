@@ -58,24 +58,29 @@ public class Model extends GameModel {
 	}
 
 	public void step(long now) {
-		m_nextLevel.step(now);
-		m_currentLevel.step(now);
+		if (!Options.PAUSE) {
+			m_nextLevel.step(now);
+			m_currentLevel.step(now);
 
-		if (now - lastPeriodUpdate > 100) {
-			m_period += now - lastPeriodUpdate;
-			m_totalTime += now - lastPeriodUpdate; // ? m_totalTime = now ?
+			if (now - lastPeriodUpdate > 100) {
+				m_period += now - lastPeriodUpdate;
+				m_totalTime += now - lastPeriodUpdate; // ? m_totalTime = now ?
+				lastPeriodUpdate = now;
+			}
+			if (m_period >= Options.TOTAL_PERIOD) {
+				if ((int) (m_totalTime / Options.TOTAL_PERIOD) % Options.NB_PERIOD_DIFFICULTY == 0) {
+					raiseDifficulty();
+				}
+				m_player.testKarma();
+				m_period = 0;
+			}
+		} else {
 			lastPeriodUpdate = now;
 		}
-		if (m_period >= Options.TOTAL_PERIOD) {
-			if ((int) (m_totalTime / Options.TOTAL_PERIOD) % Options.NB_PERIOD_DIFFICULTY == 0) {
-				raiseDifficulty();
-			}
-			// raiseDifficulty();
-			// m_currentLevel.updateDifficulty();
-			// m_nextLevel.updateDifficulty();
-			m_player.testKarma();
-			m_period = 0;
-		}
+	}
+	
+	public void switchPause() {
+		Options.PAUSE = !Options.PAUSE;
 	}
 
 	private void raiseDifficulty() {
@@ -159,13 +164,13 @@ public class Model extends GameModel {
 		m_nextLevel = m_nextLevelMaker.loadLevel(this);
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
-	
+
 	public double getPeriod() {
 		return m_period;
 	}
-	
+
 	public double getTotalTime() {
 		return m_totalTime;
 	}
-	
+
 }

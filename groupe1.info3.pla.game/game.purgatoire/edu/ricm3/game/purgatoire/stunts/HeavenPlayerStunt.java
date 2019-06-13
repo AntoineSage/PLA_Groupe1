@@ -131,12 +131,13 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void step(long now) {
+		m_entity.m_direction = IDirection.NONE;
+		m_automatonMove.step(m_entity);
 		super.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
-		m_automatonMove.step(m_entity);
 	}
 
 	@Override

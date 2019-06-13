@@ -19,6 +19,7 @@ import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.HeavenPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.HellPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.PlayerStunt;
+import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -35,6 +36,7 @@ public class Player extends Entity {
 		m_XP = 0;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
+		Options.PAUSE = false;
 	}
 
 	public void addKarma(Entity e) {
@@ -113,6 +115,10 @@ public class Player extends Entity {
 		return m_rank;
 	}
 
+	public int getDMG() {
+		return m_currentStunt.getDMG();
+	}
+
 	public String getRankName() {
 		return ((PlayerStunt) m_currentStunt).getRankName();
 	}
@@ -158,6 +164,7 @@ public class Player extends Entity {
 	@Override
 	public void die() {
 		super.die();
+		Options.PAUSE = true;
 		endGameMenu("You lost... Do you want to try again?");
 	}
 
@@ -199,5 +206,4 @@ public class Player extends Entity {
 		endFrame.setLocationRelativeTo(null);
 		endFrame.setVisible(true);
 	}
-
 }

@@ -119,6 +119,7 @@ public class GameUI {
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
 		m_frame.setTitle("Purgatory");
+		m_frame.setMinimumSize(new Dimension(800, 500));
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);
