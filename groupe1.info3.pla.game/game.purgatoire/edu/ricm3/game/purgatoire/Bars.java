@@ -196,7 +196,7 @@ public class Bars {
 			m_view.addGraphicUI(this);
 			m_startAngle = 90;
 			m_currentAngle = 90;
-			setForeground(Color.yellow);
+			setForeground(new Color(255, 230, 50));
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
@@ -205,6 +205,9 @@ public class Bars {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			g.setColor(Color.white);
+			g.fillArc(m_x, m_y, m_width, m_height, 0, 360);
+			g.setColor(getForeground());
 			g.fillArc(m_x, m_y, m_width, m_height, (int) m_startAngle, (int) m_currentAngle);
 		}
 
