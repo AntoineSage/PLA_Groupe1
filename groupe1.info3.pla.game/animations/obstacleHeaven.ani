@@ -1,4 +1,4 @@
-sprite_sheet = sprites/brick_gray2.png
+sprite_sheet = sprites/pillar.png
 NORTH = 1
 EAST = 1
 SOUTH = 1

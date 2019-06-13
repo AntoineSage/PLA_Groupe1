@@ -11,13 +11,6 @@ import ricm3.interpreter.IDirection;
 
 public class HeavenObstacleStunt extends Stunt {
 
-//	HeavenObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		super(automaton, entity, sprite);
-//		m_maxHP = Options.HEAVEN_OBSTACLE_HP_MAX;
-//		setDMG(Options.HEAVEN_OBSTACLE_DMG);
-//		m_obstacleDashTimer = new Timer(10000);
-//	}
-
 	public HeavenObstacleStunt() {
 		super(Singleton.getNewObstacleHeavenAut(),
 				new AnimationPlayer(Singleton.getObstacleHeavenAnim(), AnimType.IDLE, 2),
@@ -34,21 +27,20 @@ public class HeavenObstacleStunt extends Stunt {
 			m_popTimer.start();
 		}
 		if (Options.ECHO_POP_OBSTACLE)
-			System.out.println("Pop (dash) obstacle");
+			System.out.println("Pop heaven (dash) obstacle");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
-		int x, y, width, height;
+		int x, y, width;
 		x = m_entity.m_bounds.x;
 		y = m_entity.m_bounds.y;
 		width = m_entity.m_bounds.width;
-		height = m_entity.m_bounds.height;
 		m_entity.m_level.removeEntity(m_entity);
 		@SuppressWarnings("unused")
-		Nest nest = new Nest(m_entity.m_level, x, y, width, height);
-
-		System.out.println("wizz heaven obstacle");
+		Nest nest = new Nest(m_entity.m_level, x, y, width);
+		if (Options.ECHO_WIZZ_OBSTACLE)
+			System.out.println("Wizz heaven (nest) obstacle");
 	}
 
 	@Override
@@ -68,12 +60,10 @@ public class HeavenObstacleStunt extends Stunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		System.out.println("takeDamage heaven obstacle");
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		System.out.println("takeDamage heaven obstacle");
 	}
 
 }

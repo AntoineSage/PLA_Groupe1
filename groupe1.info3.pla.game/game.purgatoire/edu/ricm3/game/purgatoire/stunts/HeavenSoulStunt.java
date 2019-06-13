@@ -11,19 +11,11 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenSoulStunt extends Stunt {
 
-	Player isPlayer;
-
-	Long lastUpdate;
-
-//	HeavenSoulStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		super(automaton, entity, sprite);
-//		m_maxHP = Options.HEAVEN_SOUL_HP_MAX;
-//		setDMG(Options.HEAVEN_SOUL_DMG);
-//		m_karmaToGive = Options.HEAVEN_SOUL_KARMA_TOGIVE;
-//	}
+	private Player isPlayer;
+	private Long lastUpdate;
 
 	public HeavenSoulStunt() {
-		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 2),
+		super(Singleton.getNewSoulHeavenAut(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 4),
 				Options.HEAVEN_SOUL_HP_MAX, Options.HEAVEN_SOUL_DMG, Options.HEAVEN_SOUL_KARMA_TOGIVE);
 		lastUpdate = (long) 0;
 	}
@@ -41,12 +33,20 @@ public class HeavenSoulStunt extends Stunt {
 			pop(isPlayer);
 		}
 		if (Options.ECHO_POP_SOUL)
-			System.out.println("Soul heaven pop (kamikaze)");
+			System.out.println("Pop heaven (kamikaze) soul");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
-		System.out.println("wizz heaven soul");
+		if (m_entity.m_transparency == 1.0) {
+			m_entity.m_transparency = (float) 0.1F;
+		}
+
+		else if (m_entity.m_transparency == 0.1F) {
+			m_entity.m_transparency = (float) 1;
+		}
+		if (Options.ECHO_WIZZ_SOUL)
+			System.out.println("Wizz heaven (transparency) soul");
 	}
 
 	@Override

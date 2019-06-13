@@ -17,7 +17,7 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenNestStunt extends Stunt {
 
-	long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
+	private long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
 
 	public HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHeavenAnim(), AnimType.IDLE, 2),
@@ -31,20 +31,21 @@ public class HeavenNestStunt extends Stunt {
 	public void wizz(IDirection direction) {
 		if (m_wizzTimer.isFinished()) {
 			int width = m_entity.m_bounds.width;
-			int height = m_entity.m_bounds.height;
 			int x = m_entity.m_bounds.x;
 			int y = m_entity.m_bounds.y;
-			new Obstacle(m_entity.m_level, x, y, width, height);
+			new Obstacle(m_entity.m_level, x, y, width);
 			m_entity.m_level.removeEntity(m_entity);
 			m_wizzTimer.start();
 		}
+		if (Options.ECHO_WIZZ_NEST)
+			System.out.println("Wizz heaven (obstacle) nest");
 	}
 
 	@Override
 	public void pop(IDirection direction) {
 		m_nestSpawnPeriod *= Options.NEST_COEF_CHANGE_SPAWN_DELAY;
 		if (Options.ECHO_POP_NEST)
-			System.out.println("Nest spawn period: " + m_nestSpawnPeriod);
+			System.out.println("Pop heaven nest (spawn period: " + m_nestSpawnPeriod + ")");
 	}
 
 	private void changeSpawnPeriod() {
@@ -75,22 +76,13 @@ public class HeavenNestStunt extends Stunt {
 			x = (2 * m_entity.m_bounds.x + (width)) / 2;
 			y = (2 * m_entity.m_bounds.y + (height)) / 2;
 			Random r = new Random();
-			double tmpX = Math.random();
-			double tmpY = Math.random();
 
-			if (tmpX >= 0.5)
-				randX = x - r.nextInt(width + 2);
+			randX = x + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
+			randY = y + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
 
-			else
-				randX = x + r.nextInt(width + 2);
-
-			if (tmpY >= 0.5)
-				randY = y - r.nextInt(height + 2);
-			else
-				randY = y + r.nextInt(height + 2);
-
-			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - 2, randY - 2, 2, 2)) {
-				new Soul(m_entity.m_level, randX - 2, randY - 2, 2, 2);
+			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
+					randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
+				new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE);
 				break;
 			}
 		}

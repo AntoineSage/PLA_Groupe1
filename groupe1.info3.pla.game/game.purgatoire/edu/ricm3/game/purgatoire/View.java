@@ -17,6 +17,7 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
@@ -38,10 +40,10 @@ import edu.ricm3.game.purgatoire.entities.Entity;
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
-	Model m_model;
-	int m_yG1; // position de g1 par rapport à g
-	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
-	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
+	private Model m_model;
+	private int m_yG1; // position de g1 par rapport à g
+	private int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
+	private int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
 
 	private static BufferedImage m_heavenBackground;
@@ -50,7 +52,10 @@ public class View extends GameView {
 	private static BufferedImage m_currentBackground;
 	private static BufferedImage m_currentBackground2;
 
+	private Color grey;
+
 	public View(Model m) {
+		grey = new Color(238, 238, 238);
 		m_model = m;
 
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
@@ -65,7 +70,8 @@ public class View extends GameView {
 				int tmp = getWidth();
 				Options.WIN_WIDTH = tmp == 0 ? Options.WIN_WIDTH : tmp;
 
-				BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
+				float borderSize = (float) (65.0f * (float) getWidth() / 765.0f);
+				BLOCK_SIZE = (int) (((float) getWidth() - 2.0f * borderSize) / ((float) Options.LVL_WIDTH));
 				NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 			}
 		});
@@ -94,16 +100,23 @@ public class View extends GameView {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+
+		m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE;
 	}
 
 	public void step(long now) {
 		// if the camera is blocked
 		if (Options.LVL_HEIGHT - m_model.m_player.m_bounds.y <= (NB_BLOCKS_WIN / 2)) {
-			m_yG1 = -(Options.LVL_HEIGHT - NB_BLOCKS_WIN);
+			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE;
+			if (Options.ECHO_CAMERA_MODE)
+				System.out.println("Camera is blocked");
 		}
 		// the camera follows the player
 		else {
-			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2);
+			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2 - 2)
+					* BLOCK_SIZE;
+			if (Options.ECHO_CAMERA_MODE)
+				System.out.println("Camera follows player");
 		}
 
 		transform();
@@ -112,100 +125,176 @@ public class View extends GameView {
 	public void transform() {
 		if (m_model.getWorldType() == WorldType.HEAVEN) {
 			m_currentBackground = m_heavenBackground;
-			m_currentBackground2 = m_heavenBackground2;		
-		}
-		else {
+			m_currentBackground2 = m_heavenBackground2;
+		} else {
 			m_currentBackground = m_hellBackground;
-			m_currentBackground2 = m_hellBackground;			
+			m_currentBackground2 = m_hellBackground;
 		}
 	}
+
 	@Override
 	protected void _paint(Graphics g) {
-		g.setColor(Color.gray);
+		g.setColor(grey);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics g1 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2, m_yG1 * BLOCK_SIZE,
-				Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT) * BLOCK_SIZE);
-		g1.setColor(m_model.m_currentLevel.m_c);
-		g1.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
 
-		Graphics g2 = g.create((Options.WIN_WIDTH - Options.LVL_WIDTH * BLOCK_SIZE) / 2,
-				(m_yG1 - Options.LVL_HEIGHT) * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE,
-				(Options.LVL_HEIGHT) * BLOCK_SIZE);
-
-		g2.setColor(m_model.m_nextLevel.m_c);
-		g2.fillRect(0, 0, Options.LVL_WIDTH * BLOCK_SIZE, (Options.LVL_HEIGHT + 1) * BLOCK_SIZE);
-
-		paint(g1, m_model.m_currentLevel);
-		paint(g2, m_model.m_nextLevel);
+		paintLevel(g, m_model.m_currentLevel, 0);
+		paintLevel(g, m_model.m_nextLevel, 1);
 
 		Iterator<Component> iter = m_graphicUIs.iterator();
 		while (iter.hasNext()) {
 			Component graphic = iter.next();
 			graphic.repaint();
-//			graphic.revalidate();
 		}
-		g1.dispose();
-		g2.dispose();
 	}
 
-//	private void paint(Graphics g, Entity e) {
-//		g.setColor(e.m_currentStunt.m_c);
-//		g.fillRect(e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE, e.m_bounds.width * BLOCK_SIZE,
-//				e.m_bounds.height * BLOCK_SIZE);
-//	}
-//
-//	private void paintGrid(Graphics g) {
-//		g.setColor(Color.BLACK);
-//		for (int i = 0; i < Options.LVL_HEIGHT; i++) {
-//			g.drawLine(0, i * BLOCK_SIZE, Options.LVL_WIDTH * BLOCK_SIZE, i * BLOCK_SIZE);
-//		}
-//		for (int i = 0; i < Options.LVL_WIDTH; i++) {
-//			g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, Options.LVL_HEIGHT * BLOCK_SIZE);
-//		}
-//	}
+	private void paintLevel(Graphics g, Level lvl, int i) {
+		float borderSize = (float) (65.0f * (float) getWidth() / 765.0f);
 
-	private void paint(Graphics g, Level lvl) {
-		Rectangle bounds = g.getClipBounds();
-		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, 0, 0, bounds.width, bounds.height,
+		int lvlHeight = Options.LVL_HEIGHT * BLOCK_SIZE;
+		int lvlWidth = (int) (((float) (Options.LVL_WIDTH * BLOCK_SIZE)) / (1.0f - (2.0f * 65.0f) / 765.0f));
+		int lvlY = m_yG1 - lvlHeight * i;
+		int lvlX = (getWidth() - lvlWidth) / 2;
+
+		g.drawImage(lvl.getId() % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight,
 				null);
-		g.setColor(Color.white);
-		g.drawLine(0, 0, bounds.width, 0);
 
+		g.setColor(Color.white);
+		g.drawLine(lvlX, lvlY, lvlX + lvlWidth, lvlY);
+
+		Rectangle viewportBounds = new Rectangle(0, 0, getWidth(), getHeight());
 		Iterator<Entity> iter = lvl.m_obstacles.iterator();
 		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			}
 		}
 
-		if (lvl.m_special != null)
-			paintAnimation(g, lvl.m_special);
-
-		if (lvl.m_player != null)
-			paintAnimation(g, lvl.m_player);
+		if (lvl.m_special != null) {
+			Rectangle bound = getRect(lvl.m_special, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				lvl.m_special.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBarTransparency(g, lvl.m_special.m_currentStunt.m_animation.getSprite(), bound,
+						lvl.m_special);
+			}
+		}
+		
+		if (lvl.m_player != null) {
+			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				lvl.m_player.m_currentStunt.m_animation.step();
+				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
+			}
+		}
 
 		iter = lvl.m_souls.iterator();
 		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
-		}
-
-		iter = lvl.m_nest.iterator();
-		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBarTransparency(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
+			}
 		}
 
 		iter = lvl.m_missiles.iterator();
 		while (iter.hasNext()) {
-			paintAnimation(g, iter.next());
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			}
+		}
+		iter = lvl.m_nest.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSpriteWithHPBar(g, e.m_currentStunt.m_animation.getSprite(), bound, e);
+			}
+		}
+		iter = lvl.m_souls.iterator();
+		while (iter.hasNext()) {
+			Entity e = iter.next();
+			Rectangle bound = getRect(e, lvlX + (int) borderSize, lvlY);
+			if (viewportBounds.intersects(bound)) {
+				e.m_currentStunt.m_animation.step();
+				paintSprite(g, e.m_currentStunt.m_animation.getSprite(), bound);
+			}
 		}
 	}
+
+	private void paintSprite(Graphics g, BufferedImage sprite, Rectangle bound) {
+		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
+	}
+
+	private void paintSpriteWithHPBar(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {
+		g.drawImage(sprite, bound.x, bound.y, bound.width, bound.height, null);
+		g.setColor(Color.BLACK);
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2, bound.width, BLOCK_SIZE / 3);
+		g.setColor(Color.RED);
+		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2,
+				(int) ((float) bound.width * ((float) e.m_HP / (float) e.m_currentStunt.getMaxHP())), BLOCK_SIZE / 3);
+	}
+
+	private void paintSpriteWithHPBarTransparency(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, e.m_transparency));
+		paintSpriteWithHPBar(g, sprite, bound, e);
+		((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+
+	}
+
+	private Rectangle getRect(Entity m_player, int x, int y) {
+		return new Rectangle(m_player.m_bounds.x * BLOCK_SIZE + x, m_player.m_bounds.y * BLOCK_SIZE + y,
+				m_player.m_bounds.width * BLOCK_SIZE, m_player.m_bounds.height * BLOCK_SIZE);
+	}
+
+//	private void paint(Graphics g, Level lvl) {
+//		Rectangle bounds = g.getClipBounds();
+//		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, 0, 0, bounds.width, bounds.height,
+//				null);
+//		g.setColor(Color.white);
+//		g.drawLine(0, 0, bounds.width, 0);
+//
+//		Iterator<Entity> iter = lvl.m_obstacles.iterator();
+//		while (iter.hasNext()) {
+//			paintAnimation(g, iter.next());
+//		}
+//
+//		if (lvl.m_special != null)
+//			paintAnimation(g, lvl.m_special);
+//
+//		if (lvl.m_player != null)
+//			paintAnimation(g, lvl.m_player);
+//
+//		iter = lvl.m_souls.iterator();
+//		while (iter.hasNext()) {
+//			paintAnimation(g, iter.next());
+//		}
+//
+//		iter = lvl.m_nest.iterator();
+//		while (iter.hasNext()) {
+//			paintAnimation(g, iter.next());
+//		}
+//
+//		iter = lvl.m_missiles.iterator();
+//		while (iter.hasNext()) {
+//			paintAnimation(g, iter.next());
+//		}
+//	}
 
 	public void addGraphicUI(Component g) {
 		m_graphicUIs.add(g);
 	}
-
-	private void paintAnimation(Graphics g, Entity e) {
-		e.m_currentStunt.m_animation.step();
-		g.drawImage(e.m_currentStunt.m_animation.getSprite(), e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE,
-				e.m_bounds.width * BLOCK_SIZE, e.m_bounds.height * BLOCK_SIZE, null);
-	}
+//
+//	private void paintAnimation(Graphics g, Entity e) {
+//		e.m_currentStunt.m_animation.step();
+//		g.drawImage(e.m_currentStunt.m_animation.getSprite(), e.m_bounds.x * BLOCK_SIZE, e.m_bounds.y * BLOCK_SIZE,
+//				e.m_bounds.width * BLOCK_SIZE, e.m_bounds.height * BLOCK_SIZE, null);
+//	}
 
 }

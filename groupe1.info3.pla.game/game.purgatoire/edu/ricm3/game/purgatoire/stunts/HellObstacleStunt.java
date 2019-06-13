@@ -19,16 +19,6 @@ public class HellObstacleStunt extends Stunt {
 		m_popTimer = new Timer(m_popCooldown);
 	}
 
-//	HellObstacleStunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		super(automaton, entity, sprite);
-//
-//		m_animation = new AnimationPlayer(Singleton.getObstacleHellAnim(), AnimType.IDLE, 2);
-//		m_animation.resume();
-//		
-//		m_maxHP = Options.HELL_OBSTACLE_HP_MAX;
-//		setDMG(Options.HELL_OBSTACLE_DMG);
-//	}
-
 	@Override
 	public void pop(IDirection d) {
 		if (m_popTimer.isFinished()) {
@@ -36,18 +26,19 @@ public class HellObstacleStunt extends Stunt {
 			m_popTimer.start();
 		}
 		if (Options.ECHO_POP_OBSTACLE)
-			System.out.println("Pop (dash) obstacle");
+			System.out.println("Pop hell (dash) obstacle");
 	}
 
 	@Override
 	public void wizz(IDirection d) {
-		int x, y, width, height;
+		int x, y, width;
 		x = m_entity.m_bounds.x;
 		y = m_entity.m_bounds.y;
 		width = m_entity.m_bounds.width;
-		height = m_entity.m_bounds.height;
 		m_entity.m_level.removeEntity(m_entity);
-		new Nest(m_entity.m_level, x, y, width, height);
+		new Nest(m_entity.m_level, x, y, width);
+		if (Options.ECHO_WIZZ_OBSTACLE)
+			System.out.println("Wizz hell (nest) obstacle");
 	}
 
 	@Override
@@ -62,12 +53,10 @@ public class HellObstacleStunt extends Stunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		System.out.println("takedamage hell obstacle");
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		System.out.println("takedamage hell obstacle");
 	}
 
 	@Override

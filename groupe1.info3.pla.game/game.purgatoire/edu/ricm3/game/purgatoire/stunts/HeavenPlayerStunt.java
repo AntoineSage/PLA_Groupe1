@@ -12,16 +12,18 @@ import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
+import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
-	LinkedList<Missile> m_missiles;
-	Timer m_hitTimer;
-	Timer m_hitCoolDown;
-	boolean m_isFiring;
-	Timer m_karmaTimer;
+	private LinkedList<Missile> m_missiles;
+	private Timer m_hitTimer;
+	private Timer m_hitCoolDown;
+	private boolean m_isFiring;
+	private Timer m_karmaTimer;
+	private IAutomaton m_automatonMove;
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
@@ -36,6 +38,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
+		m_automatonMove = Singleton.getNewPlayerHeavenMoveAut();
 	}
 
 	@Override
@@ -61,6 +64,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void hit(IDirection d) {
+		super.hit(d);
+
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
@@ -72,7 +77,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 				case NORTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, 1, 1, IDirection.NORTH, m_entity);
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE,
+								IDirection.NORTH, m_entity);
 						m_missiles.add(missile);
 					}
 					if (m_animation != null)
@@ -81,7 +87,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 				case SOUTH:
 					for (int x = 0; x <= 2; x++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, 1, 1, IDirection.SOUTH, m_entity);
+								m_entity.m_bounds.x + x, m_entity.m_bounds.y + 3, Options.MISSILE_SIZE,
+								IDirection.SOUTH, m_entity);
 						m_missiles.add(missile);
 					}
 					if (m_animation != null)
@@ -90,7 +97,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 				case EAST:
 					for (int y = 0; y <= 2; y++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, 1, 1, IDirection.EAST, m_entity);
+								m_entity.m_bounds.x + 3, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.EAST,
+								m_entity);
 						m_missiles.add(missile);
 					}
 					if (m_animation != null)
@@ -99,11 +107,14 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 				case WEST:
 					for (int y = 0; y <= 2; y++) {
 						missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
-								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, 1, 1, IDirection.WEST, m_entity);
+								m_entity.m_bounds.x - 1, m_entity.m_bounds.y + y, Options.MISSILE_SIZE, IDirection.WEST,
+								m_entity);
 						m_missiles.add(missile);
 					}
 					if (m_animation != null)
 						m_animation.changeTo(AnimType.WEST);
+					break;
+				default:
 					break;
 				}
 			} else {
@@ -136,6 +147,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
+		m_automatonMove.step(m_entity);
 	}
 	
 	@Override
@@ -162,8 +174,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void updateRankStats() {
 		((Player) m_entity).setMaxTotalHP(Options.PLAYER_HP_MAX_TOTAL_HEAVEN[((Player) m_entity).getRank()]);
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
-		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println("Update stats: " + ((Player) m_entity).getMaxTotalHP() + " maxTotalHP, " + getBaseDMG());
+//		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
 
 }

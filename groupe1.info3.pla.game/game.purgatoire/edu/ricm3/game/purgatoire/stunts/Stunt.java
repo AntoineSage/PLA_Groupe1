@@ -1,15 +1,14 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import ricm3.interpreter.IAutomaton;
@@ -19,45 +18,26 @@ import ricm3.interpreter.IEntityType;
 public class Stunt {
 
 	public AnimationPlayer m_animation;
-	public Color m_c;
 	public BufferedImage m_sprite;
 
-	IAutomaton m_automaton;
-	Entity m_entity;
+	private IAutomaton m_automaton;
+	protected Entity m_entity;
 
-	int m_rangeDash = Options.DASH_SIZE;
+	private int m_rangeDash = Options.DASH_SIZE;
 
-	Timer m_popTimer;
-	int m_popCooldown;
-	int m_popDuration; // not used
+	protected Timer m_popTimer;
+	protected int m_popCooldown;
+	protected int m_popDuration; // not used
 
-	Timer m_wizzTimer; // not used
-	int m_wizzCooldown; // not used
-	int m_wizzDuration;
+	protected Timer m_wizzTimer; // not used
+	protected int m_wizzCooldown; // not used
+	protected int m_wizzDuration;
 
-	public int m_maxHP;
+	private int m_maxHP;
 	private int m_DMG;
-	public int m_karmaToGive;
-	float m_DMGBuff = 1;
-	public float m_weaknessBuff = 1;
-
-//	Stunt(IAutomaton automaton, Color c) {
-//		m_automaton = automaton;
-//		m_c = c;
-//	}
-//
-//	Stunt(IAutomaton automaton, Entity entity, Color c) {
-//		m_automaton = automaton;
-//		m_entity = entity;
-//		m_c = c;
-//	}
-//
-//	public Stunt(IAutomaton automaton, AnimationPlayer animation) {
-//		m_automaton = automaton;
-//		m_animation = animation;
-//		m_popTimer = new Timer(Options.DEFAULT_CD);
-//		m_wizzTimer = new Timer(Options.DEFAULT_CD);
-//	}
+	private int m_karmaToGive;
+	private float m_DMGBuff = 1;
+	protected float m_weaknessBuff = 1;
 
 	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG) {
 		m_automaton = automaton;
@@ -77,12 +57,6 @@ public class Stunt {
 		m_popTimer = new Timer(Options.DEFAULT_CD);
 		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
-
-//	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		m_automaton = automaton;
-//		m_entity = entity;
-//		m_sprite = sprite;
-//	}
 
 	public void tryMove(IDirection d) {
 		switch (d) {
@@ -234,7 +208,22 @@ public class Stunt {
 	}
 
 	public void hit(IDirection d) {
-		System.out.println("hit de base");
+		switch (d) {
+		case NORTH:
+			m_entity.m_direction = IDirection.NORTH;
+			break;
+		case SOUTH:
+			m_entity.m_direction = IDirection.SOUTH;
+			break;
+		case EAST:
+			m_entity.m_direction = IDirection.EAST;
+			break;
+		case WEST:
+			m_entity.m_direction = IDirection.WEST;
+			break;
+		default:
+			break;
+		}
 	}
 
 	private void move(int x, int y) {
@@ -265,6 +254,14 @@ public class Stunt {
 
 	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
+	}
+
+	public int getMaxHP() {
+		return m_maxHP;
+	}
+
+	public void setMaxHP(int maxHP) {
+		m_maxHP = maxHP;
 	}
 
 	public int getBaseDMG() {
@@ -348,6 +345,22 @@ public class Stunt {
 		m_automaton.step(m_entity);
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
+		switch (m_entity.m_direction) {
+		case NORTH:
+			m_animation.changeTo(AnimType.NORTH);
+			break;
+		case SOUTH:
+			m_animation.changeTo(AnimType.SOUTH);
+			break;
+		case EAST:
+			m_animation.changeTo(AnimType.EAST);
+			break;
+		case WEST:
+			m_animation.changeTo(AnimType.WEST);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public long getTimeLeftPop() {
@@ -356,6 +369,14 @@ public class Stunt {
 
 	public long getTimeLeftWizz() {
 		return m_wizzTimer.getCurrent();
+	}
+
+	public int getKarmaToGive() {
+		return m_karmaToGive;
+	}
+
+	public void setDMGBuff(int b) {
+		m_DMGBuff = b;
 	}
 
 }

@@ -43,17 +43,16 @@ import edu.ricm3.game.purgatoire.Bars.XPBar;
 
 public class Controller extends GameController implements ActionListener {
 
-	Model m_model;
-	View m_view;
-	// private long m_lastTransform;
-	List<Integer> m_allKeyPressed;
-	Stack<Integer> m_directionKey;
-	HPBar m_HPBar, m_periodCircle;
-	XPBar m_XPBar;
-	KarmaBar m_karmaBar;
+	private Model m_model;
+	private View m_view;
+	private List<Integer> m_allKeyPressed;
+	private Stack<Integer> m_directionKey;
+	private HPBar m_HPBar, m_periodCircle;
+	private XPBar m_XPBar;
+	private KarmaBar m_karmaBar;
 
-	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
-	Label m_cooldownLabel, m_cooldownWizzLabel;
+	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
+	private Label m_cooldownLabel;
 
 	Music m_player;
 	Button m_music;
@@ -95,7 +94,6 @@ public class Controller extends GameController implements ActionListener {
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
 		m_karmaLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
-		m_cooldownWizzLabel = new Label("", Label.CENTER);
 
 		westInside.add(m_periodLabel);
 		karmaBar.add(m_karmaBar);
@@ -169,8 +167,8 @@ public class Controller extends GameController implements ActionListener {
 	}
 
 	public void updateTimeUI() {
-		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.m_period) / 1000));
-		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
+		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.getPeriod()) / 1000));
+		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.getTotalTime() / 1000));
 	}
 
 	public void updateKarmaUI() {
@@ -208,7 +206,7 @@ public class Controller extends GameController implements ActionListener {
 
 	// TODO fix distance when changing world
 	public void updateDistanceUI() {
-		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_HEIGHT + "m");
+		m_totalDistanceLabel.setText("total distance: " + m_model.m_totalDistance / Options.PLAYER_SIZE + "m");
 	}
 
 	public void updateCooldownUI() {
@@ -239,11 +237,12 @@ public class Controller extends GameController implements ActionListener {
 			m_allKeyPressed.add(code);
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_A) {
+		if ((e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) && Options.CHEAT_MODE) {
 			m_model.getPlayer().addKarma(+50);
-		} else if (e.getKeyCode() == KeyEvent.VK_E) {
+		} else if ((e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) && Options.CHEAT_MODE) {
 			m_model.getPlayer().addKarma(-50);
-		}
+		} else if (e.getKeyCode() == KeyEvent.VK_R)
+			m_model.respawn();
 	}
 
 	@Override

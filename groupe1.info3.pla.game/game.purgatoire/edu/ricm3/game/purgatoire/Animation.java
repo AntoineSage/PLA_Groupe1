@@ -37,7 +37,7 @@ public class Animation {
 			System.exit(-1);
 		}
 	}
-	
+
 	public Animation(File file) {
 		m_name = file.getName();
 		try {
@@ -48,7 +48,8 @@ public class Animation {
 		}
 	}
 
-	private static List<BufferedImage>[] spritesFromFile(File file) throws FileNotFoundException  {
+	private static List<BufferedImage>[] spritesFromFile(File file) throws FileNotFoundException {
+		@SuppressWarnings("unchecked")
 		List<BufferedImage>[] sprites = new List[5];
 		BufferedImage[] splitImage = null;
 
@@ -133,6 +134,5 @@ public class Animation {
 	public String toString() {
 		return m_name;
 	}
-	
-	
+
 }

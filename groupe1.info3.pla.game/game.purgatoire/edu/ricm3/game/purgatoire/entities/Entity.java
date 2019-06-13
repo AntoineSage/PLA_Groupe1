@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import edu.ricm3.game.purgatoire.Level;
+import edu.ricm3.game.purgatoire.Model;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
@@ -17,20 +18,22 @@ public class Entity {
 	public Rectangle m_bounds;
 	public IEntityType m_type;
 	public IDirection m_direction;
+	public float m_transparency;
 
 	private Stunt m_heavenStunt, m_hellStunt;
 
-	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int width, int height) {
+	Entity(Level level, Stunt heaven, Stunt hell, int x, int y, int size) {
 		m_level = level;
 		m_heavenStunt = heaven;
 		m_heavenStunt.setAttachedEntity(this);
 		m_hellStunt = hell;
 		m_hellStunt.setAttachedEntity(this);
-		m_bounds = new Rectangle(x, y, width, height);
+		m_bounds = new Rectangle(x, y, size, size);
 		m_direction = IDirection.NORTH;
 		m_level.addEntity(this);
+		m_transparency = 1;
 		transform();
-		m_HP = 1;
+		m_HP = this.m_currentStunt.getMaxHP();
 	}
 
 	public void transform() {
@@ -53,19 +56,34 @@ public class Entity {
 		return m_HP;
 	}
 
+	public double getHPPercent() {
+		return (double) m_HP / m_currentStunt.getMaxHP();
+	}
+
+	public void setHPPercent(double p) {
+		m_HP = (int) (m_currentStunt.getMaxHP() * p);
+	}
+
 	public void addHP(int HP) {
-		m_HP = Math.min(m_currentStunt.m_maxHP, m_HP + HP);
+		m_HP = Math.min(m_currentStunt.getMaxHP(), m_HP + HP);
+		m_HP = Math.max(m_HP, 0);
+		if (Options.ECHO_HP_CHANGE)
+			System.out.println("Entity HP change: " + HP + " HP, " + getMaxHP() + " maxHP");
 	}
 
 	public int getMaxHP() {
-		return m_currentStunt.m_maxHP;
+		return m_currentStunt.getMaxHP();
 	}
 
 	/*
 	 * public int getDMG() { return (m_DMG * m_currentStunt.m_buffedDMG); }
 	 */
 	public void addMaxHP(int maxHP) {
-		m_currentStunt.m_maxHP += maxHP;
+		m_currentStunt.setMaxHP(m_currentStunt.getMaxHP() + maxHP);
+	}
+
+	public void setMaxHP(int maxHP) {
+		m_currentStunt.setMaxHP(maxHP);
 	}
 
 	public void takeDamage(int DMG) {
@@ -109,8 +127,8 @@ public class Entity {
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-		if (m_type2 == IEntityType.PLAYER && m_level.m_player != null) {
-			return isGoodDirection(m_direction2, this, m_level.m_player);
+		if (m_type2 == IEntityType.PLAYER && m_level.getPlayer() != null) {
+			return isGoodDirection(m_direction2, this, m_level.getPlayer());
 		}
 		return false;
 	}
@@ -158,6 +176,10 @@ public class Entity {
 
 	public long getTimeLeftWizz() {
 		return m_currentStunt.getTimeLeftWizz();
+	}
+
+	public Model getModel() {
+		return m_level.m_model;
 	}
 
 }

@@ -10,7 +10,7 @@ import ricm3.interpreter.IEntityType;
 
 public class CollisionGrid {
 
-	List<Entity> m_grid[][];
+	private List<Entity> m_grid[][];
 
 	@SuppressWarnings("unchecked")
 	public CollisionGrid() {
@@ -52,7 +52,7 @@ public class CollisionGrid {
 		if (x >= 0 && (x < Options.LVL_WIDTH) && (x + width - 1 < Options.LVL_WIDTH) && (x + width - 1 >= 0))
 			if (y >= 0 && (y < Options.LVL_HEIGHT) && (y + height - 1 < Options.LVL_HEIGHT) && (y + height - 1 >= 0)) {
 				if (testCollisionWithType(type, x, y, width, height) == false)
-				return true;
+					return true;
 			}
 		return false;
 	}
