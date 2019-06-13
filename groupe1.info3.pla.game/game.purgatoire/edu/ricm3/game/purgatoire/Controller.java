@@ -245,8 +245,6 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().addXP(-50);
 		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
 				&& Options.CHEAT_MODE == true) {
-			m_model.getPlayer().addMaxHP(1000000);
-			m_model.getPlayer().setHP(1000000);
 		} else if (e.getKeyCode() == KeyEvent.VK_NUMBER_SIGN)
 			m_model.respawn();
 	}

@@ -263,27 +263,35 @@ public class Stunt {
 	}
 
 	public void takeDamage(int DMG) {
-		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
+		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity) {
+			return;
+		} else {
+			m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+			if (m_entity.m_HP <= 0) {
+				m_entity.die();
+			}
 		}
 	}
 
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
+		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity) {
+			return;
+		} else {
+			m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
+			if (m_entity.m_HP <= 0) {
+				m_entity.die();
+			}
 		}
 	}
 
 	public int getDMG() {
 		return (int) ((float) (m_DMGBuff * m_DMG));
 	}
-	
+
 	public int getMaxHP() {
 		return m_maxHP;
 	}
-	
+
 	public void setMaxHP(int maxHP) {
 		m_maxHP = maxHP;
 	}
