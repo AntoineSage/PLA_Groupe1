@@ -17,6 +17,8 @@
  */
 package edu.ricm3.game.purgatoire;
 
+import java.util.Random;
+
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.entities.Player;
 
@@ -30,18 +32,18 @@ public class Model extends GameModel {
 	public int m_totalDistance;
 	private double m_period;
 	private double m_totalTime;
-
+	private Random m_randGenerator;
 	private long lastPeriodUpdate;
 
 	public Model() {
-
+		m_randGenerator= new Random ();
+		m_randGenerator.setSeed(3);
 		m_wt = WorldType.HELL;
 		Singleton.getBackgroundMusic().start();
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
 		m_currentLevel = m_currentLevelMaker.loadLevel(this);
 		m_nextLevel = m_nextLevelMaker.loadLevel(this);
-
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
 
@@ -163,6 +165,7 @@ public class Model extends GameModel {
 		Options.HELL_OBSTACLE_HP_MAX = Options.HELL_OBSTACLE_HP_MAX_BASE;
 		Options.HEAVEN_OBSTACLE_DMG = Options.HEAVEN_OBSTACLE_DMG_BASE;
 		Options.HEAVEN_OBSTACLE_HP_MAX = Options.HEAVEN_OBSTACLE_HP_MAX_BASE;
+		m_randGenerator.setSeed(1);
 		m_totalDistance = 0;
 		m_period = 0;
 		m_totalTime = 0;
@@ -180,6 +183,10 @@ public class Model extends GameModel {
 
 	public double getTotalTime() {
 		return m_totalTime;
+	}
+	
+	public Random getRandomGenerator() {
+		return m_randGenerator;
 	}
 
 }
