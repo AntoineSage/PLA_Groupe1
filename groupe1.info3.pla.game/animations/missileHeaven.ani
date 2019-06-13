@@ -1,4 +1,4 @@
-sprite_sheet = sprites/bolt04.png
+sprite_sheet = sprites/cloud2.png
 NORTH = 1
 EAST = 1
 SOUTH = 1
