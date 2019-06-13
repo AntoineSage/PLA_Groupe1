@@ -20,6 +20,11 @@ public class HellSoulStunt extends Stunt {
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
+	public HellSoulStunt(boolean unlimitedRange) {
+		super(Singleton.getNewUnlimitedRangeFollow(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
+				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+	}
+
 	public void pop(Player p) {
 		p.addKarma(m_entity);
 		p.takeDamage(m_entity.m_currentStunt.getDMG());
@@ -60,8 +65,8 @@ public class HellSoulStunt extends Stunt {
 		if (m_entity.m_HP <= 0) {
 			if (Options.ECHO_DIE)
 				System.out.println("Soul dies");
-			if (e instanceof Missile) {
-				isPlayer = (Player) ((Missile) e).getOwner();
+			if (e instanceof Player) {
+				isPlayer = (Player) e;
 				isPlayer.addKarma(m_entity);
 			}
 			m_entity.die();
@@ -80,7 +85,7 @@ public class HellSoulStunt extends Stunt {
 			pop(isPlayer);
 		}
 		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
-			m_automaton.step(m_entity);
+			super.step(now);
 			lastUpdate = now;
 		}
 	}

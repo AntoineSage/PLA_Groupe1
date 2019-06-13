@@ -41,10 +41,6 @@ public class HellSpecialStunt extends Stunt {
 	}
 
 	@Override
-	public void takeDamage(int DMG) {
-	}
-
-	@Override
 	public void takeDamage(Entity e) {
 	}
 

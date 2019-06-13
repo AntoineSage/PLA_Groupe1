@@ -82,7 +82,7 @@ public class HellNestStunt extends Stunt {
 
 			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
 					randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
-				new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE);
+				new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE, true);
 				break;
 			}
 		}
