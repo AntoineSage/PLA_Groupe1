@@ -179,8 +179,8 @@ public class Bars {
 	}
 
 	static class TimeCircle extends JComponent {
+		private static final long serialVersionUID = -75224855196791341L;
 
-		private static final long serialVersionUID = -4828379213574397971L;
 		private View m_view;
 		private int m_x, m_y;
 		private int m_width, m_height;
@@ -200,6 +200,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 		}
 
 		@Override
@@ -214,7 +215,6 @@ public class Bars {
 		public void updateArcs(double period) {
 			if (period <= Options.TOTAL_PERIOD)
 				m_currentAngle = 360 - (period * 360 / Options.TOTAL_PERIOD);
-
 		}
 	}
 
