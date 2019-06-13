@@ -95,7 +95,7 @@ public class HellSoulStunt extends Stunt {
 		if (isPlayer != null) {
 			pop(isPlayer);
 		}
-		if (now - lastUpdate > 1000 / 15) {
+		if (now - lastUpdate > Options.SOUL_STEP_DELAY) {
 			m_automaton.step(m_entity);
 			lastUpdate = now;
 		}

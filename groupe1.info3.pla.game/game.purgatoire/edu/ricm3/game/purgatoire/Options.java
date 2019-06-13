@@ -98,7 +98,7 @@ public class Options {
 	public static final double HEAVEN_SOUL_DMG_COEF = 1.5;
 	public static final double HEAVEN_SOUL_HP_MAX_COEF = 1.5;
 
-	public static final int SOUL_STEP_DELAY = 1000 / 15;
+	public static final int SOUL_STEP_DELAY = 1000 / 10;
 
 
 	// SPCL OPTIONS
