@@ -12,21 +12,20 @@ import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
-import ricm3.parser.Ast.Automaton;
 
 public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
-	LinkedList<Missile> m_missiles;
-	Timer m_missileTimer;
-	Timer m_karmaTimer;
+	private LinkedList<Missile> m_missiles;
+	private Timer m_missileTimer;
+	private Timer m_karmaTimer;
 
-	int m_lastPopPeriod = -1;
-	int m_nbPeriod;
-	int m_DMGBuffRatio = Options.BUFF_DMG;
-	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
-	int m_durationBuff = Options.BUFF_DURATION;
-	
-	IAutomaton m_automatonMove;
+	private int m_lastPopPeriod = -1;
+	private int m_nbPeriod;
+	private int m_DMGBuffRatio = Options.BUFF_DMG;
+	private int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
+	private int m_durationBuff = Options.BUFF_DURATION;
+
+	private IAutomaton m_automatonMove;
 
 	public HellPlayerStunt() {
 		super(Singleton.getNewPlayerHellAut(), new AnimationPlayer(Singleton.getPlayerHellAnim(), AnimType.IDLE, 2),
@@ -45,7 +44,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void pop(IDirection d) {
 		// TODO Peut-être un peu lourd comme calcul ? A voir si on peut pas juste avoir
 		// un compteur de période écoulée ?
-		m_nbPeriod = (int) m_entity.m_level.m_model.m_totalTime / Options.TOTAL_PERIOD;
+		m_nbPeriod = (int) m_entity.m_level.m_model.getTotalTime() / Options.TOTAL_PERIOD;
 		if (m_nbPeriod != m_lastPopPeriod) {
 			m_popTimer.start();
 			buff(m_DMGBuffRatio, m_weaknessBuffRatio);
@@ -98,7 +97,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void hit(IDirection d) {
 		super.hit(d);
-		
+
 		if (m_missileTimer.isFinished()) {
 			m_missileTimer.start();
 			Missile missile;
@@ -158,7 +157,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void step(long now) {
 		super.step(now);
 		if (m_popTimer.isFinished()) {
-			m_DMGBuff = 1;
+			setDMGBuff(1);
 			m_weaknessBuff = 1;
 		}
 		m_missileTimer.step(now);

@@ -17,31 +17,28 @@
  */
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Color;
-import java.io.FileNotFoundException;
-
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.entities.Player;
 
 public class Model extends GameModel {
 
 	private WorldType m_wt;
-	Player m_player;
-	Level m_currentLevel, m_nextLevel;
-	LevelMaker m_currentLevelMaker, m_nextLevelMaker;
+	protected Player m_player;
+	protected Level m_currentLevel, m_nextLevel;
+	private LevelMaker m_currentLevelMaker, m_nextLevelMaker;
 
 	public int m_totalDistance;
-	double m_period;
-	public double m_totalTime;
+	private double m_period;
+	private double m_totalTime;
 
-	long lastPeriodUpdate;
+	private long lastPeriodUpdate;
 
-	public Model(){
+	public Model() {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
-		m_currentLevel = m_currentLevelMaker.loadLevel(this, Color.yellow);
-		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.pink);
+		m_currentLevel = m_currentLevelMaker.loadLevel(this);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this);
 
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
@@ -121,11 +118,11 @@ public class Model extends GameModel {
 		return m_player;
 	}
 
-	public void nextLevel(){
+	public void nextLevel() {
 		m_currentLevel = m_nextLevel;
 		m_currentLevelMaker = m_nextLevelMaker;
 		m_nextLevelMaker = new LevelMaker();
-		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.GREEN);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this);
 		m_player.nextLevel(m_currentLevel);
 	}
 
@@ -161,9 +158,17 @@ public class Model extends GameModel {
 		m_wt = WorldType.HEAVEN;
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
-		m_currentLevel = m_currentLevelMaker.loadLevel(this, Color.yellow);
-		m_nextLevel = m_nextLevelMaker.loadLevel(this, Color.pink);
+		m_currentLevel = m_currentLevelMaker.loadLevel(this);
+		m_nextLevel = m_nextLevelMaker.loadLevel(this);
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
-
 	}
+	
+	public double getPeriod() {
+		return m_period;
+	}
+	
+	public double getTotalTime() {
+		return m_totalTime;
+	}
+	
 }
