@@ -148,37 +148,35 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-			if (!Options.INVULNERABILITY) {
-				(new Sound("sprites/hurt.wav")).start();
-				m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-				if (m_entity.m_HP <= 0) {
-					m_entity.die();
-				}
-				((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		if (!Options.INVULNERABILITY) {
+			(new Sound("sprites/hurt.wav")).start();
+			m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+			if (m_entity.m_HP <= 0) {
+				m_entity.die();
 			}
+			((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		}
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-			if (!Options.INVULNERABILITY) {
-				(new Sound("sprites/hurt.wav")).start();
-				int computeDmg = (int) (- m_weaknessBuff * e.m_currentStunt.getDMG());
-				m_entity.addHP(computeDmg);
-				if (m_entity.m_HP <= 0) {
-					m_entity.die();
-				}
-				((Player) m_entity).addMaxHP(computeDmg * Options.HELL_DIVIDAND_HP_MAX_TOLOSE / 100);
+		if (!Options.INVULNERABILITY) {
+			(new Sound("sprites/hurt.wav")).start();
+			int computeDmg = (int) (-m_weaknessBuff * e.m_currentStunt.getDMG());
+			m_entity.addHP(computeDmg);
+			if (m_entity.m_HP <= 0) {
+				m_entity.die();
 			}
+			((Player) m_entity).addMaxHP(computeDmg * Options.HELL_DIVIDAND_HP_MAX_TOLOSE / 100);
+		}
 	}
 
 	@Override
 	public void step(long now) {
-		IDirection save = m_entity.m_direction;
 		m_entity.m_direction = IDirection.NONE;
 		if (m_automatonMove != null) {
 			m_automatonMove.step(m_entity);
 		}
-		if(m_entity.m_direction == IDirection.NONE) m_entity.m_direction = save; 
 		super.step(now);
 		if (m_popTimer.isFinished()) {
 			setDMGBuff(1);
@@ -217,7 +215,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		if (Options.ECHO_HIT_TIMER_CHANGE)
 			System.out.println("Missile timer: " + m_missileTimer.getDuration());
 	}
-	
+
 	@Override
 	protected void move(int x, int y) {
 		super.move(x, y);

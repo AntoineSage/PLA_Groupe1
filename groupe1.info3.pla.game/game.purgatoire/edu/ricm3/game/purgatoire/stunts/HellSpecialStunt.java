@@ -13,7 +13,7 @@ import ricm3.interpreter.IEntityType;
 public class HellSpecialStunt extends Stunt {
 
 	public HellSpecialStunt() {
-		super(Singleton.getNewSpecialHellAut(), new AnimationPlayer(Singleton.getSpecialHellAnim(), AnimType.IDLE, 2),
+		super(Singleton.getNewSpecialHellAut(), new AnimationPlayer(Singleton.getSpecialHellAnim(), AnimType.IDLE, 4),
 				Options.HELL_SPCL_HP_MAX, Options.HELL_SPCL_DMG, Options.HELL_SPCL_KARMA_TOGIVE);
 	}
 

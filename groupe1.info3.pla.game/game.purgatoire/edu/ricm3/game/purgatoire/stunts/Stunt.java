@@ -376,28 +376,41 @@ public class Stunt {
 	void goingOut(IDirection d) {
 	}
 
+	private IDirection save;
+
 	public void step(long now) {
-		if(m_automaton != null) {
+		boolean change = true;
+		if (m_entity.m_direction == IDirection.NONE) {
+			change = false;
+			m_entity.m_direction = save;
+		}
+		else 
+			save = m_entity.m_direction;
+			
+		if (m_automaton != null) {
 			m_automaton.step(m_entity);
 		}
+		
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
-		switch (m_entity.m_direction) {
-		case NORTH:
-			m_animation.changeTo(AnimType.NORTH);
-			break;
-		case SOUTH:
-			m_animation.changeTo(AnimType.SOUTH);
-			break;
-		case EAST:
-			m_animation.changeTo(AnimType.EAST);
-			break;
-		case WEST:
-			m_animation.changeTo(AnimType.WEST);
-			break;
-		case NONE:
-		default:
-			break;
+		if (change) {
+			switch (m_entity.m_direction) {
+			case NORTH:
+				m_animation.changeTo(AnimType.NORTH);
+				break;
+			case SOUTH:
+				m_animation.changeTo(AnimType.SOUTH);
+				break;
+			case EAST:
+				m_animation.changeTo(AnimType.EAST);
+				break;
+			case WEST:
+				m_animation.changeTo(AnimType.WEST);
+				break;
+			case NONE:
+			default:
+				break;
+			}
 		}
 	}
 
