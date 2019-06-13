@@ -25,7 +25,7 @@ public class Soul extends Entity {
 	}
 	
 	public Soul(Level level, int x, int y, IAutomaton automaton) {
-		super(level, new HeavenSoulStunt(), new HellSoulStunt(), x, y, Options.SOUL_SIZE);
+		super(level, new HeavenSoulStunt(automaton), new HellSoulStunt(automaton), x, y, Options.SOUL_SIZE);
 		m_type = IEntityType.ADVERSARY;
 	}
 }

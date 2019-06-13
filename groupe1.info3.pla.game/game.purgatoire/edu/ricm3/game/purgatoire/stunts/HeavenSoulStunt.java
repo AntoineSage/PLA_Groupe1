@@ -97,9 +97,9 @@ public class HeavenSoulStunt extends Stunt {
 		Iterator<Entity> iter;
 		int range = 9;
 		int x_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
-		int x_rangeMin = m_entity.m_bounds.x - m_entity.m_bounds.width - range;
-		int y_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
-		int y_rangeMin = m_entity.m_bounds.y - m_entity.m_bounds.height - range;
+		int x_rangeMin = m_entity.m_bounds.x - range;
+		int y_rangeMax = m_entity.m_bounds.y + m_entity.m_bounds.width + range;
+		int y_rangeMin = m_entity.m_bounds.y - range;
 
 		if (x_rangeMin < 0)
 			x_rangeMin = 0;
