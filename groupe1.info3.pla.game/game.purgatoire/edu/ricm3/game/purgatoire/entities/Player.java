@@ -40,7 +40,7 @@ public class Player extends Entity {
 	}
 
 	public void addKarma(Entity e) {
-		m_karma += e.m_currentStunt.getKarmaToGive();
+		addKarma(e.m_currentStunt.getKarmaToGive());
 		Singleton.getController().updateKarmaUI();
 	}
 
