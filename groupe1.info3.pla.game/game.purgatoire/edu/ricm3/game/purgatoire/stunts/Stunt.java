@@ -20,7 +20,7 @@ public class Stunt {
 	public AnimationPlayer m_animation;
 	public BufferedImage m_sprite;
 
-	private IAutomaton m_automaton;
+	protected IAutomaton m_automaton;
 	protected Entity m_entity;
 
 	private int m_rangeDash = Options.DASH_SIZE;

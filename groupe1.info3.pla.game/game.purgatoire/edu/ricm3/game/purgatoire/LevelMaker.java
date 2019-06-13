@@ -44,7 +44,12 @@ public class LevelMaker {
 
 		for (int i = 0; i < 4; i++) {
 			paternListTcheck();
-			currentQuarterLevel = new QuarterLevel(i, paternList, level);
+			if (i == randomSpecial)
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.SPECIAL);
+			else if (quarterNest.contains(i))
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NEST);
+			else
+				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NOTHING);
 			paternList.remove(currentQuarterLevel.getIndex());
 			level.quarterLevelPlacement(currentQuarterLevel);
 		}

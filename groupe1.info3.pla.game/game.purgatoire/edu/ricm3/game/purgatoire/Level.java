@@ -233,7 +233,7 @@ public class Level {
 //
 //	public void entityInterpret(char c, int x, int y) {
 //=======
-	public void entityInterpret(char c, int x, int y) {
+	public void entityInterpret(char c, int x, int y, QuarterType qt) {
 		switch (c) {
 		case 'O':
 			new Obstacle(this, x, y, Options.OBSTACLE_SIZE);
@@ -248,6 +248,10 @@ public class Level {
 			new Special(this, x, y, Options.SPCL_SIZE);
 			break;
 		case '/':
+			if(qt == QuarterType.SPECIAL)
+				new Special(this, x, y, Options.SPCL_SIZE);
+			if(qt == QuarterType.NEST)
+				new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '_':
 			break;
@@ -267,7 +271,7 @@ public class Level {
 			for (int j = 0; j < Options.LVL_WIDTH / 2; j++) {
 				if (m_collisionGrid.get(j + quarterLevel.x_offset, i + quarterLevel.y_offset).isEmpty())
 					entityInterpret(quarterLevel.levelQuarter.get(i).charAt(j), quarterLevel.x_offset + j,
-							quarterLevel.y_offset + i);
+							quarterLevel.y_offset + i, quarterLevel.m_quarterType);
 			}
 		}
 	}
