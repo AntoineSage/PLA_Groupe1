@@ -263,6 +263,7 @@ public class Stunt {
 
 	public void setMaxHP(int maxHP) {
 		m_maxHP = maxHP;
+		m_entity.m_HP = Math.min(m_maxHP, m_entity.m_HP);
 	}
 
 	public int getBaseDMG() {
