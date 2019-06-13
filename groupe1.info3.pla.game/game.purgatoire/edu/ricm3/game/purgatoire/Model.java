@@ -168,6 +168,7 @@ public class Model extends GameModel {
 		m_totalDistance = 0;
 		m_period = 0;
 		m_totalTime = 0;
+		if(m_wt != m_initialWt)Singleton.getBackgroundMusic().swap();
 		m_wt = m_initialWt;
 		Singleton.clearCount();
 		Singleton.getController().clear();
