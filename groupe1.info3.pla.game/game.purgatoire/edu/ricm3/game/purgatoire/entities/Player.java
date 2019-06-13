@@ -5,6 +5,15 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -163,6 +172,8 @@ public class Player extends Entity {
 
 	// TODO high scores
 	private void endGameMenu(String msg) {
+		addHighScore();
+
 		JFrame endFrame = new JFrame();
 		endFrame.getContentPane().setLayout(new GridBagLayout());
 
@@ -198,6 +209,62 @@ public class Player extends Entity {
 		endFrame.pack();
 		endFrame.setLocationRelativeTo(null);
 		endFrame.setVisible(true);
+	}
+
+	private void addHighScore() {
+		try {
+			FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
+			ObjectOutputStream o = new ObjectOutputStream(f);
+
+			// Write objects to file
+			o.writeObject((Integer) 1);
+			o.writeObject((Integer) 2);
+
+			o.close();
+			f.close();
+
+			FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+
+			// Read objects
+			Integer pr1 = (Integer) oi.readObject();
+			Integer pr2 = (Integer) oi.readObject();
+
+			System.out.println(pr1.toString());
+			System.out.println(pr2.toString());
+
+			oi.close();
+			fi.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (IOException e) {
+			System.out.println("Error initializing stream");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+//		BufferedWriter highscores = null;
+//		try {
+//			highscores = new BufferedWriter(new FileWriter("highscores"));
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//			System.exit(-3);
+//		}
+//
+//		try {
+//			highscores.write(" text " + getModel().getTotalTime() + " " + getModel().getTotalDistance());
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//			System.exit(-3);
+//		}
+//
+//		try {
+//			highscores.close();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//			System.exit(-3);
+//		}
 	}
 
 }

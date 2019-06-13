@@ -159,13 +159,17 @@ public class Model extends GameModel {
 		m_nextLevel = m_nextLevelMaker.loadLevel(this);
 		m_player = new Player(this, m_currentLevel, (Options.LVL_WIDTH) / 2, Options.LVL_HEIGHT - Options.PLAYER_SIZE);
 	}
-	
+
 	public double getPeriod() {
 		return m_period;
 	}
-	
+
 	public double getTotalTime() {
 		return m_totalTime;
 	}
-	
+
+	public double getTotalDistance() {
+		return m_totalDistance;
+	}
+
 }
