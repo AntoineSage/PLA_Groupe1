@@ -1,5 +1,5 @@
 0 PlayerAction PlayerAction playerHeaven.ani playerHell.ani PlayerAction PlayerAction playerHeaven.ani playerHell.ani 
-1 SoulsHeaven SoulsHell playerHeaven.ani playerHell.ani SoulsHeaven SoulsHell soulHeaven.ani soulHell.ani 
+1 SoulsHeaven PlayerSolo playerHeaven.ani playerHell.ani HorizontalSoul VerticalSoul soulHeaven.ani soulHell.ani 
 0 Obstacle Obstacle obstacleHeaven.ani obstacleHell.ani Obstacle Obstacle obstacleHeaven.ani obstacleHell.ani 
 0 Nest Nest nestHeaven.ani nestHell.ani Nest Nest nestHeaven.ani nestHell.ani 
 0 MissileHeaven MissileHell missileHeaven.ani missileHell.ani MissileHeaven MissileHell missileHeaven.ani missileHell.ani 

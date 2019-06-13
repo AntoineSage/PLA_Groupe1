@@ -1,5 +1,7 @@
 package edu.ricm3.game.purgatoire.stunts;
 
+import java.util.Iterator;
+
 import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
@@ -7,6 +9,7 @@ import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
+import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
@@ -17,6 +20,11 @@ public class HellSoulStunt extends Stunt {
 
 	public HellSoulStunt() {
 		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
+				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+	}
+	
+	public HellSoulStunt(IAutomaton automaton) {
+		super(automaton, new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
@@ -71,6 +79,37 @@ public class HellSoulStunt extends Stunt {
 	@Override
 	public void egg() {
 		System.out.println("egg hell soul");
+	}
+
+	@Override
+	public boolean isInRange(IEntityType targetType) {
+		Iterator<Entity> iter;
+		int range = 15;
+		int x_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
+		int x_rangeMin = m_entity.m_bounds.x - range;
+		int y_rangeMax = m_entity.m_bounds.y + m_entity.m_bounds.width + range;
+		int y_rangeMin = m_entity.m_bounds.y - range;
+
+		if (x_rangeMin < 0)
+			x_rangeMin = 0;
+		if (x_rangeMax >= Options.LVL_WIDTH)
+			x_rangeMax = Options.LVL_WIDTH ;
+		if (y_rangeMin < 0)
+			y_rangeMin = 0;
+		if (y_rangeMax >= Options.LVL_HEIGHT)
+			y_rangeMax = Options.LVL_HEIGHT ;
+
+		for (int i = x_rangeMin; i < x_rangeMax; i++) {
+			for (int j = y_rangeMin; j < y_rangeMax; j++) {
+				iter = m_entity.m_level.m_collisionGrid.get(i, j).iterator();
+				while (iter.hasNext()) {
+					Entity e = iter.next();
+					if (e.m_type == targetType)
+						return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

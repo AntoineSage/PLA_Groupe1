@@ -132,6 +132,10 @@ public class Entity {
 		}
 		return false;
 	}
+	
+	public boolean isInRange(IEntityType targetType) {
+		return m_currentStunt.isInRange(targetType);
+	}
 
 	public boolean isGoodDirection(IDirection d, Entity hostEntity, Entity researchedEntity) {
 		switch (d) {
