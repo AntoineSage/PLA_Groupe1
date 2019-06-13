@@ -170,12 +170,13 @@ public class Player extends Entity {
 	@Override
 	public void die() {
 		super.die();
-		Options.PAUSE = true;
 		endGameMenu("You lost... Do you want to try again?");
 	}
 
 	// TODO high scores
 	private void endGameMenu(String msg) {
+		Options.PAUSE = true;
+
 		addHighScore();
 
 		JFrame endFrame = new JFrame();
