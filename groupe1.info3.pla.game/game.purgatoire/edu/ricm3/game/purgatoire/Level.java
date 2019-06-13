@@ -242,10 +242,10 @@ public class Level {
 			new Soul(this, x, y, Options.SOUL_SIZE);
 			break;
 		case 'V':
-			new Soul(this, x, y, Singleton.getAutomatons().get(12));
+			new Soul(this, x, y, Singleton.getAutomatons().get(12).copy());
 			break;
 		case 'H':
-			new Soul(this, x, y, Singleton.getAutomatons().get(13));
+			new Soul(this, x, y, Singleton.getAutomatons().get(13).copy());
 			break;
 		case 'N':
 			// new Nest(this, x, y, Options.NEST_SIZE);
