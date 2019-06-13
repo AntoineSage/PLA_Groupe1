@@ -10,7 +10,7 @@ import ricm3.interpreter.IEntityType;
 
 public class CollisionGrid {
 
-	List<Entity> m_grid[][];
+	private List<Entity> m_grid[][];
 
 	@SuppressWarnings("unchecked")
 	public CollisionGrid() {

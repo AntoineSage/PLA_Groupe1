@@ -16,13 +16,12 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
-	LinkedList<Missile> m_missiles;
-	Timer m_hitTimer;
-	Timer m_hitCoolDown;
-	boolean m_isFiring;
-	Timer m_karmaTimer;
-	
-	IAutomaton m_automatonMove;
+	private LinkedList<Missile> m_missiles;
+	private Timer m_hitTimer;
+	private Timer m_hitCoolDown;
+	private boolean m_isFiring;
+	private Timer m_karmaTimer;
+	private IAutomaton m_automatonMove;
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
@@ -63,7 +62,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void hit(IDirection d) {
 		super.hit(d);
-		
+
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();

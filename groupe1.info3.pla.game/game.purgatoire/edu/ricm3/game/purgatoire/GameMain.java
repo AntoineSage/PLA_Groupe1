@@ -358,7 +358,6 @@ public class GameMain {
 		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		new GameUI(model, view, controller, d);
-
 	}
 
 	public static class ImagePanel extends JPanel {

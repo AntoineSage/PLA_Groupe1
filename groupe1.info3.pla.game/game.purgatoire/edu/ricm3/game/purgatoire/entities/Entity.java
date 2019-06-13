@@ -127,8 +127,8 @@ public class Entity {
 	}
 
 	public boolean isClosestEntityAt(IEntityType m_type2, IDirection m_direction2) {
-		if (m_type2 == IEntityType.PLAYER && m_level.m_player != null) {
-			return isGoodDirection(m_direction2, this, m_level.m_player);
+		if (m_type2 == IEntityType.PLAYER && m_level.getPlayer() != null) {
+			return isGoodDirection(m_direction2, this, m_level.getPlayer());
 		}
 		return false;
 	}
