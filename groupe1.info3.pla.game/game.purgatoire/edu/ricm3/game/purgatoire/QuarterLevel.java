@@ -15,10 +15,10 @@ public class QuarterLevel {
 	protected int x_offset, y_offset;
 	QuarterType m_quarterType;
 
-	QuarterLevel(int positionQuarter, List<Integer> quarterList, Level level, QuarterType quarterType) {
+	QuarterLevel(Random randGenerator,int positionQuarter, List<Integer> quarterList, Level level, QuarterType quarterType){
 		levelQuarter = new ArrayList<String>();
 		Random r = new Random();
-		m_index = r.nextInt(quarterList.size());
+		m_index = randGenerator.nextInt(quarterList.size());
 		m_positionQuarter = positionQuarter;
 		m_quarterType = quarterType;
 		quarterOffset();
