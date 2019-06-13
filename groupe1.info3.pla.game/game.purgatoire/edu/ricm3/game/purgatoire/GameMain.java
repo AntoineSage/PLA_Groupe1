@@ -18,12 +18,18 @@
 
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,11 +37,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SwingConstants;
 
 import edu.ricm3.game.GameUI;
 import ricm3.interpreter.IAutomaton;
@@ -44,8 +54,11 @@ public class GameMain {
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IllegalAccessException {
-		String[] lines = { "Players", "Souls", "Obstacles", "Nests", "Missiles", "Specials" };
+		menu();
+		return;
+	}
 
+	static void menu() {
 		final JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -74,15 +87,15 @@ public class GameMain {
 		gbc.gridx = 10;
 		frame.add(new JLabel(" Hell Ani "), gbc);
 
-		JSpinner[] spinners = new JSpinner[lines.length];
-		JComboBox<IAutomaton>[] comboAutHeaven1 = new JComboBox[lines.length];
-		JComboBox<IAutomaton>[] comboAutHell1 = new JComboBox[lines.length];
-		JComboBox<Animation>[] comboAniHeaven1 = new JComboBox[lines.length];
-		JComboBox<Animation>[] comboAniHell1 = new JComboBox[lines.length];
-		JComboBox<IAutomaton>[] comboAutHeaven2 = new JComboBox[lines.length];
-		JComboBox<IAutomaton>[] comboAutHell2 = new JComboBox[lines.length];
-		JComboBox<Animation>[] comboAniHeaven2 = new JComboBox[lines.length];
-		JComboBox<Animation>[] comboAniHell2 = new JComboBox[lines.length];
+		JSpinner[] spinners = new JSpinner[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<IAutomaton>[] comboAutHeaven1 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<IAutomaton>[] comboAutHell1 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<Animation>[] comboAniHeaven1 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<Animation>[] comboAniHell1 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<IAutomaton>[] comboAutHeaven2 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<IAutomaton>[] comboAutHell2 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<Animation>[] comboAniHeaven2 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
+		JComboBox<Animation>[] comboAniHell2 = new JComboBox[Singleton.m_existingEntitiesTypes.length];
 
 		File config = new File("config");
 		Scanner sc = null;
@@ -94,13 +107,13 @@ public class GameMain {
 		}
 
 		gbc.gridy = 1;
-		for (int i = 0; i < lines.length; i++) {
+		for (int i = 0; i < Singleton.m_existingEntitiesTypes.length; i++) {
 			if (!sc.hasNextLine())
 				throw new IllegalStateException("There alaways should be enought line here");
 			String configLine = sc.nextLine();
 			String[] configWords = configLine.split(" ");
 
-			String line = lines[i];
+			String line = Singleton.m_existingEntitiesTypes[i];
 			gbc.gridx = 0;
 
 			spinners[i] = new JSpinner();
@@ -216,7 +229,7 @@ public class GameMain {
 				Animation[] HellAnimFirst = new Animation[size];
 				Animation[] HeavenAnimFirst = new Animation[size];
 
-				for (int i = 0; i < lines.length; i++) {
+				for (int i = 0; i < Singleton.m_existingEntitiesTypes.length; i++) {
 					Firsts[i] = (Integer) spinners[i].getValue();
 					HeavenAutFirst[i] = (IAutomaton) (comboAutHeaven1[i].getSelectedItem());
 					HellAutFirst[i] = (IAutomaton) (comboAutHell1[i].getSelectedItem());
@@ -252,7 +265,7 @@ public class GameMain {
 					System.exit(-3);
 				}
 
-				for (int i = 0; i < lines.length; i++) {
+				for (int i = 0; i < Singleton.m_existingEntitiesTypes.length; i++) {
 					try {
 						config.write((Integer) spinners[i].getValue() + " ");
 						config.write(((IAutomaton) (comboAutHeaven1[i].getSelectedItem())).toString() + " ");
@@ -282,8 +295,51 @@ public class GameMain {
 
 		frame.pack();
 		frame.setVisible(true);
+	}
 
-		return;
+	static void intro(JFrame oldFrame) {
+		final JFrame frame = new JFrame();
+		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+
+		ImagePanel img = new ImagePanel();
+		img.setAlignmentX(Component.CENTER_ALIGNMENT);
+		frame.add(img);
+
+		JLabel label = new JLabel("THIS IS A MEAN MONSTER, WHAT WILL YOU DECIDE TO DO ?", SwingConstants.CENTER);
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		frame.add(label);
+
+		Container cont = new Container();
+		cont.setLayout(new FlowLayout());
+		JButton attack = new JButton("Attack!");
+		attack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				label.setText("YOU DIED AND YOU ARE GOING TO HELL");
+				img.current = img.image2;
+				img.repaint();
+			}
+		});
+		cont.add(attack);
+
+		JButton flee = new JButton("Flee");
+		flee.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				label.setText("YOU DIED AND YOU ARE GOING TO HEAVEN");
+				img.current = img.image2;
+				img.repaint();
+			}
+		});
+		cont.add(flee);
+		frame.add(cont);
+
+		frame.pack();
+		frame.setVisible(true);
+
+//		oldFrame.dispatchEvent(new WindowEvent(oldFrame, WindowEvent.WINDOW_CLOSING));
 	}
 
 	static void play(JFrame frame) {
@@ -302,5 +358,29 @@ public class GameMain {
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		new GameUI(model, view, controller, d);
 	}
-	
+
+	public static class ImagePanel extends JPanel {
+
+		public BufferedImage image1;
+		public BufferedImage image2;
+		public BufferedImage current;
+
+		public ImagePanel() {
+	       try {                
+		          image1 = ImageIO.read(new File("sprites/tmp.png"));
+		          image2 = ImageIO.read(new File("sprites/tmp2.png"));
+	       current = image1;
+	       } catch (IOException ex) {
+	    	   ex.printStackTrace();
+	    	   System.exit(-5);
+	       }
+	    }
+
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(current, 0, 0, this); // see javadoc for more info on the parameters
+		}
+
+	}
 }

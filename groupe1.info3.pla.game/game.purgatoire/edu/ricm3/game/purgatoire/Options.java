@@ -150,7 +150,7 @@ public class Options {
 	public static final int MISSILE_SIZE = 1;
 
 	// LVL OPTIONS
-	public static final int LVL_QUARTER_MAX_NBR = 6; // nbr of patterns
+	public static int LVL_QUARTER_MAX_NBR = 7; // nbr of patterns
 
 	// Echo options
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
