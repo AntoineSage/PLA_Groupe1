@@ -20,6 +20,11 @@ public class HellSoulStunt extends Stunt {
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
+	public HellSoulStunt(boolean unlimitedRange) {
+		super(Singleton.getNewUnlimitedRangeFollow(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
+				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+	}
+
 	public void pop(Player p) {
 		p.addKarma(m_entity);
 		p.takeDamage(m_entity.m_currentStunt.getDMG());
