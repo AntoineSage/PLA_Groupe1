@@ -27,21 +27,20 @@ public class LevelMaker {
 		Level level = new Level(model, c);
 		int randomSpecial = r.nextInt(4);
 		quarterNonUsed.remove(randomSpecial);
-		int randomNest1 = r.nextInt(100);
-		int randomNest2 = r.nextInt(100);
+		int randomNest = r.nextInt(100);
 
-		if (randomNest1 < 5) { // Options....
+		if (randomNest < Options.LVL_3_NEST_PROBABILITY) {
 			quarterNest = quarterNonUsed;
-		} else if (randomNest2 < 10) {// Options.
-			int randomNonUsedQuarter1 = randomizer(quarterNonUsed.size(),r);
+		} else if (randomNest < Options.LVL_3_NEST_PROBABILITY + Options.LVL_2_NEST_PROBABILITY) {
+			int randomNonUsedQuarter1 = randomizer(quarterNonUsed.size(), r);
 			quarterNest.add(randomNonUsedQuarter1);
 			quarterNonUsed.remove(randomNonUsedQuarter1);
-			int randomNonUsedQuarter2 = randomizer(quarterNonUsed.size(),r);
+			int randomNonUsedQuarter2 = randomizer(quarterNonUsed.size(), r);
 			quarterNest.add(randomNonUsedQuarter2);
 			quarterNonUsed.remove(randomNonUsedQuarter2);
 		} else {
-				int randomNonUsedQuarter = randomizer(quarterNonUsed.size(),r);
-				quarterNest.add(randomizer(randomNonUsedQuarter,r));
+			int randomNonUsedQuarter = randomizer(quarterNonUsed.size(), r);
+			quarterNest.add(randomizer(randomNonUsedQuarter, r));
 		}
 
 		for (int i = 0; i < 4; i++) {
@@ -63,11 +62,11 @@ public class LevelMaker {
 		}
 		return level;
 	}
-	
+
 	int randomizer(int value, Random r) {
 		if (value == 0)
 			return 0;
-		else 
+		else
 			return r.nextInt(value);
 	}
 

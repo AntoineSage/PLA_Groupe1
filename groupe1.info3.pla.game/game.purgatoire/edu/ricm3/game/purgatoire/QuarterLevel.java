@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class QuarterLevel {
+	
 
 	List<String> levelQuarter;
 	int m_index;
