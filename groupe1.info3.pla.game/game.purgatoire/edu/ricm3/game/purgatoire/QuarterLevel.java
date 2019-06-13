@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class QuarterLevel {
-	
 
 	protected List<String> levelQuarter;
 	private int m_index;
@@ -16,7 +15,7 @@ public class QuarterLevel {
 	protected int x_offset, y_offset;
 	QuarterType m_quarterType;
 
-	QuarterLevel(int positionQuarter, List<Integer> quarterList, Level level, QuarterType quarterType){
+	QuarterLevel(int positionQuarter, List<Integer> quarterList, Level level, QuarterType quarterType) {
 		levelQuarter = new ArrayList<String>();
 		Random r = new Random();
 		m_index = r.nextInt(quarterList.size());
@@ -54,9 +53,9 @@ public class QuarterLevel {
 			break;
 		}
 	}
-	
+
 	public int getIndex() {
 		return m_index;
 	}
-	
+
 }

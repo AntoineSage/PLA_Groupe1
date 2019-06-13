@@ -32,7 +32,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.Graphics2D;
 
-
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameView;
@@ -50,7 +49,7 @@ public class View extends GameView {
 	long m_last;
 	int m_npaints;
 	int m_fps;
-	
+
 	private static BufferedImage m_heavenBackground;
 	private static BufferedImage m_heavenBackground2;
 	private static BufferedImage m_hellBackground;
@@ -60,7 +59,7 @@ public class View extends GameView {
 	private Color grey;
 
 	public View(Model m) {
-		grey = new Color(238, 238, 238);
+		grey = Options.PRIMARY_BACKGROUND;
 		m_model = m;
 
 		// ecart entre g1 et g, est négatif quand g1 n'est pas dans g
@@ -136,18 +135,18 @@ public class View extends GameView {
 			m_currentBackground2 = m_hellBackground;
 		}
 	}
-	
-	  private void computeFPS() {
-		    long now = System.currentTimeMillis();
-		    if (now - m_last > 1000L) {
-		      m_fps = m_npaints;
-		      m_last = now;
-		      m_npaints = 0;
-		    }
-		    m_game.setFPS(m_fps, null);
-		    // m_game.setFPS(m_fps, "npaints=" + m_npaints);
-		    m_npaints++;
-		  }
+
+	private void computeFPS() {
+		long now = System.currentTimeMillis();
+		if (now - m_last > 1000L) {
+			m_fps = m_npaints;
+			m_last = now;
+			m_npaints = 0;
+		}
+		m_game.setFPS(m_fps, null);
+		// m_game.setFPS(m_fps, "npaints=" + m_npaints);
+		m_npaints++;
+	}
 
 	@Override
 	protected void _paint(Graphics g) {
@@ -198,7 +197,7 @@ public class View extends GameView {
 						lvl.m_special);
 			}
 		}
-		
+
 		if (lvl.m_player != null) {
 			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
 			if (viewportBounds.intersects(bound)) {

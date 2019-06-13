@@ -1,15 +1,30 @@
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
+
 public class Options {
 
-	public static int WIN_HEIGHT = 756;
+	public static final int WIN_MIN_WIDTH = 600;
+	public static final int WIN_MIN_HEIGHT = 800;
 	public static int WIN_WIDTH = 786;
+	public static int WIN_HEIGHT = 756;
 	public static final int LVL_HEIGHT = 90;
 	public static final int LVL_WIDTH = 54;
 
+	public static final Color PRIMARY_BACKGROUND = new Color(60, 60, 60);
+	public static final Color PRIMARY_FOREGROUND = new Color(200, 200, 200);
+	public static final Color SECONDARY_FOREGROUND = new Color(220, 220, 220);
+	public static final Color CIRCLE_FOREGROUND = new Color(230, 180, 0);
+	public static final Color KARMA_POS_FOREGROUND = new Color(80, 80, 220);
+	public static final Color KARMA_NEG_FOREGROUND = new Color(220, 70, 120);
+
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
-	public static final int UI_BAR_WIDTH = 30;
+	public static final int UI_BAR_WIDTH = 35;
+	public static final int UI_CIRCLE_SIZE = 70;
+	public static final int UI_MARGIN = 30;
+
+	public static final boolean FPS_DISPLAYED = false;
 
 	public static final int TOTAL_PERIOD = 25000;
 	public static final String AUT_FILE = "automatons/automata.aut";
@@ -39,14 +54,14 @@ public class Options {
 	public static boolean INVULNERABILITY = false;
 
 	// Player stats arrays
-	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
-			"Rank heaven 4" };
-	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3", "Rank hell 4" };
-	public static final int[] PLAYER_DMG_HEAVEN = { 10, 15, 20, 30};
-	public static final int[] PLAYER_DMG_HELL = { 10, 15, 20, 30};
+	public static final String[] PLAYER_RANKS_HELL = { "Heretic", "Necromancer", "Demon", "SATAN" };
+	public static final String[] PLAYER_RANKS_HEAVEN = { "Priest", "Saint", "Angel", "GOD" };
+	public static final int[] PLAYER_DMG_HEAVEN = { 10, 15, 20, 30 };
+	public static final int[] PLAYER_DMG_HELL = { 10, 15, 20, 30 };
+
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-	public static final long[] HIT_TIMER_HELL = { 200, 150, 100, 50};
+	public static final long[] HIT_TIMER_HELL = { 200, 150, 100, 50 };
 //	public static final long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 3;
