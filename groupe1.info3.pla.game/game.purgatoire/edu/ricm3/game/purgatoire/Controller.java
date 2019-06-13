@@ -231,13 +231,23 @@ public class Controller extends GameController implements ActionListener {
 			m_allKeyPressed.add(code);
 		}
 
-		if ((e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) && Options.CHEAT_MODE == true) {
+		if ((e.getKeyCode() == KeyEvent.VK_LEFT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD1)
+				&& Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addKarma(+50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) && Options.CHEAT_MODE == true) {
+		} else if ((e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_NUMPAD2)
+				&& Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addKarma(-50);
-		}else if((e.getKeyCode() == KeyEvent.VK_3 || e.getKeyCode() == KeyEvent.VK_NUMPAD1)&& Options.CHEAT_MODE == true) {
-			//m_model.getPlayer()
-		} else if (e.getKeyCode() == KeyEvent.VK_R)
+		} else if ((e.getKeyCode() == KeyEvent.VK_RIGHT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD3)
+				&& Options.CHEAT_MODE == true) {
+			m_model.getPlayer().addXP(50);
+		} else if ((e.getKeyCode() == KeyEvent.VK_PLUS || e.getKeyCode() == KeyEvent.VK_NUMPAD4)
+				&& Options.CHEAT_MODE == true) {
+			m_model.getPlayer().addXP(-50);
+		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
+				&& Options.CHEAT_MODE == true) {
+			m_model.getPlayer().addMaxHP(1000000);
+			m_model.getPlayer().setHP(1000000);
+		} else if (e.getKeyCode() == KeyEvent.VK_NUMBER_SIGN)
 			m_model.respawn();
 	}
 
