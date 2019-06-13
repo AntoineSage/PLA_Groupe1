@@ -22,7 +22,8 @@ public class LevelMaker {
 	}
 
 	public Level loadLevel(Model model) {
-		Random r = new Random();
+		Random r = model.getRandomGenerator();
+		// Random r = new Random();
 		Level level = new Level(model);
 		int randomSpecial = r.nextInt(4);
 		quarterNonUsed.remove(randomSpecial);
@@ -46,11 +47,11 @@ public class LevelMaker {
 		for (int i = 0; i < 4; i++) {
 			paternListTcheck();
 			if (i == randomSpecial)
-				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.SPECIAL);
+				currentQuarterLevel = new QuarterLevel(model.getRandomGenerator(),i, paternList, level, QuarterType.SPECIAL);
 			else if (quarterNest.contains(i))
-				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NEST);
+				currentQuarterLevel = new QuarterLevel(model.getRandomGenerator(),i, paternList, level, QuarterType.NEST);
 			else
-				currentQuarterLevel = new QuarterLevel(i, paternList, level, QuarterType.NOTHING);
+				currentQuarterLevel = new QuarterLevel(model.getRandomGenerator(),i, paternList, level, QuarterType.NOTHING);
 			paternList.remove(currentQuarterLevel.getIndex());
 			level.quarterLevelPlacement(currentQuarterLevel);
 		}

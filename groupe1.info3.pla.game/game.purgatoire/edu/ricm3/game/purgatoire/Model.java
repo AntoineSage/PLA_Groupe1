@@ -19,6 +19,7 @@ package edu.ricm3.game.purgatoire;
 
 import edu.ricm3.game.GameModel;
 import edu.ricm3.game.purgatoire.entities.Player;
+import java.util.Random;
 
 public class Model extends GameModel {
 
@@ -33,8 +34,12 @@ public class Model extends GameModel {
 	private double m_totalTime;
 
 	private long lastPeriodUpdate;
+	private Random m_randGenerator;
 
 	public Model(WorldType wt) {
+		m_randGenerator= new Random ();
+		m_randGenerator.setSeed(3);
+		
 		m_initialWt = wt;
 		m_wt = wt;
 		if (wt == WorldType.HEAVEN)
@@ -174,6 +179,7 @@ public class Model extends GameModel {
 		m_wt = m_initialWt;
 		Singleton.clearCount();
 		Singleton.getController().clear();
+		m_randGenerator.setSeed(1);
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
 		m_currentLevel = m_currentLevelMaker.loadLevel(this);
@@ -192,5 +198,10 @@ public class Model extends GameModel {
 	public double getTotalDistance() {
 		return m_totalDistance;
 	}
+	
+	public Random getRandomGenerator() {
+		return m_randGenerator;
+	}
+	
 
 }
