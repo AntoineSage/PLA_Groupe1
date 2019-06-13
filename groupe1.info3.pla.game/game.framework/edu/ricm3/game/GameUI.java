@@ -46,13 +46,13 @@ public class GameUI {
 	GameModel m_model;
 	GameController m_controller;
 	JLabel m_text;
-	int m_fps;
+	public int m_fps;// changed
 	String m_msg;
 	long m_start;
 	long m_elapsed;
 	long m_lastRepaint;
 	long m_lastTick;
-	int m_nTicks;
+	public int m_nTicks;
 
 	public GameUI(GameModel m, GameView v, GameController c, Dimension d) {
 		m_model = m;
