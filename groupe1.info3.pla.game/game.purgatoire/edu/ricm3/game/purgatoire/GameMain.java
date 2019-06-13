@@ -25,7 +25,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -52,12 +51,12 @@ import ricm3.interpreter.IAutomaton;
 
 public class GameMain {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IllegalAccessException {
 		menu();
 		return;
 	}
 
+	@SuppressWarnings("unchecked")
 	static void menu() {
 
 		final JFrame frame = new JFrame();
@@ -363,6 +362,7 @@ public class GameMain {
 	}
 
 	public static class ImagePanel extends JPanel {
+		private static final long serialVersionUID = 7190904833473088836L;
 
 		public BufferedImage image1;
 		public BufferedImage image2;

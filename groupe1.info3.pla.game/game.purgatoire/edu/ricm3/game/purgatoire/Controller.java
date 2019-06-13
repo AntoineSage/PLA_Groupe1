@@ -19,7 +19,6 @@
 package edu.ricm3.game.purgatoire;
 
 import java.awt.Button;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Label;
@@ -27,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,8 +38,8 @@ import javax.swing.JPanel;
 import edu.ricm3.game.GameController;
 import edu.ricm3.game.purgatoire.Bars.HPBar;
 import edu.ricm3.game.purgatoire.Bars.KarmaBar;
-import edu.ricm3.game.purgatoire.Bars.XPBar;
 import edu.ricm3.game.purgatoire.Bars.TimeCircle;
+import edu.ricm3.game.purgatoire.Bars.XPBar;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -49,7 +47,7 @@ public class Controller extends GameController implements ActionListener {
 	private View m_view;
 	private List<Integer> m_allKeyPressed;
 	private Stack<Integer> m_directionKey;
-	private HPBar m_HPBar, m_periodCircle;
+	private HPBar m_HPBar;
 	private XPBar m_XPBar;
 	private KarmaBar m_karmaBar;
 	private TimeCircle m_timeCircle;
@@ -92,8 +90,8 @@ public class Controller extends GameController implements ActionListener {
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
 		m_karmaLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
-		m_timeCircle = new TimeCircle(m_view,0,0,50,50);
-		
+		m_timeCircle = new TimeCircle(m_view, 0, 0, 50, 50);
+
 		westInside.add(m_timeCircle);
 		westInside.add(m_periodLabel);
 		karma.add(Box.createRigidArea(new Dimension((westInside.getWidth() - m_karmaBar.getWidth()) / 2, 0)));
@@ -160,7 +158,7 @@ public class Controller extends GameController implements ActionListener {
 		m_game.addWest(west);
 		m_game.addEast(east);
 		updateUI();
-		
+
 	}
 
 	public void updateUI() {

@@ -84,7 +84,7 @@ public class Model extends GameModel {
 			lastPeriodUpdate = now;
 		}
 	}
-	
+
 	public void switchPause() {
 		Options.PAUSE = !Options.PAUSE;
 	}
@@ -104,7 +104,7 @@ public class Model extends GameModel {
 		Options.HELL_OBSTACLE_HP_MAX *= Options.HELL_OBSTACLE_HP_MAX_COEF;
 		Options.HEAVEN_OBSTACLE_DMG *= Options.HEAVEN_OBSTACLE_DMG_COEF;
 		Options.HEAVEN_OBSTACLE_HP_MAX *= Options.HEAVEN_OBSTACLE_HP_MAX_COEF;
-		
+
 		Options.LVL_3_NEST_PROBABILITY *= Options.LVL_3_NEST_PROBABILITY_COEF;
 		Options.LVL_2_NEST_PROBABILITY *= Options.LVL_2_NEST_PROBABILITY_COEF;
 

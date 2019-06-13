@@ -32,7 +32,6 @@ public class Level {
 	protected List<Entity> m_entities;
 	protected List<Entity> m_toRemove;
 
-
 	public CollisionGrid m_collisionGrid;
 
 	private long lastUpdatePlayer;
@@ -186,7 +185,7 @@ public class Level {
 	}
 
 	void transform() {
-		
+
 		Iterator<Entity> iter = m_entities.iterator();
 		while (iter.hasNext())
 			iter.next().transform();
@@ -250,9 +249,9 @@ public class Level {
 			new Special(this, x, y, Options.SPCL_SIZE);
 			break;
 		case '/':
-			if(qt == QuarterType.SPECIAL)
+			if (qt == QuarterType.SPECIAL)
 				new Special(this, x, y, Options.SPCL_SIZE);
-			if(qt == QuarterType.NEST)
+			if (qt == QuarterType.NEST)
 				new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '_':

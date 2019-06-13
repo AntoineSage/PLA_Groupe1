@@ -150,13 +150,13 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
 	}
-	
+
 	@Override
 	public void takeDamage(int DMG) {
 		super.takeDamage(DMG);
 		(new Sound("sprites/hurt.wav")).start();
 	}
-	
+
 	@Override
 	public void takeDamage(Entity e) {
 		super.takeDamage(e);
