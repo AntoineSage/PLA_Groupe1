@@ -2,14 +2,18 @@ package edu.ricm3.game.purgatoire;
 
 public class Options {
 
-	public static int WIN_HEIGHT = 756;
+	public static final int WIN_MIN_WIDTH = 600;
+	public static final int WIN_MIN_HEIGHT = 800;
 	public static int WIN_WIDTH = 786;
+	public static int WIN_HEIGHT = 756;
 	public static final int LVL_HEIGHT = 90;
 	public static final int LVL_WIDTH = 54;
 
 	public static final int UI_PANEL_SIZE = 200;
 	public static final int UI_BAR_HEIGHT = 150;
-	public static final int UI_BAR_WIDTH = 30;
+	public static final int UI_BAR_WIDTH = 35;
+	public static final int UI_CIRCLE_SIZE = 70;
+	public static final int UI_MARGIN = 30;
 
 	public static final int TOTAL_PERIOD = 6000;
 	public static final String AUT_FILE = "automatons/automata.aut";

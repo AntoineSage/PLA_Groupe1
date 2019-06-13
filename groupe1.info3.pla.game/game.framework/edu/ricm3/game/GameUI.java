@@ -79,7 +79,6 @@ public class GameUI {
 //		m_frame.add(m_menu);
 //		 m_menu.show(m_frame, 0, 0);
 
-
 //		button.addActionListener(new java.awt.event.ActionListener() {
 //			@Override
 //			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,7 +118,8 @@ public class GameUI {
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
 		m_frame.setTitle("Purgatory");
-		m_frame.setMinimumSize(new Dimension(800, 500));
+		m_frame.setMinimumSize(new Dimension(edu.ricm3.game.purgatoire.Options.WIN_MIN_HEIGHT,
+				edu.ricm3.game.purgatoire.Options.WIN_MIN_WIDTH));
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);
