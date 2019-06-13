@@ -46,7 +46,7 @@ public class GameUI {
 	GameModel m_model;
 	GameController m_controller;
 	JLabel m_text;
-	public int m_fps;// changed
+	int m_fps;
 	String m_msg;
 	long m_start;
 	long m_elapsed;
@@ -118,7 +118,7 @@ public class GameUI {
 
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
-		m_frame.setTitle("Sample Game");
+		m_frame.setTitle("Purgatory");
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);

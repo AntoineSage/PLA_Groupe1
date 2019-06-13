@@ -37,6 +37,7 @@ import edu.ricm3.game.GameController;
 import edu.ricm3.game.purgatoire.Bars.HPBar;
 import edu.ricm3.game.purgatoire.Bars.KarmaBar;
 import edu.ricm3.game.purgatoire.Bars.XPBar;
+import edu.ricm3.game.purgatoire.Bars.TimeCircle;
 
 public class Controller extends GameController implements ActionListener {
 
@@ -47,6 +48,7 @@ public class Controller extends GameController implements ActionListener {
 	private HPBar m_HPBar, m_periodCircle;
 	private XPBar m_XPBar;
 	private KarmaBar m_karmaBar;
+	private TimeCircle m_timeCircle;
 
 	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
 	private Label m_cooldownLabel;
@@ -87,7 +89,9 @@ public class Controller extends GameController implements ActionListener {
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
 		m_karmaLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
-
+		m_timeCircle = new TimeCircle(m_view,0,0,50,50);
+		
+		westInside.add(m_timeCircle);
 		westInside.add(m_periodLabel);
 		karmaBar.add(m_karmaBar);
 		westInside.add(karmaBar);
@@ -156,11 +160,13 @@ public class Controller extends GameController implements ActionListener {
 		updateRankUI();
 		updateDistanceUI();
 		updateCooldownUI();
+		
 	}
 
 	public void updateTimeUI() {
 		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.getPeriod()) / 1000));
 		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.getTotalTime() / 1000));
+		m_timeCircle.updateArcs(m_model.getPeriod());
 	}
 
 	public void updateKarmaUI() {
