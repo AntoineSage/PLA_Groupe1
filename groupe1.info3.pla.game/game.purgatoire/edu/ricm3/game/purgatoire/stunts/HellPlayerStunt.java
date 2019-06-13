@@ -148,22 +148,27 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		(new Sound("sprites/hurt.wav")).start();
-		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			if (!Options.INVULNERABILITY) {
+				(new Sound("sprites/hurt.wav")).start();
+				m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+				if (m_entity.m_HP <= 0) {
+					m_entity.die();
+				}
+				((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			}
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		(new Sound("sprites/hurt.wav")).start();
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			if (!Options.INVULNERABILITY) {
+				(new Sound("sprites/hurt.wav")).start();
+				int computeDmg = (int) (- m_weaknessBuff * e.m_currentStunt.getDMG());
+				m_entity.addHP(computeDmg);
+				if (m_entity.m_HP <= 0) {
+					m_entity.die();
+				}
+				((Player) m_entity).addMaxHP(computeDmg * Options.HELL_DIVIDAND_HP_MAX_TOLOSE / 100);
+			}
 	}
 
 	@Override
@@ -209,6 +214,12 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_missileTimer.setDuration(Options.HIT_TIMER_HELL[((Player) m_entity).getRank()]);
 		if (Options.ECHO_HIT_TIMER_CHANGE)
 			System.out.println("Missile timer: " + m_missileTimer.getDuration());
+	}
+	
+	@Override
+	protected void move(int x, int y) {
+		super.move(x, y);
+		m_entity.m_level.m_model.m_totalDistance -= y;
 	}
 
 }

@@ -156,18 +156,6 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	@Override
-	public void takeDamage(int DMG) {
-		super.takeDamage(DMG);
-		(new Sound("sprites/hurt.wav")).start();
-	}
-
-	@Override
-	public void takeDamage(Entity e) {
-		super.takeDamage(e);
-		(new Sound("sprites/hurt.wav")).start();
-	}
-
-	@Override
 	public void changeKarmaOverTime() {
 		if (m_karmaTimer.isFinished()) {
 			((Player) m_entity).addKarma(-Options.PLAYER_KARMA_TIME_AMOUNT);
@@ -181,5 +169,26 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
 //		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
+	
+	@Override
+	protected void move(int x, int y) {
+		super.move(x, y);
+		m_entity.m_level.m_model.m_totalDistance -= y;
+	}
 
+	@Override
+	public void takeDamage(int DMG) {
+			if (!Options.INVULNERABILITY) {
+				super.takeDamage(DMG);
+				(new Sound("sprites/hurt.wav")).start();
+			}
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
+			if (!Options.INVULNERABILITY) {
+				super.takeDamage(e);
+				(new Sound("sprites/hurt.wav")).start();
+			}
+	}
 }

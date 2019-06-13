@@ -17,6 +17,7 @@ import ricm3.interpreter.IEntityType;
 public class HellNestStunt extends Stunt {
 
 	private long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
+	private Timer m_nestSpawnTimer;
 
 	public HellNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHellAnim(), AnimType.IDLE, 2),
@@ -24,6 +25,7 @@ public class HellNestStunt extends Stunt {
 
 		m_wizzTimer = new Timer(Options.NEST_WIZZ_DURATION);
 		m_popTimer = new Timer(Options.NEST_POP_DURATION);
+		m_nestSpawnTimer = new Timer(m_nestSpawnPeriod);
 	}
 
 	@Override
@@ -68,27 +70,32 @@ public class HellNestStunt extends Stunt {
 
 	@Override
 	public void egg() {
-		int x, y, width, height, randX, randY;
-		for (int i = 0; i < 10; i++) {
-			width = m_entity.m_bounds.width;
-			height = m_entity.m_bounds.height;
-			x = (2 * m_entity.m_bounds.x + (width)) / 2;
-			y = (2 * m_entity.m_bounds.y + (height)) / 2;
-			Random r = new Random();
+		if (m_nestSpawnTimer.isFinished()) {
+			m_nestSpawnTimer.start(m_nestSpawnPeriod);
+			int x, y, width, height, randX, randY;
+			for (int i = 0; i < 10; i++) {
+				width = m_entity.m_bounds.width;
+				height = m_entity.m_bounds.height;
+				x = (2 * m_entity.m_bounds.x + (width)) / 2;
+				y = (2 * m_entity.m_bounds.y + (height)) / 2;
+				Random r = new Random();
 
-			randX = x + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
-			randY = y + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
+				randX = x + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
+				randY = y + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
 
-			if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
-					randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
-				new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE);
-				break;
+				if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
+						randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
+					new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE,
+							true);
+					break;
+				}
 			}
 		}
 	}
 
 	@Override
 	public void step(long now) {
+		m_nestSpawnTimer.step(now);
 		super.step(now);
 		changeSpawnPeriod();
 	}
