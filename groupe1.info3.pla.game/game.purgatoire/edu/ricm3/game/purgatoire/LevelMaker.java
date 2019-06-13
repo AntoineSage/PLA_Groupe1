@@ -40,6 +40,7 @@ public class LevelMaker {
 		} else {
 			int randomNonUsedQuarter = randomizer(quarterNonUsed.size(), r);
 			quarterNest.add(randomizer(randomNonUsedQuarter, r));
+			quarterNonUsed.remove(randomNonUsedQuarter);
 		}
 
 		for (int i = 0; i < 4; i++) {
