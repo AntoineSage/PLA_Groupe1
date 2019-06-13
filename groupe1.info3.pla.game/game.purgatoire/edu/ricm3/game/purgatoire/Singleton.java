@@ -35,6 +35,8 @@ public class Singleton {
 	private static IAutomaton m_playerHeavenMoveAut;
 	private static IAutomaton  m_playerHellMoveAut;
 	
+	private static BiSound m_backgroundMusic;
+	
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -52,6 +54,11 @@ public class Singleton {
 		}
 		m_playerHeavenMoveAut = m_automatons.get(0);
 		m_playerHellMoveAut = m_automatons.get(0);
+		
+		try {
+			m_backgroundMusic = BiSound.make("sprites/hell.wav", "sprites/heaven.wav", true);
+		} catch (Exception ex) {
+		}
 	}
 
 //	public Singleton getSingleton() {
@@ -307,5 +314,9 @@ public class Singleton {
 
 	public static Animation[] getAnimations() {
 		return m_animations;
+	}
+	
+	public static BiSound getBackgroundMusic() {
+		return m_backgroundMusic;
 	}
 }

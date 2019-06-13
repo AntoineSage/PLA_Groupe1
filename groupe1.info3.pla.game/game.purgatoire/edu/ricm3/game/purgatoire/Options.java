@@ -21,8 +21,10 @@ public class Options {
 
 	public static final int NB_PERIOD_DIFFICULTY = 2;
 
+	public static boolean PAUSE = true;
+
 	// PLAYER OPTIONS
-	
+
 	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
 	public static final int HELL_PLAYER_DMG = 1;
 	public static final int HELL_PLAYER_HP_MAX = 1000;
@@ -91,7 +93,7 @@ public class Options {
 	public static final double HEAVEN_SOUL_DMG_COEF = 1.5;
 	public static final double HEAVEN_SOUL_HP_MAX_COEF = 1.5;
 
-	public static final int SOUL_STEP_DELAY = 1000 / 15;
+	public static final int SOUL_STEP_DELAY = 1000 / 10;
 
 	// SPCL OPTIONS
 	public static final int HELL_SPCL_DMG = 1;
@@ -150,7 +152,11 @@ public class Options {
 	public static final int MISSILE_SIZE = 1;
 
 	// LVL OPTIONS
-	public static int LVL_QUARTER_MAX_NBR = 7; // nbr of patterns
+	public static int LVL_QUARTER_MAX_NBR = 8; // nbr of paterns
+	public static int LVL_3_NEST_PROBABILITY = 10;
+	public static int LVL_2_NEST_PROBABILITY = 30;
+	public static double LVL_3_NEST_PROBABILITY_COEF = 1.1;
+	public static double LVL_2_NEST_PROBABILITY_COEF = 1.2;
 
 	// Echo options
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;

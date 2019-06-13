@@ -6,6 +6,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Sound;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
@@ -106,23 +107,31 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + 1, m_entity.m_bounds.y - 1, Options.MISSILE_SIZE, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.NORTH);
 				break;
 			case SOUTH:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + 1, m_entity.m_bounds.y + m_entity.m_bounds.height, Options.MISSILE_SIZE,
 						d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.SOUTH);
 				break;
 			case EAST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x + m_entity.m_bounds.width, m_entity.m_bounds.y + 1, Options.MISSILE_SIZE, d,
 						m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.EAST);
 				break;
 			case WEST:
 				missile = new Missile(m_entity.m_level, new HeavenMissileStunt(), new HellMissileStunt(),
 						m_entity.m_bounds.x - 1, m_entity.m_bounds.y + 1, Options.MISSILE_SIZE, d, m_entity);
 				m_missiles.add(missile);
+				if (m_animation != null)
+					m_animation.changeTo(AnimType.WEST);
 				break;
 			default:
 				break;
@@ -137,6 +146,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
+		(new Sound("sprites/hurt.wav")).start();
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
@@ -146,6 +156,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(Entity e) {
+		(new Sound("sprites/hurt.wav")).start();
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
@@ -155,15 +166,17 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void step(long now) {
+		m_entity.m_direction = IDirection.NONE;
+		m_automatonMove.step(m_entity);
 		super.step(now);
 		if (m_popTimer.isFinished()) {
 			setDMGBuff(1);
 			m_weaknessBuff = 1;
+			Singleton.getController().updateBuffsUI();
 		}
 		m_missileTimer.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
-		m_automatonMove.step(m_entity);
 	}
 
 	@Override

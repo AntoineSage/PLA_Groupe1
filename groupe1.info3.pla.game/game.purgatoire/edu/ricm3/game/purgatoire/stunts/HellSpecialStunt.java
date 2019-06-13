@@ -4,6 +4,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Sound;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Player;
 import ricm3.interpreter.IDirection;
@@ -22,6 +23,7 @@ public class HellSpecialStunt extends Stunt {
 		if (player != null) {
 			if (Options.ECHO_PLAYER_ON_SPCL)
 				System.out.println("Player sur flaque");
+			(new Sound("sprites/karma_up.wav")).start();
 			player.addKarma(m_entity);
 			player.addHP(Options.HELL_SPCL_HP_TOGIVE);
 			m_entity.takeDamage(1);
