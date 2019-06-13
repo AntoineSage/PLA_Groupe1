@@ -6,6 +6,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Sound;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
@@ -133,7 +134,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		Options.MUSIC_HURT.start();
+		(new Sound("sprites/hurt.wav")).start();
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();
@@ -144,7 +145,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		Options.MUSIC_HURT.start();
+		(new Sound("sprites/hurt.wav")).start();
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
 			m_entity.die();

@@ -45,17 +45,8 @@ public class GameMain {
 	public static void main(String[] args) throws IllegalAccessException {
 		String[] lines = { "Players", "Souls", "Obstacles", "Nests", "Missiles", "Specials" };
 
-		File file, file_hell, file_heaven, file_hurt;
-		file = new File("sprites/Future-RPG.wav");
-		file_hell = new File("sprites/hell.wav");
-		file_heaven = new File("sprites/heaven.wav");
-		file_hurt = new File("sprites/hurt");
 		try {
-			Options.MUSIC_MENU = new Music(file, true);
-			Options.MUSIC_HELL = new Music(file_hell, true);
-			Options.MUSIC_HEAVEN = new Music(file_heaven, true);
-			Options.MUSIC_HURT = new Music(file_hurt, false);
-			Options.MUSIC_MENU.start();
+			Options.MUSIC_BACKGROUND = BiSound.make("sprites/hell.wav", "sprites/heaven.wav", true);
 		} catch (Exception ex) {
 		}
 
@@ -245,6 +236,7 @@ public class GameMain {
 				Singleton.set(HellAut, HeavenAut, HellAnim, HeavenAnim, Firsts, HellAutFirst, HeavenAutFirst,
 						HellAnimFirst, HeavenAnimFirst);
 
+				(new Sound("sprites/button_sound.wav")).start();
 				play(frame);
 			}
 		});
@@ -314,7 +306,6 @@ public class GameMain {
 
 		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-		Options.MUSIC_MENU.stop();
 		new GameUI(model, view, controller, d);
 
 	}

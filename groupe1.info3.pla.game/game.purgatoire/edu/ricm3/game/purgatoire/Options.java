@@ -2,11 +2,7 @@ package edu.ricm3.game.purgatoire;
 
 public class Options {
 	
-	public static Music MUSIC_MENU;
-	public static Music MUSIC_HELL;
-	public static Music MUSIC_HEAVEN;
-	public static Music MUSIC_HURT;
-	
+	public static BiSound MUSIC_BACKGROUND;
 
 	public static int WIN_HEIGHT = 756;
 	public static int WIN_WIDTH = 786;

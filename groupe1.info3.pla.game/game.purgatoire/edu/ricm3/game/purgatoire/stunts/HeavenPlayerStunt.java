@@ -6,7 +6,9 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Sound;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
@@ -50,6 +52,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void wizz(IDirection d) {
 		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
 		if (special != null) {
+			(new Sound("sprites/cat.wav")).start();
 			special.pop(null);
 		}
 		if (Options.ECHO_WIZZ_PLAYER)
@@ -133,6 +136,18 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
+	}
+	
+	@Override
+	public void takeDamage(int DMG) {
+		super.takeDamage(DMG);
+		(new Sound("sprites/hurt.wav")).start();
+	}
+	
+	@Override
+	public void takeDamage(Entity e) {
+		super.takeDamage(e);
+		(new Sound("sprites/hurt.wav")).start();
 	}
 
 	@Override
