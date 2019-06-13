@@ -20,8 +20,6 @@ public class Options {
 	public static final long DEFAULT_CD = 1000;
 
 	public static final int NB_PERIOD_DIFFICULTY = 2;
-	
-	
 
 	// PLAYER OPTIONS
 
@@ -137,10 +135,11 @@ public class Options {
 	public static int NEST_SIZE = 3;
 	public static int SPCL_SIZE = 5;
 	public static int OBSTACLE_SIZE = 3;
-	
-	//LVL OPTIONS
+	public static int MISSILE_SIZE = 1;
+
+	// LVL OPTIONS
 	public static int LVL_QUARTER_MAX_NBR = 5;
-	
+
 	// Echo options
 	public static final boolean ECHO_PLAYER_DAMAGE_TAKEN = false;
 	public static final boolean ECHO_PLAYER_HP_CHANGE = false;
