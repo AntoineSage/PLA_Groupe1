@@ -248,7 +248,7 @@ public class Level {
 			new Soul(this, x, y, Singleton.getAutomatons().get(13));
 			break;
 		case 'N':
-			new Nest(this, x, y, Options.NEST_SIZE);
+			// new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '*':
 			new Special(this, x, y, Options.SPCL_SIZE);
@@ -257,7 +257,7 @@ public class Level {
 			if (qt == QuarterType.SPECIAL)
 				new Special(this, x, y, Options.SPCL_SIZE);
 			if (qt == QuarterType.NEST)
-				new Nest(this, x, y, Options.NEST_SIZE);
+				// new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '_':
 			break;
