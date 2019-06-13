@@ -48,7 +48,8 @@ public class Controller extends GameController implements ActionListener {
 	private XPBar m_XPBar;
 	private KarmaBar m_karmaBar;
 
-	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
+	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel,
+			m_periodLabel;
 	private Label m_cooldownLabel;
 
 	public Controller(Model model, View view) {
@@ -233,8 +234,12 @@ public class Controller extends GameController implements ActionListener {
 			m_model.getPlayer().addKarma(+50);
 		} else if ((e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) && Options.CHEAT_MODE) {
 			m_model.getPlayer().addKarma(-50);
-		} else if (e.getKeyCode() == KeyEvent.VK_R)
+		} else if (e.getKeyCode() == KeyEvent.VK_R) {
 			m_model.respawn();
+		} else if (e.getKeyCode() == KeyEvent.VK_P) {
+			m_model.switchPause();
+		}
+
 	}
 
 	@Override
