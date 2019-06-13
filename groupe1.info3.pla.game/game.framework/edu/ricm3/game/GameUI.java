@@ -18,6 +18,7 @@
 package edu.ricm3.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -54,6 +55,8 @@ public class GameUI {
 	long m_lastTick;
 	public int m_nTicks;
 
+	private Color m_background = edu.ricm3.game.purgatoire.Options.PRIMARY_BACKGROUND;
+
 	public GameUI(GameModel m, GameView v, GameController c, Dimension d) {
 		m_model = m;
 		m_model.m_game = this;
@@ -78,7 +81,6 @@ public class GameUI {
 //		
 //		m_frame.add(m_menu);
 //		 m_menu.show(m_frame, 0, 0);
-
 
 //		button.addActionListener(new java.awt.event.ActionListener() {
 //			@Override
@@ -118,15 +120,24 @@ public class GameUI {
 
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
+
+		m_frame.setBackground(m_background);
+		m_frame.getRootPane().setBackground(m_background);
+		m_frame.getLayeredPane().setBackground(m_background);
+		m_frame.getContentPane().setBackground(m_background);
+
 		m_frame.setTitle("Purgatory");
-		m_frame.setMinimumSize(new Dimension(800, 500));
+		m_frame.setMinimumSize(new Dimension(edu.ricm3.game.purgatoire.Options.WIN_MIN_HEIGHT,
+				edu.ricm3.game.purgatoire.Options.WIN_MIN_WIDTH));
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);
 
 		m_text = new JLabel();
 		m_text.setText("Starting up...");
-		m_frame.add(m_text, BorderLayout.NORTH);
+		if (edu.ricm3.game.purgatoire.Options.FPS_DISPLAYED) {
+			m_frame.add(m_text, BorderLayout.NORTH);
+		}
 
 		m_frame.setSize(d);
 		m_frame.doLayout();
@@ -203,6 +214,7 @@ public class GameUI {
 			}
 			// System.out.println(txt);
 			m_text.setText(txt);
+			m_text.setForeground(edu.ricm3.game.purgatoire.Options.PRIMARY_FOREGROUND);
 			m_text.repaint();
 			m_view.paint();
 			m_lastRepaint = now;

@@ -1,24 +1,18 @@
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.media.CannotRealizeException;
-import javax.media.Controller;
 import javax.media.ControllerEvent;
 import javax.media.ControllerListener;
 import javax.media.EndOfMediaEvent;
 import javax.media.GainControl;
 import javax.media.Manager;
-import javax.media.MediaException;
 import javax.media.NoPlayerException;
 import javax.media.Player;
-import javax.media.Time;
-
-import javax.sound.sampled.*;;
+import javax.media.Time;;
 
 /*
  * Music player.
@@ -47,6 +41,7 @@ public class Music {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void load(boolean repeat) throws IOException, NoPlayerException, CannotRealizeException {
 		URL url;
 		url = m_file.toURL();
@@ -57,13 +52,11 @@ public class Music {
 
 			@Override
 			public void controllerUpdate(ControllerEvent arg0) {
-				Controller ctr = arg0.getSourceController();
 				if (arg0 instanceof EndOfMediaEvent) {
 					m_player.setMediaTime(new Time(0));
 					if (repeat) {
 						m_player.start();
-					}
-					else {
+					} else {
 						m_player.stop();
 					}
 				}

@@ -19,7 +19,6 @@ import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.HeavenPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.HellPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.PlayerStunt;
-import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -144,6 +143,7 @@ public class Player extends Entity {
 
 	public void setMaxTotalHP(int newMax) {
 		m_maxTotalHP = newMax;
+		m_HP = Math.min(m_maxTotalHP, m_HP);
 	}
 
 	public void setHP(int HP) {

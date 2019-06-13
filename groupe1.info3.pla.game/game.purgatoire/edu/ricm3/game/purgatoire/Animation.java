@@ -137,15 +137,17 @@ public class Animation {
 	}
 
 	public boolean equals(AnimType type1, AnimType type2) {
-		if(type1.getValue() == type2.getValue()) return true;
+		if (type1.getValue() == type2.getValue())
+			return true;
 		int length = m_sprites[type1.getValue()].size();
 		if (length != m_sprites[type2.getValue()].size())
 			return false;
 
 		Iterator<BufferedImage> iter1 = m_sprites[type1.getValue()].iterator();
 		Iterator<BufferedImage> iter2 = m_sprites[type2.getValue()].iterator();
-		while(iter1.hasNext()) {
-			if(iter1.next() != iter2.next()) return false;
+		while (iter1.hasNext()) {
+			if (iter1.next() != iter2.next())
+				return false;
 		}
 
 		return true;
