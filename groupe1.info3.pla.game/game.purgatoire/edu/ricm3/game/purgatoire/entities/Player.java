@@ -144,11 +144,7 @@ public class Player extends Entity {
 
 	public void setMaxTotalHP(int newMax) {
 		m_maxTotalHP = newMax;
-		m_HP = Math.min(m_maxTotalHP, m_HP);
-	}
-
-	public void setHP(int HP) {
-		m_HP = HP;
+		setHP(Math.min(m_maxTotalHP, getHP()));
 	}
 
 	public void testKarma() {

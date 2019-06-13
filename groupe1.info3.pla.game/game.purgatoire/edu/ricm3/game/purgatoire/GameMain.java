@@ -23,7 +23,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -302,6 +301,7 @@ public class GameMain {
 	}
 
 	static WorldType wt;
+
 	static void intro(JFrame oldFrame) {
 		final JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
@@ -392,7 +392,7 @@ public class GameMain {
 	static void setWt(WorldType wttmp) {
 		wt = wttmp;
 	}
-	
+
 	static void play(JFrame frame, WorldType wt) {
 		// construct the game elements: model, controller, and view.
 		Model model = new Model(wt);

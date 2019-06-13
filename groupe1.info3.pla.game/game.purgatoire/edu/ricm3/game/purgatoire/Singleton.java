@@ -223,6 +223,7 @@ public class Singleton {
 			return m_verticalSoulAut.copy();
 		}
 	}
+
 	public static IAutomaton getHorizontalSoul() {
 		if (m_Count[1] < m_Firsts[1]) {
 			return m_HeavenAutFirst[1].copy();

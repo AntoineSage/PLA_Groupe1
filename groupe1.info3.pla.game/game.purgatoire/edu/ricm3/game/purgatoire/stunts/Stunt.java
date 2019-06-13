@@ -240,16 +240,14 @@ public class Stunt {
 
 	public void takeDamage(int DMG) {
 		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
 	}
 
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
+		m_entity.addHP(-getDMGTaken(e));
+	}
+
+	public int getDMGTaken(Entity e) {
+		return (int) (m_weaknessBuff * e.m_currentStunt.getDMG());
 	}
 
 	public int getDMG() {
@@ -262,7 +260,7 @@ public class Stunt {
 
 	public void setMaxHP(int maxHP) {
 		m_maxHP = maxHP;
-		m_entity.m_HP = Math.min(m_maxHP, m_entity.m_HP);
+		m_entity.setHP(Math.min(m_maxHP, m_entity.getHP()));
 	}
 
 	public int getBaseDMG() {
@@ -383,14 +381,13 @@ public class Stunt {
 		if (m_entity.m_direction == IDirection.NONE) {
 			change = false;
 			m_entity.m_direction = save;
-		}
-		else 
+		} else
 			save = m_entity.m_direction;
-			
+
 		if (m_automaton != null) {
 			m_automaton.step(m_entity);
 		}
-		
+
 		m_wizzTimer.step(now);
 		m_popTimer.step(now);
 		if (change) {

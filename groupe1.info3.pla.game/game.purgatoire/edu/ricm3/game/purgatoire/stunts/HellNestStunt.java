@@ -58,14 +58,10 @@ public class HellNestStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			if (e instanceof Player) {
-				Player p = (Player) e;
-				p.addKarma(m_entity);
-			}
-			m_entity.die();
+		if (m_entity.getHP() - getDMGTaken(e) <= 0 && e instanceof Player) {
+			((Player) e).addKarma(m_entity);
 		}
+		m_entity.addHP(-getDMGTaken(e));
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class HeavenSpecialStunt extends Stunt {
 		super(Singleton.getNewSpecialHeavenAut(),
 				new AnimationPlayer(Singleton.getSpecialHeavenAnim(), AnimType.IDLE, 2), Options.HEAVEN_SPCL_HP_MAX,
 				Options.HEAVEN_SPCL_DMG, Options.HEAVEN_SPCL_KARMA_TOGIVE);
-		
+
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class HeavenSpecialStunt extends Stunt {
 
 	@Override
 	public void wizz(IDirection d) {
-		if(m_heavenSpecialTimer == null) {
+		if (m_heavenSpecialTimer == null) {
 			m_heavenSpecialTimer = new Timer(5000);
 		}
 		m_entity.m_transparency = m_heavenSpecialTimer.getRemainingTimePercentage();
@@ -60,10 +60,11 @@ public class HeavenSpecialStunt extends Stunt {
 		super.step(now);
 		if (m_heavenSpecialTimer != null) {
 			m_heavenSpecialTimer.step(now);
-			if (m_heavenSpecialTimer.isFinished()) {
-				m_entity.die();
-			} else
-				this.wizz(null);
+			m_entity.setHPPercent((float) m_heavenSpecialTimer.getCurrent() / m_heavenSpecialTimer.getDuration());
+//			if (m_heavenSpecialTimer.isFinished()) {
+//				m_entity.die();
+//			} else
+			this.wizz(null);
 		}
 	}
 

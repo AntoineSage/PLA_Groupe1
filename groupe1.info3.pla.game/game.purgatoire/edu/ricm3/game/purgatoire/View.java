@@ -255,7 +255,8 @@ public class View extends GameView {
 		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2, bound.width, BLOCK_SIZE / 3);
 		g.setColor(Color.RED);
 		g.fillRect(bound.x, bound.y - BLOCK_SIZE / 2,
-				(int) ((float) bound.width * ((float) e.m_HP / (float) e.m_currentStunt.getMaxHP())), BLOCK_SIZE / 3);
+				(int) ((float) bound.width * ((float) e.getHP() / (float) e.m_currentStunt.getMaxHP())),
+				BLOCK_SIZE / 3);
 	}
 
 	private void paintSpriteWithHPBarTransparency(Graphics g, BufferedImage sprite, Rectangle bound, Entity e) {

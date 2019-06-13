@@ -12,7 +12,7 @@ import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Entity {
-	public int m_HP;
+	private int m_HP;
 	public Stunt m_currentStunt;
 	public Level m_level;
 	public Rectangle m_bounds;
@@ -33,7 +33,7 @@ public class Entity {
 		m_level.addEntity(this);
 		m_transparency = 1;
 		transform();
-		m_HP = this.m_currentStunt.getMaxHP();
+		setHP(m_currentStunt.getMaxHP());
 	}
 
 	public void transform() {
@@ -60,15 +60,20 @@ public class Entity {
 		return (double) m_HP / m_currentStunt.getMaxHP();
 	}
 
+	public void setHP(int HP) {
+		m_HP = Math.max(HP, 0);
+		if (Options.ECHO_HP_CHANGE)
+			System.out.println("Entity HP change: " + HP + " HP, " + getMaxHP() + " maxHP");
+		if (m_HP <= 0)
+			die();
+	}
+
 	public void setHPPercent(double p) {
-		m_HP = (int) (m_currentStunt.getMaxHP() * p);
+		setHP((int) (m_currentStunt.getMaxHP() * p));
 	}
 
 	public void addHP(int HP) {
-		m_HP = Math.min(m_currentStunt.getMaxHP(), m_HP + HP);
-		m_HP = Math.max(m_HP, 0);
-		if (Options.ECHO_HP_CHANGE)
-			System.out.println("Entity HP change: " + HP + " HP, " + getMaxHP() + " maxHP");
+		setHP(Math.min(m_currentStunt.getMaxHP(), m_HP + HP));
 	}
 
 	public int getMaxHP() {
@@ -112,6 +117,8 @@ public class Entity {
 
 	public void die() {
 		m_level.removeEntity(this);
+		if (Options.ECHO_DIE)
+			System.out.println("Entity died");
 	}
 
 	public boolean wontCollide(IDirection d) {
@@ -132,7 +139,7 @@ public class Entity {
 		}
 		return false;
 	}
-	
+
 	public boolean isInRange(IEntityType targetType) {
 		return m_currentStunt.isInRange(targetType);
 	}

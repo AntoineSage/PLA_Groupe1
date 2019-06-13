@@ -18,6 +18,7 @@ public class HeavenNestStunt extends Stunt {
 
 	private long m_nestSpawnPeriod = Options.NEST_SPAWN_PERIOD;
 	private Timer m_nestSpawnTimer;
+
 	public HeavenNestStunt() {
 		super(Singleton.getNewNestHeavenAut(), new AnimationPlayer(Singleton.getNestHeavenAnim(), AnimType.IDLE, 2),
 				Options.HEAVEN_NEST_HP_MAX, Options.HEAVEN_NEST_DMG, Options.HEAVEN_NEST_KARMA_TOGIVE);
@@ -57,19 +58,15 @@ public class HeavenNestStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			if (e instanceof Player) {
-				Player p = (Player) e;
-				p.addKarma(m_entity);
-			}
-			m_entity.die();
+		if (m_entity.getHP() - getDMGTaken(e) <= 0 && e instanceof Player) {
+			((Player) e).addKarma(m_entity);
 		}
+		m_entity.addHP(-getDMGTaken(e));
 	}
 
 	@Override
 	public void egg() {
-		if(m_nestSpawnTimer.isFinished()) {
+		if (m_nestSpawnTimer.isFinished()) {
 			m_nestSpawnTimer.start(m_nestSpawnPeriod);
 			int x, y, width, height, randX, randY;
 			for (int i = 0; i < 10; i++) {
@@ -78,13 +75,14 @@ public class HeavenNestStunt extends Stunt {
 				x = (2 * m_entity.m_bounds.x + (width)) / 2;
 				y = (2 * m_entity.m_bounds.y + (height)) / 2;
 				Random r = new Random();
-				
+
 				randX = x + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
 				randY = y + r.nextInt(Options.NEST_EGG_RANGE + 1) - (Options.NEST_EGG_RANGE / 2);
-				
+
 				if (m_entity.m_level.m_collisionGrid.isOk(IEntityType.ADVERSARY, randX - Options.SOUL_SIZE,
 						randY - Options.SOUL_SIZE, Options.SOUL_SIZE, Options.SOUL_SIZE)) {
-					new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE, true);
+					new Soul(m_entity.m_level, randX - Options.SOUL_SIZE, randY - Options.SOUL_SIZE, Options.SOUL_SIZE,
+							true);
 					break;
 				}
 			}
