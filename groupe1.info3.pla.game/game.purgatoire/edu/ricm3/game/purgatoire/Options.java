@@ -97,12 +97,12 @@ public class Options {
 	public static int HELL_SOUL_DMG = HELL_SOUL_DMG_BASE;
 	public static final int HELL_SOUL_HP_MAX_BASE = 40;
 	public static int HELL_SOUL_HP_MAX = HELL_SOUL_HP_MAX_BASE;
-	public static final int HELL_SOUL_KARMA_TOGIVE = -20;
+	public static final int HELL_SOUL_KARMA_TOGIVE = -10;
 	public static final int HEAVEN_SOUL_DMG_BASE = 30;
 	public static int HEAVEN_SOUL_DMG = HEAVEN_SOUL_DMG_BASE;
 	public static final int HEAVEN_SOUL_HP_MAX_BASE = 40;
 	public static int HEAVEN_SOUL_HP_MAX = HEAVEN_SOUL_HP_MAX_BASE;
-	public static final int HEAVEN_SOUL_KARMA_TOGIVE = -5;
+	public static final int HEAVEN_SOUL_KARMA_TOGIVE = -1;
 
 	public static final double HELL_SOUL_DMG_COEF = 1.5;
 	public static final double HELL_SOUL_HP_MAX_COEF = 1.4;

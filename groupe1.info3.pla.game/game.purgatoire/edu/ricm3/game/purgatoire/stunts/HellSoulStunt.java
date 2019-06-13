@@ -88,7 +88,7 @@ public class HellSoulStunt extends Stunt {
 	@Override
 	public boolean isInRange(IEntityType targetType) {
 		Iterator<Entity> iter;
-		int range = 15;
+		int range = 12;
 		int x_rangeMax = m_entity.m_bounds.x + m_entity.m_bounds.width + range;
 		int x_rangeMin = m_entity.m_bounds.x - range;
 		int y_rangeMax = m_entity.m_bounds.y + m_entity.m_bounds.width + range;
