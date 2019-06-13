@@ -38,7 +38,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		m_popTimer = new Timer(m_durationBuff);
 		m_karmaTimer = new Timer(Options.PLAYER_KARMA_TIME_DURATION);
 		m_karmaTimer.start();
-		m_automatonMove = Singleton.getNewPlayerHellMoveAut();
+		if (m_automaton.toString().equals("PlayerAction")) {
+			m_automatonMove = Singleton.getNewPlayerHellMoveAut();
+		}
 	}
 
 	@Override
@@ -172,7 +174,9 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void step(long now) {
 		m_entity.m_direction = IDirection.NONE;
-		m_automatonMove.step(m_entity);
+		if (m_automatonMove != null) {
+			m_automatonMove.step(m_entity);
+		}
 		super.step(now);
 		if (m_popTimer.isFinished()) {
 			setDMGBuff(1);
