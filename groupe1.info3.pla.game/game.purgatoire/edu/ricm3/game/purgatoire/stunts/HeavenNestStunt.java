@@ -8,7 +8,6 @@ import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Entity;
-import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Obstacle;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Soul;
@@ -60,8 +59,8 @@ public class HeavenNestStunt extends Stunt {
 	public void takeDamage(Entity e) {
 		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (m_entity.m_HP <= 0) {
-			if (e instanceof Missile) {
-				Player p = (Player) ((Missile) e).getOwner();
+			if (e instanceof Player) {
+				Player p = (Player) e;
 				p.addKarma(m_entity);
 			}
 			m_entity.die();
