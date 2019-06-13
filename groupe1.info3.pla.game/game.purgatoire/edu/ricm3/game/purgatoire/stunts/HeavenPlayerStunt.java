@@ -177,5 +177,11 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
 //		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
+	
+	@Override
+	protected void move(int x, int y) {
+		super.move(x, y);
+		m_entity.m_level.m_model.m_totalDistance -= y;
+	}
 
 }

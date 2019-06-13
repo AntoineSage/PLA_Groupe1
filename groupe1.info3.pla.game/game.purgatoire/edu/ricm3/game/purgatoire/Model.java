@@ -182,4 +182,8 @@ public class Model extends GameModel {
 		return m_totalTime;
 	}
 
+	public double getTotalDistance() {
+		return m_totalDistance;
+	}
+
 }
