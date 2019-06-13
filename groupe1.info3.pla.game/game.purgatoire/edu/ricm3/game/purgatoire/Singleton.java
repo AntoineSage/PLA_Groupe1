@@ -37,6 +37,8 @@ public class Singleton {
 	
 	private static BiSound m_backgroundMusic;
 	
+	private static IAutomaton m_soulUnlimitedRangeFollow;
+	
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -54,7 +56,7 @@ public class Singleton {
 		}
 		m_playerHeavenMoveAut = m_automatons.get(0);
 		m_playerHellMoveAut = m_automatons.get(0);
-		
+		m_soulUnlimitedRangeFollow = m_automatons.get(4);
 		try {
 			m_backgroundMusic = BiSound.make("sprites/hell.wav", "sprites/heaven.wav", true);
 		} catch (Exception ex) {
@@ -111,6 +113,10 @@ public class Singleton {
 	
 	public static IAutomaton getNewPlayerHellMoveAut() {
 		return m_playerHellMoveAut.copy();
+	}	
+	
+	public static IAutomaton getNewUnlimitedRangeFollow() {
+		return m_soulUnlimitedRangeFollow.copy();
 	}
 
 	

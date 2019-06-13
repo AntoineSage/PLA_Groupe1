@@ -18,10 +18,12 @@
 
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,12 +54,12 @@ import ricm3.interpreter.IAutomaton;
 
 public class GameMain {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IllegalAccessException {
 		menu();
 		return;
 	}
 
+	@SuppressWarnings("unchecked")
 	static void menu() {
 
 		final JFrame frame = new JFrame();
@@ -246,7 +248,7 @@ public class GameMain {
 						HellAnimFirst, HeavenAnimFirst);
 
 				(new Sound("sprites/button_sound.wav")).start();
-				play(frame);
+				intro(frame);
 			}
 		});
 		frame.add(okay, gbc);
@@ -300,54 +302,101 @@ public class GameMain {
 		frame.setVisible(true);
 	}
 
+	static WorldType wt;
 	static void intro(JFrame oldFrame) {
 		final JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-
+		frame.setMinimumSize(new Dimension(900, 800));
 		ImagePanel img = new ImagePanel();
 		img.setAlignmentX(Component.CENTER_ALIGNMENT);
+		img.setPreferredSize(new Dimension(900, 650));
+		img.setBackground(Color.BLACK);
 		frame.add(img);
 
-		JLabel label = new JLabel("THIS IS A MEAN MONSTER, WHAT WILL YOU DECIDE TO DO ?", SwingConstants.CENTER);
+		frame.setBackground(Color.BLACK);
+		frame.getRootPane().setBackground(Color.BLACK);
+		frame.getLayeredPane().setBackground(Color.BLACK);
+		frame.getContentPane().setBackground(Color.BLACK);
+
+		JLabel label = new JLabel(
+				"<html>You just woke up after a peaceful nap in a mysterious cave. <br/> You stretch and blink gently when you suddenly realize a MONSTROUS CREATURE is facing you. <br/>His breath is terrible and his eyes are terrifying. <br/> At this moment you know you can’t stay still much longer and you have to act. What do you want to do?<br/>  </html>",
+				SwingConstants.CENTER);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		label.setForeground(Color.WHITE);
+		label.setBackground(Color.BLACK);
 		frame.add(label);
 
 		Container cont = new Container();
 		cont.setLayout(new FlowLayout());
 		JButton attack = new JButton("Attack!");
+		JButton flee = new JButton("Flee");
+
+		Container continuerContainer = new Container();
+		continuerContainer.setLayout(new FlowLayout());
+		JButton continuer = new JButton("Continue");
+		continuerContainer.add(continuer);
+		continuer.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				play(frame, wt);
+			}
+		});
+
 		attack.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				label.setText("YOU DIED AND YOU ARE GOING TO HELL");
+				label.setText(
+						"<html>Oh oh… You just died… You really thought you could beat this monster? <br/> But it’s not over yet, you’ve been given the chance to become GOD in Heaven or SATAN in Hell, you choose! <br/> \n"
+								+ "Your actions will be carefully monitored and your karma will depend on them. <br/> Be wise, and become the most powerful being of your world.<br/> <br/> \n"
+								+ "\n"
+								+ " As you chose to attack this monster, you have sinned: go to HELL!<br/>  </html>");
 				img.current = img.image2;
 				img.repaint();
+				frame.remove(cont);
+				frame.remove(cont);
+				frame.add(continuerContainer);
+				setWt(WorldType.HELL);
 			}
 		});
 		cont.add(attack);
+		cont.setBackground(Color.BLACK);
 
-		JButton flee = new JButton("Flee");
 		flee.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				label.setText("YOU DIED AND YOU ARE GOING TO HEAVEN");
+				label.setText(
+						"<html>Oh oh… You just died… You really thought you could escape this monster? <br/>  But it’s not over yet, you’ve been given the chance to become GOD in Heaven or SATAN in Hell, you choose! <br/> \n"
+								+ "Your actions will be carefully monitored and your karma will depend on them. <br/> Be wise, and become the most powerful being of your world.<br/> <br/> \n"
+								+ "\n"
+								+ "As you chose to escape the danger, you chose the path of virtue: you’re allowed to go to HEAVEN!<br/>  <html>");
 				img.current = img.image2;
 				img.repaint();
+				frame.remove(cont);
+				frame.remove(cont);
+				frame.add(continuerContainer);
+				setWt(WorldType.HEAVEN);
 			}
 		});
 		cont.add(flee);
 		frame.add(cont);
 
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-//		oldFrame.dispatchEvent(new WindowEvent(oldFrame, WindowEvent.WINDOW_CLOSING));
+		oldFrame.dispatchEvent(new WindowEvent(oldFrame, WindowEvent.WINDOW_CLOSING));
 	}
 
-	static void play(JFrame frame) {
+	static void setWt(WorldType wttmp) {
+		wt = wttmp;
+	}
+	
+	static void play(JFrame frame, WorldType wt) {
 		// construct the game elements: model, controller, and view.
-		Model model = new Model();
+		Model model = new Model(wt);
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
 		try {
@@ -356,13 +405,13 @@ public class GameMain {
 			e.printStackTrace();
 			System.exit(-2);
 		}
-
 		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		new GameUI(model, view, controller, d);
 	}
 
 	public static class ImagePanel extends JPanel {
+		private static final long serialVersionUID = 7190904833473088836L;
 
 		public BufferedImage image1;
 		public BufferedImage image2;
@@ -370,8 +419,8 @@ public class GameMain {
 
 		public ImagePanel() {
 			try {
-				image1 = ImageIO.read(new File("sprites/tmp.png"));
-				image2 = ImageIO.read(new File("sprites/tmp2.png"));
+				image1 = ImageIO.read(new File("sprites/intro1.png"));
+				image2 = ImageIO.read(new File("sprites/intro2.png"));
 				current = image1;
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -382,7 +431,7 @@ public class GameMain {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawImage(current, 0, 0, this); // see javadoc for more info on the parameters
+			g.drawImage(current, 0, 0, null); // see javadoc for more info on the parameters
 		}
 
 	}

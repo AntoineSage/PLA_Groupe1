@@ -68,9 +68,7 @@ SoulsHell(Init){
 	|True ? Wait :(Init)
 	* (PlayerO):
 	|Closest(@,O) ? Move(O) :(Init)
-	|True ? Wait :(Init)
-
-	
+	|True ? Wait :(Init)	
 }
 
 

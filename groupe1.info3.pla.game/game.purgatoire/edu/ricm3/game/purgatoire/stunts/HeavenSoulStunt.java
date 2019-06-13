@@ -20,6 +20,12 @@ public class HeavenSoulStunt extends Stunt {
 		lastUpdate = (long) 0;
 	}
 
+	public HeavenSoulStunt(boolean unlimitedRange) {
+		super(Singleton.getNewUnlimitedRangeFollow(), new AnimationPlayer(Singleton.getSoulHeavenAnim(), AnimType.IDLE, 16),
+				Options.HEAVEN_SOUL_HP_MAX, Options.HEAVEN_SOUL_DMG, Options.HEAVEN_SOUL_KARMA_TOGIVE);
+		lastUpdate = (long) 0;
+	}
+
 	public void pop(Player p) {
 		p.addKarma(m_entity);
 		p.takeDamage(m_entity.m_currentStunt.getDMG());
