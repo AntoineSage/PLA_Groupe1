@@ -92,8 +92,8 @@ public class Controller extends GameController implements ActionListener {
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
 		m_karmaLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
-		m_timeCircle = new TimeCircle(m_view,0,0,50,50);
-		
+		m_timeCircle = new TimeCircle(m_view, 0, 0, 50, 50);
+
 		westInside.add(m_timeCircle);
 		westInside.add(m_periodLabel);
 		karma.add(Box.createRigidArea(new Dimension((westInside.getWidth() - m_karmaBar.getWidth()) / 2, 0)));
@@ -160,7 +160,7 @@ public class Controller extends GameController implements ActionListener {
 		m_game.addWest(west);
 		m_game.addEast(east);
 		updateUI();
-		
+
 	}
 
 	public void updateUI() {
@@ -257,15 +257,28 @@ public class Controller extends GameController implements ActionListener {
 			m_allKeyPressed.add(code);
 		}
 
-		if ((e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) && Options.CHEAT_MODE) {
-			m_model.getPlayer().addKarma(+50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) && Options.CHEAT_MODE) {
-			m_model.getPlayer().addKarma(-50);
-		} else if (e.getKeyCode() == KeyEvent.VK_R) {
-			m_model.respawn();
-		} else if (e.getKeyCode() == KeyEvent.VK_P) {
-			m_model.switchPause();
+		if (e.getKeyCode() == KeyEvent.VK_DOLLAR && Options.CHEAT_MODE == false)
+			Options.CHEAT_MODE = true;
+		else if (e.getKeyCode() == KeyEvent.VK_DOLLAR && Options.CHEAT_MODE == true)
+			Options.CHEAT_MODE = false;
+
+		if (Options.CHEAT_MODE) {
+			if ((e.getKeyCode() == KeyEvent.VK_LEFT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD1)) {
+				m_model.getPlayer().addKarma(+50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_NUMPAD2)) {
+				m_model.getPlayer().addKarma(-50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_RIGHT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD3)) {
+				m_model.getPlayer().addXP(+50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_PLUS || e.getKeyCode() == KeyEvent.VK_NUMPAD4)) {
+				m_model.getPlayer().addXP(-50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)) {
+				Options.INVULNERABILITY = !Options.INVULNERABILITY;
+			}
 		}
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			m_model.switchPause();
+		} else if (e.getKeyCode() == KeyEvent.VK_EXCLAMATION_MARK)
+			m_model.respawn();
 
 	}
 

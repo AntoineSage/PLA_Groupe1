@@ -146,22 +146,26 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		(new Sound("sprites/hurt.wav")).start();
-		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			if (!Options.INVULNERABILITY) {
+				(new Sound("sprites/hurt.wav")).start();
+				m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+				if (m_entity.m_HP <= 0) {
+					m_entity.die();
+				}
+				((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			}
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		(new Sound("sprites/hurt.wav")).start();
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			if (!Options.INVULNERABILITY) {
+				(new Sound("sprites/hurt.wav")).start();
+				m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
+				if (m_entity.m_HP <= 0) {
+					m_entity.die();
+				}
+				((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			}
 	}
 
 	@Override
