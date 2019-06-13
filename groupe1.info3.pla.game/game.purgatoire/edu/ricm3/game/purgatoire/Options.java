@@ -53,9 +53,8 @@ public class Options {
 	public static final boolean CHEAT_MODE = true;
 
 	// Player stats arrays
-	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",
-			"Rank heaven 4" };
-	public static final String[] PLAYER_RANKS_HELL = { "Rank hell 1", "Rank hell 2", "Rank hell 3", "Rank hell 4" };
+	public static final String[] PLAYER_RANKS_HEAVEN = { "Priest", "Saint", "Angel", "GOD" };
+	public static final String[] PLAYER_RANKS_HELL = { "Heretic", "Necromancer", "Demon", "SATAN" };
 	public static final int[] PLAYER_DMG_HEAVEN = { 100, 120, 150, 200 };
 	public static final int[] PLAYER_DMG_HELL = { 100, 120, 150, 200 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
