@@ -25,7 +25,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	int m_DMGBuffRatio = Options.BUFF_DMG;
 	int m_weaknessBuffRatio = Options.BUFF_WEAKNESS;
 	int m_durationBuff = Options.BUFF_DURATION;
-	
+
 	IAutomaton m_automatonMove;
 
 	public HellPlayerStunt() {
@@ -98,7 +98,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void hit(IDirection d) {
 		super.hit(d);
-		
+
 		if (m_missileTimer.isFinished()) {
 			m_missileTimer.start();
 			Missile missile;
@@ -138,28 +138,16 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity)
-		{
-			return;
-		}
-		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		//if (Options.CHEAT_MODE == false)
+			if (Options.INVULNERABILITY == false)
+				super.takeDamage(DMG);
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity)
-		{
-			return;
-		}
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
-		((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+		//if (Options.CHEAT_MODE == false)
+			if (Options.INVULNERABILITY == false)
+				super.takeDamage(e);
 	}
 
 	@Override

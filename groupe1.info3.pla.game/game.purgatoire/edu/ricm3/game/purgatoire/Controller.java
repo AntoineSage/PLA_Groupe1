@@ -231,6 +231,11 @@ public class Controller extends GameController implements ActionListener {
 			m_allKeyPressed.add(code);
 		}
 
+		if (e.getKeyCode() == KeyEvent.VK_DOLLAR && Options.CHEAT_MODE == false)
+			Options.CHEAT_MODE = true;
+		else if (e.getKeyCode() == KeyEvent.VK_DOLLAR && Options.CHEAT_MODE == true)
+			Options.CHEAT_MODE = false;
+
 		if ((e.getKeyCode() == KeyEvent.VK_LEFT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD1)
 				&& Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addKarma(+50);
@@ -244,8 +249,12 @@ public class Controller extends GameController implements ActionListener {
 				&& Options.CHEAT_MODE == true) {
 			m_model.getPlayer().addXP(-50);
 		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
-				&& Options.CHEAT_MODE == true) {
-		} else if (e.getKeyCode() == KeyEvent.VK_NUMBER_SIGN)
+				&& Options.CHEAT_MODE == true && Options.INVULNERABILITY == false) {
+			Options.INVULNERABILITY = true;
+		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
+				&& Options.CHEAT_MODE == true && Options.INVULNERABILITY == true) {
+			Options.INVULNERABILITY = false;
+		} else if (e.getKeyCode() == KeyEvent.VK_EXCLAMATION_MARK)
 			m_model.respawn();
 	}
 

@@ -39,7 +39,8 @@ public class Options {
 	public static long HELL_PLAYER_WIZZ_TIMER = 1000;
 	public static final int PLAYER_KARMA_MAX = 150;
 	public static final int PLAYER_MAX_RANK = PLAYER_RANKS.length - 2;
-	public static boolean CHEAT_MODE = true;
+	public static boolean CHEAT_MODE = false;
+	public static boolean INVULNERABILITY = false;
 
 	// Player stats arrays
 	public static final String[] PLAYER_RANKS_HEAVEN = { "Rank heaven 1", "Rank heaven 2", "Rank heaven 3",

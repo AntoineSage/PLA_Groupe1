@@ -263,24 +263,16 @@ public class Stunt {
 	}
 
 	public void takeDamage(int DMG) {
-		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity) {
-			return;
-		} else {
-			m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-			if (m_entity.m_HP <= 0) {
-				m_entity.die();
-			}
+		m_entity.addHP(-(int) (m_weaknessBuff * DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
 		}
 	}
 
 	public void takeDamage(Entity e) {
-		if (Options.CHEAT_MODE == true && m_entity.m_level.m_player == m_entity) {
-			return;
-		} else {
-			m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
-			if (m_entity.m_HP <= 0) {
-				m_entity.die();
-			}
+		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.m_DMG));
+		if (m_entity.m_HP <= 0) {
+			m_entity.die();
 		}
 	}
 

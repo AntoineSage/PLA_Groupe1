@@ -7,6 +7,7 @@ import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
+import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import edu.ricm3.game.purgatoire.entities.Player;
 import edu.ricm3.game.purgatoire.entities.Special;
@@ -21,7 +22,6 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	Timer m_hitCoolDown;
 	boolean m_isFiring;
 	Timer m_karmaTimer;
-	
 	IAutomaton m_automatonMove;
 
 	public HeavenPlayerStunt() {
@@ -63,7 +63,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	@Override
 	public void hit(IDirection d) {
 		super.hit(d);
-		
+
 		if (m_hitCoolDown.isFinished()) {
 			if (m_isFiring == false) {
 				m_hitTimer.start();
@@ -155,4 +155,17 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 //		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
 
+	@Override
+	public void takeDamage(int DMG) {
+		if (Options.CHEAT_MODE == false)
+			if (Options.INVULNERABILITY == false)
+				super.takeDamage(DMG);
+	}
+
+	@Override
+	public void takeDamage(Entity e) {
+		if (Options.CHEAT_MODE == false)
+			if (Options.INVULNERABILITY == false)
+				super.takeDamage(e);
+	}
 }
