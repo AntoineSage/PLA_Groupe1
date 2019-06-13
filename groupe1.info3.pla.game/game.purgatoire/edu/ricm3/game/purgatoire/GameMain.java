@@ -293,6 +293,7 @@ public class GameMain {
 		frame.add(save, gbc);
 
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
