@@ -30,6 +30,7 @@ public class Player extends Entity {
 
 	public Player(Model model, Level level, int x, int y) {
 		super(level, new HeavenPlayerStunt(), new HellPlayerStunt(), x, y, Options.PLAYER_SIZE);
+		Singleton.notify(IEntityType.IType.PLAYER);
 		m_model = model;
 		m_type = IEntityType.PLAYER;
 		m_XP = 0;

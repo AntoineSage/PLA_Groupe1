@@ -4,17 +4,12 @@ import java.io.File;
 import java.util.List;
 
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IEntityType;
 import ricm3.parser.Ast;
 import ricm3.parser.Ast.AI_Definitions;
 import ricm3.parser.AutomataParser;
 
 public class Singleton {
-
-	@SuppressWarnings("unused")
-	private static Singleton m_singleton = new Singleton(Options.AUT_FILE);
-
-	public static final String[] m_existingEntitiesTypes = { "Players", "Souls", "Obstacles", "Nests", "Missiles",
-			"Specials" };
 
 	private static IAutomaton[] m_HellAut;
 	private static IAutomaton[] m_HeavenAut;
@@ -22,6 +17,7 @@ public class Singleton {
 	private static Animation[] m_HeavenAnim;
 
 	private static int[] m_Firsts;
+	private static int[] m_Count;
 
 	private static IAutomaton[] m_HellAutFirst;
 	private static IAutomaton[] m_HeavenAutFirst;
@@ -36,9 +32,17 @@ public class Singleton {
 	private static IAutomaton m_playerHellMoveAut;
 
 	private static BiSound m_backgroundMusic;
-	
+
 	private static IAutomaton m_soulUnlimitedRangeFollow;
-	
+	private static IAutomaton m_verticalSoulAut;
+	private static IAutomaton m_horizontalSoulAut;
+
+	public static final String[] m_existingEntitiesTypes = { "Players", "Souls", "Obstacles", "Nests", "Missiles",
+			"Specials" };
+
+	@SuppressWarnings("unused")
+	private static Singleton m_singleton = new Singleton(Options.AUT_FILE);
+
 	private Singleton(String file) {
 		Ast ast = null;
 		try {
@@ -57,10 +61,14 @@ public class Singleton {
 		m_playerHeavenMoveAut = m_automatons.get(0);
 		m_playerHellMoveAut = m_automatons.get(0);
 		m_soulUnlimitedRangeFollow = m_automatons.get(4);
+		m_verticalSoulAut = m_automatons.get(12);
+		m_horizontalSoulAut = m_automatons.get(13);
 		try {
 			m_backgroundMusic = BiSound.make("sprites/hell.wav", "sprites/heaven.wav", true);
 		} catch (Exception ex) {
 		}
+
+		m_Count = new int[m_existingEntitiesTypes.length];
 	}
 
 //	public Singleton getSingleton() {
@@ -78,6 +86,31 @@ public class Singleton {
 			throw new IllegalAccessException("controller can only be set one time");
 		}
 
+	}
+
+	public static void notify(IEntityType.IType type) {
+		switch (type) {
+		case PLAYER:
+			m_Count[0]++;
+			break;
+		case ADVERSARY:
+			m_Count[1]++;
+			break;
+		case OBSTACLE:
+			m_Count[2]++;
+			break;
+		case DANGER:
+			m_Count[3]++;
+			break;
+		case MISSILE:
+			m_Count[4]++;
+			break;
+		case TEAM:
+			m_Count[5]++;
+			break;
+		default:
+			break;
+		}
 	}
 
 	public static void set(IAutomaton[] HellAut, IAutomaton[] HeavenAut, Animation[] HellAnim, Animation[] HeavenAnim,
@@ -113,14 +146,14 @@ public class Singleton {
 
 	public static IAutomaton getNewPlayerHellMoveAut() {
 		return m_playerHellMoveAut.copy();
-	}	
-	
+	}
+
 	public static IAutomaton getNewUnlimitedRangeFollow() {
 		return m_soulUnlimitedRangeFollow.copy();
 	}
 
 	public static IAutomaton getNewPlayerHellAut() {
-		if (m_Firsts[0] >= 0) {
+		if (m_Count[0] < m_Firsts[0]) {
 			return m_HellAutFirst[0].copy();
 		} else {
 			return m_HellAut[0].copy();
@@ -128,8 +161,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewPlayerHeavenAut() {
-		m_Firsts[0]--;
-		if (m_Firsts[0] >= 0) {
+		if (m_Count[0] < m_Firsts[0]) {
 			return m_HeavenAutFirst[0].copy();
 		} else {
 			return m_HeavenAut[0].copy();
@@ -137,7 +169,7 @@ public class Singleton {
 	}
 
 	public static Animation getPlayerHellAnim() {
-		if (m_Firsts[0] >= 0) {
+		if (m_Count[0] < m_Firsts[0]) {
 			return m_HellAnimFirst[0];
 		} else {
 			return m_HellAnim[0];
@@ -145,7 +177,7 @@ public class Singleton {
 	}
 
 	public static Animation getPlayerHeavenAnim() {
-		if (m_Firsts[0] >= 0) {
+		if (m_Count[0] < m_Firsts[0]) {
 			return m_HeavenAnimFirst[0];
 		} else {
 			return m_HeavenAnim[0];
@@ -153,7 +185,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewSoulHellAut() {
-		if (m_Firsts[1] >= 0) {
+		if (m_Count[1] < m_Firsts[1]) {
 			return m_HellAutFirst[1].copy();
 		} else {
 			return m_HellAut[1].copy();
@@ -161,8 +193,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewSoulHeavenAut() {
-		m_Firsts[1]--;
-		if (m_Firsts[1] >= 0) {
+		if (m_Count[1] < m_Firsts[1]) {
 			return m_HeavenAutFirst[1].copy();
 		} else {
 			return m_HeavenAut[1].copy();
@@ -170,7 +201,7 @@ public class Singleton {
 	}
 
 	public static Animation getSoulHellAnim() {
-		if (m_Firsts[1] >= 0) {
+		if (m_Count[1] < m_Firsts[1]) {
 			return m_HellAnimFirst[1];
 		} else {
 			return m_HellAnim[1];
@@ -178,15 +209,30 @@ public class Singleton {
 	}
 
 	public static Animation getSoulHeavenAnim() {
-		if (m_Firsts[1] >= 0) {
+		if (m_Count[1] < m_Firsts[1]) {
 			return m_HeavenAnimFirst[1];
 		} else {
 			return m_HeavenAnim[1];
 		}
 	}
 
+	public static IAutomaton getVerticalSoul() {
+		if (m_Count[1] < m_Firsts[1]) {
+			return m_HeavenAutFirst[1].copy();
+		} else {
+			return m_verticalSoulAut.copy();
+		}
+	}
+	public static IAutomaton getHorizontalSoul() {
+		if (m_Count[1] < m_Firsts[1]) {
+			return m_HeavenAutFirst[1].copy();
+		} else {
+			return m_verticalSoulAut.copy();
+		}
+	}
+
 	public static IAutomaton getNewObstacleHellAut() {
-		if (m_Firsts[2] >= 0) {
+		if (m_Count[2] < m_Firsts[2]) {
 			return m_HellAutFirst[2].copy();
 		} else {
 			return m_HellAut[2].copy();
@@ -194,8 +240,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewObstacleHeavenAut() {
-		m_Firsts[2]--;
-		if (m_Firsts[2] >= 0) {
+		if (m_Count[2] < m_Firsts[2]) {
 			return m_HeavenAutFirst[2].copy();
 		} else {
 			return m_HeavenAut[2].copy();
@@ -203,7 +248,7 @@ public class Singleton {
 	}
 
 	public static Animation getObstacleHellAnim() {
-		if (m_Firsts[2] >= 0) {
+		if (m_Count[2] < m_Firsts[2]) {
 			return m_HellAnimFirst[2];
 		} else {
 			return m_HellAnim[2];
@@ -211,7 +256,7 @@ public class Singleton {
 	}
 
 	public static Animation getObstacleHeavenAnim() {
-		if (m_Firsts[2] >= 0) {
+		if (m_Count[2] < m_Firsts[2]) {
 			return m_HeavenAnimFirst[2];
 		} else {
 			return m_HeavenAnim[2];
@@ -219,7 +264,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewNestHeavenAut() {
-		if (m_Firsts[3] >= 0) {
+		if (m_Count[3] < m_Firsts[3]) {
 			return m_HellAutFirst[3].copy();
 		} else {
 			return m_HellAut[3].copy();
@@ -227,8 +272,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewNestHellAut() {
-		m_Firsts[3]--;
-		if (m_Firsts[3] >= 0) {
+		if (m_Count[3] < m_Firsts[3]) {
 			return m_HeavenAutFirst[3].copy();
 		} else {
 			return m_HeavenAut[3].copy();
@@ -236,7 +280,7 @@ public class Singleton {
 	}
 
 	public static Animation getNestHellAnim() {
-		if (m_Firsts[3] >= 0) {
+		if (m_Firsts[3] < 0) {
 			return m_HellAnimFirst[3];
 		} else {
 			return m_HellAnim[3];
@@ -244,7 +288,7 @@ public class Singleton {
 	}
 
 	public static Animation getNestHeavenAnim() {
-		if (m_Firsts[3] >= 0) {
+		if (m_Count[3] < m_Firsts[3]) {
 			return m_HeavenAnimFirst[3];
 		} else {
 			return m_HeavenAnim[3];
@@ -252,7 +296,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewMissileHellAut() {
-		if (m_Firsts[4] >= 0) {
+		if (m_Count[4] < m_Firsts[4]) {
 			return m_HellAutFirst[4].copy();
 		} else {
 			return m_HellAut[4].copy();
@@ -260,8 +304,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewMissileHeavenAut() {
-		m_Firsts[4]--;
-		if (m_Firsts[4] >= 0) {
+		if (m_Count[4] < m_Firsts[4]) {
 			return m_HeavenAutFirst[4].copy();
 		} else {
 			return m_HeavenAut[4].copy();
@@ -269,7 +312,7 @@ public class Singleton {
 	}
 
 	public static Animation getMissileHellAnim() {
-		if (m_Firsts[4] >= 0) {
+		if (m_Count[4] < m_Firsts[4]) {
 			return m_HellAnimFirst[4];
 		} else {
 			return m_HellAnim[4];
@@ -277,7 +320,7 @@ public class Singleton {
 	}
 
 	public static Animation getMissileHeavenAnim() {
-		if (m_Firsts[4] >= 0) {
+		if (m_Count[4] < m_Firsts[4]) {
 			return m_HeavenAnimFirst[4];
 		} else {
 			return m_HeavenAnim[4];
@@ -285,7 +328,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewSpecialHellAut() {
-		if (m_Firsts[5] >= 0) {
+		if (m_Count[5] < m_Firsts[5]) {
 			return m_HellAutFirst[5].copy();
 		} else {
 			return m_HellAut[5].copy();
@@ -293,8 +336,7 @@ public class Singleton {
 	}
 
 	public static IAutomaton getNewSpecialHeavenAut() {
-		m_Firsts[5]--;
-		if (m_Firsts[5] >= 0) {
+		if (m_Count[5] < m_Firsts[5]) {
 			return m_HeavenAutFirst[5].copy();
 		} else {
 			return m_HeavenAut[5].copy();
@@ -302,7 +344,7 @@ public class Singleton {
 	}
 
 	public static Animation getSpecialHellAnim() {
-		if (m_Firsts[5] >= 0) {
+		if (m_Count[5] < m_Firsts[5]) {
 			return m_HellAnimFirst[5];
 		} else {
 			return m_HellAnim[5];
@@ -310,7 +352,7 @@ public class Singleton {
 	}
 
 	public static Animation getSpecialHeavenAnim() {
-		if (m_Firsts[5] >= 0) {
+		if (m_Count[5] < m_Firsts[5]) {
 			return m_HeavenAnimFirst[5];
 		} else {
 			return m_HeavenAnim[5];
@@ -324,4 +366,9 @@ public class Singleton {
 	public static BiSound getBackgroundMusic() {
 		return m_backgroundMusic;
 	}
+
+	public static void clearCount() {
+		m_Count = new int[m_existingEntitiesTypes.length];
+	}
+
 }

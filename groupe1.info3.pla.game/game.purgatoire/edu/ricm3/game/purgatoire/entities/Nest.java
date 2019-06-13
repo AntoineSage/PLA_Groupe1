@@ -2,6 +2,7 @@ package edu.ricm3.game.purgatoire.entities;
 
 import edu.ricm3.game.purgatoire.Level;
 import edu.ricm3.game.purgatoire.Options;
+import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.stunts.HeavenNestStunt;
 import edu.ricm3.game.purgatoire.stunts.HellNestStunt;
 import edu.ricm3.game.purgatoire.stunts.Stunt;
@@ -15,11 +16,13 @@ public class Nest extends Entity {
 
 	public Nest(Level level, int x, int y, int size) {
 		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, size);
+		Singleton.notify(IEntityType.IType.DANGER);
 		m_type = IEntityType.DANGER;
 	}
 
 	public Nest(Level level, int x, int y) {
 		super(level, new HeavenNestStunt(), new HellNestStunt(), x, y, Options.NEST_SIZE);
+		Singleton.notify(IEntityType.IType.DANGER);
 		m_type = IEntityType.DANGER;
 	}
 

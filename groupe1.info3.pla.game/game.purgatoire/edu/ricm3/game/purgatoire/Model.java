@@ -23,6 +23,7 @@ import edu.ricm3.game.purgatoire.entities.Player;
 public class Model extends GameModel {
 
 	public WorldType m_wt;
+	public WorldType m_initialWt;
 	protected Player m_player;
 	protected Level m_currentLevel, m_nextLevel;
 	private LevelMaker m_currentLevelMaker, m_nextLevelMaker;
@@ -34,7 +35,7 @@ public class Model extends GameModel {
 	private long lastPeriodUpdate;
 
 	public Model(WorldType wt) {
-
+		m_initialWt = wt;
 		m_wt = wt;
 		if(wt == WorldType.HEAVEN)Singleton.getBackgroundMusic().swap();
 		Singleton.getBackgroundMusic().start();
@@ -167,7 +168,8 @@ public class Model extends GameModel {
 		m_totalDistance = 0;
 		m_period = 0;
 		m_totalTime = 0;
-		m_wt = WorldType.HEAVEN;
+		m_wt = m_initialWt;
+		Singleton.clearCount();
 		m_currentLevelMaker = new LevelMaker();
 		m_nextLevelMaker = new LevelMaker();
 		m_currentLevel = m_currentLevelMaker.loadLevel(this);

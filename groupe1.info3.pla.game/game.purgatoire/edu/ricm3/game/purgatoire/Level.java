@@ -138,7 +138,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > 500 && this == m_model.m_currentLevel) {
+		if (now - lastUpdateNests > 1000/30 && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}
@@ -242,10 +242,10 @@ public class Level {
 			new Soul(this, x, y, Options.SOUL_SIZE);
 			break;
 		case 'V':
-			new Soul(this, x, y, Singleton.getAutomatons().get(12).copy());
+			new Soul(this, x, y, Singleton.getVerticalSoul());
 			break;
 		case 'H':
-			new Soul(this, x, y, Singleton.getAutomatons().get(13).copy());
+			new Soul(this, x, y, Singleton.getHorizontalSoul());
 			break;
 		case 'N':
 			new Nest(this, x, y, Options.NEST_SIZE);
