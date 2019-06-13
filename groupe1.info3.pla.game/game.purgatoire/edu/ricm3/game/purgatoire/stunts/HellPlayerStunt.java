@@ -193,5 +193,11 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		if (Options.ECHO_HIT_TIMER_CHANGE)
 			System.out.println("Missile timer: " + m_missileTimer.getDuration());
 	}
+	
+	@Override
+	protected void move(int x, int y) {
+		super.move(x, y);
+		m_entity.m_level.m_model.m_totalDistance -= y;
+	}
 
 }
