@@ -150,7 +150,7 @@ public class Options {
 	public static final int MISSILE_SIZE = 1;
 
 	// LVL OPTIONS
-	public static int LVL_QUARTER_MAX_NBR = 7; // nbr of paterns
+	public static int LVL_QUARTER_MAX_NBR = 8; // nbr of paterns
 	public static int LVL_3_NEST_PROBABILITY = 10;
 	public static int LVL_2_NEST_PROBABILITY = 30;
 	public static double LVL_3_NEST_PROBABILITY_COEF = 1.1;
