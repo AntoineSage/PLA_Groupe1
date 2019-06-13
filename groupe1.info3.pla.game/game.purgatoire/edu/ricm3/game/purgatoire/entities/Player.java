@@ -113,6 +113,10 @@ public class Player extends Entity {
 		return m_rank;
 	}
 
+	public int getDMG() {
+		return m_currentStunt.getDMG();
+	}
+
 	public String getRankName() {
 		return ((PlayerStunt) m_currentStunt).getRankName();
 	}

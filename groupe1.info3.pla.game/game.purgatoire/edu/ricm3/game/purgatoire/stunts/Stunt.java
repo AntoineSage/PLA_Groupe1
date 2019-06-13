@@ -197,6 +197,7 @@ public class Stunt {
 	void buff(int buffDMG, int debuffWeakness) {
 		m_DMGBuff = (float) (1 + buffDMG / 100.0);
 		m_weaknessBuff = (float) (1 + debuffWeakness / 100.0);
+		Singleton.getController().updateBuffsUI();
 	}
 
 	public void pop(IDirection d) {
@@ -266,6 +267,10 @@ public class Stunt {
 
 	public int getBaseDMG() {
 		return m_DMG;
+	}
+
+	public float getWeakness() {
+		return m_weaknessBuff;
 	}
 
 	void setDMG(int DMG) {

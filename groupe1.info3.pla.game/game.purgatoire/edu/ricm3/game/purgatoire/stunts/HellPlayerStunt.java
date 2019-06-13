@@ -159,6 +159,7 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 		if (m_popTimer.isFinished()) {
 			setDMGBuff(1);
 			m_weaknessBuff = 1;
+			Singleton.getController().updateBuffsUI();
 		}
 		m_missileTimer.step(now);
 		m_karmaTimer.step(now);

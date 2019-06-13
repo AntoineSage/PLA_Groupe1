@@ -28,6 +28,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
@@ -82,6 +83,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
@@ -132,6 +134,7 @@ public class Bars {
 			setLocation(x, y);
 			setMinimumSize(new Dimension(w, h));
 			setPreferredSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
 //			setVisible(true);
 		}
 
