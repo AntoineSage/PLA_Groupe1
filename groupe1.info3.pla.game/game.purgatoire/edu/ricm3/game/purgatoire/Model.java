@@ -64,24 +64,29 @@ public class Model extends GameModel {
 	}
 
 	public void step(long now) {
-		m_nextLevel.step(now);
-		m_currentLevel.step(now);
+		if (!Options.PAUSE) {
+			m_nextLevel.step(now);
+			m_currentLevel.step(now);
 
-		if (now - lastPeriodUpdate > 100) {
-			m_period += now - lastPeriodUpdate;
-			m_totalTime += now - lastPeriodUpdate; // ? m_totalTime = now ?
+			if (now - lastPeriodUpdate > 100) {
+				m_period += now - lastPeriodUpdate;
+				m_totalTime += now - lastPeriodUpdate; // ? m_totalTime = now ?
+				lastPeriodUpdate = now;
+			}
+			if (m_period >= Options.TOTAL_PERIOD) {
+				if ((int) (m_totalTime / Options.TOTAL_PERIOD) % Options.NB_PERIOD_DIFFICULTY == 0) {
+					raiseDifficulty();
+				}
+				m_player.testKarma();
+				m_period = 0;
+			}
+		} else {
 			lastPeriodUpdate = now;
 		}
-		if (m_period >= Options.TOTAL_PERIOD) {
-			if ((int) (m_totalTime / Options.TOTAL_PERIOD) % Options.NB_PERIOD_DIFFICULTY == 0) {
-				raiseDifficulty();
-			}
-			// raiseDifficulty();
-			// m_currentLevel.updateDifficulty();
-			// m_nextLevel.updateDifficulty();
-			m_player.testKarma();
-			m_period = 0;
-		}
+	}
+	
+	public void switchPause() {
+		Options.PAUSE = !Options.PAUSE;
 	}
 
 	private void raiseDifficulty() {
@@ -99,6 +104,9 @@ public class Model extends GameModel {
 		Options.HELL_OBSTACLE_HP_MAX *= Options.HELL_OBSTACLE_HP_MAX_COEF;
 		Options.HEAVEN_OBSTACLE_DMG *= Options.HEAVEN_OBSTACLE_DMG_COEF;
 		Options.HEAVEN_OBSTACLE_HP_MAX *= Options.HEAVEN_OBSTACLE_HP_MAX_COEF;
+		
+		Options.LVL_3_NEST_PROBABILITY *= Options.LVL_3_NEST_PROBABILITY_COEF;
+		Options.LVL_2_NEST_PROBABILITY *= Options.LVL_2_NEST_PROBABILITY_COEF;
 
 		if (Options.ECHO_RAISE_DIFFICULTY) {
 			System.out.println(
