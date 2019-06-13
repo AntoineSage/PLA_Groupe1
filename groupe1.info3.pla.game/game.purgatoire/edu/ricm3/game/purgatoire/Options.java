@@ -21,8 +21,10 @@ public class Options {
 
 	public static final int NB_PERIOD_DIFFICULTY = 2;
 
+	public static boolean PAUSE = true;
+
 	// PLAYER OPTIONS
-	
+
 	public static final int[] PLAYER_RANKS = { 0, 100, 200, 300, 400 }; // length <= stats arrays length - 1 !
 	public static final int HELL_PLAYER_DMG = 1;
 	public static final int HELL_PLAYER_HP_MAX = 1000;

@@ -33,7 +33,7 @@ public class AnimationPlayer {
 
 	public void changeTo(AnimType type) {
 		m_playing = true;
-		if (m_type.getValue() != type.getValue()) {
+		if (!m_animation.equals(type, m_type)) {
 			m_type = type;
 			m_position = 0;
 		}
