@@ -18,6 +18,8 @@
 
 package edu.ricm3.game.purgatoire;
 
+import java.awt.Button;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Label;
@@ -25,11 +27,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -37,20 +41,25 @@ import edu.ricm3.game.GameController;
 import edu.ricm3.game.purgatoire.Bars.HPBar;
 import edu.ricm3.game.purgatoire.Bars.KarmaBar;
 import edu.ricm3.game.purgatoire.Bars.XPBar;
+import edu.ricm3.game.purgatoire.Bars.TimeCircle;
 
 public class Controller extends GameController implements ActionListener {
 
-	Model m_model;
-	View m_view;
-	// private long m_lastTransform;
-	List<Integer> m_allKeyPressed;
-	Stack<Integer> m_directionKey;
-	HPBar m_HPBar, m_periodCircle;
-	XPBar m_XPBar;
-	KarmaBar m_karmaBar;
+	private Model m_model;
+	private View m_view;
+	private List<Integer> m_allKeyPressed;
+	private Stack<Integer> m_directionKey;
+	private HPBar m_HPBar, m_periodCircle;
+	private XPBar m_XPBar;
+	private KarmaBar m_karmaBar;
+	private TimeCircle m_timeCircle;
 
-	Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
-	Label m_cooldownLabel, m_cooldownWizzLabel;
+	private Label m_totalTimeLabel, m_totalDistanceLabel, m_periodLabel;
+	private Label m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel;
+	private Label m_cooldownLabel, m_DMGLabel, m_weaknessLabel;
+
+	Music m_player;
+	Button m_music;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -65,41 +74,36 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void notifyVisible() {
-		// TODO center bars
-		// TODO add Hell or Heaven Label
-
 		// West container
 
 		JPanel west = new JPanel();
 //		west.setLayout(new FlowLayout(FlowLayout.CENTER, 0, Options.UI_MARGIN));
-//		west.setLayout(new BoxLayout(west, BoxLayout.X_AXIS));
 		west.setLayout(new GridBagLayout());
 		west.setPreferredSize(new Dimension(Options.UI_PANEL_SIZE, 0));
 
 		JPanel westInside = new JPanel();
 		westInside.setLayout(new BoxLayout(westInside, BoxLayout.Y_AXIS));
+		westInside.setMinimumSize(new Dimension(200, 50));
 
-		JPanel karmaBar = new JPanel();
-		karmaBar.setLayout(new GridBagLayout());
-		JPanel cooldown = new JPanel();
-		cooldown.setLayout(new GridBagLayout());
+		JPanel karma = new JPanel();
+		karma.setLayout(new BoxLayout(karma, BoxLayout.X_AXIS));
 
 		m_periodLabel = new Label("", Label.CENTER);
 		m_karmaBar = new KarmaBar(m_view, 0, 0, Options.UI_BAR_WIDTH, 2 * Options.UI_BAR_HEIGHT);
 		m_karmaLabel = new Label("", Label.CENTER);
 		m_cooldownLabel = new Label("", Label.CENTER);
-		m_cooldownWizzLabel = new Label("", Label.CENTER);
+		m_timeCircle = new TimeCircle(m_view, 0, 0, 50, 50);
 
+		westInside.add(m_timeCircle);
 		westInside.add(m_periodLabel);
-		karmaBar.add(m_karmaBar);
-		westInside.add(karmaBar);
-		westInside.add(m_karmaLabel);
-		cooldown.add(m_cooldownLabel);
-		westInside.add(cooldown);
+		karma.add(Box.createRigidArea(new Dimension((westInside.getWidth() - m_karmaBar.getWidth()) / 2, 0)));
+		karma.add(m_karmaBar, KarmaBar.CENTER_ALIGNMENT);
+		westInside.add(karma);
+		westInside.add(m_karmaLabel, Label.CENTER_ALIGNMENT);
+		westInside.add(m_cooldownLabel, Label.CENTER_ALIGNMENT);
 
 		west.add(westInside);
-//		west.add(Box.createHorizontalGlue());
-//		west.add(Box.createRigidArea(new Dimension(Options.UI_HORIZONTAL_MARGIN, 0)));
+//		westInside.add(Box.createHorizontalGlue());
 
 		// East container
 
@@ -110,16 +114,16 @@ public class Controller extends GameController implements ActionListener {
 		JPanel eastInside = new JPanel();
 		eastInside.setLayout(new BoxLayout(eastInside, BoxLayout.Y_AXIS));
 
-		JPanel eastBars = new JPanel();
-		eastBars.setLayout(new BoxLayout(eastBars, BoxLayout.X_AXIS));
+		JPanel bars = new JPanel();
+		bars.setLayout(new BoxLayout(bars, BoxLayout.X_AXIS));
 		JPanel HP = new JPanel();
 		HP.setLayout(new BoxLayout(HP, BoxLayout.Y_AXIS));
 		JPanel XP = new JPanel();
 		XP.setLayout(new BoxLayout(XP, BoxLayout.Y_AXIS));
-		JPanel HPBarContainer = new JPanel();
-		HPBarContainer.setLayout(new GridBagLayout());
-		JPanel XPBarContainer = new JPanel();
-		XPBarContainer.setLayout(new GridBagLayout());
+		JPanel HPBar = new JPanel();
+		HPBar.setLayout(new BoxLayout(HPBar, BoxLayout.X_AXIS));
+		JPanel XPBar = new JPanel();
+		XPBar.setLayout(new BoxLayout(XPBar, BoxLayout.X_AXIS));
 
 		m_HPBar = new HPBar(m_view, 0, 0, Options.UI_BAR_WIDTH, Options.UI_BAR_HEIGHT);
 		m_HPLabel = new Label("", Label.CENTER);
@@ -128,26 +132,35 @@ public class Controller extends GameController implements ActionListener {
 		m_rankLabel = new Label("", Label.CENTER);
 		m_totalTimeLabel = new Label("", Label.CENTER);
 		m_totalDistanceLabel = new Label("", Label.CENTER);
+		m_DMGLabel = new Label("", Label.CENTER);
+		m_weaknessLabel = new Label("", Label.CENTER);
 
-		HPBarContainer.add(m_HPBar);
-		HP.add(HPBarContainer);
+		HP.add(new Label("HP", Label.CENTER));
+		HPBar.add(Box.createRigidArea(new Dimension((HP.getWidth() - m_HPBar.getWidth()) / 2, 0)));
+		HPBar.add(m_HPBar);
+		HP.add(HPBar);
 		HP.add(m_HPLabel);
-		XPBarContainer.add(m_XPBar);
-		XP.add(XPBarContainer);
+		XP.add(new Label("XP", Label.CENTER));
+		XPBar.add(Box.createRigidArea(new Dimension((XP.getWidth() - m_XPBar.getWidth()) / 2, 0)));
+		XPBar.add(m_XPBar);
+		XP.add(XPBar);
 		XP.add(m_XPLabel);
-		eastBars.add(HP);
-		eastBars.add(XP);
+		bars.add(HP);
+		bars.add(XP);
 
-		eastInside.add(eastBars);
+		eastInside.add(bars);
 		eastInside.add(m_rankLabel);
 		eastInside.add(m_totalTimeLabel);
 		eastInside.add(m_totalDistanceLabel);
+		eastInside.add(m_DMGLabel);
+		eastInside.add(m_weaknessLabel);
 
 		east.add(eastInside);
 
 		m_game.addWest(west);
 		m_game.addEast(east);
 		updateUI();
+
 	}
 
 	public void updateUI() {
@@ -158,11 +171,13 @@ public class Controller extends GameController implements ActionListener {
 		updateRankUI();
 		updateDistanceUI();
 		updateCooldownUI();
+		updateBuffsUI();
 	}
 
 	public void updateTimeUI() {
-		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.m_period) / 1000));
-		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.m_totalTime / 1000));
+		m_periodLabel.setText(String.format("period: %.1f%ns", (Options.TOTAL_PERIOD - m_model.getPeriod()) / 1000));
+		m_totalTimeLabel.setText(String.format("total time: %.1f%ns", m_model.getTotalTime() / 1000));
+		m_timeCircle.updateArcs(m_model.getPeriod());
 	}
 
 	public void updateKarmaUI() {
@@ -176,7 +191,7 @@ public class Controller extends GameController implements ActionListener {
 	public void updateHPUI() {
 		m_HPBar.updateHeights(m_model.getPlayer().getHP(), m_model.getPlayer().getMaxHP(),
 				m_model.getPlayer().getMaxTotalHP());
-		m_HPLabel.setText("HP: " + m_model.getPlayer().getHP() + "/" + m_model.getPlayer().getMaxHP());
+		m_HPLabel.setText(m_model.getPlayer().getHP() + "/" + m_model.getPlayer().getMaxHP());
 
 		if (Options.ECHO_PLAYER_HP_CHANGE)
 			System.out.println("Player new HP: " + m_model.getPlayer().getHP());
@@ -185,13 +200,15 @@ public class Controller extends GameController implements ActionListener {
 	public void updateXPUI() {
 		m_XPBar.updateHeights(m_model.getPlayer().getXP(), m_model.getPlayer().getMinXP(),
 				m_model.getPlayer().getMaxXP());
-		m_XPLabel.setText("XP: " + m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
+		m_XPLabel.setText(m_model.getPlayer().getXP() + "/" + m_model.getPlayer().getMaxXP());
 
 		if (Options.ECHO_PLAYER_XP_CHANGE)
 			System.out.println("Player new XP: " + m_model.getPlayer().getXP());
 	}
 
 	public void updateRankUI() {
+		updateHPUI();
+		updateDMGUI();
 		m_rankLabel.setText("rank: " + (m_model.getPlayer().getRank() + 1) + " - " + m_model.getPlayer().getRankName());
 
 		if (Options.ECHO_PLAYER_RANK_CHANGE)
@@ -209,6 +226,15 @@ public class Controller extends GameController implements ActionListener {
 		else
 			m_cooldownLabel
 					.setText(String.format("wizz: %.1f%ns", (float) m_model.getPlayer().getTimeLeftWizz() / 1000));
+	}
+
+	public void updateBuffsUI() {
+		updateDMGUI();
+		m_weaknessLabel.setText("Damage taken: " + (int) (m_model.getPlayer().getWeakness() * 100) + "%");
+	}
+
+	public void updateDMGUI() {
+		m_DMGLabel.setText("DMG: " + m_model.getPlayer().getDMG());
 	}
 
 	@Override
@@ -236,26 +262,24 @@ public class Controller extends GameController implements ActionListener {
 		else if (e.getKeyCode() == KeyEvent.VK_DOLLAR && Options.CHEAT_MODE == true)
 			Options.CHEAT_MODE = false;
 
-		if ((e.getKeyCode() == KeyEvent.VK_LEFT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD1)
-				&& Options.CHEAT_MODE == true) {
-			m_model.getPlayer().addKarma(+50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_NUMPAD2)
-				&& Options.CHEAT_MODE == true) {
-			m_model.getPlayer().addKarma(-50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_RIGHT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD3)
-				&& Options.CHEAT_MODE == true) {
-			m_model.getPlayer().addXP(50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_PLUS || e.getKeyCode() == KeyEvent.VK_NUMPAD4)
-				&& Options.CHEAT_MODE == true) {
-			m_model.getPlayer().addXP(-50);
-		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
-				&& Options.CHEAT_MODE == true && Options.INVULNERABILITY == false) {
-			Options.INVULNERABILITY = true;
-		} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)
-				&& Options.CHEAT_MODE == true && Options.INVULNERABILITY == true) {
-			Options.INVULNERABILITY = false;
+		if (Options.CHEAT_MODE) {
+			if ((e.getKeyCode() == KeyEvent.VK_LEFT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD1)) {
+				m_model.getPlayer().addKarma(+50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_NUMPAD2)) {
+				m_model.getPlayer().addKarma(-50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_RIGHT_PARENTHESIS || e.getKeyCode() == KeyEvent.VK_NUMPAD3)) {
+				m_model.getPlayer().addXP(+50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_PLUS || e.getKeyCode() == KeyEvent.VK_NUMPAD4)) {
+				m_model.getPlayer().addXP(-50);
+			} else if ((e.getKeyCode() == KeyEvent.VK_UNDERSCORE || e.getKeyCode() == KeyEvent.VK_NUMPAD5)) {
+				Options.INVULNERABILITY = !Options.INVULNERABILITY;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			m_model.switchPause();
 		} else if (e.getKeyCode() == KeyEvent.VK_EXCLAMATION_MARK)
 			m_model.respawn();
+
 	}
 
 	@Override

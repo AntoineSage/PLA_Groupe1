@@ -6,6 +6,7 @@ import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
+import edu.ricm3.game.purgatoire.Sound;
 import edu.ricm3.game.purgatoire.Timer;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
@@ -17,12 +18,12 @@ import ricm3.interpreter.IEntityType;
 
 public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
-	LinkedList<Missile> m_missiles;
-	Timer m_hitTimer;
-	Timer m_hitCoolDown;
-	boolean m_isFiring;
-	Timer m_karmaTimer;
-	IAutomaton m_automatonMove;
+	private LinkedList<Missile> m_missiles;
+	private Timer m_hitTimer;
+	private Timer m_hitCoolDown;
+	private boolean m_isFiring;
+	private Timer m_karmaTimer;
+	private IAutomaton m_automatonMove;
 
 	public HeavenPlayerStunt() {
 		super(Singleton.getNewPlayerHeavenAut(), new AnimationPlayer(Singleton.getPlayerHeavenAnim(), AnimType.IDLE, 2),
@@ -54,6 +55,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	public void wizz(IDirection d) {
 		Special special = (Special) m_entity.superposedWith(IEntityType.TEAM);
 		if (special != null) {
+			(new Sound("sprites/cat.wav")).start();
 			special.pop(null);
 		}
 		if (Options.ECHO_WIZZ_PLAYER)
@@ -79,6 +81,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								IDirection.NORTH, m_entity);
 						m_missiles.add(missile);
 					}
+					if (m_animation != null)
+						m_animation.changeTo(AnimType.NORTH);
 					break;
 				case SOUTH:
 					for (int x = 0; x <= 2; x++) {
@@ -87,6 +91,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								IDirection.SOUTH, m_entity);
 						m_missiles.add(missile);
 					}
+					if (m_animation != null)
+						m_animation.changeTo(AnimType.SOUTH);
 					break;
 				case EAST:
 					for (int y = 0; y <= 2; y++) {
@@ -95,6 +101,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								m_entity);
 						m_missiles.add(missile);
 					}
+					if (m_animation != null)
+						m_animation.changeTo(AnimType.EAST);
 					break;
 				case WEST:
 					for (int y = 0; y <= 2; y++) {
@@ -103,6 +111,8 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 								m_entity);
 						m_missiles.add(missile);
 					}
+					if (m_animation != null)
+						m_animation.changeTo(AnimType.WEST);
 					break;
 				default:
 					break;
@@ -132,12 +142,13 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void step(long now) {
+		m_entity.m_direction = IDirection.NONE;
+		m_automatonMove.step(m_entity);
 		super.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
 		changeKarmaOverTime();
-		m_automatonMove.step(m_entity);
 	}
 
 	@Override
@@ -157,15 +168,17 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-		if (Options.CHEAT_MODE == false)
-			if (Options.INVULNERABILITY == false)
+			if (!Options.INVULNERABILITY) {
 				super.takeDamage(DMG);
+				(new Sound("sprites/hurt.wav")).start();
+			}
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-		if (Options.CHEAT_MODE == false)
-			if (Options.INVULNERABILITY == false)
+			if (!Options.INVULNERABILITY) {
 				super.takeDamage(e);
+				(new Sound("sprites/hurt.wav")).start();
+			}
 	}
 }

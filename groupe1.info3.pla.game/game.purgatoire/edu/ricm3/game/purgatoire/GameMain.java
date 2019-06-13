@@ -59,6 +59,7 @@ public class GameMain {
 	}
 
 	static void menu() {
+
 		final JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -244,6 +245,7 @@ public class GameMain {
 				Singleton.set(HellAut, HeavenAut, HellAnim, HeavenAnim, Firsts, HellAutFirst, HeavenAutFirst,
 						HellAnimFirst, HeavenAnimFirst);
 
+				(new Sound("sprites/button_sound.wav")).start();
 				play(frame);
 			}
 		});
@@ -294,6 +296,7 @@ public class GameMain {
 		frame.add(save, gbc);
 
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -357,7 +360,6 @@ public class GameMain {
 		Dimension d = new Dimension(540 + 2 * Options.UI_PANEL_SIZE, 744 + 40);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		new GameUI(model, view, controller, d);
-
 	}
 
 	public static class ImagePanel extends JPanel {
@@ -367,15 +369,15 @@ public class GameMain {
 		public BufferedImage current;
 
 		public ImagePanel() {
-	       try {                
-		          image1 = ImageIO.read(new File("sprites/tmp.png"));
-		          image2 = ImageIO.read(new File("sprites/tmp2.png"));
-	       current = image1;
-	       } catch (IOException ex) {
-	    	   ex.printStackTrace();
-	    	   System.exit(-5);
-	       }
-	    }
+			try {
+				image1 = ImageIO.read(new File("sprites/tmp.png"));
+				image2 = ImageIO.read(new File("sprites/tmp2.png"));
+				current = image1;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-5);
+			}
+		}
 
 		@Override
 		protected void paintComponent(Graphics g) {

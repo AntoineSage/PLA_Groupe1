@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.Graphics2D;
 
+
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameView;
@@ -40,19 +41,23 @@ import edu.ricm3.game.purgatoire.entities.Entity;
 public class View extends GameView {
 	private static final long serialVersionUID = 1L;
 
-	Model m_model;
-	int m_yG1; // position de g1 par rapport à g
-	int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
-	int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
+	private Model m_model;
+	private int m_yG1; // position de g1 par rapport à g
+	private int BLOCK_SIZE = (Options.WIN_WIDTH) / Options.LVL_WIDTH;
+	private int NB_BLOCKS_WIN = Options.WIN_HEIGHT / BLOCK_SIZE;
 	private List<Component> m_graphicUIs;
 
+	long m_last;
+	int m_npaints;
+	int m_fps;
+	
 	private static BufferedImage m_heavenBackground;
 	private static BufferedImage m_heavenBackground2;
 	private static BufferedImage m_hellBackground;
 	private static BufferedImage m_currentBackground;
 	private static BufferedImage m_currentBackground2;
 
-	Color grey;
+	private Color grey;
 
 	public View(Model m) {
 		grey = new Color(238, 238, 238);
@@ -108,13 +113,15 @@ public class View extends GameView {
 		// if the camera is blocked
 		if (Options.LVL_HEIGHT - m_model.m_player.m_bounds.y <= (NB_BLOCKS_WIN / 2)) {
 			m_yG1 = getHeight() - Options.LVL_HEIGHT * BLOCK_SIZE;
-			System.out.println("A");
+			if (Options.ECHO_CAMERA_MODE)
+				System.out.println("Camera is blocked");
 		}
 		// the camera follows the player
 		else {
 			m_yG1 = -(m_model.m_player.m_bounds.y - (NB_BLOCKS_WIN - m_model.m_player.m_bounds.height) / 2 - 2)
 					* BLOCK_SIZE;
-			System.out.println("B");
+			if (Options.ECHO_CAMERA_MODE)
+				System.out.println("Camera follows player");
 		}
 
 		transform();
@@ -129,9 +136,22 @@ public class View extends GameView {
 			m_currentBackground2 = m_hellBackground;
 		}
 	}
+	
+	  private void computeFPS() {
+		    long now = System.currentTimeMillis();
+		    if (now - m_last > 1000L) {
+		      m_fps = m_npaints;
+		      m_last = now;
+		      m_npaints = 0;
+		    }
+		    m_game.setFPS(m_fps, null);
+		    // m_game.setFPS(m_fps, "npaints=" + m_npaints);
+		    m_npaints++;
+		  }
 
 	@Override
 	protected void _paint(Graphics g) {
+		computeFPS();
 		g.setColor(grey);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -146,7 +166,6 @@ public class View extends GameView {
 	}
 
 	private void paintLevel(Graphics g, Level lvl, int i) {
-		int viewPortWidth = getWidth();
 		float borderSize = (float) (65.0f * (float) getWidth() / 765.0f);
 
 		int lvlHeight = Options.LVL_HEIGHT * BLOCK_SIZE;
@@ -154,7 +173,7 @@ public class View extends GameView {
 		int lvlY = m_yG1 - lvlHeight * i;
 		int lvlX = (getWidth() - lvlWidth) / 2;
 
-		g.drawImage(lvl.m_id % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight,
+		g.drawImage(lvl.getId() % 2 == 0 ? m_currentBackground : m_currentBackground2, lvlX, lvlY, lvlWidth, lvlHeight,
 				null);
 
 		g.setColor(Color.white);

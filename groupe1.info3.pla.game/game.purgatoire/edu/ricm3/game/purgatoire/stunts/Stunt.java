@@ -1,15 +1,14 @@
 package edu.ricm3.game.purgatoire.stunts;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.AnimationPlayer;
 import edu.ricm3.game.purgatoire.Options;
 import edu.ricm3.game.purgatoire.Singleton;
 import edu.ricm3.game.purgatoire.Timer;
-import edu.ricm3.game.purgatoire.Animation.AnimType;
 import edu.ricm3.game.purgatoire.entities.Entity;
 import edu.ricm3.game.purgatoire.entities.Missile;
 import ricm3.interpreter.IAutomaton;
@@ -19,45 +18,26 @@ import ricm3.interpreter.IEntityType;
 public class Stunt {
 
 	public AnimationPlayer m_animation;
-	public Color m_c;
 	public BufferedImage m_sprite;
 
-	IAutomaton m_automaton;
-	Entity m_entity;
+	protected IAutomaton m_automaton;
+	protected Entity m_entity;
 
-	int m_rangeDash = Options.DASH_SIZE;
+	private int m_rangeDash = Options.DASH_SIZE;
 
-	Timer m_popTimer;
-	int m_popCooldown;
-	int m_popDuration; // not used
+	protected Timer m_popTimer;
+	protected int m_popCooldown;
+	protected int m_popDuration; // not used
 
-	Timer m_wizzTimer; // not used
-	int m_wizzCooldown; // not used
-	int m_wizzDuration;
+	protected Timer m_wizzTimer; // not used
+	protected int m_wizzCooldown; // not used
+	protected int m_wizzDuration;
 
 	private int m_maxHP;
 	private int m_DMG;
-	public int m_karmaToGive;
-	float m_DMGBuff = 1;
-	public float m_weaknessBuff = 1;
-
-//	Stunt(IAutomaton automaton, Color c) {
-//		m_automaton = automaton;
-//		m_c = c;
-//	}
-//
-//	Stunt(IAutomaton automaton, Entity entity, Color c) {
-//		m_automaton = automaton;
-//		m_entity = entity;
-//		m_c = c;
-//	}
-//
-//	public Stunt(IAutomaton automaton, AnimationPlayer animation) {
-//		m_automaton = automaton;
-//		m_animation = animation;
-//		m_popTimer = new Timer(Options.DEFAULT_CD);
-//		m_wizzTimer = new Timer(Options.DEFAULT_CD);
-//	}
+	private int m_karmaToGive;
+	private float m_DMGBuff = 1;
+	protected float m_weaknessBuff = 1;
 
 	public Stunt(IAutomaton automaton, AnimationPlayer animation, int maxHP, int DMG) {
 		m_automaton = automaton;
@@ -78,18 +58,12 @@ public class Stunt {
 		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
 
-//	public Stunt(IAutomaton automaton, Entity entity, BufferedImage sprite) {
-//		m_automaton = automaton;
-//		m_entity = entity;
-//		m_sprite = sprite;
-//	}
-
 	public void tryMove(IDirection d) {
 		switch (d) {
 		case NORTH:
 			m_entity.m_direction = IDirection.NORTH;
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.NORTH);
+//			if (m_animation != null)
+//				m_animation.changeTo(AnimType.NORTH);
 			if (m_entity.m_bounds.y <= 0) {
 				goingOut(d);
 			} else {
@@ -100,8 +74,8 @@ public class Stunt {
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.SOUTH;
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.SOUTH);
+//			if (m_animation != null)
+//				m_animation.changeTo(AnimType.SOUTH);
 			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(0, 1);
@@ -112,8 +86,8 @@ public class Stunt {
 			break;
 		case EAST:
 			m_entity.m_direction = IDirection.EAST;
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.EAST);
+//			if (m_animation != null)
+//				m_animation.changeTo(AnimType.EAST);
 			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
 					move(1, 0);
@@ -124,8 +98,8 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
-			if (m_animation != null)
-				m_animation.changeTo(AnimType.WEST);
+//			if (m_animation != null)
+//				m_animation.changeTo(AnimType.WEST);
 			if (m_entity.m_bounds.x > 0) {
 				if (nobodyCollideWithEntity()) {
 					move(-1, 0);
@@ -223,6 +197,7 @@ public class Stunt {
 	void buff(int buffDMG, int debuffWeakness) {
 		m_DMGBuff = (float) (1 + buffDMG / 100.0);
 		m_weaknessBuff = (float) (1 + debuffWeakness / 100.0);
+		Singleton.getController().updateBuffsUI();
 	}
 
 	public void pop(IDirection d) {
@@ -246,6 +221,8 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
+			break;
+		default:
 			break;
 		}
 	}
@@ -290,6 +267,10 @@ public class Stunt {
 
 	public int getBaseDMG() {
 		return m_DMG;
+	}
+
+	public float getWeakness() {
+		return m_weaknessBuff;
 	}
 
 	void setDMG(int DMG) {
@@ -382,6 +363,9 @@ public class Stunt {
 		case WEST:
 			m_animation.changeTo(AnimType.WEST);
 			break;
+		case NONE:
+		default:
+			break;
 		}
 	}
 
@@ -391,6 +375,14 @@ public class Stunt {
 
 	public long getTimeLeftWizz() {
 		return m_wizzTimer.getCurrent();
+	}
+
+	public int getKarmaToGive() {
+		return m_karmaToGive;
+	}
+
+	public void setDMGBuff(int b) {
+		m_DMGBuff = b;
 	}
 
 }

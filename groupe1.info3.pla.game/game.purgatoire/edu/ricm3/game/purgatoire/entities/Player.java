@@ -1,5 +1,16 @@
 package edu.ricm3.game.purgatoire.entities;
 
+import java.awt.GridBagLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import edu.ricm3.game.purgatoire.Level;
 import edu.ricm3.game.purgatoire.Model;
 import edu.ricm3.game.purgatoire.Options;
@@ -8,6 +19,7 @@ import edu.ricm3.game.purgatoire.WorldType;
 import edu.ricm3.game.purgatoire.stunts.HeavenPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.HellPlayerStunt;
 import edu.ricm3.game.purgatoire.stunts.PlayerStunt;
+import ricm3.interpreter.IDirection;
 import ricm3.interpreter.IEntityType;
 
 public class Player extends Entity {
@@ -24,10 +36,11 @@ public class Player extends Entity {
 		m_XP = 0;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
+		Options.PAUSE = false;
 	}
 
 	public void addKarma(Entity e) {
-		m_karma += e.m_currentStunt.m_karmaToGive;
+		m_karma += e.m_currentStunt.getKarmaToGive();
 		Singleton.getController().updateKarmaUI();
 	}
 
@@ -44,6 +57,12 @@ public class Player extends Entity {
 		if (m_XP >= getMaxXP() && getRank() < Options.PLAYER_MAX_RANK) {
 			m_rank++;
 			Singleton.getController().updateRankUI();
+			if (m_rank == Options.PLAYER_MAX_RANK) {
+				if (getWorldType() == WorldType.HEAVEN)
+					endGameMenu("You are now GOD, you won! Do you want to try again?");
+				else
+					endGameMenu("You are now SATAN, you won! Do you want to try again?");
+			}
 		} else if (m_XP < getMinXP()) {
 			m_rank--;
 			Singleton.getController().updateRankUI();
@@ -61,9 +80,9 @@ public class Player extends Entity {
 		}
 
 		if (Options.ECHO_PLAYER_UPDATE_STATS)
-			System.out.println(
-					"Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, " + m_currentStunt.getMaxHP()
-							+ " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG() + " baseDMG");
+			System.out.println("Update stats: " + delta + " delta, " + getMaxTotalHP() + " maxTotalHP, "
+					+ m_currentStunt.getMaxHP() + " maxHP, " + getHP() + " HP, " + m_currentStunt.getBaseDMG()
+					+ " baseDMG");
 	}
 
 	public void nextLevel(Level newLevel) {
@@ -94,6 +113,10 @@ public class Player extends Entity {
 
 	public int getRank() {
 		return m_rank;
+	}
+
+	public int getDMG() {
+		return m_currentStunt.getDMG();
 	}
 
 	public String getRankName() {
@@ -138,4 +161,49 @@ public class Player extends Entity {
 		m_karma = 0;
 	}
 
+	@Override
+	public void die() {
+		super.die();
+		Options.PAUSE = true;
+		endGameMenu("You lost... Do you want to try again?");
+	}
+
+	// TODO high scores
+	private void endGameMenu(String msg) {
+		JFrame endFrame = new JFrame();
+		endFrame.getContentPane().setLayout(new GridBagLayout());
+
+		JPanel inside = new JPanel();
+		inside.setLayout(new BoxLayout(inside, BoxLayout.Y_AXIS));
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+
+		inside.add(new Label(msg, Label.CENTER));
+
+		JButton tryAgain = new JButton("Try again");
+		tryAgain.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getModel().respawn();
+				endFrame.dispatchEvent(new WindowEvent(endFrame, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+		buttons.add(tryAgain);
+
+		JButton quit = new JButton("Quit");
+		quit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		buttons.add(quit);
+
+		inside.add(buttons);
+
+		endFrame.add(inside);
+		endFrame.pack();
+		endFrame.setLocationRelativeTo(null);
+		endFrame.setVisible(true);
+	}
 }

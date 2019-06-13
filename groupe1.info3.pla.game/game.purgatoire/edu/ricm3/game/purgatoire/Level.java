@@ -1,6 +1,5 @@
 package edu.ricm3.game.purgatoire;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,38 +15,36 @@ import edu.ricm3.game.purgatoire.entities.Special;
 import ricm3.interpreter.IDirection;
 
 public class Level {
-	private static int id = 0;
-	int m_id;
 
-	Color m_c;
+	private static int id = 0;
+	private int m_id;
 
 	public Model m_model;
 
-	List<Entity> m_souls;
-	List<Entity> m_obstacles;
-	List<Entity> m_nest;
-	List<Entity> m_missiles;
+	protected List<Entity> m_souls;
+	protected List<Entity> m_obstacles;
+	protected List<Entity> m_nest;
+	protected List<Entity> m_missiles;
 
-	Entity m_special;
-	public Entity m_player;
+	protected Entity m_special;
+	protected Player m_player;
 
-	List<Entity> m_entities;
-	List<Entity> m_toRemove;
+	protected List<Entity> m_entities;
+	protected List<Entity> m_toRemove;
+
 
 	public CollisionGrid m_collisionGrid;
 
 	private long lastUpdatePlayer;
-	// public long nest_spawn_period = Options.NEST_SPAWN_DELAY;
 	private long lastUpdateSouls;
 	private long lastUpdateObstacles;
 	private long lastUpdateNests;
 
 	public BufferedImage m_background;
 
-	Level(Model model, Color c) {
+	Level(Model model) {
 		m_id = id;
 		id++;
-		m_c = c;
 		m_model = model;
 
 		m_souls = new LinkedList<Entity>();
@@ -59,10 +56,6 @@ public class Level {
 
 		m_collisionGrid = new CollisionGrid();
 
-	}
-
-	Level(Model model) {
-		this(model, Color.WHITE);
 	}
 
 	public void addEntity(Entity e) {
@@ -93,7 +86,7 @@ public class Level {
 		}
 
 		if (e instanceof Player) {
-			m_player = e;
+			m_player = (Player) e;
 		}
 
 		if (e instanceof Missile) {
@@ -193,6 +186,7 @@ public class Level {
 	}
 
 	void transform() {
+		
 		Iterator<Entity> iter = m_entities.iterator();
 		while (iter.hasNext())
 			iter.next().transform();
@@ -241,7 +235,7 @@ public class Level {
 //
 //	public void entityInterpret(char c, int x, int y) {
 //=======
-	public void entityInterpret(char c, int x, int y, QuarterType type) {
+	public void entityInterpret(char c, int x, int y, QuarterType qt) {
 		switch (c) {
 		case 'O':
 			new Obstacle(this, x, y, Options.OBSTACLE_SIZE);
@@ -256,10 +250,10 @@ public class Level {
 			new Special(this, x, y, Options.SPCL_SIZE);
 			break;
 		case '/':
-			if (type == QuarterType.NEST)
-				new Nest(this, x, y, Options.NEST_SIZE);
-			if (type == QuarterType.SPECIAL)
+			if(qt == QuarterType.SPECIAL)
 				new Special(this, x, y, Options.SPCL_SIZE);
+			if(qt == QuarterType.NEST)
+				new Nest(this, x, y, Options.NEST_SIZE);
 			break;
 		case '_':
 			break;
@@ -283,4 +277,13 @@ public class Level {
 			}
 		}
 	}
+
+	public int getId() {
+		return m_id;
+	}
+
+	public Player getPlayer() {
+		return m_player;
+	}
+
 }
