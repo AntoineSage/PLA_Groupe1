@@ -35,6 +35,7 @@ public class Player extends Entity {
 		m_XP = 0;
 		m_maxKarma = Options.PLAYER_KARMA_MAX;
 		((PlayerStunt) m_currentStunt).updateRankStats();
+		Options.PAUSE = false;
 	}
 
 	public void addKarma(Entity e) {
@@ -158,6 +159,7 @@ public class Player extends Entity {
 	@Override
 	public void die() {
 		super.die();
+		Options.PAUSE = true;
 		endGameMenu("You lost... Do you want to try again?");
 	}
 

@@ -48,7 +48,8 @@ public class Controller extends GameController implements ActionListener {
 	private XPBar m_XPBar;
 	private KarmaBar m_karmaBar;
 
-	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel, m_periodLabel;
+	private Label m_totalTimeLabel, m_totalDistanceLabel, m_karmaLabel, m_HPLabel, m_XPLabel, m_rankLabel,
+			m_periodLabel;
 	private Label m_cooldownLabel;
 
 	public Controller(Model model, View view) {
