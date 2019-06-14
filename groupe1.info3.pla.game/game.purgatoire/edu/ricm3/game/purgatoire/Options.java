@@ -61,7 +61,7 @@ public class Options {
 
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-	public static final long[] HIT_TIMER_HELL = { 200, 150, 100, 50 };
+	public static final long[] HIT_TIMER_HELL = { 220, 170, 150, 100 };
 //	public static final long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 3;
@@ -84,7 +84,7 @@ public class Options {
 	public static final long NEST_SPAWN_PERIOD = 3000;
 	public static final long NEST_MIN_SPAWN_PERIOD = 200;
 
-	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.7;
+	public static final double NEST_COEF_CHANGE_SPAWN_DELAY = 0.8;
 	public static final double HELL_NEST_DMG_COEF = 1.5;
 	public static final double HELL_NEST_HP_MAX_COEF = 1.2;
 	public static final double HEAVEN_NEST_DMG_COEF = 1.5;
