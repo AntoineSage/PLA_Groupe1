@@ -202,7 +202,7 @@ public class View extends GameView {
 			Rectangle bound = getRect(lvl.m_player, lvlX + (int) borderSize, lvlY);
 			if (viewportBounds.intersects(bound)) {
 				lvl.m_player.m_currentStunt.m_animation.step();
-				paintSprite(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound);
+				paintSpriteWithHPBar(g, lvl.m_player.m_currentStunt.m_animation.getSprite(), bound, lvl.m_player);
 			}
 		}
 
