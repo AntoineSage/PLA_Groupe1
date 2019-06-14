@@ -44,7 +44,7 @@ public class Stunt {
 		m_animation = animation;
 		m_maxHP = maxHP;
 		m_DMG = DMG;
-		m_popTimer = new Timer(Options.DEFAULT_CD);
+		m_popTimer = new Timer(Options.DASH_CD);
 		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
 

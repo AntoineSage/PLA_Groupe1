@@ -149,7 +149,7 @@ public class Options {
 
 	// DASH SIZE AND COOLDOWN
 	public static final int DASH_SIZE = 15;
-	public static final int DASH_CD = 5000;
+	public static final int DASH_CD = 3000;
 	public static final int HEAVEN_HIT_CD = 300;
 
 	// TIMER OPTIONS
