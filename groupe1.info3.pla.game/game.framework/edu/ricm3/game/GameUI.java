@@ -18,6 +18,7 @@
 package edu.ricm3.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import javax.swing.Timer;
 
 public class GameUI {
@@ -37,6 +39,9 @@ public class GameUI {
 	static GameUI game;
 
 	JFrame m_frame;
+
+	JPopupMenu m_menu;
+
 	GameView m_view;
 	Timer m_timer;
 	GameModel m_model;
@@ -48,7 +53,9 @@ public class GameUI {
 	long m_elapsed;
 	long m_lastRepaint;
 	long m_lastTick;
-	int m_nTicks;
+	public int m_nTicks;
+
+	private Color m_background = edu.ricm3.game.purgatoire.Options.PRIMARY_BACKGROUND;
 
 	public GameUI(GameModel m, GameView v, GameController c, Dimension d) {
 		m_model = m;
@@ -64,6 +71,23 @@ public class GameUI {
 		// to drive the overall clock of the simulation.
 		createWindow(d);
 		createTimer();
+
+//		m_menu = new JPopupMenu("test");
+//		JComboBox cut = new JComboBox<String>();  
+//		cut.addItem("TEST");
+//        JMenuItem copy = new JMenuItem("Copy");  
+//        JMenuItem paste = new JMenuItem("Paste");  
+//        m_menu.add(cut); m_menu.add(copy); m_menu.add(paste);      
+//		
+//		m_frame.add(m_menu);
+//		 m_menu.show(m_frame, 0, 0);
+
+//		button.addActionListener(new java.awt.event.ActionListener() {
+//			@Override
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				String name = JOptionPane.showInputDialog(parent, "What is your name?", null);
+//			}
+//		});
 	}
 
 	public GameModel getModel() {
@@ -96,14 +120,24 @@ public class GameUI {
 
 	private void createWindow(Dimension d) {
 		m_frame = new JFrame();
-		m_frame.setTitle("Sample Game");
+
+		m_frame.setBackground(m_background);
+		m_frame.getRootPane().setBackground(m_background);
+		m_frame.getLayeredPane().setBackground(m_background);
+		m_frame.getContentPane().setBackground(m_background);
+
+		m_frame.setTitle("Purgatory");
+		m_frame.setMinimumSize(new Dimension(edu.ricm3.game.purgatoire.Options.WIN_MIN_HEIGHT,
+				edu.ricm3.game.purgatoire.Options.WIN_MIN_WIDTH));
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_view, BorderLayout.CENTER);
 
 		m_text = new JLabel();
 		m_text.setText("Starting up...");
-		m_frame.add(m_text, BorderLayout.NORTH);
+		if (edu.ricm3.game.purgatoire.Options.FPS_DISPLAYED) {
+			m_frame.add(m_text, BorderLayout.NORTH);
+		}
 
 		m_frame.setSize(d);
 		m_frame.doLayout();
@@ -180,6 +214,7 @@ public class GameUI {
 			}
 			// System.out.println(txt);
 			m_text.setText(txt);
+			m_text.setForeground(edu.ricm3.game.purgatoire.Options.PRIMARY_FOREGROUND);
 			m_text.repaint();
 			m_view.paint();
 			m_lastRepaint = now;

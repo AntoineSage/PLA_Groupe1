@@ -1,0 +1,238 @@
+PlayerSolo(Init){
+  * (Init):
+  | Key(z) ? Move(N) :(Init)
+  | Key(s) ? Move(S) :(Init)
+  | Key(q) ? Move(O) :(Init)
+  | Key(d) ? Move(E) :(Init)
+ }
+  
+ PlayerAction(Init){
+  * (Init): 
+  | Key(FU) ? Hit(N) :(Init)
+  | Key(FD) ? Hit(S) :(Init)
+  | Key(FL) ? Hit(O) :(Init)
+  | Key(FR) ? Hit(E) :(Init)
+  | Key(a) ? Pop() :(Init)
+  | Key(e) ? Wizz() :(Init)
+  | True ? Wait :(Init)
+}
+
+Player1(Init){
+	* (Init):
+  | Key(z) ? Move(N) :(Step1)
+  | Key(s) ? Move(S) :(Step1)
+  | Key(q) ? Move(O) :(Step1)
+  | Key(d) ? Move(E) :(Step1)
+  | True ? Wait :(Step1)
+  
+  * (Step1): 
+  | Key(y) ? Hit(N) :(Init)
+  | Key(h) ? Hit(S) :(Init)
+  | Key(g) ? Hit(O) :(Init)
+  | Key(j) ? Hit(E) :(Init)
+  | Key(a) ? Pop() :(Init)
+  | Key(e) ? Wizz() :(Init)
+  | True ? Wait :(Init)
+}
+
+Player2(Init){
+	* (Init):
+  | Key(o) ? Move(N) :(Step1)
+  | Key(l) ? Move(S) :(Step1)
+  | Key(k) ? Move(O) :(Step1)
+  | Key(m) ? Move(E) :(Step1)
+  | True ? Wait :(Step1)
+  
+  * (Step1): 
+  | Key(FU) ? Hit(N) :(Init)
+  | Key(FD) ? Hit(S) :(Init)
+  | Key(FL) ? Hit(O) :(Init)
+  | Key(FR) ? Hit(E) :(Init)
+  | Key(i) ? Pop() :(Init)
+  | Key(p) ? Wizz() :(Init)
+  | True ? Wait :(Init)
+}
+
+SoulFollowing(Init){
+	* (Init):
+	|Key(v) ? Wizz() : (Init)
+	| Closest(@,N) & Closest(@,E) ? Move(N) :(PlayerE)
+	| Closest(@,N) & Closest(@,O) ? Move(N) :(PlayerO)
+	| Closest(@,N) ? Move(N) :(Init)
+	| Closest(@,S) & Closest(@,E) ? Move(S) :(PlayerE)
+	| Closest(@,S) & Closest(@,O) ? Move(S) :(PlayerO)
+	| Closest(@,S) ? Move(S) :(Init)
+	| Closest(@,E) ? Move(E) :(Init)
+	| Closest(@,O) ? Move(O) :(Init)
+	* (PlayerE):
+	|Closest(@,E) ? Move(E) :(Init)
+	|True ? Wait :(Init)
+	* (PlayerO):
+	|Closest(@,O) ? Move(O) :(Init)
+	|True ? Wait :(Init)	
+}
+
+
+SoulsHeaven(Init){
+	* (Init): 
+		|Key(v) ? Wizz() : (Init)
+		|True ? Move(E) :(Step1)
+	* (Step1): True ? Move(E) :(Step2)
+	* (Step2): True ? Move(E) :(Step3)
+	* (Step3): True ? Move(O) :(Step4)
+	* (Step4): True ? Move(O) :(Step5)
+	* (Step5): True ? Move(O) :(Init)
+}
+
+Obstacle(Init){
+* (Init):
+}
+
+Cat(Init){
+*(Init):
+
+}
+
+Flaque(Init){
+*(Init):
+	|Cell(N,@) ? Pop() : (Init)
+}
+
+Nest(Init){
+	* (Init): True ? Egg() :(Init)
+}
+
+MissileHell(Init){
+	* (Init):
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Init)
+	
+}
+
+MissileHeaven(Init){
+	* (Init): 
+	|Key(i) ? Wizz() : (Init)
+	|True ? Move(F) : (Step1)
+	* (Step1): True ? Move(F) : (Step2)
+	* (Step2): True ? Move(F) : (Step3)
+	* (Step3): True ? Move(F) : (Step4)
+	* (Step4): True ? Move(F) : (Step5)
+	* (Step5): True ? Move(F) : (Step6)
+	* (Step6): True ? Pop(F) : (Init)
+}
+
+VerticalSoul(Init){
+	* (Init): 
+	|Key(v) ? Wizz() : (Init)
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step1)
+	* (Step1): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step2)
+	* (Step2): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step3)
+	* (Step3): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step4)
+	* (Step4): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step5)
+	* (Step5): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(N) :(Step6)
+	* (Step6): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step7)
+	* (Step7): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step8)
+	* (Step8): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step9)
+	* (Step9): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step10)
+	* (Step10):
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Step11)
+	* (Step11): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(S) :(Init)
+	
+	* (StartFollowing):
+	| Closest(@,N) & Closest(@,E) ? Move(N) :(PlayerE)
+	| Closest(@,N) & Closest(@,O) ? Move(N) :(PlayerO)
+	| Closest(@,N) ? Move(N) :(StartFollowing)
+	| Closest(@,S) & Closest(@,E) ? Move(S) :(PlayerE)
+	| Closest(@,S) & Closest(@,O) ? Move(S) :(PlayerO)
+	| Closest(@,S) ? Move(S) :(StartFollowing)
+	| Closest(@,E) ? Move(E) :(StartFollowing)
+	| Closest(@,O) ? Move(O) :(StartFollowing)
+	* (PlayerE):
+	|Closest(@,E) ? Move(E) :(StartFollowing)
+	|True ? Wait :(StartFollowing)
+	* (PlayerO):
+	|Closest(@,O) ? Move(O) :(StartFollowing)
+	|True ? Wait :(StartFollowing)
+	
+}
+
+HorizontalSoul(Init){
+	* (Init): 
+	|Key(v) ? Wizz() : (Init)
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step1)
+	* (Step1): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step2)
+	* (Step2): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step3)
+	* (Step3): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step4)
+	* (Step4): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step5)
+	* (Step5): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(E) :(Step6)
+	* (Step6): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step7)
+	* (Step7): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step8)
+	* (Step8): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step9)
+	* (Step9): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step10)
+	* (Step10):
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Step11)
+	* (Step11): 
+	|GotPower(@) ? Wait : (StartFollowing)
+	|True ? Move(O) :(Init)
+	
+	* (StartFollowing):
+	| Closest(@,N) & Closest(@,E) ? Move(N) :(PlayerE)
+	| Closest(@,N) & Closest(@,O) ? Move(N) :(PlayerO)
+	| Closest(@,N) ? Move(N) :(StartFollowing)
+	| Closest(@,S) & Closest(@,E) ? Move(S) :(PlayerE)
+	| Closest(@,S) & Closest(@,O) ? Move(S) :(PlayerO)
+	| Closest(@,S) ? Move(S) :(StartFollowing)
+	| Closest(@,E) ? Move(E) :(StartFollowing)
+	| Closest(@,O) ? Move(O) :(StartFollowing)
+	* (PlayerE):
+	|Closest(@,E) ? Move(E) :(StartFollowing)
+	|True ? Wait :(StartFollowing)
+	* (PlayerO):
+	|Closest(@,O) ? Move(O) :(StartFollowing)
+	|True ? Wait :(StartFollowing)
+	
+}
+
+
