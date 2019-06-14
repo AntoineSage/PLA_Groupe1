@@ -30,6 +30,7 @@ public class Special extends Entity {
 		super(level, new HeavenSpecialStunt(), new HellSpecialStunt(), 0, 0, Options.SPCL_SIZE);
 		Singleton.notify(IEntityType.IType.TEAM);
 		m_type = IEntityType.TEAM;
-		m_HP = m_currentStunt.getMaxHP();
+		setHP(m_currentStunt.getMaxHP());
 	}
+
 }

@@ -30,7 +30,7 @@ public class Soul extends Entity {
 	public Soul(Level level, int x, int y, int soulSize, boolean unlimitedRange) {
 		super(level, new HeavenSoulStunt(unlimitedRange), new HellSoulStunt(unlimitedRange), x, y, Options.SOUL_SIZE);
 		Singleton.notify(IEntityType.IType.ADVERSARY);
-		m_type = IEntityType.ADVERSARY;		
+		m_type = IEntityType.ADVERSARY;
 	}
 
 	public Soul(Level level, int x, int y, IAutomaton automaton) {

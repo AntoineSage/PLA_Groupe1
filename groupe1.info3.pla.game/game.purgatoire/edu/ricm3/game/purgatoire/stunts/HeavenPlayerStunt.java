@@ -143,13 +143,14 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 	}
 
 	IDirection save;
+
 	@Override
 	public void step(long now) {
 		m_entity.m_direction = IDirection.NONE;
 		if (m_automatonMove != null) {
 			m_automatonMove.step(m_entity);
 		}
-		super.step(now);						
+		super.step(now);
 		m_hitTimer.step(now);
 		m_hitCoolDown.step(now);
 		m_karmaTimer.step(now);
@@ -170,7 +171,7 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 		setDMG(Options.PLAYER_DMG_HEAVEN[((Player) m_entity).getRank()]);
 //		m_hitCoolDown.setDuration(Options.HIT_TIMER_HEAVEN[((Player) m_entity).getRank()]);
 	}
-	
+
 	@Override
 	protected void move(int x, int y) {
 		super.move(x, y);
@@ -179,17 +180,17 @@ public class HeavenPlayerStunt extends Stunt implements PlayerStunt {
 
 	@Override
 	public void takeDamage(int DMG) {
-			if (!Options.INVULNERABILITY) {
-				super.takeDamage(DMG);
-				(new Sound("sprites/hurt.wav")).start();
-			}
+		if (!Options.INVULNERABILITY) {
+			super.takeDamage(DMG);
+			(new Sound("sprites/hurt.wav")).start();
+		}
 	}
 
 	@Override
 	public void takeDamage(Entity e) {
-			if (!Options.INVULNERABILITY) {
-				super.takeDamage(e);
-				(new Sound("sprites/hurt.wav")).start();
-			}
+		if (!Options.INVULNERABILITY) {
+			super.takeDamage(e);
+			(new Sound("sprites/hurt.wav")).start();
+		}
 	}
 }

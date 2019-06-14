@@ -21,15 +21,16 @@ public class HellSoulStunt extends Stunt {
 		super(Singleton.getNewSoulHellAut(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
 				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
-	
+
 	public HellSoulStunt(IAutomaton automaton) {
-		super(automaton, new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
-				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+		super(automaton, new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16), Options.HELL_SOUL_HP_MAX,
+				Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
 	public HellSoulStunt(boolean unlimitedRange) {
-		super(Singleton.getNewUnlimitedRangeFollow(), new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16),
-				Options.HELL_SOUL_HP_MAX, Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
+		super(Singleton.getNewUnlimitedRangeFollow(),
+				new AnimationPlayer(Singleton.getSoulHellAnim(), AnimType.IDLE, 16), Options.HELL_SOUL_HP_MAX,
+				Options.HELL_SOUL_DMG, Options.HELL_SOUL_KARMA_TOGIVE);
 	}
 
 	public void pop(Player p) {
@@ -68,16 +69,10 @@ public class HellSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
-		if (m_entity.m_HP <= 0) {
-			if (Options.ECHO_DIE)
-				System.out.println("Soul dies");
-			if (e instanceof Player) {
-				isPlayer = (Player) e;
-				isPlayer.addKarma(m_entity);
-			}
-			m_entity.die();
+		if (m_entity.getHP() - getDMGTaken(e) <= 0 && e instanceof Player) {
+			((Player) e).addKarma(m_entity);
 		}
+		m_entity.addHP(-getDMGTaken(e));
 	}
 
 	@Override
@@ -97,11 +92,11 @@ public class HellSoulStunt extends Stunt {
 		if (x_rangeMin < 0)
 			x_rangeMin = 0;
 		if (x_rangeMax >= Options.LVL_WIDTH)
-			x_rangeMax = Options.LVL_WIDTH ;
+			x_rangeMax = Options.LVL_WIDTH;
 		if (y_rangeMin < 0)
 			y_rangeMin = 0;
 		if (y_rangeMax >= Options.LVL_HEIGHT)
-			y_rangeMax = Options.LVL_HEIGHT ;
+			y_rangeMax = Options.LVL_HEIGHT;
 
 		for (int i = x_rangeMin; i < x_rangeMax; i++) {
 			for (int j = y_rangeMin; j < y_rangeMax; j++) {

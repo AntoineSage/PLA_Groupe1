@@ -17,7 +17,6 @@ public class QuarterLevel {
 
 	QuarterLevel(Random randGenerator,int positionQuarter, List<Integer> quarterList, Level level, QuarterType quarterType){
 		levelQuarter = new ArrayList<String>();
-		Random r = new Random();
 		m_index = randGenerator.nextInt(quarterList.size());
 		m_positionQuarter = positionQuarter;
 		m_quarterType = quarterType;

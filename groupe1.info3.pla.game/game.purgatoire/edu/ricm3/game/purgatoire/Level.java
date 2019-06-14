@@ -138,7 +138,7 @@ public class Level {
 		}
 
 		iter = m_nest.iterator();
-		if (now - lastUpdateNests > 1000/30 && this == m_model.m_currentLevel) {
+		if (now - lastUpdateNests > 1000 / 30 && this == m_model.m_currentLevel) {
 			while (iter.hasNext()) {
 				iter.next().step(now);
 			}

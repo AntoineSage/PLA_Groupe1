@@ -76,14 +76,10 @@ public class HeavenSoulStunt extends Stunt {
 
 	@Override
 	public void takeDamage(Entity e) {
-		m_entity.addHP(-(int) (m_weaknessBuff * e.m_currentStunt.getDMG()));
 		if (e instanceof Player) {
-			isPlayer = (Player) e;
-			isPlayer.addKarma(m_entity);
+			((Player) e).addKarma(m_entity);
 		}
-		if (m_entity.m_HP <= 0) {
-			m_entity.die();
-		}
+		m_entity.addHP(-getDMGTaken(e));
 	}
 
 	@Override

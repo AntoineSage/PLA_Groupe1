@@ -150,11 +150,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void takeDamage(int DMG) {
 		if (!Options.INVULNERABILITY) {
 			(new Sound("sprites/hurt.wav")).start();
-			m_entity.addHP(-(int) (m_weaknessBuff * DMG));
-			if (m_entity.m_HP <= 0) {
-				m_entity.die();
-			}
 			((Player) m_entity).addMaxHP(-m_entity.getMaxHP() / Options.HELL_DIVIDAND_HP_MAX_TOLOSE);
+			m_entity.addHP(-(int) (m_weaknessBuff * DMG));
 		}
 	}
 
@@ -162,12 +159,8 @@ public class HellPlayerStunt extends Stunt implements PlayerStunt {
 	public void takeDamage(Entity e) {
 		if (!Options.INVULNERABILITY) {
 			(new Sound("sprites/hurt.wav")).start();
-			int computeDmg = (int) (-m_weaknessBuff * e.m_currentStunt.getDMG());
-			m_entity.addHP(computeDmg);
-			if (m_entity.m_HP <= 0) {
-				m_entity.die();
-			}
-			((Player) m_entity).addMaxHP(computeDmg * Options.HELL_DIVIDAND_HP_MAX_TOLOSE / 100);
+			((Player) m_entity).addMaxHP(-getDMGTaken(e) * Options.HELL_DIVIDAND_HP_MAX_TOLOSE / 100);
+			m_entity.addHP(-getDMGTaken(e));
 		}
 	}
 

@@ -1,11 +1,20 @@
 package edu.ricm3.game.purgatoire.entities;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,7 +49,7 @@ public class Player extends Entity {
 	}
 
 	public void addKarma(Entity e) {
-		m_karma += e.m_currentStunt.getKarmaToGive();
+		addKarma(e.m_currentStunt.getKarmaToGive());
 		Singleton.getController().updateKarmaUI();
 	}
 
@@ -144,11 +153,7 @@ public class Player extends Entity {
 
 	public void setMaxTotalHP(int newMax) {
 		m_maxTotalHP = newMax;
-		m_HP = Math.min(m_maxTotalHP, m_HP);
-	}
-
-	public void setHP(int HP) {
-		m_HP = HP;
+		setHP(Math.min(m_maxTotalHP, getHP()));
 	}
 
 	public void testKarma() {
@@ -165,23 +170,32 @@ public class Player extends Entity {
 	@Override
 	public void die() {
 		super.die();
-		Options.PAUSE = true;
 		endGameMenu("You lost... Do you want to try again?");
 	}
 
 	// TODO high scores
 	private void endGameMenu(String msg) {
+		Options.PAUSE = true;
+
 		addHighScore();
 
 		JFrame endFrame = new JFrame();
 		endFrame.getContentPane().setLayout(new GridBagLayout());
 
+		endFrame.setBackground(Color.BLACK);
+		endFrame.getRootPane().setBackground(Color.BLACK);
+		endFrame.getLayeredPane().setBackground(Color.BLACK);
+		endFrame.getContentPane().setBackground(Color.BLACK);
+
 		JPanel inside = new JPanel();
 		inside.setLayout(new BoxLayout(inside, BoxLayout.Y_AXIS));
+		inside.setBackground(Color.BLACK);
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+		buttons.setBackground(Color.BLACK);
 
-		inside.add(new Label(msg, Label.CENTER));
+		Label msgLabel = new Label(msg, Label.CENTER);
+		msgLabel.setForeground(Color.WHITE);
 
 		JButton tryAgain = new JButton("Try again");
 		tryAgain.addActionListener(new ActionListener() {
@@ -191,7 +205,6 @@ public class Player extends Entity {
 				endFrame.dispatchEvent(new WindowEvent(endFrame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-		buttons.add(tryAgain);
 
 		JButton quit = new JButton("Quit");
 		quit.addActionListener(new ActionListener() {
@@ -200,8 +213,16 @@ public class Player extends Entity {
 				System.exit(0);
 			}
 		});
-		buttons.add(quit);
 
+		if (getRank() != Options.PLAYER_MAX_RANK) {
+			inside.add(new ImagePanel());
+		}
+
+		inside.add(msgLabel);
+		inside.add(Box.createRigidArea(new Dimension(0, Options.UI_MARGIN / 2)));
+		buttons.add(tryAgain);
+		buttons.add(Box.createRigidArea(new Dimension(Options.UI_MARGIN / 6, 0)));
+		buttons.add(quit);
 		inside.add(buttons);
 
 		endFrame.add(inside);
@@ -268,6 +289,32 @@ public class Player extends Entity {
 //			e1.printStackTrace();
 //			System.exit(-3);
 //		}
+	}
+
+	public static class ImagePanel extends JPanel {
+		private static final long serialVersionUID = 7190904833473088836L;
+
+		public BufferedImage img;
+
+		public ImagePanel() {
+			try {
+				img = ImageIO.read(new File("sprites/gameover.png"));
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-5);
+			}
+
+			setAlignmentX(Component.CENTER_ALIGNMENT);
+			setPreferredSize(new Dimension(600, 460));
+			setBackground(Color.BLACK);
+		}
+
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(img, 0, 0, null); // see javadoc for more info on the parameters
+		}
+
 	}
 
 }
