@@ -58,27 +58,29 @@ public class Stunt {
 		m_wizzTimer = new Timer(Options.DEFAULT_CD);
 	}
 
-	public void tryMove(IDirection d) {
+	public boolean tryMove(IDirection d) {
+		return tryMove(d, 1);
+	}
+
+	public boolean tryMove(IDirection d, int i) {
 		switch (d) {
 		case NORTH:
 			m_entity.m_direction = IDirection.NORTH;
-//			if (m_animation != null)
-//				m_animation.changeTo(AnimType.NORTH);
-			if (m_entity.m_bounds.y <= 0) {
+			if (m_entity.m_bounds.y - i + 1 <= 0) {
 				goingOut(d);
 			} else {
 				if (nobodyCollideWithEntity()) {
-					move(0, -1);
+					move(0, -i);
+					return true;
 				}
 			}
 			break;
 		case SOUTH:
 			m_entity.m_direction = IDirection.SOUTH;
-//			if (m_animation != null)
-//				m_animation.changeTo(AnimType.SOUTH);
-			if (m_entity.m_bounds.y < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
+			if (m_entity.m_bounds.y + i - 1 < Options.LVL_HEIGHT - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
-					move(0, 1);
+					move(0, i);
+					return true;
 				}
 			} else {
 				goingOut(d);
@@ -86,11 +88,10 @@ public class Stunt {
 			break;
 		case EAST:
 			m_entity.m_direction = IDirection.EAST;
-//			if (m_animation != null)
-//				m_animation.changeTo(AnimType.EAST);
-			if (m_entity.m_bounds.x < Options.LVL_WIDTH - m_entity.m_bounds.height) {
+			if (m_entity.m_bounds.x + i - 1 < Options.LVL_WIDTH - m_entity.m_bounds.height) {
 				if (nobodyCollideWithEntity()) {
-					move(1, 0);
+					move(i, 0);
+					return true;
 				}
 			} else {
 				goingOut(d);
@@ -98,11 +99,10 @@ public class Stunt {
 			break;
 		case WEST:
 			m_entity.m_direction = IDirection.WEST;
-//			if (m_animation != null)
-//				m_animation.changeTo(AnimType.WEST);
-			if (m_entity.m_bounds.x > 0) {
+			if (m_entity.m_bounds.x - i + 1 > 0) {
 				if (nobodyCollideWithEntity()) {
-					move(-1, 0);
+					move(-i, 0);
+					return true;
 				}
 			} else {
 				goingOut(d);
@@ -183,12 +183,13 @@ public class Stunt {
 		default:
 			break;
 		}
-
+		return false;
 	}
 
 	void dash(IDirection d) {
-		for (int i = 0; i < m_rangeDash; i++) {
-			tryMove(d);
+		boolean res = false;
+		for (int i = m_rangeDash - 1; i >= 0 && !res; i--) {
+			res = tryMove(d, i);
 		}
 		if (Options.ECHO_DASH)
 			System.out.println("Dash");
@@ -359,10 +360,16 @@ public class Stunt {
 		return false;
 	}
 
+//	testCollisionWithType(IEntityType type, int x, int y, int width, int height)
+
 	public boolean nobodyCollideWithEntity() {
+		return nobodyCollideWithEntity(1);
+	}
+
+	public boolean nobodyCollideWithEntity(int i) {
 		if (m_entity instanceof Missile) {
 		}
-		List<Entity> colliders = m_entity.m_level.m_collisionGrid.testCollisionFutur(m_entity, m_entity.m_direction);
+		List<Entity> colliders = m_entity.m_level.m_collisionGrid.testCollisionFutur(m_entity, m_entity.m_direction, i);
 		if (!colliders.isEmpty()) {
 			m_entity.enterInCollisionWith(colliders);
 			return false;

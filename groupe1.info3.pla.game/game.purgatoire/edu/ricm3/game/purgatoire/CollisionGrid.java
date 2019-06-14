@@ -165,11 +165,15 @@ public class CollisionGrid {
 	}
 
 	public List<Entity> testCollisionFutur(Entity entity, IDirection d) {
+		return testCollisionFutur(entity, d, 1);
+	}
+
+	public List<Entity> testCollisionFutur(Entity entity, IDirection d, int j) {
 		List<Entity> colliders = new LinkedList<Entity>();
 		switch (d) {
 		case EAST:
 			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
-				Iterator<Entity> iter = m_grid[entity.m_bounds.x + entity.m_bounds.width][i].iterator();
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x + entity.m_bounds.width + j - 1][i].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -181,7 +185,7 @@ public class CollisionGrid {
 			break;
 		case NORTH:
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
-				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y - 1].iterator();
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y - j].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -192,7 +196,7 @@ public class CollisionGrid {
 			break;
 		case SOUTH:
 			for (int i = entity.m_bounds.x; i < entity.m_bounds.x + entity.m_bounds.width; i++) {
-				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y + entity.m_bounds.height].iterator();
+				Iterator<Entity> iter = m_grid[i][entity.m_bounds.y + entity.m_bounds.height + j - 1].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
@@ -203,7 +207,7 @@ public class CollisionGrid {
 			break;
 		case WEST:
 			for (int i = entity.m_bounds.y; i < entity.m_bounds.y + entity.m_bounds.height; i++) {
-				Iterator<Entity> iter = m_grid[entity.m_bounds.x - 1][i].iterator();
+				Iterator<Entity> iter = m_grid[entity.m_bounds.x - j][i].iterator();
 				while (iter.hasNext()) {
 					Entity e = iter.next();
 					if (entity.m_type.isCollidingWith(e.m_type)) {
