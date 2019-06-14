@@ -10,7 +10,7 @@ public class Options {
 	public static int WIN_HEIGHT = 756;
 	public static final int LVL_HEIGHT = 90;
 	public static final int LVL_WIDTH = 54;
-	public static final boolean FULLSCREEN = false;
+	public static final boolean FULLSCREEN = true;
 
 	public static final Color PRIMARY_BACKGROUND = new Color(60, 60, 60);
 	public static final Color PRIMARY_FOREGROUND = new Color(200, 200, 200);
@@ -62,7 +62,7 @@ public class Options {
 
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-	public static final long[] HIT_TIMER_HELL = { 250, 200, 150, 100 };
+	public static final long[] HIT_TIMER_HELL = { 300, 250, 200, 100 };
 //	public static final long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 3;
@@ -98,7 +98,7 @@ public class Options {
 	public static int HELL_SOUL_DMG = HELL_SOUL_DMG_BASE;
 	public static final int HELL_SOUL_HP_MAX_BASE = 40;
 	public static int HELL_SOUL_HP_MAX = HELL_SOUL_HP_MAX_BASE;
-	public static final int HELL_SOUL_KARMA_TOGIVE = -10;
+	public static final int HELL_SOUL_KARMA_TOGIVE = -8;
 	public static final int HEAVEN_SOUL_DMG_BASE = 30;
 	public static int HEAVEN_SOUL_DMG = HEAVEN_SOUL_DMG_BASE;
 	public static final int HEAVEN_SOUL_HP_MAX_BASE = 40;
