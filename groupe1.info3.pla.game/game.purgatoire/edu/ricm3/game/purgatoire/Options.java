@@ -61,7 +61,7 @@ public class Options {
 
 	public static final int[] PLAYER_HP_MAX_TOTAL_HEAVEN = { 1000, 1200, 1500, 2000 };
 	public static final int[] PLAYER_HP_MAX_TOTAL_HELL = { 1000, 1200, 1500, 2000 };
-	public static final long[] HIT_TIMER_HELL = { 220, 170, 150, 100 };
+	public static final long[] HIT_TIMER_HELL = { 250, 200, 150, 100 };
 //	public static final long[] HIT_TIMER_HEAVEN = { 200, 200, 200, 200 };
 
 	public static final int PLAYER_KARMA_TIME_AMOUNT = 3;
