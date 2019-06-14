@@ -10,6 +10,7 @@ public class Options {
 	public static int WIN_HEIGHT = 756;
 	public static final int LVL_HEIGHT = 90;
 	public static final int LVL_WIDTH = 54;
+	public static final boolean FULLSCREEN = false;
 
 	public static final Color PRIMARY_BACKGROUND = new Color(60, 60, 60);
 	public static final Color PRIMARY_FOREGROUND = new Color(200, 200, 200);

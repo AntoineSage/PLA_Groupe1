@@ -139,6 +139,10 @@ public class GameUI {
 			m_frame.add(m_text, BorderLayout.NORTH);
 		}
 
+		if (edu.ricm3.game.purgatoire.Options.FULLSCREEN) {
+			m_frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			m_frame.setUndecorated(true);
+		}
 		m_frame.setSize(d);
 		m_frame.doLayout();
 		m_frame.setVisible(true);
